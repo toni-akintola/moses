@@ -28,25 +28,113 @@ export default function S1() {
             </div>
           </div>
         </div>
-        <div className="col-span-full">
+        <div className="sm:col-span-4">
           <label
-            htmlFor="about"
+            htmlFor="username"
             className="block text-sm font-medium leading-6 text-white"
           >
-            About
+            Age
           </label>
           <div className="mt-2">
-            <textarea
-              id="about"
-              name="about"
-              rows={3}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              defaultValue={""}
-            />
+            <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input
+                type="number"
+                name="age"
+                id="name"
+                autoComplete="age"
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                placeholder="18"
+              />
+            </div>
           </div>
-          <p className="mt-3 text-sm leading-6 text-white">
-            Write a few sentences about yourself.
-          </p>
+        </div>
+        <div className="border-b border-white pb-12">
+          <div className=" space-y-10">
+            <fieldset>
+              <legend className="text-sm font-semibold leading-6 text-white">
+                English Level
+              </legend>
+              <div className="mt-6 space-y-6">
+                <div className="flex items-center gap-x-3">
+                  <input
+                    id="push-everything"
+                    name="push-notifications"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <label
+                    htmlFor="push-everything"
+                    className="block text-sm font-medium leading-6 text-white"
+                  >
+                    None
+                  </label>
+                </div>
+                <div className="flex items-center gap-x-3">
+                  <input
+                    id="push-email"
+                    name="push-notifications"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <label
+                    htmlFor="push-email"
+                    className="block text-sm font-medium leading-6 text-white"
+                  >
+                    Basic
+                  </label>
+                </div>
+                <div className="flex items-center gap-x-3">
+                  <input
+                    id="push-nothing"
+                    name="push-notifications"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <label
+                    htmlFor="push-nothing"
+                    className="block text-sm font-medium leading-6 text-white"
+                  >
+                    Intermediate
+                  </label>
+                </div>
+                <div className="flex items-center gap-x-3">
+                  <input
+                    id="push-everything"
+                    name="push-notifications"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <label
+                    htmlFor="push-everything"
+                    className="block text-sm font-medium leading-6 text-white"
+                  >
+                    Advanced
+                  </label>
+                </div>
+                <div className="flex items-center gap-x-3">
+                  <input
+                    id="push-everything"
+                    name="push-notifications"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <label
+                    htmlFor="push-everything"
+                    className="block text-sm font-medium leading-6 text-white"
+                  >
+                    Conversational
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div className="col-span-full">
+          <div className="mt-2 flex items-center justify-center">
+            <button className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ const countryOptions: [{ id: number; name: string }] = {
   Mexico: { id: 3, name: "Mexico" },
 };
 
-export default function S1() {
+export default function S2() {
   return (
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
       <h2 className="text-base font-semibold leading-7 text-white">

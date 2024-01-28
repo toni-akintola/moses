@@ -63,10 +63,10 @@ const Hero = async (props: Props) => {
                 Get started
               </Link>
               <a
-                href="/learn-more"
+                href="/moses"
                 className="text-sm font-semibold leading-6 text-white"
               >
-                Practice your English <span aria-hidden="true">→</span>
+                Practice your English (coming soon...) <span aria-hidden="true">→</span>
               </a>
             </div>
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">

@@ -1,4 +1,32 @@
+'use client'
+
+import { ageAtom, nameAtom, proficiencyAtom } from "@/utils/atoms";
+import { useAtom } from "jotai";
+
+
+
 export default function S1() {
+  const [fullName, setFullName] = useAtom(nameAtom)
+  const [age, setAge] = useAtom(ageAtom)
+  const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+
+
+  const handleAgeChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setAge(e.currentTarget.value)
+  }
+
+  const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setFullName(e.currentTarget.value)
+  }
+
+  const handleProficiencyChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const name = e.currentTarget.value
+    setProficiency(name)
+  }
+
+  const handleClick = () => {
+    console.log(age, fullName, proficiency)
+  }
   return (
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
       <h2 className="text-base font-semibold leading-7 text-white">
@@ -7,10 +35,10 @@ export default function S1() {
       {/* <p className="mt-1 text-sm leading-6 text-white">
             This information will be displayed publicly so be careful what you share.
           </p> */}
-      <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <form className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-4">
           <label
-            htmlFor="username"
+            htmlFor="full-name"
             className="block text-sm font-medium leading-6 text-white"
           >
             Full Name
@@ -21,8 +49,9 @@ export default function S1() {
                 type="text"
                 name="name"
                 id="name"
+                onChange={handleNameChange}
                 autoComplete="name"
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="janesmith"
               />
             </div>
@@ -30,7 +59,7 @@ export default function S1() {
         </div>
         <div className="sm:col-span-4">
           <label
-            htmlFor="username"
+            htmlFor="age"
             className="block text-sm font-medium leading-6 text-white"
           >
             Age
@@ -39,10 +68,11 @@ export default function S1() {
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input
                 type="number"
+                onChange={handleAgeChange}
                 name="age"
                 id="name"
                 autoComplete="age"
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="18"
               />
             </div>
@@ -57,13 +87,13 @@ export default function S1() {
               <div className="mt-6 space-y-6">
                 <div className="flex items-center gap-x-3">
                   <input
-                    id="push-everything"
-                    name="push-notifications"
+                    id="none"
+                    name="proficiency"
                     type="radio"
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label
-                    htmlFor="push-everything"
+                    htmlFor="none"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     None
@@ -71,13 +101,13 @@ export default function S1() {
                 </div>
                 <div className="flex items-center gap-x-3">
                   <input
-                    id="push-email"
-                    name="push-notifications"
+                    id="basic"
+                    name="proficiency"
                     type="radio"
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label
-                    htmlFor="push-email"
+                    htmlFor="basic"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     Basic
@@ -85,13 +115,13 @@ export default function S1() {
                 </div>
                 <div className="flex items-center gap-x-3">
                   <input
-                    id="push-nothing"
-                    name="push-notifications"
+                    id="intermediate"
+                    name="proficiency"
                     type="radio"
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label
-                    htmlFor="push-nothing"
+                    htmlFor="intermediate"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     Intermediate
@@ -99,13 +129,13 @@ export default function S1() {
                 </div>
                 <div className="flex items-center gap-x-3">
                   <input
-                    id="push-everything"
-                    name="push-notifications"
+                    id="advanced"
+                    name="proficiency"
                     type="radio"
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label
-                    htmlFor="push-everything"
+                    htmlFor="advanced"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     Advanced
@@ -113,13 +143,13 @@ export default function S1() {
                 </div>
                 <div className="flex items-center gap-x-3">
                   <input
-                    id="push-everything"
-                    name="push-notifications"
+                    id="conversational"
+                    name="proficiency"
                     type="radio"
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label
-                    htmlFor="push-everything"
+                    htmlFor="conversational"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     Conversational
@@ -131,12 +161,12 @@ export default function S1() {
         </div>
         <div className="col-span-full">
           <div className="mt-2 flex items-center justify-center">
-            <button className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
+            <button onClick={handleClick}  type="button" className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
               Next
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

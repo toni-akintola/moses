@@ -1,32 +1,30 @@
-'use client'
+"use client";
 
 import { ageAtom, nameAtom, proficiencyAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
 
-
-
 export default function S1() {
-  const [fullName, setFullName] = useAtom(nameAtom)
-  const [age, setAge] = useAtom(ageAtom)
-  const [proficiency, setProficiency] = useAtom(proficiencyAtom)
-
+  const [fullName, setFullName] = useAtom(nameAtom);
+  const [age, setAge] = useAtom(ageAtom);
+  const [proficiency, setProficiency] = useAtom(proficiencyAtom);
 
   const handleAgeChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setAge(e.currentTarget.value)
-  }
+    setAge(e.currentTarget.value);
+  };
 
   const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setFullName(e.currentTarget.value)
-  }
+    setFullName(e.currentTarget.value);
+  };
 
   const handleProficiencyChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const name = e.currentTarget.value
-    setProficiency(name)
-  }
+    const name = e.currentTarget.value;
+    setProficiency(name);
+  };
 
   const handleClick = () => {
-    console.log(age, fullName, proficiency)
-  }
+    console.log(age, fullName, proficiency);
+  };
+
   return (
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
       <h2 className="text-base font-semibold leading-7 text-white">
@@ -161,7 +159,11 @@ export default function S1() {
         </div>
         <div className="col-span-full">
           <div className="mt-2 flex items-center justify-center">
-            <button onClick={handleClick}  type="button" className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
+            <button
+              onClick={handleClick}
+              type="button"
+              className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
+            >
               Next
             </button>
           </div>

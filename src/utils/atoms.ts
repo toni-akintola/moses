@@ -22,3 +22,5 @@ export const cityAtom = atom<string | null>("");
 export const startDateAtom = atom<string | null>("");
 export const endDateAtom = atom<string | null>("");
 export const dutiesAtom = atom<string | null>("");
+
+export const buildResume = () => {};

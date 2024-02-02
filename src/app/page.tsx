@@ -1,12 +1,11 @@
 import { WaypointsIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export type Props = {};
 
 const Hero = async (props: Props) => {
   return (
-    <div className="flex h-screen justify-center bg-gradient-to-b from-indigo-800 via-rose-400 to-amber-200">
+    <div className="flex h-screen justify-center bg-gradient-to-b from-indigo-200 via-indigo-400 to-indigo-600">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           className="flex items-center justify-between p-6 lg:px-8"
@@ -19,19 +18,19 @@ const Hero = async (props: Props) => {
             >
               <WaypointsIcon className="h-12 w-12 text-white" />
               <h1 className="text-xl font-extrabold tracking-tight text-white">
-                Moses
+                Exodus
               </h1>
             </Link>
           </div>
           <div className="flex lg:hidden"></div>
 
           <div className="lg:flex lg:flex-1 lg:justify-end">
-            <Link
+            {/* <Link
               href="/login"
               className="text-sm font-semibold leading-6 text-white"
             >
               Log in <span aria-hidden="true">&rarr;</span>
-            </Link>
+            </Link> */}
           </div>
         </nav>
       </header>
@@ -48,7 +47,7 @@ const Hero = async (props: Props) => {
             }}
           />
         </div>
-        <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-64">
+        <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
           <div className="space-y-12 text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
               A GPT-powered employment enablement application for migrant
@@ -57,18 +56,17 @@ const Hero = async (props: Props) => {
 
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
-                href="/resume-form"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-rose-400 shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                href="/s1"
+                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Get started
+                Build Resume
               </Link>
-              <a
+              <Link
                 href="/moses"
-                className="text-sm font-semibold leading-6 text-white"
+                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Practice your English (coming soon...){" "}
-                <span aria-hidden="true">→</span>
-              </a>
+                Personal Assistant
+              </Link>
             </div>
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20">

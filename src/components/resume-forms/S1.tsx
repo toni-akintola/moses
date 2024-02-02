@@ -2,6 +2,8 @@
 
 import { ageAtom, nameAtom, proficiencyAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function S1() {
   const [fullName, setFullName] = useAtom(nameAtom);
@@ -27,6 +29,13 @@ export default function S1() {
 
   return (
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
+      <Link
+        href="/"
+        className="flex flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+      >
+        <ArrowLeft className="h-4 w-4 text-indigo-500" />
+        Home
+      </Link>
       <h2 className="text-base font-semibold leading-7 text-white">
         General Information
       </h2>
@@ -50,7 +59,7 @@ export default function S1() {
                 onChange={handleNameChange}
                 autoComplete="name"
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                placeholder="janesmith"
+                placeholder="Jane Smith"
               />
             </div>
           </div>
@@ -159,13 +168,12 @@ export default function S1() {
         </div>
         <div className="col-span-full">
           <div className="mt-2 flex items-center justify-center">
-            <button
-              onClick={handleClick}
-              type="button"
+            <Link
+              href="/s2"
               className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
             >
               Next
-            </button>
+            </Link>
           </div>
         </div>
       </form>

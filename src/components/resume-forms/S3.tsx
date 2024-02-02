@@ -1,57 +1,52 @@
 "use client";
-import {
-  cityAtom,
-  dutiesAtom,
-  employerAtom,
-  endDateAtom,
-  experienceCounter,
-  jobAtom,
-  startDateAtom,
-} from "@/utils/atoms";
+import { experienceCounter, experiencesAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
-
+import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import { Experience } from "@/utils/types";
+import { nanoid } from "@/utils/helpers";
 export default function S3() {
-  const [experiences, setExperiences] = useAtom(experienceCounter);
-  const [employer, setEmployer] = useAtom(employerAtom);
-  const [job, setJob] = useAtom(jobAtom);
-  const [city, setCity] = useAtom(cityAtom);
-  const [startDate, setStartDate] = useAtom(startDateAtom);
-  const [endDate, setEndDate] = useAtom(endDateAtom);
-  const [duties, setDuties] = useAtom(dutiesAtom);
+  const [experiences, setExperiences] = useAtom(experiencesAtom);
 
-  const handleEmployerChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setEmployer(e.currentTarget.value);
+  const addExperience = () => {
+    const newExperiences = [
+      ...experiences,
+      {
+        id: experiences.length + 1,
+        employer: "",
+        job: "",
+        city: "",
+        startDate: "",
+        endDate: "",
+        duties: "",
+      },
+    ];
+    setExperiences(newExperiences);
   };
 
-  const handleJobChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setJob(e.currentTarget.value);
-  };
+  const handleExperienceChange =
+    (index: number) => (e: React.FormEvent<HTMLSelectElement>) => {
+      console.log("index: " + index);
+      console.log("property name: " + e.currentTarget.name);
+      let newArr = [...experiences];
+      const experience = experiences.find((exp) => exp.id === index);
 
-  const handleCityChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setCity(e.currentTarget.value);
-  };
+      setExperiences(newArr);
+    };
 
-  const handleStartDateChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setStartDate(e.currentTarget.value);
-  };
-
-  const handleEndDateChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setEndDate(e.currentTarget.value);
-  };
-
-  const handleDutiesChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setDuties(e.currentTarget.value);
-  };
-
-  const submitHandler = () => {
-    console.log({ employer, job, city, startDate, endDate, duties });
-  };
   return (
     <form className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
+      <Link
+        href="/s2"
+        className="flex flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+      >
+        <ArrowLeft className="h-4 w-4 text-indigo-500" />
+        Back
+      </Link>
       {experiences.map((item) => (
-        <div key={item}>
+        <div key={item.id}>
           <h2 className="text-base font-semibold leading-7 text-white">
-            Experience #{item}
+            Experience #{item.id}
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
@@ -69,7 +64,6 @@ export default function S3() {
                     id="employer"
                     autoComplete="employer"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    onChange={handleEmployerChange}
                     placeholder="Department of Education"
                   />
                 </div>
@@ -89,7 +83,6 @@ export default function S3() {
                     name="job-title"
                     id="job-title"
                     autoComplete="job-title"
-                    onChange={handleJobChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Assistant Manager"
                   />
@@ -110,7 +103,6 @@ export default function S3() {
                     name="city"
                     id="city"
                     autoComplete="city"
-                    onChange={handleCityChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Caracas"
                   />
@@ -130,7 +122,6 @@ export default function S3() {
                     type="text"
                     name="start"
                     id="start"
-                    onChange={handleStartDateChange}
                     autoComplete="start"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="January 2024"
@@ -151,7 +142,6 @@ export default function S3() {
                     type="text"
                     name="end"
                     id="end"
-                    onChange={handleEndDateChange}
                     autoComplete="end"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="January 2024"
@@ -172,7 +162,6 @@ export default function S3() {
                   name="duties"
                   rows={3}
                   className="block w-full p-2 rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={handleDutiesChange}
                   defaultValue={""}
                 />
                 <p className="mt-3 text-sm leading-6 text-white">
@@ -183,33 +172,36 @@ export default function S3() {
           </div>
           {experiences.length >= 2 && (
             <button
+              type="button"
+              className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
               onClick={() => {
                 const newExperiences = [...experiences];
                 newExperiences.pop();
                 setExperiences(newExperiences);
               }}
             >
+              <MinusCircle className="h-4 w-4" />
               Remove Experience
             </button>
           )}
         </div>
       ))}
       <button
-        onClick={() => {
-          const newExperiences = [...experiences];
-          newExperiences.push(newExperiences.length + 1);
-          setExperiences(newExperiences);
-        }}
+        type="button"
+        className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+        onClick={addExperience}
       >
+        <PlusCircle className="h-4 w-4" />
         Add Experience
       </button>
-
       <div className="col-span-full">
         <div className="mt-2 flex items-center justify-center">
           <button
             type="button"
-            onClick={submitHandler}
             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
+            onClick={() => {
+              console.log(experiences);
+            }}
           >
             Create Resume
           </button>

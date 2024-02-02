@@ -1,4 +1,4 @@
-import { Education } from "@/utils/types";
+import { Education, Experience } from "@/utils/types";
 import { atom } from "jotai";
 
 /* An atom for each input field is created/defined */
@@ -16,6 +16,17 @@ export const nationAtom = atom<string | null>("United States");
 
 // Experience Atoms
 export const experienceCounter = atom<number[]>([1]);
+export const experiencesAtom = atom<Experience[]>([
+  {
+    id: 1,
+    employer: "",
+    job: "",
+    city: "",
+    startDate: "",
+    endDate: "",
+    duties: "",
+  },
+]);
 export const employerAtom = atom<string | null>("");
 export const jobAtom = atom<string | null>("");
 export const cityAtom = atom<string | null>("");

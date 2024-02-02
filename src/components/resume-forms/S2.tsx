@@ -6,6 +6,8 @@ import {
   yearsAtom,
 } from "@/utils/atoms";
 import { useAtom } from "jotai";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 const countryOptions = {
   US: { id: 1, name: "US" },
@@ -41,6 +43,13 @@ export default function S2() {
 
   return (
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
+      <Link
+        href="/s1"
+        className="flex flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+      >
+        <ArrowLeft className="h-4 w-4 text-indigo-500" />
+        Back
+      </Link>
       <h2 className="text-base font-semibold leading-7 text-white">
         Education
       </h2>
@@ -131,13 +140,12 @@ export default function S2() {
 
         <div className="col-span-full">
           <div className="mt-2 flex items-center justify-center">
-            <button
-              type="button"
-              onClick={handleClick}
+            <Link
               className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
+              href="/s3"
             >
               Next
-            </button>
+            </Link>
           </div>
         </div>
       </div>

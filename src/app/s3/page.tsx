@@ -3,8 +3,8 @@ import React from "react";
 
 type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   return <S3 />;
 };
 
-export default page;
+export default Page;

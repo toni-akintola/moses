@@ -4,10 +4,10 @@ const ChatHeader: FC = () => {
   return (
     <div className="w-full flex gap-3 justify-start items-center text-zinc-800">
       <div className="flex flex-col items-start text-sm">
-        <p className="text-xs">Chat with</p>
+        <p className="text-xs">Chatea con</p>
         <div className="flex gap-1.5 items-center">
           <p className="w-2 h-2 rounded-full bg-green-500" />
-          <p className="font-medium">Your Personal Assistant</p>
+          <p className="font-medium">Tu asistente personal</p>
         </div>
       </div>
     </div>

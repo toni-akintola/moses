@@ -18,7 +18,7 @@ const Hero = async (props: Props) => {
             >
               <WaypointsIcon className="h-12 w-12 text-white" />
               <h1 className="text-xl font-extrabold tracking-tight text-white">
-                Exodus
+                Èxodo
               </h1>
             </Link>
           </div>
@@ -50,8 +50,7 @@ const Hero = async (props: Props) => {
         <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
           <div className="space-y-12 text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              A GPT-powered employment enablement application for migrant
-              workers
+              Una solicitud de habilitación de empleo impulsada por GPT para trabajadores migrantes
             </h1>
 
             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -59,23 +58,23 @@ const Hero = async (props: Props) => {
                 href="/s1"
                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Build Resume
+                Crear currículum
               </Link>
               <Link
                 href="/moses"
                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Personal Assistant
+                Asistente personal
               </Link>
             </div>
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-              <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+              {/* <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                 By creating an account, you agree to our terms of service.{" "}
                 <a href="#" className="font-bold text-white">
                   <span className="absolute inset-0" aria-hidden="true" />
                   Read more <span aria-hidden="true">&rarr;</span>
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

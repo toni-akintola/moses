@@ -45,13 +45,13 @@ export default function S2() {
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
       <Link
         href="/s1"
-        className="flex flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+        className="flex flex-row w-1/5 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
       >
         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-        Back
+        Atrás
       </Link>
       <h2 className="text-base font-semibold leading-7 text-white">
-        Education
+        Educación
       </h2>
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-4">
@@ -59,7 +59,7 @@ export default function S2() {
             htmlFor="university"
             className="block text-sm font-medium leading-6 text-white"
           >
-            University
+            Universidad
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -80,7 +80,7 @@ export default function S2() {
             htmlFor="degree"
             className="block text-sm font-medium leading-6 text-white"
           >
-            Degree & Concentration
+            Grado y Concentración
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -101,7 +101,7 @@ export default function S2() {
             htmlFor="years-attended"
             className="block text-sm font-medium leading-6 text-white"
           >
-            Years Attended
+            Años de estudio
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -121,7 +121,7 @@ export default function S2() {
             htmlFor="country"
             className="block text-sm font-medium leading-6 text-white"
           >
-            Country
+            País
           </label>
           <div className="mt-2">
             <select
@@ -144,7 +144,7 @@ export default function S2() {
               className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
               href="/s3"
             >
-              Next
+              Próximo
             </Link>
           </div>
         </div>

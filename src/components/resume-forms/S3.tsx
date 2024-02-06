@@ -38,23 +38,23 @@ export default function S3() {
     <form className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
       <Link
         href="/s2"
-        className="flex flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+        className="flex justify-center flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
       >
         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-        Back
+        Atrás
       </Link>
       {experiences.map((item) => (
         <div key={item.id}>
           <h2 className="text-base font-semibold leading-7 text-white">
-            Experience #{item.id}
+            Experiencia #{item.id}
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
               <label
                 htmlFor="employer"
                 className="block text-sm font-medium leading-6 text-white"
-              >
-                Employer
+              >  
+                Empleador
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -74,7 +74,7 @@ export default function S3() {
                 htmlFor="job-title"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                Job Title
+                Título Profesional
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -94,7 +94,7 @@ export default function S3() {
                 htmlFor="city"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                City
+                Ciudad
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -114,7 +114,7 @@ export default function S3() {
                 htmlFor="start"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                Start Month and Year
+                Mes y año de inicio
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -134,7 +134,7 @@ export default function S3() {
                 htmlFor="end"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                End Month and Year
+                Mes y año de termino
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -154,7 +154,7 @@ export default function S3() {
                 htmlFor="duties"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                Duties
+                ¿Qué hiciste específicamente?
               </label>
               <div className="mt-2">
                 <textarea
@@ -165,7 +165,7 @@ export default function S3() {
                   defaultValue={""}
                 />
                 <p className="mt-3 text-sm leading-6 text-white">
-                  Write 3-4 lines about the experience.
+                  Escribe 3-4 líneas sobre la experiencia.
                 </p>
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function S3() {
               }}
             >
               <MinusCircle className="h-4 w-4" />
-              Remove Experience
+              Eliminar experiencia
             </button>
           )}
         </div>
@@ -192,7 +192,7 @@ export default function S3() {
         onClick={addExperience}
       >
         <PlusCircle className="h-4 w-4" />
-        Add Experience
+          Agregar experiencia
       </button>
       <div className="col-span-full">
         <div className="mt-2 flex items-center justify-center">
@@ -203,7 +203,7 @@ export default function S3() {
               console.log(experiences);
             }}
           >
-            Create Resume
+            Crear Currículum
           </button>
         </div>
       </div>

@@ -31,13 +31,13 @@ export default function S1() {
     <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
       <Link
         href="/"
-        className="flex flex-row w-1/4 items-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+        className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
       >
         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-        Home
+        Inicio
       </Link>
       <h2 className="text-base font-semibold leading-7 text-white">
-        General Information
+        Información General
       </h2>
       {/* <p className="mt-1 text-sm leading-6 text-white">
             This information will be displayed publicly so be careful what you share.
@@ -48,7 +48,7 @@ export default function S1() {
             htmlFor="full-name"
             className="block text-sm font-medium leading-6 text-white"
           >
-            Full Name
+            Nombre completo
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -69,7 +69,7 @@ export default function S1() {
             htmlFor="age"
             className="block text-sm font-medium leading-6 text-white"
           >
-            Age
+            Edad
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -89,7 +89,7 @@ export default function S1() {
           <div className=" space-y-10">
             <fieldset>
               <legend className="text-sm font-semibold leading-6 text-white">
-                English Level
+                Nivel de inglés
               </legend>
               <div className="mt-6 space-y-6">
                 <div className="flex items-center gap-x-3">
@@ -172,7 +172,7 @@ export default function S1() {
               href="/s2"
               className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
             >
-              Next
+              Próximo
             </Link>
           </div>
         </div>

@@ -64,7 +64,14 @@ export default function S3() {
                     id="employer"
                     autoComplete="employer"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    onChange={handleExperienceChange}
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                      setExperiences((prevArr) => {
+                        const result = [...prevArr];
+                        result[item.id - 1].employer = e.currentTarget.value;
+                        return result;
+                      })
+                      console.log(experiences)
+                    }}
                     placeholder="Department of Education"
                   />
                 </div>
@@ -84,6 +91,14 @@ export default function S3() {
                     name="job-title"
                     id="job-title"
                     autoComplete="job-title"
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                      setExperiences((prevArr) => {
+                        const result = [...prevArr];
+                        result[item.id - 1].job = e.currentTarget.value;
+                        return result;
+                      })
+                      console.log(experiences)
+                    }}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Assistant Manager"
                   />
@@ -105,6 +120,14 @@ export default function S3() {
                     id="city"
                     autoComplete="city"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                      setExperiences((prevArr) => {
+                        const result = [...prevArr];
+                        result[item.id - 1].city = e.currentTarget.value;
+                        return result;
+                      })
+                      console.log(experiences)
+                    }}
                     placeholder="Caracas"
                   />
                 </div>
@@ -126,6 +149,14 @@ export default function S3() {
                     autoComplete="start"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="January 2024"
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                      setExperiences((prevArr) => {
+                        const result = [...prevArr];
+                        result[item.id - 1].startDate = e.currentTarget.value;
+                        return result;
+                      })
+                      console.log(experiences)
+                    }}
                   />
                 </div>
               </div>
@@ -145,6 +176,14 @@ export default function S3() {
                     id="end"
                     autoComplete="end"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                      setExperiences((prevArr) => {
+                        const result = [...prevArr];
+                        result[item.id - 1].endDate = e.currentTarget.value;
+                        return result;
+                      })
+                      console.log(experiences)
+                    }}
                     placeholder="January 2024"
                   />
                 </div>
@@ -164,6 +203,14 @@ export default function S3() {
                   rows={3}
                   className="block w-full p-2 rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={""}
+                  onChange={(e: React.FormEvent<HTMLTextAreaElement>) => {
+                      setExperiences((prevArr) => {
+                        const result = [...prevArr];
+                        result[item.id - 1].duties = e.currentTarget.value;
+                        return result;
+                      })
+                      console.log(experiences)
+                    }}
                 />
                 <p className="mt-3 text-sm leading-6 text-white">
                   Escribe 3-4 líneas sobre la experiencia.

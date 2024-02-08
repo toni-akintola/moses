@@ -514,6 +514,7 @@ def get_countries():
 
 @app.route("/resume", methods=['GET', 'POST'])
 def build_resume():
-    a2p_client = Api2Pdf(os.environ["API_2_PDF_KEY"])
-    api_response = a2p_client.Chrome.html_to_pdf(template)
-    return (api_response.result)
+    arguments = request.get_json()
+    # a2p_client = Api2Pdf(os.environ["API_2_PDF_KEY"])
+    # api_response = a2p_client.Chrome.html_to_pdf(template)
+    return ("Hello World")

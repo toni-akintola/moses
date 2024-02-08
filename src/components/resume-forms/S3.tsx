@@ -24,12 +24,12 @@ export default function S3() {
     setExperiences(newExperiences);
   };
 
+
   const handleExperienceChange =
-    (index: number) => (e: React.FormEvent<HTMLSelectElement>) => {
-      console.log("index: " + index);
+    () => (e: React.FormEvent<HTMLInputElement>) => {
       console.log("property name: " + e.currentTarget.name);
       let newArr = [...experiences];
-      const experience = experiences.find((exp) => exp.id === index);
+      // const experience = experiences.find((exp) => exp.id === index);
 
       setExperiences(newArr);
     };
@@ -64,6 +64,7 @@ export default function S3() {
                     id="employer"
                     autoComplete="employer"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    onChange={handleExperienceChange}
                     placeholder="Department of Education"
                   />
                 </div>

@@ -1,10 +1,10 @@
-import S1 from "@/components/resume-forms/S1";
-import React from "react";
+import S1 from "@/components/resume-forms/S1"
+import React from "react"
 
-type Props = {};
+type Props = {}
 
 const Page = async (props: Props) => {
-  return <S1 />;
-};
+    return <S1 />
+}
 
-export default Page;
+export default Page

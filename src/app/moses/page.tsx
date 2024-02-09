@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import Chat from "@/components/chat/Chat";
+import Chat from "@/components/chat/Chat"
 
 export default function ChatPage() {
-  return (
-    <div className="max-w-6xl flex flex-col items-center w-full h-full">
-      <Chat />
-    </div>
-  );
+    return (
+        <div className="max-w-6xl flex flex-col items-center w-full h-full">
+            <Chat />
+        </div>
+    )
 }

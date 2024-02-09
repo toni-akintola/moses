@@ -1,39 +1,58 @@
-import { Education, Experience } from "@/utils/types";
-import { atom } from "jotai";
+import { Education, Experience } from "@/utils/types"
+import { atom } from "jotai"
 
 /* An atom for each input field is created/defined */
 
 // General Information Atoms
-export const ageAtom = atom<string | null>("0");
-export const nameAtom = atom<string | null>("");
-export const proficiencyAtom = atom<string | null>("");
+export const ageAtom = atom<string | null>("0")
+export const nameAtom = atom<string | null>("")
+export const proficiencyAtom = atom<string | null>("")
 
 // Education Atoms
-export const universityAtom = atom<string | null>("");
-export const degreeAtom = atom<string | null>("");
-export const yearsAtom = atom<string | null>("0");
-export const nationAtom = atom<string | null>("United States");
+export const universityAtom = atom<string | null>("")
+export const degreeAtom = atom<string | null>("")
+export const yearsAtom = atom<string | null>("0")
+export const nationAtom = atom<string | null>("United States")
 
 // Experience Atoms
-export const experienceCounter = atom<number[]>([1]);
 export const experiencesAtom = atom<Experience[]>([
-  {
-    id: 1,
-    employer: "",
-    job: "",
-    city: "",
-    startDate: "",
-    endDate: "",
-    duties: "",
-  },
-]);
-export const employerAtom = atom<string | null>("");
-export const jobAtom = atom<string | null>("");
-export const cityAtom = atom<string | null>("");
-export const startDateAtom = atom<string | null>("");
-export const endDateAtom = atom<string | null>("");
-export const dutiesAtom = atom<string | null>("");
+    {
+        id: 1,
+        employer: "",
+        job: "",
+        city: "",
+        startDate: "",
+        endDate: "",
+        duties: "",
+    },
+])
 
-export const buildResume = () => {
-  
-};
+export const buildResumeAtom = atom(null, async (get, set, update) => {
+    const age = get(ageAtom)
+    const name = get(nameAtom)
+    const proficiency = get(proficiencyAtom)
+    const university = get(universityAtom)
+    const degree = get(degreeAtom)
+    const years = get(yearsAtom)
+    const nation = get(nationAtom)
+    const experiences = get(experiencesAtom)
+
+    const response = await fetch("http://127.0.0.1:5000/test", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            age,
+            name,
+            proficiency,
+            university,
+            degree,
+            years,
+            nation,
+            experiences,
+        }),
+    })
+    const data = await response.json()
+    console.log(data)
+})

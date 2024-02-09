@@ -23,7 +23,7 @@
     />
 
     <link href="../static/build.css" rel="stylesheet" />
-    <title>Thomas Leon Highbaugh — Resume</title>
+    <title>{{data.name}} — Resume</title>
   </head>
 <!-- Body ----------------------------------------------------------------------- -->
   <body >
@@ -38,16 +38,10 @@
         >
           <section class="block">
             <h1 class="mb-0 text-5xl font-bold text-gray-700">
-              Thomas Leon Highbaugh
+              {{data.name}}
             </h1>
             <!--Job Title--------------------------------------------------------------------------------------------------------->
-            <h2
-              class="m-0 ml-2 text-2xl font-semibold text-gray-700 leading-snugish"
-            >
-              Full Stack Web Development
-            </h2>
             <!--Location --------------------------------------------------------------------------------------------------------->
-
             <h3
               class="m-0 mt-2 ml-2 text-xl font-semibold text-gray-500 leading-snugish"
             >
@@ -55,14 +49,7 @@
             </h3>
           </section>
           <!--   Initials Block         -->
-          <section
-            class="justify-between px-3 mt-0 mb-5 text-4xl font-black leading-none text-white bg-gray-700 initials-container print:bg-black"
-            style="padding-bottom: 1.5rem; padding-top: 1.5rem;"
-          >
-            <section class="text-center initial">T</section>
-            <section class="text-center initial">L</section>
-            <section class="text-center initial">H</section>
-          </section>
+
         </header>
 
         <!-- Column -------------------------------------------------------------------------------------------------->
@@ -74,91 +61,12 @@
             <!-- To keep in the same column -------------------------------------------------------------------------->
             <section class="break-inside-avoid">
               <section class="pb-4 mb-2 border-b-4 border-gray-300 break-inside-avoid">
-                <ul class="pr-7 list-inside">
-                  <li
-                    class="mt-1 leading-normal text-black text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md print:"
-                  >
-                    <a href="https://thomasleonhighbaugh.me" class="group">
-                      <span
-                        class="mr-2 text-lg font-semibold text-gray-700 leading-snugish"
-                      >
-                        Portfolio:
-                      </span>
-                      thomasleonhighbaugh.me
-                      <span
-                        class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:"
-                      >
-                        ↗
-                      </span>
-                    </a>
-                  </li>
-                  <li
-                    class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md"
-                  >
-                    <a href="https://github.com/Thomashighbaugh" class="group">
-                      <span
-                        class="mr-5 text-lg font-semibold text-gray-700 leading-snugish"
-                      >
-                        Github:
-                      </span>
-                      Thomashighbaugh
-                      <span
-                        class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:"
-                      >
-                        ↗
-                      </span>
-                    </a>
-                  </li>
-
-                  <li
-                    class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md"
-                  >
-                    <a href="mailto:me@thomasleonhighbaugh.me" class="group">
-                      <span
-                        class="mr-8 text-lg font-semibold text-gray-700 leading-snugish"
-                      >
-                        Email:
-                      </span>
-me@thomasleonhighbaugh.me
-                      <span
-                        class="inline-block font-normal text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black"
-                      >
-                        ↗
-                      </span>
-                    </a>
-                  </li>
-                  <li
-                    class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md"
-                  >
-                    <a href="tel:+15109070654">
-                      <span
-                        class="mr-5 text-lg font-semibold text-gray-700 leading-snugish"
-                      >
-                        Phone:
-                      </span>
-                      +1(510)907-0654
-                    </a>
-                  </li>
-                </ul>
               </section>
             </section>
           </section>
           <!--Summary ---------------------------------------------------------------------------------------------------------->
           <section class="pb-2 pb-4 mt-0 border-b-4 border-gray-300 first:mt-0">
             <!-- To keep in the same column -->
-            <section class="break-inside-avoid">
-              <h2
-                class="mb-2 text-xl font-bold tracking-widest text-gray-700 print:font-normal"
-              >
-                SUMMARY
-              </h2>
-
-              <section class="mb-2 break-inside-avoid">
-                <p class="mt-2 leading-normal text-gray-700 text-md">
-               Experienced full-stack web developer with a strong track record of independently addressing complex business requirements and overcoming challenges to deliver polished and user-friendly web solutions.
-                </p>
-              </section>
-            </section>
           </section>
 <!--Education -------------------------------------------------------------------------------------------------------->
 <section class="pb-0 mt-2 border-b-4 border-gray-300 first:mt-0 break-inside-avoid">

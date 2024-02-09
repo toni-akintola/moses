@@ -1,6 +1,5 @@
 import { Education, Experience } from "@/utils/types"
 import { atom } from "jotai"
-
 /* An atom for each input field is created/defined */
 
 // General Information Atoms
@@ -37,7 +36,7 @@ export const buildResumeAtom = atom(null, async (get, set, update) => {
     const nation = get(nationAtom)
     const experiences = get(experiencesAtom)
 
-    const response = await fetch("http://127.0.0.1:5000/test", {
+    const response = await fetch("http://127.0.0.1:5000/build_resume", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -53,6 +52,13 @@ export const buildResumeAtom = atom(null, async (get, set, update) => {
             experiences,
         }),
     })
-    const data = await response.json()
-    console.log(data)
+    const data = await response.blob()
+    const file = new File([data], "test.pdf", {
+        type: "application/pdf"
+    })
+    const url = window.URL.createObjectURL(file)
+    const a = document.createElement('a')
+    a.download = "test.pdf"
+    a.href = url
+    a.click()
 })

@@ -1,9 +1,9 @@
 import os
-from flask import Flask, request, jsonify, render_template, Response
+from flask import Flask, request, jsonify, render_template, send_file
 import numpy as np
-from xhtml2pdf import pisa
 
-
+from flask_weasyprint import render_pdf
+from weasyprint import HTML
 app = Flask(__name__)
 
 countries = [
@@ -11,32 +11,6 @@ countries = [
     {"id": 2, "name": "Australia", "capital": "Canberra", "area": 7617930},
     {"id": 3, "name": "Egypt", "capital": "Cairo", "area": 1010408},
 ]
-
-
-@app.get("/countries")
-def get_countries():
-    return jsonify(countries)
-
-
-@app.get("/pdf")
-def build_resume():
-  options = {
-      "orientation": "landscape",
-      "page-size": "A4",
-      "margin-top": "1.0cm",
-      "margin-right": "1.0cm",
-      "margin-bottom": "1.0cm",
-      "margin-left": "1.0cm",
-      "encoding": "UTF-8",
-  }
-  template = render_template("index.html")
-
-  filename = "MyTest.pdf"
-  pisa_status = pisa.CreatePDF(template)
-  if pisa_status.err:
-      return Response(f'We had some errors')
-
-  return Response(pisa_status, mimetype="application/pdf")
 
 
 @app.after_request
@@ -49,13 +23,21 @@ def after_request(response):
   return response
 
 
-@app.route("/test", methods=["POST"])
-def test():
+@app.get("/countries")
+def get_countries():
+    return jsonify(countries)
 
-    if request.method == "POST":
-      data = request.get_json()
-      print(data)
-      return jsonify(data)
+
+@app.route("/build_resume", methods=["POST", "GET"])
+def build_resume():
+    data = request.get_json()
+    print(data)
+    html = render_template('index.html', data=data)
+    file = "output.pdf"
+    HTML("index.html").write_pdf(file)
+    pdf = render_pdf(HTML(string=html))
+    return pdf
+
 
 
 if __name__ == '__main__':

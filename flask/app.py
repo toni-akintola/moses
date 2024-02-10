@@ -12,19 +12,6 @@ countries = [
 ]
 
 
-# def translate(string):
-#     client = OpenAI()
-
-#     completion = client.chat.completions.create(
-#         model="gpt-3.5-turbo",
-#         messages=[
-#             {"role": "system", "content": "You are helping international migrants translate their resumes into English."},
-#             {"role": "user", "content": f"Translate the following: {string}"}
-#         ]
-#     )
-#     return (completion.choices[0].message.content)
-
-
 @app.after_request
 def after_request(response):
   response.headers.add('Access-Control-Allow-Origin', '*')
@@ -46,7 +33,7 @@ def build_resume():
     print(data)
     html = render_template('index.html', data=data)
     pdf = render_pdf(HTML(string=html), stylesheets=[
-                     "/Users/Toni/The Vault/moses/flask/static/style.css", "/Users/Toni/The Vault/moses/flask/static/normalize.css", "/Users/Toni/The Vault/moses/flask/static/solid.css"])
+                     "/Users/Toni/The Vault/moses/flask/static/build.css", "/Users/Toni/The Vault/moses/flask/static/jost.css"])
     return pdf
 
 

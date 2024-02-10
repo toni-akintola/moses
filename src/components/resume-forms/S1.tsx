@@ -1,6 +1,12 @@
 "use client"
 
-import { ageAtom, nameAtom, proficiencyAtom } from "@/utils/atoms"
+import {
+    ageAtom,
+    emailAtom,
+    nameAtom,
+    numberAtom,
+    proficiencyAtom,
+} from "@/utils/atoms"
 import { useAtom } from "jotai"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
@@ -9,6 +15,8 @@ export default function S1() {
     const [fullName, setFullName] = useAtom(nameAtom)
     const [age, setAge] = useAtom(ageAtom)
     const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+    const [number, setNumber] = useAtom(numberAtom)
+    const [email, setEmail] = useAtom(emailAtom)
 
     const handleAgeChange = (e: React.FormEvent<HTMLInputElement>) => {
         setAge(e.currentTarget.value)
@@ -18,13 +26,12 @@ export default function S1() {
         setFullName(e.currentTarget.value)
     }
 
-    const handleProficiencyChange = (e: React.FormEvent<HTMLInputElement>) => {
-        const name = e.currentTarget.value
-        setProficiency(name)
+    const handleNumberChange = (e: React.FormEvent<HTMLInputElement>) => {
+        setNumber(e.currentTarget.value)
     }
 
-    const handleClick = () => {
-        console.log(age, fullName, proficiency)
+    const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
+        setEmail(e.currentTarget.value)
     }
 
     return (
@@ -81,6 +88,48 @@ export default function S1() {
                                 autoComplete="age"
                                 className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="18"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="sm:col-span-4">
+                    <label
+                        htmlFor="phoneNumber"
+                        className="block text-sm font-medium leading-6 text-white"
+                    >
+                        Teléfono (si lo tienes)
+                    </label>
+                    <div className="mt-2">
+                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input
+                                type="number"
+                                onChange={handleNumberChange}
+                                name="phoneNumber"
+                                id="phoneNumber"
+                                autoComplete="phoneNumber"
+                                className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                placeholder="877-241-9890"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="sm:col-span-4">
+                    <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-white"
+                    >
+                        Correo electrónico (si lo tienes)
+                    </label>
+                    <div className="mt-2">
+                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input
+                                type="text"
+                                onChange={handleEmailChange}
+                                name="email"
+                                id="email"
+                                autoComplete="email"
+                                className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                placeholder="janesmith@gmail.com"
                             />
                         </div>
                     </div>

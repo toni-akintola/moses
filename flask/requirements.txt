@@ -1,5 +1,5 @@
 gunicorn==20.1.0 
 Flask==3.0.2
 flask_weasyprint==1.1.0
-weasyprint==52.5
+weasyprint==60.2
 pango==0.0.1

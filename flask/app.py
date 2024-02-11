@@ -11,14 +11,14 @@ countries = [
 ]
 
 
-@app.after_request
-def after_request(response):
-  response.headers.add('Access-Control-Allow-Origin', '*')
-  response.headers.add('Access-Control-Allow-Headers',
-                       'Content-Type,Authorization')
-  response.headers.add('Access-Control-Allow-Methods',
-                       'GET,PUT,POST,DELETE,OPTIONS')
-  return response
+# @app.after_request
+# def after_request(response):
+#   response.headers.add('Access-Control-Allow-Origin', '*')
+#   response.headers.add('Access-Control-Allow-Headers',
+#                        'Content-Type,Authorization')
+#   response.headers.add('Access-Control-Allow-Methods',
+#                        'GET,PUT,POST,DELETE,OPTIONS')
+#   return response
 
 
 @app.get("/countries")
@@ -32,9 +32,8 @@ def build_resume():
     print(data)
     html = render_template('index.html', data=data)
     pdf = render_pdf(HTML(string=html), stylesheets=[
-                     "/Users/Toni/The Vault/moses/flask/static/build.css", "/Users/Toni/The Vault/moses/flask/static/jost.css"])
+                     "../static/build.css", "../static/jost.css"])
     return pdf
 
-
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(debug=True)

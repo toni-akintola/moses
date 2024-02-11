@@ -72,7 +72,7 @@ export const buildResumeAtom = atom(null, async (get, set, update) => {
     const nation = get(nationAtom)
     const experiences = get(experiencesAtom)
 
-    const response = await fetch("http://127.0.0.1:5000/build_resume", {
+    const response = await fetch("https://moses-fdgl.onrender.com/build_resume", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

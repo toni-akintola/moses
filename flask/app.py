@@ -32,8 +32,8 @@ def build_resume():
     print(data)
     html = render_template('index.html', data=data)
     pdf = render_pdf(HTML(string=html), stylesheets=[
-                     "../static/build.css", "../static/jost.css"])
-    return pdf
+                     "flask/static/build.css", "flask/static/jost.css"])
+    return pdf 
 
 if __name__ == '__main__':
     app.run(debug=True)

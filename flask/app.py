@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, jsonify, render_template
 from flask_weasyprint import render_pdf
 from weasyprint import HTML

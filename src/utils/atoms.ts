@@ -57,6 +57,9 @@ export const translateAtom = atom(null, async (get, set, update) => {
         })
         const data = await response.json()
         console.log(data)
+        data.map((object: any) => {
+            console.log(object.text)
+        })
     })
 })
 

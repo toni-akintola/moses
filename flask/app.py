@@ -32,7 +32,7 @@ def build_resume():
     print(data)
     html = render_template('index.html', data=data)
     pdf = render_pdf(HTML(string=html), stylesheets=[
-                     "flask/static/build.css", "flask/static/jost.css"])
+                     "/etc/secrets/build.css", "/etc/secrets/jost.css"])
     return pdf 
 
 if __name__ == '__main__':

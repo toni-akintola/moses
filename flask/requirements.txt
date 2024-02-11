@@ -2,7 +2,7 @@ gunicorn==20.1.0
 Flask==3.0.2
 flask_weasyprint==1.1.0
 weasyprint==60.2
-pango==1.44.0
+pango==0.0.1
 pydyf==0.6.0
 CFFI==0.6
 html5lib==1.1

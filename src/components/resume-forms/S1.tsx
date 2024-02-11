@@ -34,6 +34,10 @@ export default function S1() {
         setEmail(e.currentTarget.value)
     }
 
+    const handleProficiencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setProficiency(e.currentTarget.id)
+    }
+
     return (
         <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
             <Link
@@ -147,6 +151,7 @@ export default function S1() {
                                         name="proficiency"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        onChange={handleProficiencyChange}
                                     />
                                     <label
                                         htmlFor="none"
@@ -160,6 +165,7 @@ export default function S1() {
                                         id="basic"
                                         name="proficiency"
                                         type="radio"
+                                        onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                     <label
@@ -174,6 +180,7 @@ export default function S1() {
                                         id="intermediate"
                                         name="proficiency"
                                         type="radio"
+                                        onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                     <label
@@ -188,6 +195,7 @@ export default function S1() {
                                         id="advanced"
                                         name="proficiency"
                                         type="radio"
+                                        onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                     <label
@@ -202,6 +210,7 @@ export default function S1() {
                                         id="conversational"
                                         name="proficiency"
                                         type="radio"
+                                        onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                     <label

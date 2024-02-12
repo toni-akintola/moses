@@ -38,6 +38,11 @@ export default function S1() {
         setProficiency(e.currentTarget.id)
     }
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        router.push("/s2")
+    }
+
     return (
         <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
             <Link
@@ -106,7 +111,7 @@ export default function S1() {
                     <div className="mt-2">
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input
-                                type="number"
+                                type="text"
                                 onChange={handleNumberChange}
                                 name="phoneNumber"
                                 id="phoneNumber"

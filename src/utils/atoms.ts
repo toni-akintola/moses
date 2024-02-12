@@ -1,18 +1,27 @@
-import { Education, Experience } from "@/utils/types"
+import { Education, Experience, Skill } from "@/utils/types"
+import { TextResult } from "deepl-node"
 import { atom } from "jotai"
 /* An atom for each input field is created/defined */
 // General Information Atoms
-export const ageAtom = atom<string | null>("0")
-export const nameAtom = atom<string | null>("")
-export const numberAtom = atom<string | null>("")
-export const emailAtom = atom<string | null>("")
-export const proficiencyAtom = atom<string | null>("")
-
+export const ageAtom = atom<string>("0")
+export const nameAtom = atom<string>("")
+export const numberAtom = atom<string>("")
+export const emailAtom = atom<string>("")
+export const proficiencyAtom = atom<string>("")
+export const educationsAtom = atom<Education[]>([{
+    id: 1,
+    school: "",
+    degree: "",
+    startDate: "",
+    endDate: "",
+    nation: "",
+},
+])
 // Education Atoms
-export const universityAtom = atom<string | null>("")
-export const degreeAtom = atom<string | null>("")
-export const yearsAtom = atom<string | null>("0")
-export const nationAtom = atom<string | null>("United States")
+export const universityAtom = atom<string>("")
+export const degreeAtom = atom<string>("")
+export const yearsAtom = atom<string>("0")
+export const nationAtom = atom<string>("United States")
 
 // Experience Atoms
 export const experiencesAtom = atom<Experience[]>([
@@ -26,19 +35,58 @@ export const experiencesAtom = atom<Experience[]>([
         duties: "",
     },
 ])
-export const translateAtom = atom(null, async (get, set, update) => {
-    const age = get(ageAtom)
-    const name = get(nameAtom)
-    const number = get(numberAtom)
-    const email = get(emailAtom)
-    const proficiency = get(proficiencyAtom) as string
-    const university = get(universityAtom)
-    const degree = get(degreeAtom) as string
-    const years = get(yearsAtom)
-    const nation = get(nationAtom)
-    const experiences = get(experiencesAtom)
 
-    const toTranslate = [degree]
+export const skillsAtom = atom<Skill[]>([{ id: 1, text: "" }])
+
+
+export const translateAtom = atom(null, async (get, set) => {
+    var proficiency = get(proficiencyAtom) as string
+    var degree = get(degreeAtom) as string
+    const educations = get(educationsAtom)
+    const experiences = get(experiencesAtom)
+    const skills = get(skillsAtom)
+    const skillStrings = skills.map((skill) => skill.text)
+
+
+    const toTranslate = [proficiency, degree]
+
+    const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            toTranslate: toTranslate,
+        }),
+    })
+    const data = await response.json()
+    const translations = data.translations as TextResult[]
+    console.log(translations)
+    ;(proficiency = String(translations[0])), (degree = String(translations[1]))
+
+     educations.map(async (education) => {
+        const startDate = education.startDate
+        const endDate = education.endDate
+        const degree = education.degree
+        const response = await fetch("/api/translate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                toTranslate: [startDate, endDate, degree],
+            }),
+        })
+        const data = await response.json()
+        const translations = data.translations as TextResult[]
+        console.log(translations)
+
+        education.startDate = String(translations[0])
+        education.endDate = String(translations[1])
+        education.degree = String(translations[2])
+        return education
+    })
+
     experiences.map(async (experience) => {
         const startDate = experience.startDate
         const endDate = experience.endDate
@@ -52,54 +100,39 @@ export const translateAtom = atom(null, async (get, set, update) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                toTranslate: [startDate, endDate, employer, job, duties],
+                toTranslate: [employer, job, duties],
             }),
         })
         const data = await response.json()
-        console.log(data)
-        data.map((object: any) => {
-            console.log(object.text)
-        })
+        const translations = data.translations as TextResult[]
+        console.log(translations)
+
+        experience.employer = String(translations[0])
+        experience.job = String(translations[1])
+        experience.duties = String(translations[2])
+        return experience
     })
-})
 
-export const buildResumeAtom = atom(null, async (get, set, update) => {
-    const age = get(ageAtom)
-    const name = get(nameAtom)
-    const number = get(numberAtom)
-    const email = get(emailAtom)
-    const proficiency = get(proficiencyAtom)
-    const university = get(universityAtom)
-    const degree = get(degreeAtom)
-    const years = get(yearsAtom)
-    const nation = get(nationAtom)
-    const experiences = get(experiencesAtom)
-
-    const response = await fetch("https://moses-fdgl.onrender.com/build_resume", {
+    const skillsResponse = await fetch("/api/translate", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            age,
-            name,
-            number,
-            email,
-            proficiency,
-            university,
-            degree,
-            years,
-            nation,
-            experiences,
+            toTranslate: skillStrings,
         }),
     })
-    const data = await response.blob()
-    const file = new File([data], "test.pdf", {
-        type: "application/pdf",
-    })
-    const url = window.URL.createObjectURL(file)
-    const a = document.createElement("a")
-    a.download = "test.pdf"
-    a.href = url
-    a.click()
+
+    const skillsData = await skillsResponse.json()
+    const skillsTranslations = skillsData.translations as TextResult[]
+    const translatedSkills = skillsTranslations.map(
+        (skillsTranslation, index) => ({
+            id: index,
+            text: String(skillsTranslation),
+        })
+    )
+    set(educationsAtom, educations)
+    set(experiencesAtom, experiences)
+    set(degreeAtom, degree)
+    set(skillsAtom, translatedSkills)
 })

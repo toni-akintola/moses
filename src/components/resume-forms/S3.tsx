@@ -1,10 +1,13 @@
 "use client"
-import { buildResumeAtom, experiencesAtom } from "@/utils/atoms"
+import { experiencesAtom, skillsAtom, translateAtom } from "@/utils/atoms"
 import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 export default function S3() {
     const [experiences, setExperiences] = useAtom(experiencesAtom)
+    const [skills, setSkills] = useAtom(skillsAtom)
+    const router = useRouter()
 
     const addExperience = () => {
         const newExperiences = [
@@ -22,12 +25,27 @@ export default function S3() {
         setExperiences(newExperiences)
     }
 
-    const submitHandler = useSetAtom(buildResumeAtom)
+    const addSkill = () => {
+        const newSkills = [...skills, { id: skills.length + 1, text: "" }]
+        setSkills(newSkills)
+    }
+
+    const translate = useSetAtom(translateAtom)
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        try {
+            await translate()
+        } catch (error) {
+            console.log(error)
+        }
+        router.push("/api/preview")
+    }
 
     return (
         <form
             className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500"
-            onSubmit={submitHandler}
+            onSubmit={handleSubmit}
         >
             <Link
                 href="/s2"
@@ -137,7 +155,7 @@ export default function S3() {
                                 htmlFor="start"
                                 className="block text-sm font-medium leading-6 text-white"
                             >
-                                Mes y año de inicio
+                                Año de inicio
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -167,7 +185,7 @@ export default function S3() {
                                 htmlFor="end"
                                 className="block text-sm font-medium leading-6 text-white"
                             >
-                                Mes y año de termino
+                                Año de termino
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -247,12 +265,66 @@ export default function S3() {
                 <PlusCircle className="h-4 w-4" />
                 Agregar experiencia
             </button>
+            <label
+                htmlFor="skills"
+                className="block text-sm font-medium leading-6 text-white"
+            >
+                Habilidades
+            </label>
+            {skills.map((skill) => (
+                <div className="sm:col-span-4" key={skill.id}>
+                    <div className="mt-2">
+                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input
+                                type="text"
+                                name="end"
+                                id="end"
+                                onChange={(
+                                            e: React.FormEvent<HTMLInputElement>
+                                        ) => {
+                                            setSkills((prevArr) => {
+                                                const result = [...prevArr]
+                                                result[skill.id - 1].text =
+                                                    e.currentTarget.value
+                                                return result
+                                            })
+                                        }}
+                                autoComplete="end"
+                                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                placeholder="Conducción de camiones"
+                            />
+                        </div>
+                    </div>
+                </div>
+            ))}
+            {skills.length >= 2 && (
+                <button
+                    type="button"
+                    className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                    onClick={() => {
+                        const newSkills = [...skills]
+                        newSkills.pop()
+                        setSkills(newSkills)
+                    }}
+                >
+                    <MinusCircle className="h-4 w-4" />
+                    Eliminar habilidad
+                </button>
+            )}
+
+            <button
+                type="button"
+                className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                onClick={addSkill}
+            >
+                <PlusCircle className="h-4 w-4" />
+                Agregar habilidad
+            </button>
             <div className="col-span-full">
                 <div className="mt-2 flex items-center justify-center">
                     <button
-                        type="button"
+                        type="submit"
                         className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
-                        onClick={submitHandler}
                     >
                         Crear Currículum
                     </button>

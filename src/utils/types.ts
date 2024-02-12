@@ -1,8 +1,10 @@
 export interface Education {
-    university: string
+    id: number
+    school: string
     degree: string
-    years: number
-    country: string
+    startDate: string
+    endDate: string
+    nation: string
 }
 
 export interface Experience {
@@ -13,4 +15,9 @@ export interface Experience {
     startDate: string
     endDate: string
     duties: string
+}
+
+export interface Skill {
+    id: number
+    text: string
 }

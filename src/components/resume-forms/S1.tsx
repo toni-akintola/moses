@@ -10,6 +10,7 @@ import {
 import { useAtom } from "jotai"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function S1() {
     const [fullName, setFullName] = useAtom(nameAtom)
@@ -17,7 +18,7 @@ export default function S1() {
     const [proficiency, setProficiency] = useAtom(proficiencyAtom)
     const [number, setNumber] = useAtom(numberAtom)
     const [email, setEmail] = useAtom(emailAtom)
-
+    const router = useRouter()
     const handleAgeChange = (e: React.FormEvent<HTMLInputElement>) => {
         setAge(e.currentTarget.value)
     }

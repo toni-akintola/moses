@@ -1,7 +1,11 @@
 "use client"
 import {
     degreeAtom,
+<<<<<<< Updated upstream
     educationsAtom,
+=======
+    educationAtom,
+>>>>>>> Stashed changes
     nationAtom,
     translateAtom,
     universityAtom,
@@ -23,7 +27,11 @@ export default function S2() {
     const [degree, setDegree] = useAtom(degreeAtom)
     const [years, setYears] = useAtom(yearsAtom)
     const [nation, setNation] = useAtom(nationAtom)
+<<<<<<< Updated upstream
     const [educations, setEducations] = useAtom(educationsAtom)
+=======
+    const [educations, setEducations] = useAtom(educationAtom)
+>>>>>>> Stashed changes
     const submitHandler = useSetAtom(translateAtom)
     const router = useRouter()
 

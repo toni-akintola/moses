@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   
     const page = await browser.newPage()
 
-    await page.goto("http://localhost:3000/preview")
+    await page.goto(`${process.env.NEXT_PUBLIC_VERCEL_URL}/preview`)
     await page.emulateMediaType("screen")
 
     const pdfBuffer = await page.pdf({ format: "A4" })

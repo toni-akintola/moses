@@ -1,8 +1,5 @@
 "use client"
-import {
-    educationsAtom,
-    translateAtom,
-} from "@/utils/atoms"
+import { educationsAtom, translateAtom } from "@/utils/atoms"
 import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
@@ -19,25 +16,24 @@ export default function S2() {
     const submitHandler = useSetAtom(translateAtom)
     const router = useRouter()
 
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         router.push("/s3")
     }
 
     const addEducation = () => {
-            const newEducations = [
-                ...educations,
-                {
-                    id: educations.length + 1,
-                    school: "",
-                    degree: "",
-                    startDate: "",
-                    endDate: "",
-                    nation: "",
-                },
-            ]
-            setEducations(newEducations)
+        const newEducations = [
+            ...educations,
+            {
+                id: educations.length + 1,
+                school: "",
+                degree: "",
+                startDate: "",
+                endDate: "",
+                nation: "",
+            },
+        ]
+        setEducations(newEducations)
     }
 
     return (
@@ -56,169 +52,176 @@ export default function S2() {
                 {educations.map((education) => (
                     <div key={education.id} className="gap-y-8 flex flex-col">
                         <h2 className="text-base font-semibold leading-7 text-white">
-                Educación #{education.id}
-            </h2>
-                    <div className="sm:col-span-4 gap-y-8 ">
-                    <label
-                        htmlFor="school"
-                        className="block text-sm font-medium leading-6 text-white"
-                    >
-                        Escuela/Universidad
-                    </label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input
-                                type="text"
-                                name="school"
-                                id="school"
-                                autoComplete="school"
-                                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                required
-                                onChange={(
+                            Educación #{education.id}
+                        </h2>
+                        <div className="sm:col-span-4 gap-y-8 ">
+                            <label
+                                htmlFor="school"
+                                className="block text-sm font-medium leading-6 text-white"
+                            >
+                                Escuela/Universidad
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="school"
+                                        id="school"
+                                        autoComplete="school"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
                                             setEducations((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[education.id - 1].school =
+                                                result[
+                                                    education.id - 1
+                                                ].school = e.currentTarget.value
+                                                return result
+                                            })
+                                        }}
+                                        value={education.school}
+                                        placeholder="Universidad de Caracas"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sm:col-span-4">
+                            <label
+                                htmlFor="degree"
+                                className="block text-sm font-medium leading-6 text-white"
+                            >
+                                Grado y Concentración
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="degree"
+                                        id="degree"
+                                        autoComplete="degree"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        onChange={(
+                                            e: React.FormEvent<HTMLInputElement>
+                                        ) => {
+                                            setEducations((prevArr) => {
+                                                const result = [...prevArr]
+                                                result[
+                                                    education.id - 1
+                                                ].degree = e.currentTarget.value
+                                                return result
+                                            })
+                                        }}
+                                        value={education.degree}
+                                        placeholder="Licenciatura en Economía"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sm:col-span-4">
+                            <label
+                                htmlFor="year-started"
+                                className="block text-sm font-medium leading-6 text-white"
+                            >
+                                Año de inicio
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="start-date"
+                                        id="start-date"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        onChange={(
+                                            e: React.FormEvent<HTMLInputElement>
+                                        ) => {
+                                            setEducations((prevArr) => {
+                                                const result = [...prevArr]
+                                                result[
+                                                    education.id - 1
+                                                ].startDate =
                                                     e.currentTarget.value
                                                 return result
                                             })
                                         }}
-                                value={education.school}
-                                placeholder="Universidad de Caracas"
-                            />
+                                        value={education.startDate}
+                                        placeholder="2000"
+                                    />
+                                </div>
+                            </div>
+                            <div className="sm:col-span-3">
+                                <label
+                                    htmlFor="country"
+                                    className="block text-sm font-medium leading-6 text-white"
+                                >
+                                    Año de termino
+                                </label>
+                                <div className="mt-2">
+                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                        <input
+                                            type="text"
+                                            name="endDate"
+                                            id="endDate"
+                                            className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            required
+                                            onChange={(
+                                                e: React.FormEvent<HTMLInputElement>
+                                            ) => {
+                                                setEducations((prevArr) => {
+                                                    const result = [...prevArr]
+                                                    result[
+                                                        education.id - 1
+                                                    ].endDate =
+                                                        e.currentTarget.value
+                                                    return result
+                                                })
+                                            }}
+                                            value={education.endDate}
+                                            placeholder="2000"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="sm:col-span-4">
-                    <label
-                        htmlFor="degree"
-                        className="block text-sm font-medium leading-6 text-white"
-                    >
-                        Grado y Concentración
-                    </label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input
-                                type="text"
-                                name="degree"
-                                id="degree"
-                                autoComplete="degree"
-                                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                required
-                                onChange={(
+                        <div className="sm:col-span-3">
+                            <label
+                                htmlFor="country"
+                                className="block text-sm font-medium leading-6 text-white"
+                            >
+                                País
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="nation"
+                                        id="nation"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
                                             setEducations((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[education.id - 1].degree =
-                                                    e.currentTarget.value
+                                                result[
+                                                    education.id - 1
+                                                ].nation = e.currentTarget.value
                                                 return result
                                             })
                                         }}
-                                 value={education.degree}
-                                placeholder="Licenciatura en Economía"
-                            />
+                                        value={education.nation}
+                                        placeholder="Venezuela"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="sm:col-span-4">
-                    <label
-                        htmlFor="year-started"
-                        className="block text-sm font-medium leading-6 text-white"
-                    >
-                        Año de inicio
-                    </label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input
-                                type="text"
-                                name="start-date"
-                                id="start-date"
-                                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                required
-                                onChange={(
-                                            e: React.FormEvent<HTMLInputElement>
-                                        ) => {
-                                            setEducations((prevArr) => {
-                                                const result = [...prevArr]
-                                                result[education.id - 1].startDate =
-                                                    e.currentTarget.value
-                                                return result
-                                            })
-                                        }}
-                                value={education.startDate}
-                                placeholder="2000"
-                            />
-                        </div>
-                    </div>
-                    <div className="sm:col-span-3">
-                    <label
-                        htmlFor="country"
-                        className="block text-sm font-medium leading-6 text-white"
-                    >
-                        Año de termino 
-                    </label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input
-                                type="text"
-                                name="endDate"
-                                id="endDate"
-                                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                required
-                                onChange={(
-                                            e: React.FormEvent<HTMLInputElement>
-                                        ) => {
-                                            setEducations((prevArr) => {
-                                                const result = [...prevArr]
-                                                result[education.id - 1].endDate =
-                                                    e.currentTarget.value
-                                                return result
-                                            })
-                                }}
-                                value={education.endDate}
-                                placeholder="2000"
-                            />
-                        </div>
-                    </div>
-                </div> 
-                </div>
-                <div className="sm:col-span-3">
-                    <label
-                        htmlFor="country"
-                        className="block text-sm font-medium leading-6 text-white"
-                    >
-                        País
-                    </label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input
-                                type="text"
-                                name="nation"
-                                id="nation"
-                                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                required
-                                onChange={(
-                                            e: React.FormEvent<HTMLInputElement>
-                                        ) => {
-                                            setEducations((prevArr) => {
-                                                const result = [...prevArr]
-                                                result[education.id - 1].nation =
-                                                    e.currentTarget.value
-                                                return result
-                                            })
-                                }}
-                                value={education.nation}
-                                placeholder="Venezuela"
-                            />
-                        </div>
-                    </div>
-                </div> 
-                </div>
                 ))}
                 <div>
-                {educations.length >= 2 && (
+                    {educations.length >= 2 && (
                         <button
                             type="button"
                             className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
@@ -232,15 +235,15 @@ export default function S2() {
                             Eliminar educación
                         </button>
                     )}
-                <button
-                type="button"
-                className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
-                onClick={addEducation}
-            >
-                <PlusCircle className="h-4 w-4" />
-                Agregar educación
-            </button>
-            </div>
+                    <button
+                        type="button"
+                        className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                        onClick={addEducation}
+                    >
+                        <PlusCircle className="h-4 w-4" />
+                        Agregar educación
+                    </button>
+                </div>
                 <div className="col-span-full">
                     <div className="mt-2 flex items-center justify-center">
                         <button

@@ -35,7 +35,9 @@ export default function S1() {
         setEmail(e.currentTarget.value)
     }
 
-    const handleProficiencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleProficiencyChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setProficiency(e.currentTarget.id)
     }
 
@@ -59,7 +61,10 @@ export default function S1() {
             {/* <p className="mt-1 text-sm leading-6 text-white">
             This information will be displayed publicly so be careful what you share.
           </p> */}
-            <form className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6" onSubmit={handleSubmit}>
+            <form
+                className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+                onSubmit={handleSubmit}
+            >
                 <div className="sm:col-span-4">
                     <label
                         htmlFor="full-name"

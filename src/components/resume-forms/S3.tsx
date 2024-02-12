@@ -80,7 +80,9 @@ export default function S3() {
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[experience.id - 1].employer =
+                                                result[
+                                                    experience.id - 1
+                                                ].employer =
                                                     e.currentTarget.value
                                                 return result
                                             })
@@ -179,7 +181,9 @@ export default function S3() {
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[experience.id - 1].startDate =
+                                                result[
+                                                    experience.id - 1
+                                                ].startDate =
                                                     e.currentTarget.value
                                                 return result
                                             })
@@ -210,7 +214,9 @@ export default function S3() {
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[experience.id - 1].endDate =
+                                                result[
+                                                    experience.id - 1
+                                                ].endDate =
                                                     e.currentTarget.value
                                                 return result
                                             })
@@ -292,15 +298,15 @@ export default function S3() {
                                 name="end"
                                 id="end"
                                 onChange={(
-                                            e: React.FormEvent<HTMLInputElement>
-                                        ) => {
-                                            setSkills((prevArr) => {
-                                                const result = [...prevArr]
-                                                result[skill.id - 1].text =
-                                                    e.currentTarget.value
-                                                return result
-                                            })
-                                        }}
+                                    e: React.FormEvent<HTMLInputElement>
+                                ) => {
+                                    setSkills((prevArr) => {
+                                        const result = [...prevArr]
+                                        result[skill.id - 1].text =
+                                            e.currentTarget.value
+                                        return result
+                                    })
+                                }}
                                 value={skill.text}
                                 required
                                 autoComplete="end"

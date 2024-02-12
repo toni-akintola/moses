@@ -1,7 +1,7 @@
 import { Education, Experience, Skill } from "@/utils/types"
 import { TextResult } from "deepl-node"
 import { atom } from "jotai"
-import { atomWithStorage } from 'jotai/utils'
+import { atomWithStorage } from "jotai/utils"
 /* An atom for each input field is created/defined */
 // General Information Atoms
 export const ageAtom = atomWithStorage<string>("age", "0")
@@ -9,19 +9,20 @@ export const nameAtom = atomWithStorage<string>("name", "")
 export const numberAtom = atomWithStorage<string>("number", "")
 export const emailAtom = atomWithStorage<string>("email", "")
 export const proficiencyAtom = atomWithStorage<string>("proficiency", "")
-export const educationsAtom = atomWithStorage<Education[]>("educations", [{
-    id: 1,
-    school: "",
-    degree: "",
-    startDate: "",
-    endDate: "",
-    nation: "",
-},
+export const educationsAtom = atomWithStorage<Education[]>("educations", [
+    {
+        id: 1,
+        school: "",
+        degree: "",
+        startDate: "",
+        endDate: "",
+        nation: "",
+    },
 ])
 // Education Atoms
 
 // Experience Atoms
-export const experiencesAtom = atomWithStorage<Experience[]>("experiences",[
+export const experiencesAtom = atomWithStorage<Experience[]>("experiences", [
     {
         id: 1,
         employer: "",
@@ -33,8 +34,9 @@ export const experiencesAtom = atomWithStorage<Experience[]>("experiences",[
     },
 ])
 
-export const skillsAtom = atomWithStorage<Skill[]>("skills", [{ id: 1, text: "" }])
-
+export const skillsAtom = atomWithStorage<Skill[]>("skills", [
+    { id: 1, text: "" },
+])
 
 export const translateAtom = atom(null, async (get, set) => {
     var proficiency = get(proficiencyAtom) as string
@@ -42,7 +44,6 @@ export const translateAtom = atom(null, async (get, set) => {
     const experiences = get(experiencesAtom)
     const skills = get(skillsAtom)
     const skillStrings = skills.map((skill) => skill.text)
-
 
     const toTranslate = [proficiency]
 
@@ -57,10 +58,10 @@ export const translateAtom = atom(null, async (get, set) => {
     })
     const data = await response.json()
     const translations = data.translations as TextResult[]
-    console.log(translations);
-    (proficiency = String(translations[0]))
+    console.log(translations)
+    proficiency = String(translations[0])
 
-     educations.map(async (education) => {
+    educations.map(async (education) => {
         const startDate = education.startDate
         const endDate = education.endDate
         const degree = education.degree

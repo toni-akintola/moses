@@ -39,7 +39,7 @@ export default function S3() {
         } catch (error) {
             console.log(error)
         }
-        router.push("/api/preview")
+        router.push("/preview")
     }
 
     return (

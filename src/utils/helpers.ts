@@ -11,10 +11,6 @@ export const nanoid = customAlphabet(
     7
 ) // 7-character random string
 
-export const getBaseUrl = () => {
-  if (process.env.NODE_ENV === "development") {
-    return `${process.env.NEXT_PUBLIC_SITE_URL}!`
-  }
-  
-  return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}!`;
-};
+export function capitalizeFirstLetter(string: String) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

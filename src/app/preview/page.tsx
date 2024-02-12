@@ -1,7 +1,8 @@
 "use client"
-import React from "react"
-
-import Resume from "@/components/resume-preview/Resume"
+import React, { useRef } from "react"
+import html2canvas from "html2canvas"
+import jsPDF from "jspdf"
+import { usePDF } from 'react-to-pdf';
 import { useAtom } from "jotai"
 import {
     ageAtom,
@@ -13,9 +14,11 @@ import {
     proficiencyAtom,
     skillsAtom,
 } from "@/utils/atoms"
-type Props = {}
+import MyResume from "@/components/resume-preview/Test";
+import { PDFViewer } from "@react-pdf/renderer";
 
-const Preview = (props: Props) => {
+
+const Preview = () => {
     const [age, setAge] = useAtom(ageAtom)
     const [name, setName] = useAtom(nameAtom)
     const [number, setNumber] = useAtom(numberAtom)
@@ -24,19 +27,17 @@ const Preview = (props: Props) => {
     const [educations, setEducations] = useAtom(educationsAtom)
     const [experiences, setExperiences] = useAtom(experiencesAtom)
     const [skills, setSkils] = useAtom(skillsAtom)
+
+
     return (
-        <div>
-            <Resume
-                age={age}
-                name={name}
-                number={number}
-                email={email}
-                proficiency={proficiency}
-                educations={educations}
-                experiences={experiences}
-                skills={skills}
-            />
-        </div>
+    <MyResume
+            name={name}
+            email={email}
+            number={number}
+            proficiency={proficiency}
+            experiences={experiences}
+            educations={educations}
+            skills={skills} age={age}    />
     )
 }
 

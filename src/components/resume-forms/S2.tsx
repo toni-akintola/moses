@@ -148,7 +148,7 @@ export default function S2() {
                                             })
                                         }}
                                         value={education.startDate}
-                                        placeholder="2000"
+                                        placeholder="2024"
                                     />
                                 </div>
                             </div>
@@ -180,7 +180,7 @@ export default function S2() {
                                                 })
                                             }}
                                             value={education.endDate}
-                                            placeholder="2000"
+                                            placeholder="2024"
                                         />
                                     </div>
                                 </div>

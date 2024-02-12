@@ -4,7 +4,7 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 /* An atom for each input field is created/defined */
 // General Information Atoms
-export const ageAtom = atomWithStorage<string>("age", "0")
+export const ageAtom = atomWithStorage<string>("age", "")
 export const nameAtom = atomWithStorage<string>("name", "")
 export const numberAtom = atomWithStorage<string>("number", "")
 export const emailAtom = atomWithStorage<string>("email", "")

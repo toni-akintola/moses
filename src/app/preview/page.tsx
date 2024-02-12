@@ -24,16 +24,18 @@ const Preview = () => {
     const [skills, setSkils] = useAtom(skillsAtom)
 
     return (
-        <MyResume
-            name={name}
-            email={email}
-            number={number}
-            proficiency={proficiency}
-            experiences={experiences}
-            educations={educations}
-            skills={skills}
-            age={age}
-        />
+        <div>
+            <MyResume
+                name={name}
+                email={email}
+                number={number}
+                proficiency={proficiency}
+                experiences={experiences}
+                educations={educations}
+                skills={skills}
+                age={age}
+            />
+        </div>
     )
 }
 

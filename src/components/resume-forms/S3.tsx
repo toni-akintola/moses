@@ -1,12 +1,32 @@
 "use client"
-import { experiencesAtom, skillsAtom, translateAtom } from "@/utils/atoms"
+import MyResume from "@/components/resume-preview/Resume"
+import {
+    ageAtom,
+    educationsAtom,
+    emailAtom,
+    experiencesAtom,
+    nameAtom,
+    numberAtom,
+    proficiencyAtom,
+    skillsAtom,
+    translateAtom,
+} from "@/utils/atoms"
+import { PDFDownloadLink } from "@react-pdf/renderer"
 import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 export default function S3() {
     const [experiences, setExperiences] = useAtom(experiencesAtom)
     const [skills, setSkills] = useAtom(skillsAtom)
+    const [age, setAge] = useAtom(ageAtom)
+    const [name, setName] = useAtom(nameAtom)
+    const [number, setNumber] = useAtom(numberAtom)
+    const [email, setEmail] = useAtom(emailAtom)
+    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+    const [educations, setEducations] = useAtom(educationsAtom)
+    const [download, setDownload] = useState(false)
     const router = useRouter()
 
     const addExperience = () => {
@@ -36,10 +56,10 @@ export default function S3() {
         e.preventDefault()
         try {
             await translate()
+            setDownload(true)
         } catch (error) {
             console.log(error)
         }
-        router.push("/preview")
     }
 
     return (
@@ -173,7 +193,7 @@ export default function S3() {
                                         id="start"
                                         autoComplete="start"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="January 2024"
+                                        placeholder="2024"
                                         required
                                         value={experience.startDate}
                                         onChange={(
@@ -221,7 +241,7 @@ export default function S3() {
                                                 return result
                                             })
                                         }}
-                                        placeholder="January 2024"
+                                        placeholder="2024"
                                     />
                                 </div>
                             </div>
@@ -341,13 +361,34 @@ export default function S3() {
                 Agregar habilidad
             </button>
             <div className="col-span-full">
-                <div className="mt-2 flex items-center justify-center">
+                <div className="mt-2 flex items-center justify-center space-x-4">
                     <button
                         type="submit"
                         className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                     >
                         Crear Currículum
                     </button>
+                    {download && (
+                        <PDFDownloadLink
+                            document={
+                                <MyResume
+                                    name={name}
+                                    email={email}
+                                    number={number}
+                                    proficiency={proficiency}
+                                    experiences={experiences}
+                                    educations={educations}
+                                    skills={skills}
+                                    age={age}
+                                />
+                            }
+                            fileName={`${name}-resume.pdf`}
+                        >
+                            <div className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
+                                Descargar
+                            </div>
+                        </PDFDownloadLink>
+                    )}
                 </div>
             </div>
         </form>

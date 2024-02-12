@@ -66,90 +66,81 @@ const styles = StyleSheet.create({
 
 // Define resume component
 const MyResume = (props: ResumeProps) => (
-    <PDFViewer width="100%" height="800">
-        <Document>
-            <Page size="A4">
-                <View style={styles.page}>
-                    <View style={styles.main}>
-                        <View style={styles.title}>
-                            <Text style={styles.heading}>{props.name}</Text>
-                        </View>
-                        <View style={styles.section}>
-                            <Text style={styles.heading}>Experiences</Text>
-                            {props.experiences.map((experience) => (
-                                <View
-                                    key={experience.id}
-                                    style={styles.section}
-                                >
-                                    <View style={styles.text}>
-                                        <Text>
-                                            {experience.startDate} -{" "}
-                                            {experience.endDate}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.text}>
-                                        <Text>{experience.job}</Text>
-                                        <Text>
-                                            {experience.employer},{" "}
-                                            {experience.city}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.text}>
-                                        <Text>{experience.duties}</Text>
-                                    </View>
-                                </View>
-                            ))}
-                        </View>
-                        <View style={styles.section}>
-                            <Text style={styles.heading}>Education</Text>
-                            {props.educations.map((education) => (
-                                <View key={education.id} style={styles.section}>
-                                    <View style={styles.text}>
-                                        <Text>
-                                            {education.startDate} -{" "}
-                                            {education.endDate}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.text}>
-                                        <Text>{education.degree}</Text>
-                                        <Text>
-                                            {education.school},{" "}
-                                            {education.nation}
-                                        </Text>
-                                    </View>
-                                </View>
-                            ))}
-                        </View>
+    <Document>
+        <Page size="A4">
+            <View style={styles.page}>
+                <View style={styles.main}>
+                    <View style={styles.title}>
+                        <Text style={styles.heading}>{props.name}</Text>
                     </View>
-                    <View style={styles.sidebar}>
-                        <View style={styles.sideBlock}>
-                            <Text style={styles.heading}>Contact Info</Text>
-                            <Text style={styles.text}>
-                                <i className="fa fa-envelope" /> {props.email}
-                            </Text>
-                            <Text style={styles.text}>
-                                <i className="fa fa-phone" /> {props.number}
-                            </Text>
-                        </View>
-                        <View style={styles.sideBlock}>
-                            <Text style={styles.heading}>Skills</Text>
-                            <Text style={styles.text}>
-                                English Proficiency:
-                            </Text>
-                            <Text style={styles.text}>
-                                {capitalizeFirstLetter(props.proficiency)}
-                            </Text>
-                            {props.skills.map((skill) => (
-                                <Text key={skill.id} style={styles.text}>
-                                    {skill.text}
-                                </Text>
-                            ))}
-                        </View>
+                    <View style={styles.section}>
+                        <Text style={styles.heading}>Experiences</Text>
+                        {props.experiences.map((experience) => (
+                            <View key={experience.id} style={styles.section}>
+                                <View style={styles.text}>
+                                    <Text>
+                                        {experience.startDate} -{" "}
+                                        {experience.endDate}
+                                    </Text>
+                                </View>
+                                <View style={styles.text}>
+                                    <Text>{experience.job}</Text>
+                                    <Text>
+                                        {experience.employer}, {experience.city}
+                                    </Text>
+                                </View>
+                                <View style={styles.text}>
+                                    <Text>{experience.duties}</Text>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.heading}>Education</Text>
+                        {props.educations.map((education) => (
+                            <View key={education.id} style={styles.section}>
+                                <View style={styles.text}>
+                                    <Text>
+                                        {education.startDate} -{" "}
+                                        {education.endDate}
+                                    </Text>
+                                </View>
+                                <View style={styles.text}>
+                                    <Text>{education.degree}</Text>
+                                    <Text>
+                                        {education.school}, {education.nation}
+                                    </Text>
+                                </View>
+                            </View>
+                        ))}
                     </View>
                 </View>
-            </Page>
-        </Document>
-    </PDFViewer>
+                <View style={styles.sidebar}>
+                    <View style={styles.sideBlock}>
+                        <Text style={styles.heading}>Contact Info</Text>
+                        <Text style={styles.text}>
+                            <i className="fa fa-envelope" /> {props.email}
+                        </Text>
+                        <Text style={styles.text}>
+                            <i className="fa fa-phone" /> {props.number}
+                        </Text>
+                    </View>
+                    <View style={styles.sideBlock}>
+                        <Text style={styles.heading}>Skills</Text>
+                        <Text style={styles.text}>English Proficiency:</Text>
+                        <Text style={styles.text}>
+                            {capitalizeFirstLetter(props.proficiency)}
+                        </Text>
+                        {props.skills.map((skill) => (
+                            <Text key={skill.id} style={styles.text}>
+                                {skill.text}
+                            </Text>
+                        ))}
+                    </View>
+                </View>
+            </View>
+        </Page>
+    </Document>
 )
 
 export default MyResume

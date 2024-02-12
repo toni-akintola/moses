@@ -1,14 +1,9 @@
+"use client"
 import React from "react"
-import {
-    PDFViewer,
-    Document,
-    Page,
-    Text,
-    View,
-    StyleSheet,
-} from "@react-pdf/renderer"
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
 import { Education, Experience, Skill } from "@/utils/types"
 import { capitalizeFirstLetter } from "@/utils/helpers"
+import dynamic from "next/dynamic"
 
 export interface ResumeProps {
     age: string
@@ -20,6 +15,14 @@ export interface ResumeProps {
     experiences: Experience[]
     skills: Skill[]
 }
+
+const PDFViewer = dynamic(
+    () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
+    {
+        ssr: false,
+        loading: () => <p>Loading...</p>,
+    }
+)
 
 // Define styles
 const styles = StyleSheet.create({
@@ -148,27 +151,5 @@ const MyResume = (props: ResumeProps) => (
         </Document>
     </PDFViewer>
 )
-
-// // Your React component
-// const MyResume = () => (
-
-//     <Resume
-//             name="John Doe"
-//             email="john.doe@example.com"
-//             number="123-456-7890"
-//             proficiency="Fluent"
-//             experiences={[
-//                 { id: 1, startDate: '2019', endDate: 'Present', job: 'Software Engineer', employer: 'Example Company', city: 'City', duties: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-//             ]}
-//             educations={[
-//                 { id: 1, startDate: '2015', endDate: '2019', degree: 'Bachelor of Science in Computer Science', school: 'Example University', nation: 'Country' },
-//             ]}
-//             skills={[
-//                 { id: 1, text: 'JavaScript' },
-//                 { id: 2, text: 'React' },
-//                 { id: 3, text: 'HTML/CSS' },
-//                 { id: 4, text: 'Node.js' },
-//             ]} age={''}    />
-// );
 
 export default MyResume

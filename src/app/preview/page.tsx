@@ -1,8 +1,5 @@
 "use client"
 import React, { useRef } from "react"
-import html2canvas from "html2canvas"
-import jsPDF from "jspdf"
-import { usePDF } from "react-to-pdf"
 import { useAtom } from "jotai"
 import {
     ageAtom,
@@ -14,8 +11,7 @@ import {
     proficiencyAtom,
     skillsAtom,
 } from "@/utils/atoms"
-import MyResume from "@/components/resume-preview/Test"
-import { PDFViewer } from "@react-pdf/renderer"
+import MyResume from "@/components/resume-preview/Resume"
 
 const Preview = () => {
     const [age, setAge] = useAtom(ageAtom)

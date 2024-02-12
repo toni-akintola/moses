@@ -124,7 +124,7 @@ export const translateAtom = atom(null, async (get, set) => {
     const skillsTranslations = skillsData.translations as TextResult[]
     const translatedSkills = skillsTranslations.map(
         (skillsTranslation, index) => ({
-            id: index,
+            id: index + 1,
             text: String(skillsTranslation),
         })
     )

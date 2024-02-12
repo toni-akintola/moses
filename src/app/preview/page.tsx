@@ -2,7 +2,7 @@
 import React, { useRef } from "react"
 import html2canvas from "html2canvas"
 import jsPDF from "jspdf"
-import { usePDF } from 'react-to-pdf';
+import { usePDF } from "react-to-pdf"
 import { useAtom } from "jotai"
 import {
     ageAtom,
@@ -14,9 +14,8 @@ import {
     proficiencyAtom,
     skillsAtom,
 } from "@/utils/atoms"
-import MyResume from "@/components/resume-preview/Test";
-import { PDFViewer } from "@react-pdf/renderer";
-
+import MyResume from "@/components/resume-preview/Test"
+import { PDFViewer } from "@react-pdf/renderer"
 
 const Preview = () => {
     const [age, setAge] = useAtom(ageAtom)
@@ -28,16 +27,17 @@ const Preview = () => {
     const [experiences, setExperiences] = useAtom(experiencesAtom)
     const [skills, setSkils] = useAtom(skillsAtom)
 
-
     return (
-    <MyResume
+        <MyResume
             name={name}
             email={email}
             number={number}
             proficiency={proficiency}
             experiences={experiences}
             educations={educations}
-            skills={skills} age={age}    />
+            skills={skills}
+            age={age}
+        />
     )
 }
 

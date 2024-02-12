@@ -259,22 +259,22 @@ export default function S3() {
                             </div>
                         </div>
                     </div>
-                    {experiences.length >= 2 && (
-                        <button
-                            type="button"
-                            className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
-                            onClick={() => {
-                                const newExperiences = [...experiences]
-                                newExperiences.pop()
-                                setExperiences(newExperiences)
-                            }}
-                        >
-                            <MinusCircle className="h-4 w-4" />
-                            Eliminar experiencia
-                        </button>
-                    )}
                 </div>
             ))}
+            {experiences.length >= 2 && (
+                <button
+                    type="button"
+                    className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                    onClick={() => {
+                        const newExperiences = [...experiences]
+                        newExperiences.pop()
+                        setExperiences(newExperiences)
+                    }}
+                >
+                    <MinusCircle className="h-4 w-4" />
+                    Eliminar experiencia
+                </button>
+            )}
             <button
                 type="button"
                 className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
@@ -295,8 +295,8 @@ export default function S3() {
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input
                                 type="text"
-                                name="end"
-                                id="end"
+                                name="skill"
+                                id="skill"
                                 onChange={(
                                     e: React.FormEvent<HTMLInputElement>
                                 ) => {
@@ -309,7 +309,7 @@ export default function S3() {
                                 }}
                                 value={skill.text}
                                 required
-                                autoComplete="end"
+                                autoComplete="skill"
                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="Conducción de camiones"
                             />

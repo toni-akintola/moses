@@ -12,5 +12,5 @@ export const nanoid = customAlphabet(
 ) // 7-character random string
 
 export function capitalizeFirstLetter(string: String) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1)
 }

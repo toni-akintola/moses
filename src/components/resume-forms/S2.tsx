@@ -1,15 +1,7 @@
 "use client"
 import {
-    degreeAtom,
-<<<<<<< Updated upstream
     educationsAtom,
-=======
-    educationAtom,
->>>>>>> Stashed changes
-    nationAtom,
     translateAtom,
-    universityAtom,
-    yearsAtom,
 } from "@/utils/atoms"
 import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
@@ -23,33 +15,10 @@ const countryOptions = {
 }
 
 export default function S2() {
-    const [university, setUniversity] = useAtom(universityAtom)
-    const [degree, setDegree] = useAtom(degreeAtom)
-    const [years, setYears] = useAtom(yearsAtom)
-    const [nation, setNation] = useAtom(nationAtom)
-<<<<<<< Updated upstream
     const [educations, setEducations] = useAtom(educationsAtom)
-=======
-    const [educations, setEducations] = useAtom(educationAtom)
->>>>>>> Stashed changes
     const submitHandler = useSetAtom(translateAtom)
     const router = useRouter()
 
-    const handleEducationChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setUniversity(e.currentTarget.value)
-    }
-
-    const handleDegreeChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setDegree(e.currentTarget.value)
-    }
-
-    const handleYearsChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setYears(e.currentTarget.value)
-    }
-
-    const handleNationChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setNation(e.currentTarget.value)
-    }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -115,6 +84,7 @@ export default function S2() {
                                                 return result
                                             })
                                         }}
+                                value={education.school}
                                 placeholder="Universidad de Caracas"
                             />
                         </div>
@@ -146,6 +116,7 @@ export default function S2() {
                                                 return result
                                             })
                                         }}
+                                 value={education.degree}
                                 placeholder="Licenciatura en Economía"
                             />
                         </div>
@@ -176,6 +147,7 @@ export default function S2() {
                                                 return result
                                             })
                                         }}
+                                value={education.startDate}
                                 placeholder="2000"
                             />
                         </div>
@@ -205,6 +177,7 @@ export default function S2() {
                                                 return result
                                             })
                                 }}
+                                value={education.endDate}
                                 placeholder="2000"
                             />
                         </div>
@@ -236,6 +209,7 @@ export default function S2() {
                                                 return result
                                             })
                                 }}
+                                value={education.nation}
                                 placeholder="Venezuela"
                             />
                         </div>

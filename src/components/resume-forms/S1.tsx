@@ -59,7 +59,7 @@ export default function S1() {
             {/* <p className="mt-1 text-sm leading-6 text-white">
             This information will be displayed publicly so be careful what you share.
           </p> */}
-            <form className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <form className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6" onSubmit={handleSubmit}>
                 <div className="sm:col-span-4">
                     <label
                         htmlFor="full-name"
@@ -77,6 +77,8 @@ export default function S1() {
                                 autoComplete="name"
                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="Jane Smith"
+                                required
+                                value={fullName}
                             />
                         </div>
                     </div>
@@ -98,6 +100,8 @@ export default function S1() {
                                 autoComplete="age"
                                 className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="18"
+                                required
+                                value={age}
                             />
                         </div>
                     </div>
@@ -119,6 +123,8 @@ export default function S1() {
                                 autoComplete="phoneNumber"
                                 className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="877-241-9890"
+                                required
+                                value={number}
                             />
                         </div>
                     </div>
@@ -140,6 +146,8 @@ export default function S1() {
                                 autoComplete="email"
                                 className="block flex-1 border-0 bg-transparent py-1.5 px-2 [&::-webkit-inner-spin-button]:appearance-none text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="janesmith@gmail.com"
+                                required
+                                value={email}
                             />
                         </div>
                     </div>
@@ -157,6 +165,8 @@ export default function S1() {
                                         name="proficiency"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        required
+                                        value={proficiency}
                                         onChange={handleProficiencyChange}
                                     />
                                     <label
@@ -173,6 +183,7 @@ export default function S1() {
                                         type="radio"
                                         onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        value={proficiency}
                                     />
                                     <label
                                         htmlFor="basic"
@@ -188,6 +199,7 @@ export default function S1() {
                                         type="radio"
                                         onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        value={proficiency}
                                     />
                                     <label
                                         htmlFor="intermediate"
@@ -203,6 +215,7 @@ export default function S1() {
                                         type="radio"
                                         onChange={handleProficiencyChange}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        value={proficiency}
                                     />
                                     <label
                                         htmlFor="advanced"
@@ -217,6 +230,7 @@ export default function S1() {
                                         name="proficiency"
                                         type="radio"
                                         onChange={handleProficiencyChange}
+                                        value={proficiency}
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                     <label
@@ -232,12 +246,12 @@ export default function S1() {
                 </div>
                 <div className="col-span-full">
                     <div className="mt-2 flex items-center justify-center">
-                        <Link
-                            href="/s2"
+                        <button
+                            type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
                             Próximo
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </form>

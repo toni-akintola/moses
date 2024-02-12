@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server"
 import puppeteer from "puppeteer"
 
+
 export async function GET(request: Request) {
-    const browser = await puppeteer.launch()
+    
+    const browser = await puppeteer.launch();
+  
     const page = await browser.newPage()
 
     await page.goto("http://localhost:3000/preview")

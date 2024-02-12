@@ -1,14 +1,15 @@
 import { Education, Experience, Skill } from "@/utils/types"
 import { TextResult } from "deepl-node"
 import { atom } from "jotai"
+import { atomWithStorage } from 'jotai/utils'
 /* An atom for each input field is created/defined */
 // General Information Atoms
-export const ageAtom = atom<string>("0")
-export const nameAtom = atom<string>("")
-export const numberAtom = atom<string>("")
-export const emailAtom = atom<string>("")
-export const proficiencyAtom = atom<string>("")
-export const educationsAtom = atom<Education[]>([{
+export const ageAtom = atomWithStorage<string>("age", "0")
+export const nameAtom = atomWithStorage<string>("name", "")
+export const numberAtom = atomWithStorage<string>("number", "")
+export const emailAtom = atomWithStorage<string>("email", "")
+export const proficiencyAtom = atomWithStorage<string>("proficiency", "")
+export const educationsAtom = atomWithStorage<Education[]>("educations", [{
     id: 1,
     school: "",
     degree: "",
@@ -18,13 +19,9 @@ export const educationsAtom = atom<Education[]>([{
 },
 ])
 // Education Atoms
-export const universityAtom = atom<string>("")
-export const degreeAtom = atom<string>("")
-export const yearsAtom = atom<string>("0")
-export const nationAtom = atom<string>("United States")
 
 // Experience Atoms
-export const experiencesAtom = atom<Experience[]>([
+export const experiencesAtom = atomWithStorage<Experience[]>("experiences",[
     {
         id: 1,
         employer: "",
@@ -36,19 +33,18 @@ export const experiencesAtom = atom<Experience[]>([
     },
 ])
 
-export const skillsAtom = atom<Skill[]>([{ id: 1, text: "" }])
+export const skillsAtom = atomWithStorage<Skill[]>("skills", [{ id: 1, text: "" }])
 
 
 export const translateAtom = atom(null, async (get, set) => {
     var proficiency = get(proficiencyAtom) as string
-    var degree = get(degreeAtom) as string
     const educations = get(educationsAtom)
     const experiences = get(experiencesAtom)
     const skills = get(skillsAtom)
     const skillStrings = skills.map((skill) => skill.text)
 
 
-    const toTranslate = [proficiency, degree]
+    const toTranslate = [proficiency]
 
     const response = await fetch("/api/translate", {
         method: "POST",
@@ -61,8 +57,8 @@ export const translateAtom = atom(null, async (get, set) => {
     })
     const data = await response.json()
     const translations = data.translations as TextResult[]
-    console.log(translations)
-    ;(proficiency = String(translations[0])), (degree = String(translations[1]))
+    console.log(translations);
+    (proficiency = String(translations[0]))
 
      educations.map(async (education) => {
         const startDate = education.startDate
@@ -131,8 +127,8 @@ export const translateAtom = atom(null, async (get, set) => {
             text: String(skillsTranslation),
         })
     )
+    set(proficiencyAtom, proficiency)
     set(educationsAtom, educations)
     set(experiencesAtom, experiences)
-    set(degreeAtom, degree)
     set(skillsAtom, translatedSkills)
 })

@@ -54,10 +54,10 @@ export default function S3() {
                 <ArrowLeft className="h-4 w-4 text-indigo-500" />
                 Atrás
             </Link>
-            {experiences.map((item) => (
-                <div key={item.id}>
+            {experiences.map((experience) => (
+                <div key={experience.id}>
                     <h2 className="text-base font-semibold leading-7 text-white">
-                        Experiencia #{item.id}
+                        Experiencia #{experience.id}
                     </h2>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div className="sm:col-span-4">
@@ -80,11 +80,13 @@ export default function S3() {
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[item.id - 1].employer =
+                                                result[experience.id - 1].employer =
                                                     e.currentTarget.value
                                                 return result
                                             })
                                         }}
+                                        required
+                                        value={experience.employer}
                                         placeholder="Department of Education"
                                     />
                                 </div>
@@ -109,12 +111,14 @@ export default function S3() {
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[item.id - 1].job =
+                                                result[experience.id - 1].job =
                                                     e.currentTarget.value
                                                 return result
                                             })
                                         }}
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        value={experience.job}
                                         placeholder="Assistant Manager"
                                     />
                                 </div>
@@ -135,16 +139,18 @@ export default function S3() {
                                         id="city"
                                         autoComplete="city"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
                                         onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[item.id - 1].city =
+                                                result[experience.id - 1].city =
                                                     e.currentTarget.value
                                                 return result
                                             })
                                         }}
+                                        value={experience.city}
                                         placeholder="Caracas"
                                     />
                                 </div>
@@ -166,12 +172,14 @@ export default function S3() {
                                         autoComplete="start"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         placeholder="January 2024"
+                                        required
+                                        value={experience.startDate}
                                         onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[item.id - 1].startDate =
+                                                result[experience.id - 1].startDate =
                                                     e.currentTarget.value
                                                 return result
                                             })
@@ -195,12 +203,14 @@ export default function S3() {
                                         id="end"
                                         autoComplete="end"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        value={experience.endDate}
                                         onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
                                             setExperiences((prevArr) => {
                                                 const result = [...prevArr]
-                                                result[item.id - 1].endDate =
+                                                result[experience.id - 1].endDate =
                                                     e.currentTarget.value
                                                 return result
                                             })
@@ -224,12 +234,14 @@ export default function S3() {
                                     rows={3}
                                     className="block w-full p-2 rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     defaultValue={""}
+                                    required
+                                    value={experience.duties}
                                     onChange={(
                                         e: React.FormEvent<HTMLTextAreaElement>
                                     ) => {
                                         setExperiences((prevArr) => {
                                             const result = [...prevArr]
-                                            result[item.id - 1].duties =
+                                            result[experience.id - 1].duties =
                                                 e.currentTarget.value
                                             return result
                                         })
@@ -289,6 +301,8 @@ export default function S3() {
                                                 return result
                                             })
                                         }}
+                                value={skill.text}
+                                required
                                 autoComplete="end"
                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="Conducción de camiones"

@@ -81,7 +81,7 @@ export default function S1() {
                                 onChange={handleNameChange}
                                 autoComplete="name"
                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                placeholder="Jane Smith"
+                                placeholder="Miguel de Cervantes"
                                 required
                                 value={fullName}
                             />
@@ -178,7 +178,7 @@ export default function S1() {
                                         htmlFor="none"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        None
+                                        Ninguno
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
@@ -194,7 +194,7 @@ export default function S1() {
                                         htmlFor="basic"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Basic
+                                        Básico
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
@@ -210,7 +210,7 @@ export default function S1() {
                                         htmlFor="intermediate"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Intermediate
+                                        Intermedio
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
@@ -226,7 +226,7 @@ export default function S1() {
                                         htmlFor="advanced"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Advanced
+                                        Avanzado
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
@@ -241,8 +241,8 @@ export default function S1() {
                                     <label
                                         htmlFor="conversational"
                                         className="block text-sm font-medium leading-6 text-white"
-                                    >
-                                        Conversational
+                                    >                                  
+                                        Conversacional
                                     </label>
                                 </div>
                             </div>

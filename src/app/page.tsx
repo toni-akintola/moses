@@ -50,8 +50,7 @@ const Hero = async (props: Props) => {
                 <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
                     <div className="space-y-12 text-center">
                         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-                            Una solicitud de habilitación de empleo impulsada
-                            por GPT para trabajadores migrantes
+                            Constructora de currículum de español a inglés y asistente personal
                         </h1>
 
                         <div className="mt-10 flex items-center justify-center gap-x-6">

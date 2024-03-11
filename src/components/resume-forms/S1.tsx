@@ -62,7 +62,7 @@ export default function S1() {
             This information will be displayed publicly so be careful what you share.
           </p> */}
             <form
-                className="mt-10 grid grid-cols-1 justify-center gap-x-6 gap-y-8 sm:grid-cols-1 p-16 border"
+                className="mt-10 grid grid-cols-1 justify-center gap-x-6 gap-y-8 sm:grid-cols-1 p-16"
                 onSubmit={handleSubmit}
             >
                 <div className="sm:col-span-4 flex-col">

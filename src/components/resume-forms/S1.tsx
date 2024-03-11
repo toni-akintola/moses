@@ -47,7 +47,7 @@ export default function S1() {
     }
 
     return (
-        <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500">
+        <div className="border rounded-md m-6 py-12 px-6 border-gray-900/10 bg-indigo-500 flex items-center flex-col">
             <Link
                 href="/"
                 className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
@@ -62,10 +62,10 @@ export default function S1() {
             This information will be displayed publicly so be careful what you share.
           </p> */}
             <form
-                className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+                className="mt-10 grid grid-cols-1 justify-center gap-x-6 gap-y-8 sm:grid-cols-1 p-16 border"
                 onSubmit={handleSubmit}
             >
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4 flex-col">
                     <label
                         htmlFor="full-name"
                         className="block text-sm font-medium leading-6 text-white"
@@ -158,7 +158,7 @@ export default function S1() {
                     </div>
                 </div>
                 <div className="border-b border-white pb-12">
-                    <div className=" space-y-10">
+                    <div className="space-y-10">
                         <fieldset>
                             <legend className="text-sm font-semibold leading-6 text-white">
                                 Nivel de inglés

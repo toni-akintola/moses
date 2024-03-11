@@ -3,7 +3,7 @@ import { Lato } from "next/font/google"
 import "./globals.css"
 import Layout from "@/components/chat/Providers"
 import { Analytics } from '@vercel/analytics/react';
- 
+import { SpeedInsights } from "@vercel/speed-insights/next" 
 const lato = Lato({
     subsets: ["latin"],
     weight: ["100", "300", "400", "700", "900"],
@@ -22,6 +22,7 @@ export default function RootLayout({
     return (
         <html lang="es">
             <Analytics />
+            <SpeedInsights />
             <Layout>
                 <body className={`${lato.className} bg-white`}>{children}</body>
             </Layout>

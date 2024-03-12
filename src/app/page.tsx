@@ -1,4 +1,6 @@
+import { MainNav } from "@/components/landing/Banner"
 import { WaypointsIcon } from "lucide-react"
+import { motion } from "framer-motion"
 import Link from "next/link"
 
 export type Props = {}
@@ -7,32 +9,7 @@ const Hero = async (props: Props) => {
     return (
         <div className="flex h-screen justify-center bg-gradient-to-b from-indigo-200 via-indigo-400 to-indigo-600">
             <header className="absolute inset-x-0 top-0 z-50">
-                <nav
-                    className="flex items-center justify-between p-6 lg:px-8"
-                    aria-label="Global"
-                >
-                    <div className="flex lg:flex-1">
-                        <Link
-                            href="#"
-                            className="-m-1.5 p-1.5 flex-row items-center flex space-x-3"
-                        >
-                            <WaypointsIcon className="h-12 w-12 text-white" />
-                            <h1 className="text-xl font-extrabold tracking-tight text-white">
-                                Èxodo
-                            </h1>
-                        </Link>
-                    </div>
-                    <div className="flex lg:hidden"></div>
-
-                    <div className="lg:flex lg:flex-1 lg:justify-end">
-                        {/* <Link
-              href="/login"
-              className="text-sm font-semibold leading-6 text-white"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </Link> */}
-                    </div>
-                </nav>
+                <MainNav />
             </header>
             <div className="relative isolate flex px-6 pt-10 lg:px-8">
                 <div
@@ -50,7 +27,8 @@ const Hero = async (props: Props) => {
                 <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
                     <div className="space-y-12 text-center">
                         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-                            Constructora de currículum de español a inglés y asistente personal
+                            Constructora de currículum de español a inglés y
+                            asistente personal
                         </h1>
 
                         <div className="mt-10 flex items-center justify-center gap-x-6">

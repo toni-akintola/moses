@@ -241,7 +241,7 @@ export default function S1() {
                                     <label
                                         htmlFor="conversational"
                                         className="block text-sm font-medium leading-6 text-white"
-                                    >                                  
+                                    >
                                         Conversacional
                                     </label>
                                 </div>

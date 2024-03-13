@@ -16,58 +16,57 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
 
-const educationSchema = z.object({
-    school: z
-        .string({ required_error: "Se requiere una escuela/universidad" })
+const experienceSchema = z.object({
+    employer: z
+        .string({
+            required_error: "Se requiere una escuela/universidad",
+        })
         .min(2, {
-            message: "School must be at least 2 characters.",
+            message: "Employer must be at least 2 characters",
         }),
-    country: z.string({
-        required_error: "Se requiere país",
+    job: z.string({
+        required_error: "Se requiere un titulo profesional",
     }),
-    degree: z.string({ required_error: "Se requiere una grado" }).min(2, {
-        message: "School must be at least 2 characters.",
+    city: z.string({
+        required_error: "Se requiere una ciudad",
     }),
-    concentration: z
-        .string({ required_error: "Se requiere una concentración" })
-        .min(2, {
-            message: "School must be at least 2 characters.",
-        }),
     startYear: z
-        .string({ required_error: "Se requiere un año de inicio" })
+        .string({
+            required_error: "Se requiere un año de inicio",
+        })
         .min(4, {
-            message: "School must be at least 4 characters.",
+            message: "Must be at least 4 characters",
         }),
     endYear: z
-        .string({ required_error: "Se requiere un año de termino" })
+        .string({
+            required_error: "Se requiere un año de termino",
+        })
         .min(4, {
-            message: "School must be at least 4 characters.",
+            message: "Must be at least 4 characters",
         }),
-    completed: z.boolean({
-        required_error:
-            "Must specify whether you did or did not complete the degree",
+    duties: z.string({
+        required_error: "Se requiere una descripción",
     }),
 })
 
-const educationsSchema = z.object({
-    educations: z.array(educationSchema),
+const experiencesSchema = z.object({
+    experiences: z.array(experienceSchema),
 })
-export function S2B() {
+
+export function S3B() {
     // 1. Define your form.
-    const form = useForm<z.infer<typeof educationsSchema>>({
-        resolver: zodResolver(educationsSchema),
+    const form = useForm<z.infer<typeof experiencesSchema>>({
+        resolver: zodResolver(experiencesSchema),
         defaultValues: {
-            educations: [
+            experiences: [
                 {
-                    school: "",
-                    degree: "",
-                    concentration: "",
+                    employer: "",
+                    job: "",
+                    city: "",
                     startYear: "",
                     endYear: "",
-                    country: "",
-                    completed: false,
+                    duties: "",
                 },
             ],
         },
@@ -75,14 +74,14 @@ export function S2B() {
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "educations",
+        name: "experiences",
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof educationsSchema>) {
+    function onSubmit(values: z.infer<typeof experiencesSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values.educations)
+        console.log(values.experiences)
     }
 
     return (
@@ -106,11 +105,11 @@ export function S2B() {
                                 className="gap-y-8 flex flex-col"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
-                                    Educación {index + 1}
+                                    Experiencia {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.school`}
+                                    name={`experiences.${index}.employer`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -131,7 +130,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.country`}
+                                    name={`experiences.${index}.job`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -152,7 +151,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.degree`}
+                                    name={`experiences.${index}.city`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -173,7 +172,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.concentration`}
+                                    name={`experiences.${index}.startYear`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -194,7 +193,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.startYear`}
+                                    name={`experiences.${index}.endYear`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -215,7 +214,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.endYear`}
+                                    name={`experiences.${index}.duties`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -231,28 +230,6 @@ export function S2B() {
                                                 Entra su correo electrónico.
                                             </FormDescription>
                                             <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name={`educations.${index}.completed`}
-                                    render={({ field }) => (
-                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                                            <FormControl>
-                                                <Checkbox
-                                                    checked={field.value}
-                                                    onCheckedChange={
-                                                        field.onChange
-                                                    }
-                                                    className="data-[state=checked]:bg-white data-[state=checked]:text-indigo-500 border-white"
-                                                />
-                                            </FormControl>
-                                            <div className="space-y-1 leading-none">
-                                                <FormLabel className="text-white">
-                                                    ¿Completaste?
-                                                </FormLabel>
-                                            </div>
                                         </FormItem>
                                     )}
                                 />
@@ -265,7 +242,7 @@ export function S2B() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar educación
+                                        Eliminar experiencia
                                     </button>
                                 )}
                             </div>
@@ -275,18 +252,17 @@ export function S2B() {
                             className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
                             onClick={() => {
                                 append({
-                                    school: "",
-                                    degree: "",
-                                    concentration: "",
+                                    employer: "",
+                                    job: "",
+                                    city: "",
                                     startYear: "",
                                     endYear: "",
-                                    country: "",
-                                    completed: false,
+                                    duties: "",
                                 })
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar educación
+                            Agregar experiencia
                         </button>
                         <Button
                             type="submit"

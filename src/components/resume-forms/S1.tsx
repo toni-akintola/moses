@@ -183,7 +183,7 @@ export default function S1() {
                                 </div>
                                 <div className="flex items-center gap-x-3">
                                     <input
-                                        id="basic"
+                                        id="primary"
                                         name="proficiency"
                                         type="radio"
                                         onChange={handleProficiencyChange}
@@ -191,15 +191,15 @@ export default function S1() {
                                         value={proficiency}
                                     />
                                     <label
-                                        htmlFor="basic"
+                                        htmlFor="elementary"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Básico
+                                        Primario
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
                                     <input
-                                        id="intermediate"
+                                        id="limited"
                                         name="proficiency"
                                         type="radio"
                                         onChange={handleProficiencyChange}
@@ -207,15 +207,15 @@ export default function S1() {
                                         value={proficiency}
                                     />
                                     <label
-                                        htmlFor="intermediate"
+                                        htmlFor="limited"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Intermedio
+                                        Limitado
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
                                     <input
-                                        id="advanced"
+                                        id="professional"
                                         name="proficiency"
                                         type="radio"
                                         onChange={handleProficiencyChange}
@@ -223,10 +223,10 @@ export default function S1() {
                                         value={proficiency}
                                     />
                                     <label
-                                        htmlFor="advanced"
+                                        htmlFor="professional"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Avanzado
+                                        Profesional
                                     </label>
                                 </div>
                                 <div className="flex items-center gap-x-3">
@@ -242,7 +242,23 @@ export default function S1() {
                                         htmlFor="conversational"
                                         className="block text-sm font-medium leading-6 text-white"
                                     >
-                                        Conversacional
+                                        Profesional Completo
+                                    </label>
+                                </div>
+                                <div className="flex items-center gap-x-3">
+                                    <input
+                                        id="fluent"
+                                        name="proficiency"
+                                        type="radio"
+                                        onChange={handleProficiencyChange}
+                                        value={proficiency}
+                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                    />
+                                    <label
+                                        htmlFor="fluent"
+                                        className="block text-sm font-medium leading-6 text-white"
+                                    >
+                                        Fluido
                                     </label>
                                 </div>
                             </div>

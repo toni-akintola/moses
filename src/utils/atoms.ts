@@ -14,9 +14,11 @@ export const educationsAtom = atomWithStorage<Education[]>("educations", [
         id: 1,
         school: "",
         degree: "",
+        concentration: "",
         startDate: "",
         endDate: "",
         nation: "",
+        graduationStatus: false
     },
 ])
 // Education Atoms

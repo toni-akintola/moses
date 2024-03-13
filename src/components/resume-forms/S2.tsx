@@ -1,9 +1,14 @@
 "use client"
+import { Checkbox } from "@/components/ui/checkbox"
+import { FormField, FormItem, FormControl, FormLabel, FormDescription, Form } from "@/components/ui/form"
 import { educationsAtom, translateAtom } from "@/utils/atoms"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 const countryOptions = {
     US: { id: 1, name: "US" },
@@ -21,6 +26,17 @@ export default function S2() {
         router.push("/s3")
     }
 
+    const FormSchema = z.object({
+  mobile: z.boolean().default(false).optional(),
+})
+
+    const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      mobile: true,
+    },
+  })
+
     const addEducation = () => {
         const newEducations = [
             ...educations,
@@ -28,9 +44,11 @@ export default function S2() {
                 id: educations.length + 1,
                 school: "",
                 degree: "",
+                concentration: "",
                 startDate: "",
                 endDate: "",
                 nation: "",
+                graduationStatus: false
             },
         ]
         setEducations(newEducations)
@@ -45,6 +63,7 @@ export default function S2() {
                 <ArrowLeft className="h-4 w-4 text-indigo-500" />
                 Atrás
             </Link>
+            <Form {...form}>
             <form
                 className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
                 onSubmit={handleSubmit}
@@ -87,12 +106,44 @@ export default function S2() {
                                 </div>
                             </div>
                         </div>
+                        <div className="sm:col-span-3">
+                            <label
+                                htmlFor="country"
+                                className="block text-sm font-medium leading-6 text-white"
+                            >
+                                País
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="nation"
+                                        id="nation"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        onChange={(
+                                            e: React.FormEvent<HTMLInputElement>
+                                        ) => {
+                                            setEducations((prevArr) => {
+                                                const result = [...prevArr]
+                                                result[
+                                                    education.id - 1
+                                                ].nation = e.currentTarget.value
+                                                return result
+                                            })
+                                        }}
+                                        value={education.nation}
+                                        placeholder="Venezuela"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <div className="sm:col-span-4">
                             <label
                                 htmlFor="degree"
                                 className="block text-sm font-medium leading-6 text-white"
                             >
-                                Grado y Concentración
+                                Grado
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -101,6 +152,39 @@ export default function S2() {
                                         name="degree"
                                         id="degree"
                                         autoComplete="degree"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        required
+                                        onChange={(
+                                            e: React.FormEvent<HTMLInputElement>
+                                        ) => {
+                                            setEducations((prevArr) => {
+                                                const result = [...prevArr]
+                                                result[
+                                                    education.id - 1
+                                                ].degree = e.currentTarget.value
+                                                return result
+                                            })
+                                        }}
+                                        value={education.degree}
+                                        placeholder="Licenciatura en Economía"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sm:col-span-4">
+                            <label
+                                htmlFor="degree"
+                                className="block text-sm font-medium leading-6 text-white"
+                            >
+                                Concentración
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="concentration"
+                                        id="concentration"
+                                        autoComplete="concentration"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         required
                                         onChange={(
@@ -186,38 +270,26 @@ export default function S2() {
                                 </div>
                             </div>
                         </div>
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="country"
-                                className="block text-sm font-medium leading-6 text-white"
-                            >
-                                País
-                            </label>
-                            <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input
-                                        type="text"
-                                        name="nation"
-                                        id="nation"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        required
-                                        onChange={(
-                                            e: React.FormEvent<HTMLInputElement>
-                                        ) => {
-                                            setEducations((prevArr) => {
-                                                const result = [...prevArr]
-                                                result[
-                                                    education.id - 1
-                                                ].nation = e.currentTarget.value
-                                                return result
-                                            })
-                                        }}
-                                        value={education.nation}
-                                        placeholder="Venezuela"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <FormField
+          control={form.control}
+          name="mobile"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  className="data-[state=checked]:bg-white data-[state=checked]:text-indigo-500 border-white"
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-white">
+                  ¿Completaste?
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
                     </div>
                 ))}
                 <div>
@@ -255,6 +327,7 @@ export default function S2() {
                     </div>
                 </div>
             </form>
+            </Form>
         </div>
     )
 }

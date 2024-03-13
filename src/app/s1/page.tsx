@@ -9,7 +9,7 @@ const Page = async (props: Props) => {
     const supabase = createClient()
     const { data: notes } = await supabase.from("notes").select()
     console.log(notes)
-    return <S1 />
+    return <S1B />
 }
 
 export default Page

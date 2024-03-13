@@ -18,7 +18,7 @@ export const educationsAtom = atomWithStorage<Education[]>("educations", [
         startDate: "",
         endDate: "",
         nation: "",
-        graduationStatus: false
+        graduationStatus: false,
     },
 ])
 // Education Atoms

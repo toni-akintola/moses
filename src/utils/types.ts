@@ -3,10 +3,10 @@ export interface Education {
     school: string
     degree: string
     concentration: string
-    startDate: string
-    endDate: string
-    nation: string
-    graduationStatus: boolean
+    startYear: string
+    endYear: string
+    country: string
+    completed: boolean
 }
 
 export interface Experience {
@@ -14,8 +14,8 @@ export interface Experience {
     employer: string
     job: string
     city: string
-    startDate: string
-    endDate: string
+    startYear: string
+    endYear: string
     duties: string
 }
 

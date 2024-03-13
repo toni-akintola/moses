@@ -37,8 +37,8 @@ export default function S3() {
                 employer: "",
                 job: "",
                 city: "",
-                startDate: "",
-                endDate: "",
+                startYear: "",
+                endYear: "",
                 duties: "",
             },
         ]
@@ -195,7 +195,7 @@ export default function S3() {
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         placeholder="2024"
                                         required
-                                        value={experience.startDate}
+                                        value={experience.startYear}
                                         onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
@@ -203,7 +203,7 @@ export default function S3() {
                                                 const result = [...prevArr]
                                                 result[
                                                     experience.id - 1
-                                                ].startDate =
+                                                ].startYear =
                                                     e.currentTarget.value
                                                 return result
                                             })
@@ -228,7 +228,7 @@ export default function S3() {
                                         autoComplete="end"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         required
-                                        value={experience.endDate}
+                                        value={experience.endYear}
                                         onChange={(
                                             e: React.FormEvent<HTMLInputElement>
                                         ) => {
@@ -236,7 +236,7 @@ export default function S3() {
                                                 const result = [...prevArr]
                                                 result[
                                                     experience.id - 1
-                                                ].endDate =
+                                                ].endYear =
                                                     e.currentTarget.value
                                                 return result
                                             })

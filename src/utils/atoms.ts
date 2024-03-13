@@ -15,10 +15,10 @@ export const educationsAtom = atomWithStorage<Education[]>("educations", [
         school: "",
         degree: "",
         concentration: "",
-        startDate: "",
-        endDate: "",
-        nation: "",
-        graduationStatus: false,
+        startYear: "",
+        endYear: "",
+        country: "",
+        completed: false,
     },
 ])
 // Education Atoms
@@ -30,8 +30,8 @@ export const experiencesAtom = atomWithStorage<Experience[]>("experiences", [
         employer: "",
         job: "",
         city: "",
-        startDate: "",
-        endDate: "",
+        startYear: "",
+        endYear: "",
         duties: "",
     },
 ])
@@ -64,8 +64,8 @@ export const translateAtom = atom(null, async (get, set) => {
     proficiency = String(translations[0])
 
     educations.map(async (education) => {
-        const startDate = education.startDate
-        const endDate = education.endDate
+        const startDate = education.startYear
+        const endDate = education.endYear
         const degree = education.degree
         const response = await fetch("/api/translate", {
             method: "POST",
@@ -80,15 +80,15 @@ export const translateAtom = atom(null, async (get, set) => {
         const translations = data.translations as TextResult[]
         console.log(translations)
 
-        education.startDate = String(translations[0])
-        education.endDate = String(translations[1])
+        education.startYear = String(translations[0])
+        education.endYear = String(translations[1])
         education.degree = String(translations[2])
         return education
     })
 
     experiences.map(async (experience) => {
-        const startDate = experience.startDate
-        const endDate = experience.endDate
+        const startDate = experience.startYear
+        const endDate = experience.endYear
         const employer = experience.employer
         const city = experience.city
         const duties = experience.duties

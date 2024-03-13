@@ -52,10 +52,10 @@ export default function S2() {
                 school: "",
                 degree: "",
                 concentration: "",
-                startDate: "",
-                endDate: "",
-                nation: "",
-                graduationStatus: false,
+                startYear: "",
+                endYear: "",
+                country: "",
+                completed: false,
             },
         ]
         setEducations(newEducations)
@@ -139,12 +139,12 @@ export default function S2() {
                                                     const result = [...prevArr]
                                                     result[
                                                         education.id - 1
-                                                    ].nation =
+                                                    ].country =
                                                         e.currentTarget.value
                                                     return result
                                                 })
                                             }}
-                                            value={education.nation}
+                                            value={education.country}
                                             placeholder="Venezuela"
                                         />
                                     </div>
@@ -240,12 +240,12 @@ export default function S2() {
                                                     const result = [...prevArr]
                                                     result[
                                                         education.id - 1
-                                                    ].startDate =
+                                                    ].startYear =
                                                         e.currentTarget.value
                                                     return result
                                                 })
                                             }}
-                                            value={education.startDate}
+                                            value={education.startYear}
                                             placeholder="2024"
                                         />
                                     </div>
@@ -274,12 +274,12 @@ export default function S2() {
                                                         ]
                                                         result[
                                                             education.id - 1
-                                                        ].endDate =
+                                                        ].endYear =
                                                             e.currentTarget.value
                                                         return result
                                                     })
                                                 }}
-                                                value={education.endDate}
+                                                value={education.endYear}
                                                 placeholder="2024"
                                             />
                                         </div>

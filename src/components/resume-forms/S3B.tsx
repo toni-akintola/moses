@@ -308,27 +308,6 @@ export function S3B() {
                         >
                             Crear Currículum
                         </Button>
-                        {download && (
-                            <PDFDownloadLink
-                                document={
-                                    <MyResume
-                                        name={name}
-                                        email={email}
-                                        number={number}
-                                        proficiency={proficiency}
-                                        experiences={experiences}
-                                        educations={educations}
-                                        skills={skills}
-                                        age={age}
-                                    />
-                                }
-                                fileName={`${name}-resume.pdf`}
-                            >
-                                <div className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
-                                    Descargar
-                                </div>
-                            </PDFDownloadLink>
-                        )}
                     </div>
                 </form>
             </Form>

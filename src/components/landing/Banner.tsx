@@ -17,28 +17,27 @@ export function MainNav({
                     href="#"
                     className="-m-1.5 p-1.5 flex-row items-center flex space-x-3"
                 >
-                    <WaypointsIcon className="h-12 w-12 text-white" />
-                    <h1 className="text-xl font-extrabold tracking-tight text-white">
+                    <h1 className="text-2xl font-extrabold tracking-tight text-indigo-400">
                         Èxodo
                     </h1>
                 </Link>
             </div>
             <div className="flex space-x-12">
-                <Link href="#" className="text-white font-bold">
-                    Features
+                <Link href="#" className="text-black font-bold">
+                    Home
                 </Link>
-                <Link href="#" className="text-white font-bold">
+                <Link href="#" className="text-black font-bold">
                     About
                 </Link>
             </div>
 
             <div className="lg:flex lg:flex-1 lg:justify-end">
-                {/* <Link
-              href="/login"
-              className="text-sm font-semibold leading-6 text-white"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </Link> */}
+                <Link
+                    href="/login"
+                    className="text-sm font-semibold leading-6 text-black"
+                >
+                    Log in <span aria-hidden="true">&rarr;</span>
+                </Link>
             </div>
         </nav>
     )

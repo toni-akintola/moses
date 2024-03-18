@@ -1,14 +1,19 @@
-import { Education, Experience, Skill } from "@/utils/types"
+import { submitResume } from "@/app/functions/dbActions"
+import { Certificate, Education, Experience, Skill } from "@/utils/types"
 import { TextResult } from "deepl-node"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
+
 /* An atom for each input field is created/defined */
+
 // General Information Atoms
 export const ageAtom = atomWithStorage<string>("age", "")
 export const nameAtom = atomWithStorage<string>("name", "")
 export const numberAtom = atomWithStorage<string>("number", "")
 export const emailAtom = atomWithStorage<string>("email", "")
 export const proficiencyAtom = atomWithStorage<string>("proficiency", "")
+
+// Education Atoms
 export const educationsAtom = atomWithStorage<Education[]>("educations", [
     {
         id: 1,
@@ -21,7 +26,6 @@ export const educationsAtom = atomWithStorage<Education[]>("educations", [
         completed: false,
     },
 ])
-// Education Atoms
 
 // Experience Atoms
 export const experiencesAtom = atomWithStorage<Experience[]>("experiences", [
@@ -35,17 +39,36 @@ export const experiencesAtom = atomWithStorage<Experience[]>("experiences", [
         duties: "",
     },
 ])
-
+// AdditionalInfoAtoms
+export const authorizationStatusAtom = atomWithStorage<string>(
+    "authorizationStatus",
+    ""
+)
 export const skillsAtom = atomWithStorage<Skill[]>("skills", [
-    { id: 1, text: "" },
+    { id: 1, title: "" },
+])
+export const certificatesAtom = atomWithStorage<Certificate[]>("certificates", [
+    { id: 1, title: "", description: "" },
 ])
 
 export const translateAtom = atom(null, async (get, set) => {
+    const name = get(nameAtom)
+    const age = get(ageAtom)
+    const number = get(numberAtom)
+    const email = get(emailAtom)
     var proficiency = get(proficiencyAtom) as string
     const educations = get(educationsAtom)
     const experiences = get(experiencesAtom)
     const skills = get(skillsAtom)
-    const skillStrings = skills.map((skill) => skill.text)
+    const certificates = get(certificatesAtom)
+    const authorizationStatus = get(authorizationStatusAtom)
+    const skillStrings = skills.map((skill) => skill.title)
+    const certificateTitles = certificates.map(
+        (certificate) => certificate.title
+    )
+    const certificateDescriptions = certificates.map(
+        (certificate) => certificate.description
+    )
 
     const toTranslate = [proficiency]
 
@@ -60,7 +83,6 @@ export const translateAtom = atom(null, async (get, set) => {
     })
     const data = await response.json()
     const translations = data.translations as TextResult[]
-    console.log(translations)
     proficiency = String(translations[0])
 
     educations.map(async (education) => {
@@ -104,7 +126,6 @@ export const translateAtom = atom(null, async (get, set) => {
         })
         const data = await response.json()
         const translations = data.translations as TextResult[]
-        console.log(translations)
 
         experience.employer = String(translations[0])
         experience.job = String(translations[1])
@@ -127,11 +148,58 @@ export const translateAtom = atom(null, async (get, set) => {
     const translatedSkills = skillsTranslations.map(
         (skillsTranslation, index) => ({
             id: index + 1,
-            text: String(skillsTranslation),
+            title: String(skillsTranslation),
         })
     )
+
+    const authResponse = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            toTranslate: [authorizationStatus],
+        }),
+    })
+
+    const authData = await authResponse.json()
+    const authTranslations = authData.translations as TextResult[]
+    const authTranslation = authTranslations[0]
+
+    certificates.map(async (certificate) => {
+        const title = certificate.title
+        const description = certificate.description
+        const response = await fetch("/api/translate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                toTranslate: [title, description],
+            }),
+        })
+        const data = await response.json()
+        const translations = data as TextResult[]
+        certificate.title = String(translations[0])
+        certificate.description = String(translations[1])
+    })
+
     set(proficiencyAtom, proficiency)
     set(educationsAtom, educations)
     set(experiencesAtom, experiences)
+    set(authorizationStatusAtom, String(authTranslation.text))
     set(skillsAtom, translatedSkills)
+    set(certificatesAtom, certificates)
+    submitResume(
+        age,
+        name,
+        number,
+        email,
+        proficiency,
+        educations,
+        experiences,
+        skills,
+        certificates,
+        authorizationStatus
+    )
 })

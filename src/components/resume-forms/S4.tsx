@@ -1,4 +1,5 @@
 "use client"
+import MyResume from "@/components/resume-preview/Resume"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -10,9 +11,22 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { translateAtom } from "@/utils/atoms"
+import {
+    ageAtom,
+    authorizationStatusAtom,
+    certificatesAtom,
+    educationsAtom,
+    emailAtom,
+    experiencesAtom,
+    nameAtom,
+    numberAtom,
+    proficiencyAtom,
+    skillsAtom,
+    translateAtom,
+} from "@/utils/atoms"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useSetAtom } from "jotai"
+import { PDFDownloadLink } from "@react-pdf/renderer"
+import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -44,6 +58,18 @@ const additionalInfoSchema = z.object({
 })
 
 export default function S4() {
+    const [authorizationStatus, setAuthorizationStatus] = useAtom(
+        authorizationStatusAtom
+    )
+    const [skills, setSkills] = useAtom(skillsAtom)
+    const [certificates, setCertificates] = useAtom(certificatesAtom)
+    const [experiences, setExperiences] = useAtom(experiencesAtom)
+    const [age, setAge] = useAtom(ageAtom)
+    const [name, setName] = useAtom(nameAtom)
+    const [number, setNumber] = useAtom(numberAtom)
+    const [email, setEmail] = useAtom(emailAtom)
+    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+    const [educations, setEducations] = useAtom(educationsAtom)
     const [download, setDownload] = useState(false)
     const translate = useSetAtom(translateAtom)
     // 1. Define your form.
@@ -66,6 +92,10 @@ export default function S4() {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
+
+        setAuthorizationStatus(values.authorizationStatus)
+        setSkills(values.skills)
+        setCertificates(values.certificates)
 
         try {
             await translate()
@@ -281,6 +311,31 @@ export default function S4() {
                         >
                             Crear Currículum
                         </Button>
+                        {download && (
+                            <PDFDownloadLink
+                                document={
+                                    <MyResume
+                                        name={name}
+                                        email={email}
+                                        number={number}
+                                        proficiency={proficiency}
+                                        experiences={experiences}
+                                        educations={educations}
+                                        skills={skills}
+                                        age={age}
+                                        certificates={certificates}
+                                        authorizationStatus={
+                                            authorizationStatus
+                                        }
+                                    />
+                                }
+                                fileName={`${name}-resume.pdf`}
+                            >
+                                <div className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
+                                    Descargar
+                                </div>
+                            </PDFDownloadLink>
+                        )}
                     </div>
                 </form>
             </Form>

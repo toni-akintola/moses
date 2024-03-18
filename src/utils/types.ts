@@ -20,8 +20,8 @@ export interface Experience {
 }
 
 export interface Skill {
-    id: number
-    text: string
+    id?: number
+    title: string
 }
 
 export interface Certificate {

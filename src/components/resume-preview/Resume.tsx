@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
-import { Education, Experience, Skill } from "@/utils/types"
+import { Certificate, Education, Experience, Skill } from "@/utils/types"
 import { capitalizeFirstLetter } from "@/utils/helpers"
 import dynamic from "next/dynamic"
 
@@ -14,6 +14,8 @@ export interface ResumeProps {
     educations: Education[]
     experiences: Experience[]
     skills: Skill[]
+    authorizationStatus: string
+    certificates: Certificate[]
 }
 
 const PDFViewer = dynamic(
@@ -79,14 +81,14 @@ const MyResume = (props: ResumeProps) => (
                             <View key={experience.id} style={styles.section}>
                                 <View style={styles.text}>
                                     <Text>
-                                        {experience.startDate} -{" "}
-                                        {experience.endDate}
+                                        {experience.startYear} -{" "}
+                                        {experience.endYear}
                                     </Text>
                                 </View>
                                 <View style={styles.text}>
-                                    <Text>{experience.job}</Text>
                                     <Text>
-                                        {experience.employer}, {experience.city}
+                                        {experience.job}, {experience.employer},{" "}
+                                        {experience.city}
                                     </Text>
                                 </View>
                                 <View style={styles.text}>
@@ -101,17 +103,31 @@ const MyResume = (props: ResumeProps) => (
                             <View key={education.id} style={styles.section}>
                                 <View style={styles.text}>
                                     <Text>
-                                        {education.startDate} -{" "}
-                                        {education.endDate}
+                                        {education.startYear} -{" "}
+                                        {education.endYear}
                                     </Text>
                                 </View>
                                 <View style={styles.text}>
-                                    <Text>{education.degree}</Text>
                                     <Text>
-                                        {education.school}, {education.nation}
+                                        {education.degree}, {education.school},{" "}
+                                        {education.country}
                                     </Text>
                                 </View>
                             </View>
+                        ))}
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.heading}>Authorization Status</Text>
+                        <Text style={styles.text}>
+                            {props.authorizationStatus}
+                        </Text>
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.heading}>Certificates</Text>
+                        {props.certificates.map((certificate) => (
+                            <Text key={certificate.id} style={styles.text}>
+                                {certificate.title}: {certificate.description}
+                            </Text>
                         ))}
                     </View>
                 </View>
@@ -133,7 +149,7 @@ const MyResume = (props: ResumeProps) => (
                         </Text>
                         {props.skills.map((skill) => (
                             <Text key={skill.id} style={styles.text}>
-                                {skill.text}
+                                {skill.title}
                             </Text>
                         ))}
                     </View>

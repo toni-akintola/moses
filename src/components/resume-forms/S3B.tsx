@@ -16,6 +16,23 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
+import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react"
+import { useAtom, useSetAtom } from "jotai"
+import {
+    ageAtom,
+    educationsAtom,
+    emailAtom,
+    experiencesAtom,
+    nameAtom,
+    numberAtom,
+    proficiencyAtom,
+    skillsAtom,
+    translateAtom,
+} from "@/utils/atoms"
+import { PDFDownloadLink } from "@react-pdf/renderer"
+import MyResume from "@/components/resume-preview/Resume"
+import { useRouter } from "next/navigation"
 
 const experienceSchema = z.object({
     employer: z
@@ -55,6 +72,16 @@ const experiencesSchema = z.object({
 })
 
 export function S3B() {
+    const router = useRouter()
+    const [download, setDownload] = useState(false)
+    const [experiences, setExperiences] = useAtom(experiencesAtom)
+    const [skills, setSkills] = useAtom(skillsAtom)
+    const [age, setAge] = useAtom(ageAtom)
+    const [name, setName] = useAtom(nameAtom)
+    const [number, setNumber] = useAtom(numberAtom)
+    const [email, setEmail] = useAtom(emailAtom)
+    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+    const [educations, setEducations] = useAtom(educationsAtom)
     // 1. Define your form.
     const form = useForm<z.infer<typeof experiencesSchema>>({
         resolver: zodResolver(experiencesSchema),
@@ -77,11 +104,22 @@ export function S3B() {
         name: "experiences",
     })
 
+    const translate = useSetAtom(translateAtom)
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof experiencesSchema>) {
+    async function onSubmit(values: z.infer<typeof experiencesSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values.experiences)
+        setExperiences(values.experiences)
+
+        router.push("/s4")
+
+        try {
+            await translate()
+            setDownload(true)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -98,7 +136,7 @@ export function S3B() {
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8">
+                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
@@ -113,16 +151,16 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Nombre Completo
+                                                Empleador
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Miguel de Cervantes"
+                                                    placeholder="Google"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su nombre completo.
+                                                Entra su empleador.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -134,16 +172,16 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Correo Electrónico
+                                                Título Profesional
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="miguel@gmail.com"
+                                                    placeholder="Ingeniero de software"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su correo electrónico.
+                                                Entra su título profesional.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -155,16 +193,16 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Edad
+                                                Ciudad
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="24"
+                                                    placeholder="Caracas"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su edad.
+                                                Entra su ciudad.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -176,16 +214,16 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Número de Teléfono
+                                                Año de inicio
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="(800) 555-0100"
+                                                    placeholder="2000"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su número de teléfono.
+                                                Entra su año de inicio.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -197,16 +235,16 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Correo Electrónico
+                                                Año de termino
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="miguel@gmail.com"
+                                                    placeholder="2000"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su correo electrónico.
+                                                Entra su año de termino.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -218,16 +256,16 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Correo Electrónico
+                                                Deberes
                                             </FormLabel>
                                             <FormControl>
-                                                <Input
-                                                    placeholder="miguel@gmail.com"
+                                                <Textarea
+                                                    placeholder="..."
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su correo electrónico.
+                                                ¿Qué hiciste específicamente?
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -268,8 +306,29 @@ export function S3B() {
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Próximo
+                            Crear Currículum
                         </Button>
+                        {download && (
+                            <PDFDownloadLink
+                                document={
+                                    <MyResume
+                                        name={name}
+                                        email={email}
+                                        number={number}
+                                        proficiency={proficiency}
+                                        experiences={experiences}
+                                        educations={educations}
+                                        skills={skills}
+                                        age={age}
+                                    />
+                                }
+                                fileName={`${name}-resume.pdf`}
+                            >
+                                <div className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
+                                    Descargar
+                                </div>
+                            </PDFDownloadLink>
+                        )}
                     </div>
                 </form>
             </Form>

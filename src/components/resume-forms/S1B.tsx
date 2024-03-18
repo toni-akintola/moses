@@ -19,6 +19,16 @@ import { Input } from "@/components/ui/input"
 import { phoneRegex } from "@/lib/utils"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
+import {
+    ageAtom,
+    emailAtom,
+    nameAtom,
+    numberAtom,
+    proficiencyAtom,
+} from "@/utils/atoms"
+import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
+
 const S1Schema = z.object({
     fullName: z.string().min(2, {
         message: "El nombre debe tener al menos dos caracteres.",
@@ -59,11 +69,25 @@ export function S1B() {
         },
     })
 
+    const [fullName, setFullName] = useAtom(nameAtom)
+    const [age, setAge] = useAtom(ageAtom)
+    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+    const [number, setNumber] = useAtom(numberAtom)
+    const [email, setEmail] = useAtom(emailAtom)
+    const router = useRouter()
+
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof S1Schema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
+        setFullName(values.fullName)
+        setAge(values.age)
+        setProficiency(values.englishProficiency)
+        setNumber(values.phoneNumber)
+        setEmail(values.email)
+
+        router.push("/s2")
     }
     return (
         <div className="border py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">
@@ -79,7 +103,7 @@ export function S1B() {
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Inicio
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8">
+                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="text-base font-semibold leading-7 text-white">
                             Información General
                         </h2>

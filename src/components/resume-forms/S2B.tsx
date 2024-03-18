@@ -17,6 +17,9 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { educationsAtom } from "@/utils/atoms"
+import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 
 const educationSchema = z.object({
     school: z
@@ -55,6 +58,8 @@ const educationsSchema = z.object({
     educations: z.array(educationSchema),
 })
 export function S2B() {
+    const [educations, setEducations] = useAtom(educationsAtom)
+    const router = useRouter()
     // 1. Define your form.
     const form = useForm<z.infer<typeof educationsSchema>>({
         resolver: zodResolver(educationsSchema),
@@ -83,6 +88,9 @@ export function S2B() {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values.educations)
+        setEducations(values.educations)
+
+        router.push("/s3")
     }
 
     return (
@@ -99,7 +107,7 @@ export function S2B() {
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8">
+                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
@@ -114,16 +122,16 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Nombre Completo
+                                                Universidad/Escuela Secundaria
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Miguel de Cervantes"
+                                                    placeholder="Universidad de Caracas"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su nombre completo.
+                                                Entra una escuela.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -135,16 +143,16 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Correo Electrónico
+                                                País
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="miguel@gmail.com"
+                                                    placeholder="Venezuela"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su correo electrónico.
+                                                Entra el país.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -156,16 +164,16 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Edad
+                                                Grado
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="24"
+                                                    placeholder="Licenciatura"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su edad.
+                                                Entra el grado.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -177,16 +185,16 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Número de Teléfono
+                                                Concentración
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="(800) 555-0100"
+                                                    placeholder="Economia"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su número de teléfono.
+                                                Entra la concentración.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -198,16 +206,16 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Correo Electrónico
+                                                Año de inicio
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="miguel@gmail.com"
+                                                    placeholder="2000"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su correo electrónico.
+                                                Entra el año de inicio.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -219,16 +227,16 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Correo Electrónico
+                                                Año de termino
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="miguel@gmail.com"
+                                                    placeholder="2000"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su correo electrónico.
+                                                Entra el año de termino.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>

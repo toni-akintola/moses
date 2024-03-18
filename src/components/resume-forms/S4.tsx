@@ -1,0 +1,289 @@
+"use client"
+import { Button } from "@/components/ui/button"
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { translateAtom } from "@/utils/atoms"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useSetAtom } from "jotai"
+import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useFieldArray, useForm } from "react-hook-form"
+import { z } from "zod"
+
+const certificateSchema = z.object({
+    title: z.string({
+        required_error: "Se requiere un titulo",
+    }),
+    description: z.string({
+        required_error: "Se requiere una descripción",
+    }),
+})
+
+const skillsSchema = z.object({
+    title: z.string({
+        required_error: "Se requiere un titulo",
+    }),
+})
+
+const additionalInfoSchema = z.object({
+    authorizationStatus: z.string({
+        required_error: "Se requiere una authorization",
+    }),
+    skills: z.array(skillsSchema),
+    certificates: z.array(certificateSchema),
+})
+
+export default function S4() {
+    const [download, setDownload] = useState(false)
+    const translate = useSetAtom(translateAtom)
+    // 1. Define your form.
+    const form = useForm<z.infer<typeof additionalInfoSchema>>({
+        resolver: zodResolver(additionalInfoSchema),
+        defaultValues: {
+            authorizationStatus: "",
+            skills: [{ title: "" }],
+            certificates: [
+                {
+                    title: "",
+                    description: "",
+                },
+            ],
+        },
+    })
+
+    // 2. Define a submit handler.
+    async function onSubmit(values: z.infer<typeof additionalInfoSchema>) {
+        // Do something with the form values.
+        // ✅ This will be type-safe and validated.
+        console.log(values)
+
+        try {
+            await translate()
+            setDownload(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const {
+        fields: certificateFields,
+        append: certificateAppend,
+        remove: certificateRemove,
+    } = useFieldArray({
+        control: form.control,
+        name: "certificates",
+    })
+
+    const {
+        fields: skillFields,
+        append: skillAppend,
+        remove: skillRemove,
+    } = useFieldArray({
+        control: form.control,
+        name: "skills",
+    })
+
+    return (
+        <div className="border py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="rounded-md p-4 border bg-indigo-500 flex flex-col"
+                >
+                    <Link
+                        href="/"
+                        className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+                    >
+                        <ArrowLeft className="h-4 w-4 text-indigo-500" />
+                        Inicio
+                    </Link>
+                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                        <h2 className="text-base font-semibold leading-7 text-white">
+                            Estado de Autorización
+                        </h2>
+                        <FormField
+                            control={form.control}
+                            name="authorizationStatus"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="text-white">
+                                        Estado de Autorización
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Miguel de Cervantes"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormDescription className="text-white">
+                                        Entra su estado de autorización.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <h2 className="text-base font-semibold leading-7 text-white">
+                            Certificados
+                        </h2>
+                        {certificateFields.map((certificateField, index) => (
+                            <div
+                                key={certificateField.id}
+                                className="gap-y-8 flex flex-col"
+                            >
+                                <h2 className="text-base font-semibold leading-7 text-white self-center">
+                                    Certificado {index + 1}
+                                </h2>
+                                <FormField
+                                    control={form.control}
+                                    name={`certificates.${index}.title`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Titulo
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Universidad de Caracas"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra el nombre del su
+                                                certificado.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`certificates.${index}.description`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Descripción
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Venezuela"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra una descripción del su
+                                                certificado.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {certificateFields.length >= 2 && (
+                                    <button
+                                        type="button"
+                                        className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                                        onClick={() => {
+                                            certificateRemove(index)
+                                        }}
+                                    >
+                                        <MinusCircle className="h-4 w-4" />
+                                        Eliminar certificado
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                                    onClick={() => {
+                                        certificateAppend({
+                                            title: "",
+                                            description: "",
+                                        })
+                                    }}
+                                >
+                                    <PlusCircle className="h-4 w-4" />
+                                    Agregar certificado
+                                </button>
+                            </div>
+                        ))}
+                        <h2 className="text-base font-semibold leading-7 text-white">
+                            Habilidades
+                        </h2>
+                        {skillFields.map((skillField, index) => (
+                            <div
+                                key={skillField.id}
+                                className="gap-y-8 flex flex-col"
+                            >
+                                <h2 className="text-base font-semibold leading-7 text-white self-center">
+                                    Habilidad {index + 1}
+                                </h2>
+                                <FormField
+                                    control={form.control}
+                                    name={`skills.${index}.title`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Titulo
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Universidad de Caracas"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra el nombre del su
+                                                certificado.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {skillFields.length >= 2 && (
+                                    <button
+                                        type="button"
+                                        className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                                        onClick={() => {
+                                            skillRemove(index)
+                                        }}
+                                    >
+                                        <MinusCircle className="h-4 w-4" />
+                                        Eliminar habilidad
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                                    onClick={() => {
+                                        skillAppend({
+                                            title: "",
+                                        })
+                                    }}
+                                >
+                                    <PlusCircle className="h-4 w-4" />
+                                    Agregar habilidad
+                                </button>
+                            </div>
+                        ))}
+                        <Button
+                            type="submit"
+                            className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
+                        >
+                            Crear Currículum
+                        </Button>
+                    </div>
+                </form>
+            </Form>
+        </div>
+    )
+}

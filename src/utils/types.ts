@@ -1,5 +1,5 @@
 export interface Education {
-    id: number
+    id?: number
     school: string
     degree: string
     concentration: string
@@ -10,7 +10,7 @@ export interface Education {
 }
 
 export interface Experience {
-    id: number
+    id?: number
     employer: string
     job: string
     city: string
@@ -22,4 +22,16 @@ export interface Experience {
 export interface Skill {
     id: number
     text: string
+}
+
+export interface Certificate {
+    id?: number
+    title: string
+    description: string
+}
+
+export interface AdditionalInfo {
+    authorizationStatus: string
+    skills: Skill[]
+    certificates: Certificate[]
 }

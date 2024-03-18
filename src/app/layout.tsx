@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
-import { Lato } from "next/font/google"
+import { Sofia_Sans } from "next/font/google"
 import "./globals.css"
 import Layout from "@/components/chat/Providers"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-const lato = Lato({
-    subsets: ["latin"],
+const lato = Sofia_Sans({
+    subsets: ["greek"],
     weight: ["100", "300", "400", "700", "900"],
 })
 

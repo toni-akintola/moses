@@ -3,7 +3,8 @@ import { MainNav } from "@/components/landing/Banner"
 import { WaypointsIcon } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import AnimatedTextCharacter from "@/components/motion/AnimatedTextCharacter"
+import AnimatedTextCharacter from "@/components/motion/TypingHeader"
+import AnimatedHeader from "@/components/motion/TypingHeader"
 
 export type Props = {}
 
@@ -28,37 +29,32 @@ const Hero = (props: Props) => {
                 </div>
                 <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
                     <div className="space-y-12 text-center">
-                        <motion.h1
-                            className="text-4xl font-bold tracking-tight text-indigo-300 sm:text-6xl"
-                            initial={{ x: -1000 }}
-                            animate={{ x: 0 }}
-                            transition={{
-                                type: "tween",
-                                duration: "2",
-                                delay: 1,
-                            }}
-                        >
-                            Constructora de currículum de español a inglés y
-                            asistente personal
-                        </motion.h1>
+                        <div>
+                            <AnimatedHeader
+                                text="Constructora de currículum de español a inglés y
+                            asistente personal"
+                            />
+                        </div>
                         {/* <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                             Constructora de currículum de español a inglés y
                             asistente personal
                         </h1> */}
 
                         <div className="mt-10 flex items-center justify-center gap-x-6">
-                            <Link
+                            <motion.a
                                 href="/s1"
                                 className="rounded-md bg- px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
                             >
                                 Crear currículum
-                            </Link>
-                            <Link
+                            </motion.a>
+                            <motion.a
                                 href="/moses"
                                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Asistente personal
-                            </Link>
+                            </motion.a>
                         </div>
                         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-black ring-1 ring-gray-900/10 hover:ring-gray-900/20">

@@ -9,6 +9,15 @@ import AnimatedHeader from "@/components/motion/TypingHeader"
 export type Props = {}
 
 const Hero = (props: Props) => {
+    const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    const text =
+        "Constructora de currículum de español a inglés y asistente personal".split(
+            " "
+        )
+    const itemVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible,
+    }
     return (
         <div className="flex h-screen justify-center bg-white">
             <header className="absolute inset-x-0 top-0 z-50">
@@ -29,12 +38,7 @@ const Hero = (props: Props) => {
                 </div>
                 <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
                     <div className="space-y-12 text-center">
-                        <div>
-                            <AnimatedHeader
-                                text="Constructora de currículum de español a inglés y
-                            asistente personal"
-                            />
-                        </div>
+                        <AnimatedHeader text="Constructora de currículum de español a inglés y asistente personal" />
                         {/* <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                             Constructora de currículum de español a inglés y
                             asistente personal
@@ -43,7 +47,7 @@ const Hero = (props: Props) => {
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <motion.a
                                 href="/s1"
-                                className="rounded-md bg- px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                             >
@@ -51,7 +55,9 @@ const Hero = (props: Props) => {
                             </motion.a>
                             <motion.a
                                 href="/moses"
-                                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-400 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
                             >
                                 Asistente personal
                             </motion.a>

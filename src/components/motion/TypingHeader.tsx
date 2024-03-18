@@ -5,16 +5,16 @@ export type Props = {
 }
 const AnimatedHeader = (props: Props) => {
     return (
-        <div className="text-center flex">
+        <div>
             {props.text.split(" ").map((el, i) => (
                 <motion.span
-                    className="text-4xl font-bold tracking-tight text-indigo-300 sm:text-6xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{
                         duration: 0.25,
                         delay: i / 10,
                     }}
+                    className="text-4xl font-bold tracking-tight text-indigo-500 sm:text-6xl"
                     key={i}
                 >
                     {el}{" "}

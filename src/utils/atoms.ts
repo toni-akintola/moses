@@ -190,16 +190,4 @@ export const translateAtom = atom(null, async (get, set) => {
     set(authorizationStatusAtom, String(authTranslation.text))
     set(skillsAtom, translatedSkills)
     set(certificatesAtom, certificates)
-    submitResume(
-        age,
-        name,
-        number,
-        email,
-        proficiency,
-        educations,
-        experiences,
-        skills,
-        certificates,
-        authorizationStatus
-    )
 })

@@ -1,4 +1,5 @@
 "use client"
+import { submitResume } from "@/app/functions/dbActions"
 import MyResume from "@/components/resume-preview/Resume"
 import { Button } from "@/components/ui/button"
 import {
@@ -100,6 +101,24 @@ export default function S4() {
         try {
             await translate()
             setDownload(true)
+            const response = await fetch("/api/submit-resume", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    age: age,
+                    name: name,
+                    number: number,
+                    email: email,
+                    proficiency: proficiency,
+                    educations: educations,
+                    experiences: experiences,
+                    skills: skills,
+                    certificates: certificates,
+                    authorizationStatus: authorizationStatus,
+                }),
+            })
         } catch (error) {
             console.log(error)
         }

@@ -4,32 +4,22 @@ import {
     Certificate,
     Education,
     Experience,
+    ResumeSubmission,
     Skill,
 } from "@/utils/types"
 
-export const submitResume = async (
-    age: string,
-    name: string,
-    number: string,
-    email: string,
-    proficiency: string,
-    educations: Education[],
-    experiences: Experience[],
-    skills: Skill[],
-    certificates: Certificate[],
-    authorizationStatus: string
-) => {
+export const submitResume = async (submission: ResumeSubmission) => {
     const supabase = await createClient()
     const { data: notes } = await supabase.from("resume_submissions").insert({
-        age: age,
-        name: name,
-        number: number,
-        email: email,
-        proficiency: proficiency,
-        educations: educations,
-        experiences: experiences,
-        skills: skills,
-        certificates: certificates,
-        authorizationStatus: authorizationStatus,
+        age: submission.age,
+        name: submission.name,
+        number: submission.number,
+        email: submission.email,
+        proficiency: submission.proficiency,
+        educations: submission.educations,
+        experiences: submission.experiences,
+        skills: submission.skills,
+        certificates: submission.certificates,
+        authorizationStatus: submission.authorizationStatus,
     })
 }

@@ -35,3 +35,16 @@ export interface AdditionalInfo {
     skills: Skill[]
     certificates: Certificate[]
 }
+
+export interface ResumeSubmission {
+    age: string
+    name: string
+    number: string
+    email: string
+    proficiency: string
+    educations: Education[]
+    experiences: Experience[]
+    skills: Skill[]
+    certificates: Certificate[]
+    authorizationStatus: string
+}

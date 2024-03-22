@@ -3,6 +3,8 @@ import React, { useRef } from "react"
 import { useAtom } from "jotai"
 import {
     ageAtom,
+    authorizationStatusAtom,
+    certificatesAtom,
     educationsAtom,
     emailAtom,
     experiencesAtom,
@@ -21,8 +23,11 @@ const Preview = () => {
     const [proficiency, setProficiency] = useAtom(proficiencyAtom)
     const [educations, setEducations] = useAtom(educationsAtom)
     const [experiences, setExperiences] = useAtom(experiencesAtom)
-    const [skills, setSkils] = useAtom(skillsAtom)
-
+    const [skills, setSkills] = useAtom(skillsAtom)
+    const [certficates, setCertificates] = useAtom(certificatesAtom)
+    const [authorizationStatus, setAuthorization] = useAtom(
+        authorizationStatusAtom
+    )
     return (
         <div>
             <MyResume
@@ -33,6 +38,8 @@ const Preview = () => {
                 experiences={experiences}
                 educations={educations}
                 skills={skills}
+                certificates={certficates}
+                authorizationStatus={authorizationStatus}
                 age={age}
             />
         </div>

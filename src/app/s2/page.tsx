@@ -1,4 +1,3 @@
-import S2 from "@/components/resume-forms/S2"
 import { S2B } from "@/components/resume-forms/S2B"
 import React from "react"
 

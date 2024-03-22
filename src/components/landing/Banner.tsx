@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
@@ -12,43 +13,32 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import React from "react"
-export function MainNav({
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLElement>) {
+export const MainNav: React.FC = () => {
     return (
-        <nav
-            className="flex items-center justify-between p-6 lg:px-8"
+        <div
+            className="flex items-center justify-between p-6 lg:px-8 bg-white"
             aria-label="Global"
         >
             <div className="flex lg:flex-1">
                 <motion.a
-                    href="#"
-                    className="-m-1.5 p-1.5 flex-row items-center flex space-x-3"
+                    href="\"
+                    className="-m-1.5 p-1.5 flex-row items-center flex"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <h1 className="text-2xl font-extrabold tracking-tight text-indigo-500">
+                    <h1 className="lg:text-2xl font-extrabold tracking-tight text-indigo-500">
                         Èxodo
                     </h1>
                 </motion.a>
             </div>
-            <div className="flex space-x-12 items-center">
+            <div className="flex space-x-2 items-center">
                 <motion.a
                     href="#"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     className="text-black font-bold"
                 >
-                    Home
-                </motion.a>
-                <motion.a
-                    href="#"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="text-black font-bold"
-                >
-                    About
+                    Información
                 </motion.a>
                 <motion.div
                     whileHover={{ scale: 1.1 }}
@@ -58,47 +48,30 @@ export function MainNav({
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="text-black font-bold">
-                                    Languages
+                                    Idioma
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                        <li className="row-span-3">
-                                            <NavigationMenuLink asChild>
-                                                <a
-                                                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                                    href="/"
-                                                >
-                                                    <p className="text-sm leading-tight text-muted-foreground">
-                                                        Beautifully designed
-                                                        components that you can
-                                                        copy and paste into your
-                                                        apps. Accessible.
-                                                        Customizable. Open
-                                                        Source.
-                                                    </p>
-                                                </a>
-                                            </NavigationMenuLink>
-                                        </li>
-                                        <ListItem
-                                            href="/docs"
-                                            title="Introduction"
-                                        >
-                                            Re-usable components built using
-                                            Radix UI and Tailwind CSS.
+                                        <ListItem href="/docs" title="English">
+                                            English
                                         </ListItem>
                                         <ListItem
                                             href="/docs/installation"
-                                            title="Installation"
+                                            title="Español"
                                         >
-                                            How to install dependencies and
-                                            structure your app.
+                                            Spanish
                                         </ListItem>
                                         <ListItem
                                             href="/docs/primitives/typography"
-                                            title="Typography"
+                                            title="中国人"
                                         >
-                                            Styles for headings, paragraphs,
-                                            lists...etc
+                                            Chinese
+                                        </ListItem>
+                                        <ListItem
+                                            href="/docs/primitives/typography"
+                                            title="українська"
+                                        >
+                                            Ukrainian
                                         </ListItem>
                                     </ul>
                                 </NavigationMenuContent>
@@ -107,18 +80,17 @@ export function MainNav({
                     </NavigationMenu>
                 </motion.div>
             </div>
-
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a
-                    href="/login"
-                    className="text-sm font-semibold leading-6 text-white bg-indigo-500 rounded-md py-2 px-4"
+                    href="/s1"
+                    className="text-sm font-semibold leading-6 text-white bg-indigo-500 rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    Log in <span aria-hidden="true">&rarr;</span>
+                    Acceso <span aria-hidden="true">&rarr;</span>
                 </motion.a>
             </div>
-        </nav>
+        </div>
     )
 }
 

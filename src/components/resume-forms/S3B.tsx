@@ -30,8 +30,6 @@ import {
     skillsAtom,
     translateAtom,
 } from "@/utils/atoms"
-import { PDFDownloadLink } from "@react-pdf/renderer"
-import MyResume from "@/components/resume-preview/Resume"
 import { useRouter } from "next/navigation"
 
 const experienceSchema = z.object({
@@ -39,9 +37,7 @@ const experienceSchema = z.object({
         .string({
             required_error: "Se requiere una escuela/universidad",
         })
-        .min(2, {
-            message: "Employer must be at least 2 characters",
-        }),
+        .min(2),
     job: z.string({
         required_error: "Se requiere un titulo profesional",
     }),
@@ -53,14 +49,14 @@ const experienceSchema = z.object({
             required_error: "Se requiere un año de inicio",
         })
         .min(4, {
-            message: "Must be at least 4 characters",
+            message: "Debe tener al menos 4 caracteres.",
         }),
     endYear: z
         .string({
             required_error: "Se requiere un año de termino",
         })
         .min(4, {
-            message: "Must be at least 4 characters",
+            message: "Debe tener al menos 4 caracteres.",
         }),
     duties: z.string({
         required_error: "Se requiere una descripción",
@@ -130,7 +126,7 @@ export function S3B() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/"
+                        href="/s2"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
@@ -140,7 +136,7 @@ export function S3B() {
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
-                                className="gap-y-8 flex flex-col"
+                                className="gap-y-4 flex flex-col items-center"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
                                     Experiencia {index + 1}

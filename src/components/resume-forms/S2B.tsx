@@ -24,33 +24,26 @@ import { useRouter } from "next/navigation"
 const educationSchema = z.object({
     school: z
         .string({ required_error: "Se requiere una escuela/universidad" })
-        .min(2, {
-            message: "School must be at least 2 characters.",
-        }),
+        .min(2),
     country: z.string({
         required_error: "Se requiere país",
     }),
-    degree: z.string({ required_error: "Se requiere una grado" }).min(2, {
-        message: "School must be at least 2 characters.",
-    }),
+    degree: z.string({ required_error: "Se requiere una grado" }).min(2),
     concentration: z
         .string({ required_error: "Se requiere una concentración" })
-        .min(2, {
-            message: "School must be at least 2 characters.",
-        }),
+        .min(2),
     startYear: z
         .string({ required_error: "Se requiere un año de inicio" })
         .min(4, {
-            message: "School must be at least 4 characters.",
+            message: "El año debe tener al menos 4 caracteres.",
         }),
     endYear: z
         .string({ required_error: "Se requiere un año de termino" })
         .min(4, {
-            message: "School must be at least 4 characters.",
+            message: "El año debe tener al menos 4 caracteres.",
         }),
     completed: z.boolean({
-        required_error:
-            "Must specify whether you did or did not complete the degree",
+        required_error: "Debe especificar si completó o no la carrera.",
     }),
 })
 
@@ -101,17 +94,17 @@ export function S2B() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/"
+                        href="/s1"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-4">
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
-                                className="gap-y-8 flex flex-col"
+                                className="gap-y-4 flex flex-col items-center"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
                                     Educación {index + 1}
@@ -126,7 +119,7 @@ export function S2B() {
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Universidad de Caracas"
+                                                    placeholder="Universidad de Los Andes"
                                                     {...field}
                                                 />
                                             </FormControl>

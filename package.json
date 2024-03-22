@@ -47,6 +47,7 @@
         "react-i18next": "^14.0.2",
         "react-textarea-autosize": "^8.5.3",
         "react-to-pdf": "^1.0.1",
+        "styled-components": "^6.1.8",
         "tailwind-merge": "^2.2.1",
         "tailwindcss-animate": "^1.0.7",
         "zod": "^3.22.4"

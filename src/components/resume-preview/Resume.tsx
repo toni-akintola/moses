@@ -104,7 +104,10 @@ const MyResume = (props: ResumeProps) => (
                                 <View style={styles.text}>
                                     <Text>
                                         {education.startYear} -{" "}
-                                        {education.endYear}
+                                        {education.endYear} |{" "}
+                                        {education.completed
+                                            ? "Completed"
+                                            : "Not Completed"}
                                     </Text>
                                 </View>
                                 <View style={styles.text}>

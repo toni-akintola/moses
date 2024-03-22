@@ -1,13 +1,18 @@
 "use client"
 import { MainNav } from "@/components/landing/Banner"
-import { WaypointsIcon } from "lucide-react"
-import { motion } from "framer-motion"
-import Link from "next/link"
-import AnimatedTextCharacter from "@/components/motion/TypingHeader"
-import AnimatedHeader from "@/components/motion/TypingHeader"
+import { LazyMotion, MotionProps, motion, domAnimation, m } from "framer-motion"
+import AnimText from "@/components/motion/AnimText"
 
 export type Props = {}
-
+const animation: MotionProps = {
+    transition: {
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatType: "mirror",
+        duration: 1,
+    },
+    animate: { scale: 1.2 },
+}
 const Hero = (props: Props) => {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
     const text =
@@ -19,7 +24,7 @@ const Hero = (props: Props) => {
         visible,
     }
     return (
-        <div className="flex h-screen justify-center bg-white">
+        <div className="flex h-screen justify-center bg-gradient-to-b from-white via-indigo-300 to-indigo-700">
             <header className="absolute inset-x-0 top-0 z-50">
                 <MainNav />
             </header>
@@ -28,6 +33,7 @@ const Hero = (props: Props) => {
                     className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                     aria-hidden="true"
                 >
+                    {/* closing addition */}
                     {/* <div
                         className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                         style={{
@@ -37,8 +43,9 @@ const Hero = (props: Props) => {
                     /> */}
                 </div>
                 <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
-                    <div className="space-y-12 text-center">
-                        <AnimatedHeader text="Constructora de currículum de español a inglés y asistente personal" />
+                    <div className="space-y-12 text-center flex flex-col items-center">
+                        <AnimText delay={2} />
+                        {/* <AnimatedHeader text="Constructora de currículum de español a inglés y asistente personal" /> */}
                         {/* <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                             Constructora de currículum de español a inglés y
                             asistente personal
@@ -64,14 +71,14 @@ const Hero = (props: Props) => {
                         </div>
                         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-black ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                                By creating an account, you agree to our terms
-                                of service.{" "}
+                                Al crear una cuenta, aceptas nuestros términos
+                                de servicio.{" "}
                                 <a href="#" className="font-bold text-black">
                                     <span
                                         className="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Read more{" "}
+                                    Leer más.{" "}
                                     <span aria-hidden="true">&rarr;</span>
                                 </a>
                             </div>

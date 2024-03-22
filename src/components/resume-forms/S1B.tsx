@@ -28,17 +28,19 @@ import {
 } from "@/utils/atoms"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
+import { stagger, useAnimate } from "framer-motion"
+import { useEffect } from "react"
 
 const S1Schema = z.object({
     fullName: z.string().min(2, {
         message: "El nombre debe tener al menos dos caracteres.",
     }),
     age: z.string().min(1, {
-        message: "La edad debe ser un numero",
+        message: "La edad debe ser un numero.",
     }),
     phoneNumber: z
         .string()
-        .regex(phoneRegex, "El número de teléfono no es válido"),
+        .regex(phoneRegex, "El número de teléfono no es válido."),
     email: z.string().email({
         message: "El correo electrónico no es válido",
     }),
@@ -103,8 +105,8 @@ export function S1B() {
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Inicio
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
-                        <h2 className="text-base font-semibold leading-7 text-white">
+                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                        <h2 className="font-semibold leading-7 text-white">
                             Información General
                         </h2>
                         <FormField

@@ -1,5 +1,4 @@
 "use client"
-import { submitResume } from "@/app/functions/dbActions"
 import MyResume from "@/components/resume-preview/Resume"
 import { Button } from "@/components/ui/button"
 import {
@@ -52,7 +51,7 @@ const skillsSchema = z.object({
 
 const additionalInfoSchema = z.object({
     authorizationStatus: z.string({
-        required_error: "Se requiere una authorization",
+        required_error: "Se requiere una authorizacion",
     }),
     skills: z.array(skillsSchema),
     certificates: z.array(certificateSchema),
@@ -150,13 +149,13 @@ export default function S4() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/"
+                        href="/s3"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Inicio
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="text-base font-semibold leading-7 text-white">
                             Estado de Autorización
                         </h2>
@@ -187,7 +186,7 @@ export default function S4() {
                         {certificateFields.map((certificateField, index) => (
                             <div
                                 key={certificateField.id}
-                                className="gap-y-8 flex flex-col"
+                                className="gap-y-4 flex flex-col items-center"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white self-center">
                                     Certificado {index + 1}
@@ -249,28 +248,28 @@ export default function S4() {
                                         Eliminar certificado
                                     </button>
                                 )}
-                                <button
-                                    type="button"
-                                    className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
-                                    onClick={() => {
-                                        certificateAppend({
-                                            title: "",
-                                            description: "",
-                                        })
-                                    }}
-                                >
-                                    <PlusCircle className="h-4 w-4" />
-                                    Agregar certificado
-                                </button>
                             </div>
                         ))}
+                        <button
+                            type="button"
+                            className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                            onClick={() => {
+                                certificateAppend({
+                                    title: "",
+                                    description: "",
+                                })
+                            }}
+                        >
+                            <PlusCircle className="h-4 w-4" />
+                            Agregar certificado
+                        </button>
                         <h2 className="text-base font-semibold leading-7 text-white">
                             Habilidades
                         </h2>
                         {skillFields.map((skillField, index) => (
                             <div
                                 key={skillField.id}
-                                className="gap-y-8 flex flex-col"
+                                className="gap-y-4 flex flex-col items-center"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white self-center">
                                     Habilidad {index + 1}
@@ -310,20 +309,20 @@ export default function S4() {
                                         Eliminar habilidad
                                     </button>
                                 )}
-                                <button
-                                    type="button"
-                                    className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
-                                    onClick={() => {
-                                        skillAppend({
-                                            title: "",
-                                        })
-                                    }}
-                                >
-                                    <PlusCircle className="h-4 w-4" />
-                                    Agregar habilidad
-                                </button>
                             </div>
                         ))}
+                        <button
+                            type="button"
+                            className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
+                            onClick={() => {
+                                skillAppend({
+                                    title: "",
+                                })
+                            }}
+                        >
+                            <PlusCircle className="h-4 w-4" />
+                            Agregar habilidad
+                        </button>
                         <Button
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"

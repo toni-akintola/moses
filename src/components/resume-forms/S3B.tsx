@@ -109,13 +109,6 @@ export function S3B() {
         setExperiences(values.experiences)
 
         router.push("/s4")
-
-        try {
-            await translate()
-            setDownload(true)
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     return (
@@ -302,7 +295,7 @@ export function S3B() {
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Crear Currículum
+                            Próximo
                         </Button>
                     </div>
                 </form>

@@ -169,7 +169,7 @@ export default function S4() {
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Miguel de Cervantes"
+                                            placeholder="Autorizado"
                                             {...field}
                                         />
                                     </FormControl>
@@ -201,7 +201,7 @@ export default function S4() {
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Universidad de Caracas"
+                                                    placeholder="Plomería"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -223,7 +223,7 @@ export default function S4() {
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Venezuela"
+                                                    placeholder="Clase de 6 meses..."
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -284,7 +284,7 @@ export default function S4() {
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Universidad de Caracas"
+                                                    placeholder="Comunicación"
                                                     {...field}
                                                 />
                                             </FormControl>

@@ -42,9 +42,11 @@ const Hero = (props: Props) => {
                         }}
                     /> */}
                 </div>
-                <div className="sm:py-42 lg:pt-58 mx-auto max-w-2xl pt-44">
-                    <div className="space-y-12 text-center flex flex-col items-center">
-                        <AnimText delay={2} />
+                <div className="sm:py-32 lg:pt-44 mx-auto max-w-2xl pt-44 grid-rows-3">
+                    <div className="space-y-12 text-center flex flex-col items-center grid-rows-3">
+                        <motion.div className="flex">
+                            <AnimText delay={2} />
+                        </motion.div>
                         {/* <AnimatedHeader text="Constructora de currículum de español a inglés y asistente personal" /> */}
                         {/* <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                             Constructora de currículum de español a inglés y

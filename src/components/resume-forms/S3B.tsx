@@ -100,7 +100,6 @@ export function S3B() {
         name: "experiences",
     })
 
-    const translate = useSetAtom(translateAtom)
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof experiencesSchema>) {
         // Do something with the form values.

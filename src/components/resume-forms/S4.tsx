@@ -96,30 +96,30 @@ export default function S4() {
         setSkills(values.skills)
         setCertificates(values.certificates)
 
-        // try {
-        //     await translate()
-        //     setDownload(true)
-        //     const response = await fetch("/api/submit-resume", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({
-        //             age: age,
-        //             name: name,
-        //             number: number,
-        //             email: email,
-        //             proficiency: proficiency,
-        //             educations: educations,
-        //             experiences: experiences,
-        //             skills: skills,
-        //             certificates: certificates,
-        //             authorizationStatus: authorizationStatus,
-        //         }),
-        //     })
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            await translate()
+            setDownload(true)
+            const response = await fetch("/api/submit-resume", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    age: age,
+                    name: name,
+                    number: number,
+                    email: email,
+                    proficiency: proficiency,
+                    educations: educations,
+                    experiences: experiences,
+                    skills: skills,
+                    certificates: certificates,
+                    authorizationStatus: authorizationStatus,
+                }),
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const {

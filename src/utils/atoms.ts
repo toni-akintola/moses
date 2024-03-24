@@ -165,6 +165,7 @@ export const translateAtom = atom(null, async (get, set) => {
     const authData = await authResponse.json()
     const authTranslations = authData.translations as TextResult[]
     const authTranslation = authTranslations[0]
+    console.log(authTranslation)
 
     certificates.map(async (certificate) => {
         const title = certificate.title
@@ -179,15 +180,16 @@ export const translateAtom = atom(null, async (get, set) => {
             }),
         })
         const data = await response.json()
-        const translations = data as TextResult[]
+        const translations = data.translations as TextResult[]
         certificate.title = String(translations[0])
         certificate.description = String(translations[1])
+        console.log(certificate.description, certificate.title)
     })
 
     set(proficiencyAtom, proficiency)
     set(educationsAtom, educations)
     set(experiencesAtom, experiences)
-    set(authorizationStatusAtom, String(authTranslation.text))
+    set(authorizationStatusAtom, String(authTranslation))
     set(skillsAtom, translatedSkills)
     set(certificatesAtom, certificates)
 })

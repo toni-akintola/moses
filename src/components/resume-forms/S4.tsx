@@ -99,6 +99,11 @@ export default function S4() {
         try {
             await translate()
             setDownload(true)
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
             const response = await fetch("/api/submit-resume", {
                 method: "POST",
                 headers: {

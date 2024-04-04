@@ -32,8 +32,7 @@ const Hero = (props: Props) => {
                 <div
                     className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                     aria-hidden="true"
-                >
-                </div>
+                ></div>
                 <div className="sm:py-32 lg:pt-44 mx-auto max-w-2xl pt-44 grid-rows-3">
                     <div className="space-y-12 text-center flex flex-col items-center grid-rows-3">
                         <motion.div className="flex w-full h-64 -mt-20">

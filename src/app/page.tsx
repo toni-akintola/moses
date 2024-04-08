@@ -2,7 +2,7 @@
 import { MainNav } from "@/components/landing/Banner"
 import { LazyMotion, MotionProps, motion, domAnimation, m } from "framer-motion"
 import AnimText from "@/components/motion/AnimText"
-
+import { useTranslations } from "next-intl"
 export type Props = {}
 const animation: MotionProps = {
     transition: {
@@ -13,7 +13,7 @@ const animation: MotionProps = {
     },
     animate: { scale: 1.2 },
 }
-const Hero = (props: Props) => {
+export default function Hero ({ params }: { params: { lang: string } }) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
     const text =
         "Constructora de currículum de español a inglés y asistente personal".split(
@@ -23,6 +23,7 @@ const Hero = (props: Props) => {
         hidden: { opacity: 0, y: 10 },
         visible,
     }
+    // const t = useTranslations("")
     return (
         <div className="flex h-screen justify-center bg-gradient-to-b from-white via-indigo-300 to-indigo-700">
             <header className="absolute inset-x-0 top-0 z-50">
@@ -46,7 +47,7 @@ const Hero = (props: Props) => {
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                             >
-                                Crear currículum
+                                Construir currículum
                             </motion.a>
                             <motion.a
                                 href="/moses"
@@ -78,4 +79,3 @@ const Hero = (props: Props) => {
     )
 }
 
-export default Hero

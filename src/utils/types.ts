@@ -6,6 +6,7 @@ export interface Education {
     startYear: string
     endYear: string
     country: string
+    city: string
     completed: boolean
 }
 
@@ -14,6 +15,7 @@ export interface Experience {
     employer: string
     job: string
     city: string
+    country: string
     startYear: string
     endYear: string
     duties: string

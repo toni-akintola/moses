@@ -30,34 +30,32 @@ import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { stagger, useAnimate } from "framer-motion"
 import { useEffect } from "react"
+import { Slider } from "@/components/ui/slider"
 
 const S1Schema = z.object({
     fullName: z.string().min(2, {
-        message: "El nombre debe tener al menos dos caracteres.",
+        message: "Inválido.",
     }),
     age: z.string().min(1, {
-        message: "La edad debe ser un numero.",
+        message: "Inválido.",
     }),
     phoneNumber: z
         .string()
-        .regex(phoneRegex, "El número de teléfono no es válido."),
+        .regex(phoneRegex, "Inválido."),
     email: z.string().email({
-        message: "El correo electrónico no es válido",
+        message: "Inválido.",
     }),
-    englishProficiency: z.enum(
-        [
-            "none",
-            "elementary",
-            "limited",
-            "professional",
-            "complete professional",
-            "fluent",
-        ],
-        {
-            required_error: "Debes especificar una competencia.",
-        }
-    ),
+    
+    numberSlider: z.number()
 })
+
+const englishProficiency = new Map<number, string>([
+    [1, "ILR Level 0"],
+    [2, "ILR Level 1"],
+    [3, "ILR Level 2"],
+    [4, "ILR Level 3"],
+    [5, "ILR Level 4"]
+])
 
 export function S1B() {
     // 1. Define your form.
@@ -68,6 +66,7 @@ export function S1B() {
             age: "",
             phoneNumber: "",
             email: "",
+            numberSlider: 1
         },
     })
 
@@ -85,7 +84,8 @@ export function S1B() {
         console.log(values)
         setFullName(values.fullName)
         setAge(values.age)
-        setProficiency(values.englishProficiency)
+        const proficiency = englishProficiency.get(values.numberSlider) as string
+        setProficiency(proficiency)
         setNumber(values.phoneNumber)
         setEmail(values.email)
 
@@ -192,6 +192,34 @@ export function S1B() {
                         />
                         <FormField
                             control={form.control}
+                            name="numberSlider"
+                            render={({ field: {value, onChange}}) => (
+                                <FormItem>
+                                    <FormLabel className="text-white">
+                                         Nivel de Inglés
+                                    </FormLabel>
+                                    <FormControl>
+                                                <Slider
+                                    className=""
+                                    max={5}
+                                    step={1}
+                                    defaultValue={[value]}
+                                    onValueChange={(vals) => {
+                                        onChange(vals[0]);
+                                    }}
+                                  
+                                        />
+                                    </FormControl>
+                                    <FormDescription className="text-white">
+                                        ¿Cuán bueno es su inglés?
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        
+                        {/* <FormField
+                            control={form.control}
                             name="englishProficiency"
                             render={({ field }) => (
                                 <FormItem className="space-y-3 border rounded-md p-2">
@@ -275,7 +303,7 @@ export function S1B() {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
                         <Button
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"

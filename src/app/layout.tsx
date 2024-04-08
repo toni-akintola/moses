@@ -17,11 +17,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
     children,
-}: Readonly<{
-    children: React.ReactNode
-}>) {
+    locale
+}: {
+    children: React.ReactNode,
+    locale: never
+}) {
     return (
-        <html lang="es">
+        <html lang={locale}>
             <Analytics />
             <SpeedInsights />
             <Layout>

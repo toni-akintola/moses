@@ -20,30 +20,34 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { educationsAtom } from "@/utils/atoms"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const educationSchema = z.object({
     school: z
-        .string({ required_error: "Se requiere una escuela/universidad" })
+        .string({ required_error: "Inválido." })
         .min(2),
     country: z.string({
-        required_error: "Se requiere país",
+        required_error: "Inválido.",
     }),
-    degree: z.string({ required_error: "Se requiere una grado" }).min(2),
+    city: z.string({
+        required_error: "Inválido.",
+    }),
+    degree: z.string({ required_error: "Inválido." }).min(2),
     concentration: z
-        .string({ required_error: "Se requiere una concentración" })
+        .string({ required_error: "Inválido." })
         .min(2),
     startYear: z
-        .string({ required_error: "Se requiere un año de inicio" })
+        .string({ required_error: "Inválido." })
         .min(4, {
-            message: "El año debe tener al menos 4 caracteres.",
+            message: "Inválido.",
         }),
     endYear: z
-        .string({ required_error: "Se requiere un año de termino" })
+        .string({ required_error: "Inválido." })
         .min(4, {
-            message: "El año debe tener al menos 4 caracteres.",
+            message: "Inválido.",
         }),
     completed: z.boolean({
-        required_error: "Debe especificar si completó o no la carrera.",
+        required_error: "Inválido.",
     }),
 })
 
@@ -65,6 +69,7 @@ export function S2B() {
                     startYear: "",
                     endYear: "",
                     country: "",
+                    city: "",
                     completed: false,
                 },
             ],
@@ -100,11 +105,14 @@ export function S2B() {
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-4">
+                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-4 items-center">
+                        <h2 className="text-base font-semibold leading-7 text-white">
+                            Escuela Secundaria
+                        </h2>
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
-                                className="gap-y-4 flex flex-col items-center"
+                                className="gap-y-4 flex flex-col items-center md:px-24"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
                                     Educación {index + 1}
@@ -115,11 +123,11 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Universidad/Escuela Secundaria
+                                                Escuela
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Universidad de Los Andes"
+                                                    placeholder="Las Palmas"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -153,6 +161,27 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
+                                    name={`educations.${index}.city`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Ciudad
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Caracas"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra la ciudad.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
                                     name={`educations.${index}.degree`}
                                     render={({ field }) => (
                                         <FormItem>
@@ -160,10 +189,21 @@ export function S2B() {
                                                 Grado
                                             </FormLabel>
                                             <FormControl>
-                                                <Input
-                                                    placeholder="Licenciatura"
-                                                    {...field}
-                                                />
+                                                <Select>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Selecciones su grado" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Fruits</SelectLabel>
+          <SelectItem value="apple">Apple</SelectItem>
+          <SelectItem value="banana">Banana</SelectItem>
+          <SelectItem value="blueberry">Blueberry</SelectItem>
+          <SelectItem value="grapes">Grapes</SelectItem>
+          <SelectItem value="pineapple">Pineapple</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
                                             </FormControl>
                                             <FormDescription className="text-white">
                                                 Entra el grado.
@@ -282,6 +322,7 @@ export function S2B() {
                                     startYear: "",
                                     endYear: "",
                                     country: "",
+                                    city: "",
                                     completed: false,
                                 })
                             }}

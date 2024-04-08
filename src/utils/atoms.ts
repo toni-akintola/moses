@@ -1,4 +1,4 @@
-import { submitResume } from "@/app/functions/dbActions"
+import { submitResume } from "@/functions/dbActions"
 import { Certificate, Education, Experience, Skill } from "@/utils/types"
 import { TextResult } from "deepl-node"
 import { atom } from "jotai"
@@ -23,6 +23,7 @@ export const educationsAtom = atomWithStorage<Education[]>("educations", [
         startYear: "",
         endYear: "",
         country: "",
+        city: "",
         completed: false,
     },
 ])
@@ -34,15 +35,16 @@ export const experiencesAtom = atomWithStorage<Experience[]>("experiences", [
         employer: "",
         job: "",
         city: "",
+        country: "",
         startYear: "",
         endYear: "",
         duties: "",
     },
 ])
 // AdditionalInfoAtoms
-export const authorizationStatusAtom = atomWithStorage<string>(
+export const authorizationStatusAtom = atomWithStorage<boolean>(
     "authorizationStatus",
-    ""
+    false
 )
 export const skillsAtom = atomWithStorage<Skill[]>("skills", [
     { id: 1, title: "" },
@@ -152,21 +154,6 @@ export const translateAtom = atom(null, async (get, set) => {
         })
     )
 
-    const authResponse = await fetch("/api/translate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            toTranslate: [authorizationStatus],
-        }),
-    })
-
-    const authData = await authResponse.json()
-    const authTranslations = authData.translations as TextResult[]
-    const authTranslation = authTranslations[0]
-    console.log(authTranslation)
-
     certificates.map(async (certificate) => {
         const title = certificate.title
         const description = certificate.description
@@ -189,7 +176,6 @@ export const translateAtom = atom(null, async (get, set) => {
     set(proficiencyAtom, proficiency)
     set(educationsAtom, educations)
     set(experiencesAtom, experiences)
-    set(authorizationStatusAtom, String(authTranslation))
     set(skillsAtom, translatedSkills)
     set(certificatesAtom, certificates)
 })

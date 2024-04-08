@@ -1,4 +1,4 @@
-import { createClient } from "@/app/functions/supabase"
+import { createClient } from "@/functions/supabase"
 import {
     AdditionalInfo,
     Certificate,

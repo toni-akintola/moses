@@ -6,4 +6,4 @@ import {
     useEffect,
     useState,
 } from "react"
-import { sendMessage } from "@/app/functions/sendMessage"
+import { sendMessage } from "@/functions/sendMessage"

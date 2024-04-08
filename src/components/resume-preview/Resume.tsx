@@ -14,7 +14,7 @@ export interface ResumeProps {
     educations: Education[]
     experiences: Experience[]
     skills: Skill[]
-    authorizationStatus: string
+    authorizationStatus: boolean
     certificates: Certificate[]
 }
 
@@ -122,7 +122,7 @@ const MyResume = (props: ResumeProps) => (
                     <View style={styles.section}>
                         <Text style={styles.heading}>Authorization Status</Text>
                         <Text style={styles.text}>
-                            {props.authorizationStatus}
+                            {props.authorizationStatus ? ("Authorized to work") : "" }
                         </Text>
                     </View>
                     <View style={styles.section}>

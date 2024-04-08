@@ -35,31 +35,34 @@ import { useRouter } from "next/navigation"
 const experienceSchema = z.object({
     employer: z
         .string({
-            required_error: "Se requiere una escuela/universidad",
+            required_error: "Inválido.",
         })
         .min(2),
     job: z.string({
-        required_error: "Se requiere un titulo profesional",
+        required_error: "Inválido.",
     }),
     city: z.string({
-        required_error: "Se requiere una ciudad",
+        required_error: "Inválido.",
+    }),
+    country: z.string({
+        required_error: "Inválido.",
     }),
     startYear: z
         .string({
-            required_error: "Se requiere un año de inicio",
+            required_error: "Inválido.",
         })
         .min(4, {
-            message: "Debe tener al menos 4 caracteres.",
+            message: "Inválido.",
         }),
     endYear: z
         .string({
-            required_error: "Se requiere un año de termino",
+            required_error: "Inválido.",
         })
         .min(4, {
-            message: "Debe tener al menos 4 caracteres.",
+            message: "Inválido.",
         }),
     duties: z.string({
-        required_error: "Se requiere una descripción",
+        required_error: "Inválido.",
     }),
 })
 
@@ -87,6 +90,7 @@ export function S3B() {
                     employer: "",
                     job: "",
                     city: "",
+                    country: "",
                     startYear: "",
                     endYear: "",
                     duties: "",
@@ -148,7 +152,7 @@ export function S3B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su empleador.
+                                                Entra el empleador.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -169,7 +173,7 @@ export function S3B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su título profesional.
+                                                Entra el título profesional.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -190,7 +194,28 @@ export function S3B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su ciudad.
+                                                Entra la ciudad.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                 <FormField
+                                    control={form.control}
+                                    name={`experiences.${index}.country`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                País
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Venezuela"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra el país.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -244,7 +269,7 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Deberes
+                                                Responsabilidades
                                             </FormLabel>
                                             <FormControl>
                                                 <Textarea
@@ -281,6 +306,7 @@ export function S3B() {
                                     employer: "",
                                     job: "",
                                     city: "",
+                                    country: "",
                                     startYear: "",
                                     endYear: "",
                                     duties: "",

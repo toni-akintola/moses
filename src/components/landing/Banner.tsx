@@ -40,7 +40,7 @@ export const MainNav: React.FC = () => {
                 >
                     Información
                 </motion.a>
-                {/* <motion.div
+                <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
@@ -73,12 +73,18 @@ export const MainNav: React.FC = () => {
                                         >
                                             Ukrainian
                                         </ListItem>
+                                        <ListItem
+                                            href="/docs/primitives/typography"
+                                            title="عربي"
+                                        >
+                                            Arabic
+                                        </ListItem>
                                     </ul>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                         </NavigationMenuList>
                     </NavigationMenu>
-                </motion.div> */}
+                </motion.div>
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a

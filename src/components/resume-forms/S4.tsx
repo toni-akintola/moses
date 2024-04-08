@@ -1,6 +1,7 @@
 "use client"
 import MyResume from "@/components/resume-preview/Resume"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
     Form,
     FormControl,
@@ -35,22 +36,22 @@ import { z } from "zod"
 
 const certificateSchema = z.object({
     title: z.string({
-        required_error: "Se requiere un titulo",
+        required_error: "Inválido.",
     }),
     description: z.string({
-        required_error: "Se requiere una descripción",
+        required_error: "Inválido.",
     }),
 })
 
 const skillsSchema = z.object({
     title: z.string({
-        required_error: "Se requiere un titulo",
+        required_error: "Inválido.",
     }),
 })
 
 const additionalInfoSchema = z.object({
-    authorizationStatus: z.string({
-        required_error: "Se requiere una authorizacion",
+    authorizationStatus: z.boolean({
+        required_error: "Inválido.",
     }),
     skills: z.array(skillsSchema),
     certificates: z.array(certificateSchema),
@@ -75,7 +76,7 @@ export default function S4() {
     const form = useForm<z.infer<typeof additionalInfoSchema>>({
         resolver: zodResolver(additionalInfoSchema),
         defaultValues: {
-            authorizationStatus: "",
+            authorizationStatus: false,
             skills: [{ title: "" }],
             certificates: [
                 {
@@ -163,27 +164,28 @@ export default function S4() {
                         <h2 className="text-base font-semibold leading-7 text-white">
                             Estado de Autorización
                         </h2>
-                        <FormField
-                            control={form.control}
-                            name="authorizationStatus"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-white">
-                                        Estado de Autorización
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="Autorizado"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormDescription className="text-white">
-                                        Entra su estado de autorización.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                           <FormField
+                                    control={form.control}
+                                    name="authorizationStatus"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={
+                                                        field.onChange
+                                                    }
+                                                    className="data-[state=checked]:bg-white data-[state=checked]:text-indigo-500 border-white"
+                                                />
+                                            </FormControl>
+                                            <div className="space-y-1 leading-none">
+                                                <FormLabel className="text-white">
+                                                    ¿Tiene autorización legal de trabajar en los Estados Unidos?
+                                                </FormLabel>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
                         <h2 className="text-base font-semibold leading-7 text-white">
                             Certificados
                         </h2>

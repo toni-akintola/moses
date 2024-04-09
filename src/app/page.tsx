@@ -41,7 +41,7 @@ export default function Hero({ params }: { params: { lang: string } }) {
                         </motion.div>
                         <div className="flex items-center justify-center gap-x-6">
                             <motion.a
-                                href="/s1"
+                                href="/resume-builder/s1"
                                 className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}

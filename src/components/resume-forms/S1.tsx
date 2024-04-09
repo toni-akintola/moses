@@ -90,7 +90,7 @@ export function S1B() {
         setNumber(values.phoneNumber)
         setEmail(values.email)
 
-        router.push("/s2")
+        router.push("/resume-builder/s2")
     }
     return (
         <div className="border py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">
@@ -210,13 +210,18 @@ export function S1B() {
                                             }}
                                         />
                                     </FormControl>
-                                    <FormDescription className="text-white flex flex-col">
-                                        <div className="flex justify-between flex-row">
-                                            <p>Poco</p>
-                                            <p>Fluidez</p>
-                                        </div>
-                                        <p>¿Cuán bueno es su inglés?</p>
-                                    </FormDescription>
+                                    <FormDescription className="text-white"></FormDescription>
+                                    <div className="flex justify-between flex-row">
+                                        <p className="text-white text-sm">
+                                            Poco
+                                        </p>
+                                        <p className="text-white text-sm">
+                                            Fluidez
+                                        </p>
+                                    </div>
+                                    <p className="text-white text-sm">
+                                        ¿Cuán bueno es su inglés?
+                                    </p>
                                     <FormMessage />
                                 </FormItem>
                             )}

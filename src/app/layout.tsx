@@ -24,9 +24,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang={locale}>
-            <body
-                className={`${lato.className} bg-gradient-to-l from-gray-200 via-indigo-300 to-stone-100`}
-            >
+            <body className={`${lato.className} `}>
                 <Analytics />
                 <SpeedInsights />
                 <Layout>

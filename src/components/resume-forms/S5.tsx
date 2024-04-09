@@ -157,14 +157,14 @@ export default function S5() {
     })
 
     return (
-        <div className="border py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">
+        <div className="border-t py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="rounded-md p-4 border bg-indigo-500 flex flex-col h-screen"
+                    className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/s4"
+                        href="/resume-builder/s4"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />

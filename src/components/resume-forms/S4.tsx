@@ -91,7 +91,7 @@ export default function S4() {
         // ✅ This will be type-safe and validated.
 
         setSkills(values.skills)
-        router.push("/s5")
+        router.push("/resume-builder/s5")
 
         // try {
         //     const response = await fetch("/api/submit-resume", {
@@ -127,14 +127,14 @@ export default function S4() {
     })
 
     return (
-        <div className="border py-4 px-8 justify-center border-gray-900/10 bg-white flex items-center flex-col">
+        <div className="py-4 px-8 border-t justify-center border-gray-900/10 bg-white flex items-center flex-col">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/s3"
+                        href="/resume-builer/s3"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />

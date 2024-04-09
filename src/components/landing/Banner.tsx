@@ -88,7 +88,7 @@ export const MainNav: React.FC = () => {
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a
-                    href="/s1"
+                    href="/resume-builder/s1"
                     className="text-sm font-semibold leading-6 text-white bg-indigo-500 rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

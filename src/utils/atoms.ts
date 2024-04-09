@@ -7,14 +7,14 @@ import { atomWithStorage } from "jotai/utils"
 /* An atom for each input field is created/defined */
 
 // General Information Atoms
-export const ageAtom = atom<string>("")
-export const nameAtom = atom<string>("")
-export const numberAtom = atom<string>("")
-export const emailAtom = atom<string>("")
-export const proficiencyAtom = atom<string>("")
+export const ageAtom = atomWithStorage<string>("age", "")
+export const nameAtom = atomWithStorage<string>("name", "")
+export const numberAtom = atomWithStorage<string>("number", "")
+export const emailAtom = atomWithStorage<string>("email", "")
+export const proficiencyAtom = atomWithStorage<string>("proficiency", "")
 
 // Education Atoms
-export const educationsAtom = atom<Education[]>([
+export const educationsAtom = atomWithStorage<Education[]>("educations", [
     {
         id: 1,
         school: "",
@@ -28,7 +28,7 @@ export const educationsAtom = atom<Education[]>([
 ])
 
 // Experience Atoms
-export const experiencesAtom = atom<Experience[]>([
+export const experiencesAtom = atomWithStorage<Experience[]>("experiences", [
     {
         id: 1,
         employer: "",
@@ -41,15 +41,21 @@ export const experiencesAtom = atom<Experience[]>([
     },
 ])
 // AdditionalInfoAtoms
-export const authorizationStatusAtom = atom<boolean>(false)
-export const skillsAtom = atom<Skill[]>([{ id: 1, title: "" }])
-export const certificatesAtom = atom<Certificate[]>([
+export const authorizationStatusAtom = atomWithStorage<boolean>(
+    "authorizationStatus",
+    false
+)
+export const skillsAtom = atomWithStorage<Skill[]>("skills", [
+    { id: 1, title: "" },
+])
+export const certificatesAtom = atomWithStorage<Certificate[]>("certificates", [
     { id: 1, title: "", description: "" },
 ])
 
 export const translateAtom = atom(null, async (get, set) => {
     const educations = get(educationsAtom)
     const experiences = get(experiencesAtom)
+    const certificates = get(certificatesAtom)
     const skills = get(skillsAtom)
     const skillStrings = skills.map((skill) => skill.title)
 
@@ -121,25 +127,26 @@ export const translateAtom = atom(null, async (get, set) => {
     //     })
     // )
 
-    // certificates.map(async (certificate) => {
-    //     const title = certificate.title
-    //     const description = certificate.description
-    //     const response = await fetch("/api/translate", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             toTranslate: [title, description],
-    //         }),
-    //     })
-    //     const data = await response.json()
-    //     const translations = data.translations as TextResult[]
-    //     certificate.title = String(translations[0])
-    //     certificate.description = String(translations[1])
-    //     console.log(certificate.description, certificate.title)
-    // })
+    certificates.map(async (certificate) => {
+        const title = certificate.title
+        const description = certificate.description
+        const response = await fetch("/api/translate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                toTranslate: [title, description],
+            }),
+        })
+        const data = await response.json()
+        const translations = data.translations as TextResult[]
+        certificate.title = String(translations[0])
+        certificate.description = String(translations[1])
+        console.log(certificate.description, certificate.title)
+    })
 
     set(educationsAtom, educations)
     set(experiencesAtom, experiences)
+    set(certificatesAtom, certificates)
 })

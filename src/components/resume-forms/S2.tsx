@@ -86,7 +86,7 @@ export function S2B() {
         console.log(values.educations)
         setEducations(values.educations)
 
-        router.push("/s3")
+        router.push("/resume-builder/s3")
     }
 
     return (
@@ -97,7 +97,7 @@ export function S2B() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/s1"
+                        href="/resume-builder/s1"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />

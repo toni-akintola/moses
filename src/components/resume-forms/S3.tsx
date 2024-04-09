@@ -16,61 +16,82 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
-import { educationsAtom } from "@/utils/atoms"
-import { useAtom } from "jotai"
+import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react"
+import { useAtom, useSetAtom } from "jotai"
+import {
+    ageAtom,
+    educationsAtom,
+    emailAtom,
+    experiencesAtom,
+    nameAtom,
+    numberAtom,
+    proficiencyAtom,
+    skillsAtom,
+    translateAtom,
+} from "@/utils/atoms"
 import { useRouter } from "next/navigation"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const educationSchema = z.object({
-    school: z
-        .string({ required_error: "Inválido." })
-        .min(2),
-    country: z.string({
+const experienceSchema = z.object({
+    employer: z.string({
+        required_error: "Inválido.",
+    }),
+    job: z.string({
         required_error: "Inválido.",
     }),
     city: z.string({
         required_error: "Inválido.",
     }),
-    degree: z.string({ required_error: "Inválido." }).min(2),
-    concentration: z
-        .string({ required_error: "Inválido." })
-        .min(2),
+    country: z.string({
+        required_error: "Inválido.",
+    }),
     startYear: z
-        .string({ required_error: "Inválido." })
+        .string({
+            required_error: "Inválido.",
+        })
         .min(4, {
             message: "Inválido.",
         }),
     endYear: z
-        .string({ required_error: "Inválido." })
+        .string({
+            required_error: "Inválido.",
+        })
         .min(4, {
             message: "Inválido.",
         }),
-    completed: z.boolean({
+    duties: z.string({
         required_error: "Inválido.",
     }),
 })
 
-const educationsSchema = z.object({
-    educations: z.array(educationSchema),
+const experiencesSchema = z.object({
+    experiences: z.array(experienceSchema),
 })
-export function S2B() {
-    const [educations, setEducations] = useAtom(educationsAtom)
+
+export function S3B() {
     const router = useRouter()
+    const [download, setDownload] = useState(false)
+    const [experiences, setExperiences] = useAtom(experiencesAtom)
+    const [skills, setSkills] = useAtom(skillsAtom)
+    const [age, setAge] = useAtom(ageAtom)
+    const [name, setName] = useAtom(nameAtom)
+    const [number, setNumber] = useAtom(numberAtom)
+    const [email, setEmail] = useAtom(emailAtom)
+    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+    const [educations, setEducations] = useAtom(educationsAtom)
     // 1. Define your form.
-    const form = useForm<z.infer<typeof educationsSchema>>({
-        resolver: zodResolver(educationsSchema),
+    const form = useForm<z.infer<typeof experiencesSchema>>({
+        resolver: zodResolver(experiencesSchema),
         defaultValues: {
-            educations: [
+            experiences: [
                 {
-                    school: "",
-                    degree: "",
-                    concentration: "",
+                    employer: "",
+                    job: "",
+                    city: "",
+                    country: "",
                     startYear: "",
                     endYear: "",
-                    country: "",
-                    city: "",
-                    completed: false,
+                    duties: "",
                 },
             ],
         },
@@ -78,17 +99,17 @@ export function S2B() {
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "educations",
+        name: "experiences",
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof educationsSchema>) {
+    async function onSubmit(values: z.infer<typeof experiencesSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values.educations)
-        setEducations(values.educations)
+        console.log(values.experiences)
+        setExperiences(values.experiences)
 
-        router.push("/s3")
+        router.push("/s4")
     }
 
     return (
@@ -99,40 +120,37 @@ export function S2B() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/s1"
+                        href="/s2"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-4 items-center">
-                        <h2 className="text-base font-semibold leading-7 text-white">
-                            Escuela Secundaria
-                        </h2>
+                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
-                                className="gap-y-4 flex flex-col items-center md:px-24"
+                                className="gap-y-4 flex flex-col"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
-                                    Educación {index + 1}
+                                    Experiencia {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.school`}
+                                    name={`experiences.${index}.employer`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Escuela
+                                                Empleador
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Las Palmas"
+                                                    placeholder="Google"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra una escuela.
+                                                Entra el empleador.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -140,20 +158,20 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.country`}
+                                    name={`experiences.${index}.job`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                País
+                                                Título Profesional
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Venezuela"
+                                                    placeholder="Ingeniero de software"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el país.
+                                                Entra el título profesional.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -161,7 +179,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.city`}
+                                    name={`experiences.${index}.city`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -182,52 +200,20 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.degree`}
+                                    name={`experiences.${index}.country`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Grado
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Selecciones su grado" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-                                            </FormControl>
-                                            <FormDescription className="text-white">
-                                                Entra el grado.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name={`educations.${index}.concentration`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                Concentración
+                                                País
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Economia"
+                                                    placeholder="Venezuela"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra la concentración.
+                                                Entra el país.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -235,7 +221,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.startYear`}
+                                    name={`experiences.${index}.startYear`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -248,7 +234,7 @@ export function S2B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el año de inicio.
+                                                Entra su año de inicio.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -256,7 +242,7 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.endYear`}
+                                    name={`experiences.${index}.endYear`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -269,7 +255,7 @@ export function S2B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el año de termino.
+                                                Entra su año de termino.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -277,23 +263,22 @@ export function S2B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.completed`}
+                                    name={`experiences.${index}.duties`}
                                     render={({ field }) => (
-                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Responsabilidades
+                                            </FormLabel>
                                             <FormControl>
-                                                <Checkbox
-                                                    checked={field.value}
-                                                    onCheckedChange={
-                                                        field.onChange
-                                                    }
-                                                    className="data-[state=checked]:bg-white data-[state=checked]:text-indigo-500 border-white"
+                                                <Textarea
+                                                    placeholder="..."
+                                                    {...field}
                                                 />
                                             </FormControl>
-                                            <div className="space-y-1 leading-none">
-                                                <FormLabel className="text-white">
-                                                    ¿Completaste?
-                                                </FormLabel>
-                                            </div>
+                                            <FormDescription className="text-white">
+                                                ¿Qué hiciste específicamente?
+                                            </FormDescription>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -306,7 +291,7 @@ export function S2B() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar educación
+                                        Eliminar experiencia
                                     </button>
                                 )}
                             </div>
@@ -316,19 +301,18 @@ export function S2B() {
                             className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
                             onClick={() => {
                                 append({
-                                    school: "",
-                                    degree: "",
-                                    concentration: "",
+                                    employer: "",
+                                    job: "",
+                                    city: "",
+                                    country: "",
                                     startYear: "",
                                     endYear: "",
-                                    country: "",
-                                    city: "",
-                                    completed: false,
+                                    duties: "",
                                 })
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar educación
+                            Agregar experiencia
                         </button>
                         <Button
                             type="submit"

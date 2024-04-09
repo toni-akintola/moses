@@ -13,6 +13,15 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import {
     ageAtom,
     authorizationStatusAtom,
     certificatesAtom,
@@ -30,6 +39,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer"
 import { useAtom, useSetAtom } from "jotai"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -58,20 +68,8 @@ const additionalInfoSchema = z.object({
 })
 
 export default function S4() {
-    const [authorizationStatus, setAuthorizationStatus] = useAtom(
-        authorizationStatusAtom
-    )
     const [skills, setSkills] = useAtom(skillsAtom)
-    const [certificates, setCertificates] = useAtom(certificatesAtom)
-    const [experiences, setExperiences] = useAtom(experiencesAtom)
-    const [age, setAge] = useAtom(ageAtom)
-    const [name, setName] = useAtom(nameAtom)
-    const [number, setNumber] = useAtom(numberAtom)
-    const [email, setEmail] = useAtom(emailAtom)
-    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
-    const [educations, setEducations] = useAtom(educationsAtom)
-    const [download, setDownload] = useState(false)
-    const translate = useSetAtom(translateAtom)
+    const router = useRouter()
     // 1. Define your form.
     const form = useForm<z.infer<typeof additionalInfoSchema>>({
         resolver: zodResolver(additionalInfoSchema),
@@ -91,51 +89,33 @@ export default function S4() {
     async function onSubmit(values: z.infer<typeof additionalInfoSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
 
-        setAuthorizationStatus(values.authorizationStatus)
         setSkills(values.skills)
-        setCertificates(values.certificates)
+        router.push("/s5")
 
-        try {
-            await translate()
-            setDownload(true)
-        } catch (error) {
-            console.log(error)
-        }
-
-        try {
-            const response = await fetch("/api/submit-resume", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    age: age,
-                    name: name,
-                    number: number,
-                    email: email,
-                    proficiency: proficiency,
-                    educations: educations,
-                    experiences: experiences,
-                    skills: skills,
-                    certificates: certificates,
-                    authorizationStatus: authorizationStatus,
-                }),
-            })
-        } catch (error) {
-            console.log(error)
-        }
+        // try {
+        //     const response = await fetch("/api/submit-resume", {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({
+        //             age: age,
+        //             name: name,
+        //             number: number,
+        //             email: email,
+        //             proficiency: proficiency,
+        //             educations: educations,
+        //             experiences: experiences,
+        //             skills: skills,
+        //             certificates: certificates,
+        //             authorizationStatus: authorizationStatus,
+        //         }),
+        //     })
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
-
-    const {
-        fields: certificateFields,
-        append: certificateAppend,
-        remove: certificateRemove,
-    } = useFieldArray({
-        control: form.control,
-        name: "certificates",
-    })
 
     const {
         fields: skillFields,
@@ -147,7 +127,7 @@ export default function S4() {
     })
 
     return (
-        <div className="border py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">
+        <div className="border py-4 px-8 justify-center border-gray-900/10 bg-white flex items-center flex-col">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -158,124 +138,16 @@ export default function S4() {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        Inicio
+                        Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
-                        <h2 className="text-base font-semibold leading-7 text-white">
-                            Estado de Autorización
-                        </h2>
-                           <FormField
-                                    control={form.control}
-                                    name="authorizationStatus"
-                                    render={({ field }) => (
-                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                                            <FormControl>
-                                                <Checkbox
-                                                    checked={field.value}
-                                                    onCheckedChange={
-                                                        field.onChange
-                                                    }
-                                                    className="data-[state=checked]:bg-white data-[state=checked]:text-indigo-500 border-white"
-                                                />
-                                            </FormControl>
-                                            <div className="space-y-1 leading-none">
-                                                <FormLabel className="text-white">
-                                                    ¿Tiene autorización legal de trabajar en los Estados Unidos?
-                                                </FormLabel>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                        <h2 className="text-base font-semibold leading-7 text-white">
-                            Certificados
-                        </h2>
-                        {certificateFields.map((certificateField, index) => (
-                            <div
-                                key={certificateField.id}
-                                className="gap-y-4 flex flex-col items-center"
-                            >
-                                <h2 className="text-base font-semibold leading-7 text-white self-center">
-                                    Certificado {index + 1}
-                                </h2>
-                                <FormField
-                                    control={form.control}
-                                    name={`certificates.${index}.title`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                Titulo
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="Plomería"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormDescription className="text-white">
-                                                Entra el nombre del su
-                                                certificado.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name={`certificates.${index}.description`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                Descripción
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="Clase de 6 meses..."
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormDescription className="text-white">
-                                                Entra una descripción del su
-                                                certificado.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                {certificateFields.length >= 2 && (
-                                    <button
-                                        type="button"
-                                        className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
-                                        onClick={() => {
-                                            certificateRemove(index)
-                                        }}
-                                    >
-                                        <MinusCircle className="h-4 w-4" />
-                                        Eliminar certificado
-                                    </button>
-                                )}
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
-                            onClick={() => {
-                                certificateAppend({
-                                    title: "",
-                                    description: "",
-                                })
-                            }}
-                        >
-                            <PlusCircle className="h-4 w-4" />
-                            Agregar certificado
-                        </button>
+                    <div className="rounded-md m-6 py-12 px-8 md:px-20 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="text-base font-semibold leading-7 text-white">
                             Habilidades
                         </h2>
                         {skillFields.map((skillField, index) => (
                             <div
                                 key={skillField.id}
-                                className="gap-y-4 flex flex-col items-center"
+                                className="gap-y-4 flex flex-col"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white self-center">
                                     Habilidad {index + 1}
@@ -289,14 +161,100 @@ export default function S4() {
                                                 Titulo
                                             </FormLabel>
                                             <FormControl>
-                                                <Input
-                                                    placeholder="Comunicación"
-                                                    {...field}
-                                                />
+                                                <Select
+                                                    onValueChange={
+                                                        field.onChange
+                                                    }
+                                                    defaultValue={field.value}
+                                                >
+                                                    <SelectTrigger className="w-56">
+                                                        <SelectValue placeholder="Habilidades" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel></SelectLabel>
+                                                            <SelectItem value="Driving">
+                                                                Conducción
+                                                            </SelectItem>
+                                                            <SelectItem value="Vehicle Maintenance">
+                                                                Mantenimiento de
+                                                                Vehículos
+                                                            </SelectItem>
+                                                            <SelectItem value="Construction">
+                                                                Construcción
+                                                            </SelectItem>
+                                                            <SelectItem value="Plumbing">
+                                                                Fontanería
+                                                            </SelectItem>
+                                                            <SelectItem value="Welding">
+                                                                Soldadura
+                                                            </SelectItem>
+                                                            <SelectItem value="Equipment Operation">
+                                                                Operación de
+                                                                Equipos
+                                                            </SelectItem>
+                                                            <SelectItem value="Heavy Machinery Operation">
+                                                                Operación de
+                                                                Maquinaria
+                                                                Pesada
+                                                            </SelectItem>
+                                                            <SelectItem value="Landscaping">
+                                                                Jardinería
+                                                            </SelectItem>
+                                                            <SelectItem value="Recycling">
+                                                                Reciclaje
+                                                            </SelectItem>
+                                                            <SelectItem value="Fishing">
+                                                                Pesca
+                                                            </SelectItem>
+                                                            <SelectItem value="Agricultural Work">
+                                                                Trabajo Agrícola
+                                                            </SelectItem>
+                                                            <SelectItem value="Mining">
+                                                                Minería
+                                                            </SelectItem>
+                                                            <SelectItem value="Manufacturing">
+                                                                Manufactura
+                                                            </SelectItem>
+                                                            <SelectItem value="Mechanical Skills">
+                                                                Habilidades
+                                                                Mecánicas
+                                                            </SelectItem>
+                                                            <SelectItem value="Problem-solving Skills">
+                                                                Habilidades para
+                                                                Resolver
+                                                                Problemas
+                                                            </SelectItem>
+                                                            <SelectItem value="Technical Skills">
+                                                                Habilidades
+                                                                Técnicas
+                                                            </SelectItem>
+                                                            <SelectItem value="Physical Strength and Endurance">
+                                                                Fuerza y
+                                                                Resistencia
+                                                                Física
+                                                            </SelectItem>
+                                                            <SelectItem value="Safety Protocols Adherence">
+                                                                Adherencia a
+                                                                Protocolos de
+                                                                Seguridad
+                                                            </SelectItem>
+                                                            <SelectItem value="Teamwork and Collaboration">
+                                                                Trabajo en
+                                                                Equipo y
+                                                                Colaboración
+                                                            </SelectItem>
+                                                            <SelectItem value="Attention to Detail">
+                                                                Atención al
+                                                                Detalle
+                                                            </SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
                                             </FormControl>
                                             <FormDescription className="text-white">
                                                 Entra el nombre del su
-                                                certificado.
+                                                habilidad.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -333,33 +291,8 @@ export default function S4() {
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Crear Currículum
+                            Próximo
                         </Button>
-                        {download && (
-                            <PDFDownloadLink
-                                document={
-                                    <MyResume
-                                        name={name}
-                                        email={email}
-                                        number={number}
-                                        proficiency={proficiency}
-                                        experiences={experiences}
-                                        educations={educations}
-                                        skills={skills}
-                                        age={age}
-                                        certificates={certificates}
-                                        authorizationStatus={
-                                            authorizationStatus
-                                        }
-                                    />
-                                }
-                                fileName={`${name}-resume.pdf`}
-                            >
-                                <div className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
-                                    Descargar
-                                </div>
-                            </PDFDownloadLink>
-                        )}
                     </div>
                 </form>
             </Form>

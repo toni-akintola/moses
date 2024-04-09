@@ -39,14 +39,12 @@ const S1Schema = z.object({
     age: z.string().min(1, {
         message: "Inválido.",
     }),
-    phoneNumber: z
-        .string()
-        .regex(phoneRegex, "Inválido."),
+    phoneNumber: z.string().regex(phoneRegex, "Inválido."),
     email: z.string().email({
         message: "Inválido.",
     }),
-    
-    numberSlider: z.number()
+
+    numberSlider: z.number(),
 })
 
 const englishProficiency = new Map<number, string>([
@@ -54,7 +52,7 @@ const englishProficiency = new Map<number, string>([
     [2, "ILR Level 1"],
     [3, "ILR Level 2"],
     [4, "ILR Level 3"],
-    [5, "ILR Level 4"]
+    [5, "ILR Level 4"],
 ])
 
 export function S1B() {
@@ -66,7 +64,7 @@ export function S1B() {
             age: "",
             phoneNumber: "",
             email: "",
-            numberSlider: 1
+            numberSlider: 1,
         },
     })
 
@@ -84,8 +82,11 @@ export function S1B() {
         console.log(values)
         setFullName(values.fullName)
         setAge(values.age)
-        const proficiency = englishProficiency.get(values.numberSlider) as string
-        setProficiency(proficiency)
+        const proficiencyValue = englishProficiency.get(
+            values.numberSlider
+        ) as string
+        setProficiency(proficiencyValue)
+        console.log(proficiencyValue)
         setNumber(values.phoneNumber)
         setEmail(values.email)
 
@@ -105,7 +106,7 @@ export function S1B() {
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Inicio
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                    <div className="rounded-md m-6 py-12 px-8 md:px-56 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="font-semibold leading-7 text-white">
                             Información General
                         </h2>
@@ -193,31 +194,34 @@ export function S1B() {
                         <FormField
                             control={form.control}
                             name="numberSlider"
-                            render={({ field: {value, onChange}}) => (
+                            render={({ field: { value, onChange } }) => (
                                 <FormItem>
                                     <FormLabel className="text-white">
-                                         Nivel de Inglés
+                                        Nivel de Inglés
                                     </FormLabel>
                                     <FormControl>
-                                                <Slider
-                                    className=""
-                                    max={5}
-                                    step={1}
-                                    defaultValue={[value]}
-                                    onValueChange={(vals) => {
-                                        onChange(vals[0]);
-                                    }}
-                                  
+                                        <Slider
+                                            className=""
+                                            max={5}
+                                            step={1}
+                                            defaultValue={[value]}
+                                            onValueChange={(vals) => {
+                                                onChange(vals[0])
+                                            }}
                                         />
                                     </FormControl>
-                                    <FormDescription className="text-white">
-                                        ¿Cuán bueno es su inglés?
+                                    <FormDescription className="text-white flex flex-col">
+                                        <div className="flex justify-between flex-row">
+                                            <p>Poco</p>
+                                            <p>Fluidez</p>
+                                        </div>
+                                        <p>¿Cuán bueno es su inglés?</p>
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        
+
                         {/* <FormField
                             control={form.control}
                             name="englishProficiency"

@@ -88,7 +88,9 @@ const MyResume = (props: ResumeProps) => (
                                 <View style={styles.text}>
                                     <Text>
                                         {experience.job}, {experience.employer},{" "}
-                                        {experience.city}
+                                    </Text>
+                                    <Text>
+                                        {experience.city}, {experience.country}{" "}
                                     </Text>
                                 </View>
                                 <View style={styles.text}>
@@ -113,7 +115,10 @@ const MyResume = (props: ResumeProps) => (
                                 <View style={styles.text}>
                                     <Text>
                                         {education.degree}, {education.school},{" "}
-                                        {education.country}
+                                    </Text>
+                                    <Text>
+                                        {education.city}, {education.country}
+                                        {""}
                                     </Text>
                                 </View>
                             </View>
@@ -122,7 +127,9 @@ const MyResume = (props: ResumeProps) => (
                     <View style={styles.section}>
                         <Text style={styles.heading}>Authorization Status</Text>
                         <Text style={styles.text}>
-                            {props.authorizationStatus ? ("Authorized to work") : "" }
+                            {props.authorizationStatus
+                                ? "Authorized to work"
+                                : ""}
                         </Text>
                     </View>
                     <View style={styles.section}>

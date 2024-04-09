@@ -13,7 +13,7 @@ const animation: MotionProps = {
     },
     animate: { scale: 1.2 },
 }
-export default function Hero ({ params }: { params: { lang: string } }) {
+export default function Hero({ params }: { params: { lang: string } }) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
     const text =
         "Constructora de currículum de español a inglés y asistente personal".split(
@@ -39,7 +39,6 @@ export default function Hero ({ params }: { params: { lang: string } }) {
                         <motion.div className="flex w-full h-64 -mt-20">
                             <AnimText delay={2} />
                         </motion.div>
-
                         <div className="flex items-center justify-center gap-x-6">
                             <motion.a
                                 href="/s1"
@@ -78,4 +77,3 @@ export default function Hero ({ params }: { params: { lang: string } }) {
         </div>
     )
 }
-

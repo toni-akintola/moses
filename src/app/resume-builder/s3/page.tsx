@@ -1,4 +1,4 @@
-import { S3B } from "@/components/resume-forms/S3B"
+import { S3B } from "@/components/resume-forms/S3"
 import React from "react"
 
 type Props = {}

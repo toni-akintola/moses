@@ -1,4 +1,4 @@
-import { S2B } from "@/components/resume-forms/S2B"
+import { S2B } from "@/components/resume-forms/S2"
 import React from "react"
 
 type Props = {}

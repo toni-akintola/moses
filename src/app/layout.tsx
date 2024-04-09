@@ -17,23 +17,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
     children,
-    locale
+    locale,
 }: {
-    children: React.ReactNode,
+    children: React.ReactNode
     locale: never
 }) {
     return (
         <html lang={locale}>
-            <Analytics />
-            <SpeedInsights />
-            <Layout>
-                <body
-                    className={`${lato.className} bg-gradient-to-l from-gray-200 via-indigo-300 to-stone-100`}
-                >
+            <body
+                className={`${lato.className} bg-gradient-to-l from-gray-200 via-indigo-300 to-stone-100`}
+            >
+                <Analytics />
+                <SpeedInsights />
+                <Layout>
                     <MainNav />
                     {children}
-                </body>
-            </Layout>
+                </Layout>
+            </body>
         </html>
     )
 }

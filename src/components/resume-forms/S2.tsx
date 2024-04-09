@@ -16,84 +16,59 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react"
-import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react"
-import { useAtom, useSetAtom } from "jotai"
-import {
-    ageAtom,
-    educationsAtom,
-    emailAtom,
-    experiencesAtom,
-    nameAtom,
-    numberAtom,
-    proficiencyAtom,
-    skillsAtom,
-    translateAtom,
-} from "@/utils/atoms"
+import { Checkbox } from "@/components/ui/checkbox"
+import { educationsAtom } from "@/utils/atoms"
+import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
-const experienceSchema = z.object({
-    employer: z
-        .string({
-            required_error: "Inválido.",
-        })
-        .min(2),
-    job: z.string({
+const educationSchema = z.object({
+    school: z.string({ required_error: "Inválido." }),
+    country: z.string({
         required_error: "Inválido.",
     }),
     city: z.string({
         required_error: "Inválido.",
     }),
-    country: z.string({
-        required_error: "Inválido.",
+    degree: z.string({ required_error: "Inválido." }),
+    startYear: z.string({ required_error: "Inválido." }).min(4, {
+        message: "Inválido.",
     }),
-    startYear: z
-        .string({
-            required_error: "Inválido.",
-        })
-        .min(4, {
-            message: "Inválido.",
-        }),
-    endYear: z
-        .string({
-            required_error: "Inválido.",
-        })
-        .min(4, {
-            message: "Inválido.",
-        }),
-    duties: z.string({
+    endYear: z.string({ required_error: "Inválido." }).min(4, {
+        message: "Inválido.",
+    }),
+    completed: z.boolean({
         required_error: "Inválido.",
     }),
 })
 
-const experiencesSchema = z.object({
-    experiences: z.array(experienceSchema),
+const educationsSchema = z.object({
+    educations: z.array(educationSchema),
 })
-
-export function S3B() {
-    const router = useRouter()
-    const [download, setDownload] = useState(false)
-    const [experiences, setExperiences] = useAtom(experiencesAtom)
-    const [skills, setSkills] = useAtom(skillsAtom)
-    const [age, setAge] = useAtom(ageAtom)
-    const [name, setName] = useAtom(nameAtom)
-    const [number, setNumber] = useAtom(numberAtom)
-    const [email, setEmail] = useAtom(emailAtom)
-    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
+export function S2B() {
     const [educations, setEducations] = useAtom(educationsAtom)
+    const router = useRouter()
     // 1. Define your form.
-    const form = useForm<z.infer<typeof experiencesSchema>>({
-        resolver: zodResolver(experiencesSchema),
+    const form = useForm<z.infer<typeof educationsSchema>>({
+        resolver: zodResolver(educationsSchema),
         defaultValues: {
-            experiences: [
+            educations: [
                 {
-                    employer: "",
-                    job: "",
-                    city: "",
-                    country: "",
+                    school: "",
+                    degree: "",
                     startYear: "",
                     endYear: "",
-                    duties: "",
+                    country: "",
+                    city: "",
+                    completed: false,
                 },
             ],
         },
@@ -101,17 +76,17 @@ export function S3B() {
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "experiences",
+        name: "educations",
     })
 
     // 2. Define a submit handler.
-    async function onSubmit(values: z.infer<typeof experiencesSchema>) {
+    function onSubmit(values: z.infer<typeof educationsSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values.experiences)
-        setExperiences(values.experiences)
+        console.log(values.educations)
+        setEducations(values.educations)
 
-        router.push("/s4")
+        router.push("/s3")
     }
 
     return (
@@ -122,37 +97,40 @@ export function S3B() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/s2"
+                        href="/s1"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
                         Atrás
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                    <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-4 items-center">
+                        <h2 className="text-base font-semibold leading-7 text-white">
+                            Educación
+                        </h2>
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
-                                className="gap-y-4 flex flex-col items-center"
+                                className="gap-y-4 flex flex-col md:px-8"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
-                                    Experiencia {index + 1}
+                                    Educación {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
-                                    name={`experiences.${index}.employer`}
+                                    name={`educations.${index}.school`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Empleador
+                                                Escuela
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Google"
+                                                    placeholder="Las Palmas"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el empleador.
+                                                Entra una escuela.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -160,49 +138,7 @@ export function S3B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`experiences.${index}.job`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                Título Profesional
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="Ingeniero de software"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormDescription className="text-white">
-                                                Entra el título profesional.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name={`experiences.${index}.city`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                Ciudad
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="Caracas"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormDescription className="text-white">
-                                                Entra la ciudad.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                 <FormField
-                                    control={form.control}
-                                    name={`experiences.${index}.country`}
+                                    name={`educations.${index}.country`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -223,7 +159,70 @@ export function S3B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`experiences.${index}.startYear`}
+                                    name={`educations.${index}.city`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Ciudad
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Caracas"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra la ciudad.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`educations.${index}.degree`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-white">
+                                                Grado
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Select
+                                                    onValueChange={
+                                                        field.onChange
+                                                    }
+                                                    defaultValue={field.value}
+                                                >
+                                                    <SelectTrigger className="w-[180px]">
+                                                        <SelectValue placeholder="Selecciones su grado" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel></SelectLabel>
+                                                            <SelectItem value="High School Diploma">
+                                                                Diploma de
+                                                                Secundaria
+                                                            </SelectItem>
+                                                            <SelectItem value="GED">
+                                                                GED
+                                                            </SelectItem>
+                                                            <SelectItem value="Bachelor's Degree">
+                                                                Licenciatura
+                                                            </SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormDescription className="text-white">
+                                                Entra el grado.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`educations.${index}.startYear`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -236,7 +235,7 @@ export function S3B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su año de inicio.
+                                                Entra el año de inicio.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -244,7 +243,7 @@ export function S3B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`experiences.${index}.endYear`}
+                                    name={`educations.${index}.endYear`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
@@ -257,7 +256,7 @@ export function S3B() {
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su año de termino.
+                                                Entra el año de termino.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -265,22 +264,23 @@ export function S3B() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`experiences.${index}.duties`}
+                                    name={`educations.${index}.completed`}
                                     render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                Responsabilidades
-                                            </FormLabel>
+                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                             <FormControl>
-                                                <Textarea
-                                                    placeholder="..."
-                                                    {...field}
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={
+                                                        field.onChange
+                                                    }
+                                                    className="data-[state=checked]:bg-white data-[state=checked]:text-indigo-500 border-white"
                                                 />
                                             </FormControl>
-                                            <FormDescription className="text-white">
-                                                ¿Qué hiciste específicamente?
-                                            </FormDescription>
-                                            <FormMessage />
+                                            <div className="space-y-1 leading-none">
+                                                <FormLabel className="text-white">
+                                                    ¿Completaste?
+                                                </FormLabel>
+                                            </div>
                                         </FormItem>
                                     )}
                                 />
@@ -293,7 +293,7 @@ export function S3B() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar experiencia
+                                        Eliminar educación
                                     </button>
                                 )}
                             </div>
@@ -303,18 +303,18 @@ export function S3B() {
                             className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"
                             onClick={() => {
                                 append({
-                                    employer: "",
-                                    job: "",
-                                    city: "",
-                                    country: "",
+                                    school: "",
+                                    degree: "",
                                     startYear: "",
                                     endYear: "",
-                                    duties: "",
+                                    country: "",
+                                    city: "",
+                                    completed: false,
                                 })
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar experiencia
+                            Agregar educación
                         </button>
                         <Button
                             type="submit"

@@ -129,14 +129,14 @@ const MyResume = (props: ResumeProps) => (
                         <Text style={styles.text}>
                             {props.authorizationStatus
                                 ? "Authorized to work"
-                                : ""}
+                                : "Not yet authorized to work"}
                         </Text>
                     </View>
                     <View style={styles.section}>
                         <Text style={styles.heading}>Certificates</Text>
                         {props.certificates.map((certificate) => (
                             <Text key={certificate.id} style={styles.text}>
-                                {certificate.title}: {certificate.description}
+                                {certificate.title}
                             </Text>
                         ))}
                     </View>

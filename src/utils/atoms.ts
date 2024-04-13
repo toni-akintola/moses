@@ -49,7 +49,7 @@ export const skillsAtom = atomWithStorage<Skill[]>("skills", [
     { id: 1, title: "" },
 ])
 export const certificatesAtom = atomWithStorage<Certificate[]>("certificates", [
-    { id: 1, title: "", description: "" },
+    { id: 1, title: "" },
 ])
 
 export const translateAtom = atom(null, async (get, set) => {
@@ -57,66 +57,73 @@ export const translateAtom = atom(null, async (get, set) => {
     const experiences = get(experiencesAtom)
     const certificates = get(certificatesAtom)
     const skills = get(skillsAtom)
-    const skillStrings = skills.map((skill) => skill.title)
 
-    educations.map(async (education) => {
-        const startDate = education.startYear
-        const endDate = education.endYear
-        const degree = education.degree
-        const response = await fetch("/api/translate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                toTranslate: [startDate, endDate, degree],
-            }),
+    try {
+        educations.map(async (education) => {
+            const startDate = education.startYear
+            const endDate = education.endYear
+            const degree = education.degree
+            const response = await fetch("/api/translate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    toTranslate: [startDate, endDate, degree],
+                }),
+            })
+            const data = await response.json()
+            const translations = data.translations as TextResult[]
+            console.log(translations)
+
+            education.startYear = String(translations[0])
+            education.endYear = String(translations[1])
+            education.degree = String(translations[2])
+            return education
         })
-        const data = await response.json()
-        const translations = data.translations as TextResult[]
-        console.log(translations)
+    } catch (error) {
+        console.log(error)
+    }
 
-        education.startYear = String(translations[0])
-        education.endYear = String(translations[1])
-        education.degree = String(translations[2])
-        return education
-    })
+    try {
+        experiences.map(async (experience) => {
+            const startDate = experience.startYear
+            const endDate = experience.endYear
+            const employer = experience.employer
+            const city = experience.city
+            const country = experience.country
+            const duties = experience.duties
+            const job = experience.job
+            const response = await fetch("/api/translate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    toTranslate: [employer, job, duties],
+                }),
+            })
+            const data = await response.json()
+            const translations = data.translations as TextResult[]
 
-    experiences.map(async (experience) => {
-        const startDate = experience.startYear
-        const endDate = experience.endYear
-        const employer = experience.employer
-        const city = experience.city
-        const country = experience.country
-        const duties = experience.duties
-        const job = experience.job
-        const response = await fetch("/api/translate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                toTranslate: [employer, job, duties],
-            }),
+            experience.employer = String(translations[0])
+            experience.job = String(translations[1])
+            experience.duties = String(translations[2])
+            return experience
         })
-        const data = await response.json()
-        const translations = data.translations as TextResult[]
+    } catch (error) {
+        console.log(error)
+    }
 
-        experience.employer = String(translations[0])
-        experience.job = String(translations[1])
-        experience.duties = String(translations[2])
-        return experience
-    })
-
-    const skillsResponse = await fetch("/api/translate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            toTranslate: skillStrings,
-        }),
-    })
+    // const skillsResponse = await fetch("/api/translate", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //         toTranslate: skillStrings,
+    //     }),
+    // })
 
     // const skillsData = await skillsResponse.json()
     // const skillsTranslations = skillsData.translations as TextResult[]
@@ -127,24 +134,26 @@ export const translateAtom = atom(null, async (get, set) => {
     //     })
     // )
 
-    certificates.map(async (certificate) => {
-        const title = certificate.title
-        const description = certificate.description
-        const response = await fetch("/api/translate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                toTranslate: [title, description],
-            }),
+    try {
+        certificates.map(async (certificate) => {
+            const title = certificate.title
+            // const description = certificate.description
+            const response = await fetch("/api/translate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    toTranslate: [title],
+                }),
+            })
+            const data = await response.json()
+            const translations = data.translations as TextResult[]
+            certificate.title = String(translations[0])
         })
-        const data = await response.json()
-        const translations = data.translations as TextResult[]
-        certificate.title = String(translations[0])
-        certificate.description = String(translations[1])
-        console.log(certificate.description, certificate.title)
-    })
+    } catch (error) {
+        console.log(error)
+    }
 
     set(educationsAtom, educations)
     set(experiencesAtom, experiences)

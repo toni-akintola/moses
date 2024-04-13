@@ -49,7 +49,6 @@ const certificateSchema = z.object({
     title: z.string({
         required_error: "Inválido.",
     }),
-    description: z.string(),
 })
 
 const stepFiveSchema = z.object({
@@ -82,7 +81,6 @@ export default function S5() {
             certificates: [
                 {
                     title: "",
-                    description: "",
                 },
             ],
         },
@@ -317,7 +315,7 @@ export default function S5() {
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
+                                {/* <FormField
                                     control={form.control}
                                     name={`certificates.${index}.description`}
                                     render={({ field }) => (
@@ -338,7 +336,7 @@ export default function S5() {
                                             <FormMessage />
                                         </FormItem>
                                     )}
-                                />
+                                /> */}
 
                                 {certificateFields.length >= 2 && (
                                     <button
@@ -360,7 +358,6 @@ export default function S5() {
                             onClick={() => {
                                 certificateAppend({
                                     title: "",
-                                    description: "",
                                 })
                             }}
                         >

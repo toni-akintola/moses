@@ -28,7 +28,7 @@ export interface Skill {
 export interface Certificate {
     id?: number
     title: string
-    description: string
+    // description: string
 }
 
 export interface AdditionalInfo {

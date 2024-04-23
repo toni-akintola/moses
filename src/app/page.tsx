@@ -23,7 +23,7 @@ export default function Hero({ params }: { params: { lang: string } }) {
         hidden: { opacity: 0, y: 10 },
         visible,
     }
-    // const t = useTranslations("")
+
     return (
         <div className="flex h-screen justify-center bg-gradient-to-b from-white via-indigo-300 to-indigo-700">
             <header className="absolute inset-x-0 top-0 z-50">

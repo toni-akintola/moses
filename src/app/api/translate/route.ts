@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     const translations = rawTranslations.map(
         (rawTranslation) => rawTranslation.text
     )
+    console.log(translations)
 
     return NextResponse.json({ translations })
 }

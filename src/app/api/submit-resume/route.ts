@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server"
 import { ResumeSubmission } from "@/utils/types"
 import { NextResponse } from "next/server"
 import OpenAI from "openai"
+
 export async function POST(request: Request) {
     const data: ResumeSubmission = await request.json()
     console.log(data)
@@ -14,6 +15,7 @@ export async function POST(request: Request) {
         email: data.email,
         proficiency: data.proficiency,
         educations: data.educations,
+        experience: data.experiences,
         skills: data.skills,
         certificates: data.certificates,
         authorizationstatus: data.authorizationStatus,

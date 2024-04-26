@@ -2,6 +2,7 @@
 
 import { MessagesProvider } from "@/context/messages"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { Provider } from "jotai"
 import { FC, ReactNode } from "react"
 
 interface LayoutProps {
@@ -13,7 +14,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <MessagesProvider>{children}</MessagesProvider>
+            <Provider>
+                <MessagesProvider>{children}</MessagesProvider>
+            </Provider>
         </QueryClientProvider>
     )
 }

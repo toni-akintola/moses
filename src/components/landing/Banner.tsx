@@ -13,7 +13,15 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import React from "react"
-export const MainNav: React.FC = () => {
+
+export type NavProps = {
+    locale: string
+    information: string
+    language: string
+    access: string
+}
+
+export function MainNav(props: NavProps) {
     return (
         <div
             className="flex items-center justify-between p-6 lg:px-8 bg-white"
@@ -38,7 +46,7 @@ export const MainNav: React.FC = () => {
                     whileTap={{ scale: 0.9 }}
                     className="text-black font-bold"
                 >
-                    Información
+                    {props.information}
                 </motion.a>
                 <motion.div
                     whileHover={{ scale: 1.1 }}
@@ -48,35 +56,23 @@ export const MainNav: React.FC = () => {
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="text-black font-bold">
-                                    Idioma
+                                    {props.language}
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                        <ListItem href="/docs" title="English">
+                                        <ListItem href="/en" title="English">
                                             English
                                         </ListItem>
-                                        <ListItem
-                                            href="/docs/installation"
-                                            title="Español"
-                                        >
+                                        <ListItem href="/es" title="Español">
                                             Spanish
                                         </ListItem>
-                                        <ListItem
-                                            href="/docs/primitives/typography"
-                                            title="中国人"
-                                        >
+                                        <ListItem href="/" title="中国人">
                                             Chinese
                                         </ListItem>
-                                        <ListItem
-                                            href="/docs/primitives/typography"
-                                            title="українська"
-                                        >
+                                        <ListItem href="/" title="українська">
                                             Ukrainian
                                         </ListItem>
-                                        <ListItem
-                                            href="/docs/primitives/typography"
-                                            title="عربي"
-                                        >
+                                        <ListItem href="/" title="عربي">
                                             Arabic
                                         </ListItem>
                                     </ul>
@@ -88,12 +84,12 @@ export const MainNav: React.FC = () => {
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a
-                    href="/resume-builder/s1"
+                    href={`${props.locale}/resume-builder/s1`}
                     className="text-sm font-semibold leading-6 text-white bg-indigo-500 rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    Acceso <span aria-hidden="true">&rarr;</span>
+                    {props.access} <span aria-hidden="true">&rarr;</span>
                 </motion.a>
             </div>
         </div>

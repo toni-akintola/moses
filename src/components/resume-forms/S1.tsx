@@ -32,6 +32,9 @@ import { stagger, useAnimate } from "framer-motion"
 import { useEffect } from "react"
 import { Slider } from "@/components/ui/slider"
 
+type S1BProps = {
+    locale: string
+}
 const S1Schema = z.object({
     fullName: z.string().min(2, {
         message: "Inválido.",
@@ -55,7 +58,7 @@ const englishProficiency = new Map<number, string>([
     [5, "ILR Level 4"],
 ])
 
-export function S1B() {
+export function S1B(props: S1BProps) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof S1Schema>>({
         resolver: zodResolver(S1Schema),
@@ -90,7 +93,7 @@ export function S1B() {
         setNumber(values.phoneNumber)
         setEmail(values.email)
 
-        router.push("/resume-builder/s2")
+        router.push(`s2`)
     }
     return (
         <div className="border py-4 px-8 border-gray-900/10 bg-white flex items-center flex-col justify-center">

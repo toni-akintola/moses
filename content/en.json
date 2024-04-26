@@ -1,0 +1,11 @@
+{
+    "home": {
+        "information": "Information",
+        "language": "Language",
+        "access": "Access",
+        "create": "Create Resume",
+        "assistant": "Personal Assistant",
+        "tos": "By creating an account, you accept our terms of service.",
+        "read_more": "Read more"
+    }
+}

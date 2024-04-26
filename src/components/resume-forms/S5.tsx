@@ -21,6 +21,7 @@ import {
     ageAtom,
     authorizationStatusAtom,
     certificatesAtom,
+    downloadAtom,
     educationsAtom,
     emailAtom,
     experiencesAtom,
@@ -44,6 +45,13 @@ import {
 import { useState } from "react"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import MyResume from "@/components/resume-preview/Resume"
+import {
+    Certificate,
+    Education,
+    Experience,
+    ResumeSubmission,
+    Skill,
+} from "@/utils/types"
 
 const certificateSchema = z.object({
     title: z.string({
@@ -57,20 +65,131 @@ const stepFiveSchema = z.object({
     }),
     certificates: z.array(certificateSchema),
 })
+
+type BodyPayload = {
+    html?: string // must be undefined if 'template' prop is used
+    format?: // applicable only for pdf, default a4
+    | "LETTER"
+        | "LEGAL"
+        | "TABLOID"
+        | "LEDGER"
+        | "A0"
+        | "A1"
+        | "A2"
+        | "A3"
+        | "A4"
+        | "A5"
+        | "A6"
+        | "Letter"
+        | "Legal"
+        | "Tabloid"
+        | "Ledger"
+    output?: "pdf" | "png" | "jpeg" | "webp" // default pdf
+    size?: {
+        scale?: string | number // default 2, can be up to 6
+        width?: string | number // default 210
+        height?: string | number // default 297
+        unit?: "px" | "in" | "cm" | "mm" // default mm
+    }
+    template?: {
+        html: string
+        data: Record<string, any>
+    }
+}
 export default function S5() {
+    const [error, setError] = useState("")
+    const [downloading, setDownloading] = useState(false)
+    const [payload, setPayload] = useState<BodyPayload>({
+        // comment `html` when `template` prop is used
+        output: "pdf",
+        template: dynamicTemplate,
+    })
+
+    const setHtml = (value: string) => {
+        setPayload({ ...payload, html: value })
+    }
+
+    const download = async () => {
+        setDownloading(true)
+        try {
+            const response = await requestDownload(payload)
+            if (response.error) {
+                setError(response.error)
+                setDownloading(false)
+            }
+            if (response.requestId) {
+                const onComplete = (error: string = "") => {
+                    setError(error)
+                    setDownloading(false)
+                }
+                downloadWithRetry(response.requestId, onComplete)
+            }
+        } catch (error) {
+            setError("Something went wrong.")
+            setDownloading(false)
+        }
+    }
+
+    /**
+     * api utils
+     */
+
+    const apiUrl = `https://api.tailwindstream.io`
+
+    function downloadToBrowser(blob: Blob) {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.href = url
+        a.download = new Date().toISOString() + "." + blob.type.split("/")[1]
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+    }
+
+    async function requestDownload(payload: BodyPayload) {
+        const response = await fetch(apiUrl + "/request", {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: { "Content-Type": "application/json" },
+        })
+        return (await response.json()) as { requestId?: string; error?: string }
+    }
+
+    // Main retry logic
+    const RETRY_INTERVAL_MS = 2500
+    const MAX_RETRIES = 4
+
+    async function downloadWithRetry(
+        requestId: string,
+        onComplete: (error?: string) => void
+    ) {
+        let retried = 0
+        const intervalId = setInterval(async () => {
+            const response = await fetch(
+                `${apiUrl}/request/${requestId}/download`
+            )
+            if (response.ok) {
+                const blob = await response.blob()
+                clearInterval(intervalId)
+                downloadToBrowser(blob)
+                onComplete()
+            } else {
+                retried++
+                if (retried >= MAX_RETRIES) {
+                    clearInterval(intervalId)
+                    onComplete("Download failed.")
+                }
+                console.error("Download failed, retrying...")
+            }
+        }, RETRY_INTERVAL_MS)
+    }
+
+    // Additional info states
     const [authorizationStatus, setAuthorizationStatus] = useAtom(
         authorizationStatusAtom
     )
-    const [skills, setSkills] = useAtom(skillsAtom)
     const [certificates, setCertificates] = useAtom(certificatesAtom)
-    const [experiences, setExperiences] = useAtom(experiencesAtom)
-    const [age, setAge] = useAtom(ageAtom)
-    const [name, setName] = useAtom(nameAtom)
-    const [number, setNumber] = useAtom(numberAtom)
-    const [email, setEmail] = useAtom(emailAtom)
-    const [proficiency, setProficiency] = useAtom(proficiencyAtom)
-    const [educations, setEducations] = useAtom(educationsAtom)
-    const [download, setDownload] = useState(false)
+
     const translate = useSetAtom(translateAtom)
 
     // 1. Define your form.
@@ -95,54 +214,17 @@ export default function S5() {
         setCertificates(values.certificates)
         setAuthorizationStatus(values.authorizationStatus)
 
+        console.log("Before POST request")
         try {
-            await translate().then(() => {
-                fetch("/api/submit-resume", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        age: age,
-                        name: name,
-                        number: number,
-                        email: email,
-                        proficiency: proficiency,
-                        educations: educations,
-                        experiences: experiences,
-                        skills: skills,
-                        certificates: certificates,
-                        authorizationStatus: authorizationStatus,
-                    }),
-                })
-            })
-            setDownload(true)
+            // const resume: ResumeSubmission | undefined = await translate()
+            // console.log("This is the resume", resume)
+            // if (!resume) {
+            //     return
+            // }
         } catch (error) {
-            console.log(error)
+            console.error("Error during POST request:", error)
         }
-
-        // try {
-        //     const response = await fetch("/api/submit-resume", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({
-        //             age: age,
-        //             name: name,
-        //             number: number,
-        //             email: email,
-        //             proficiency: proficiency,
-        //             educations: educations,
-        //             experiences: experiences,
-        //             skills: skills,
-        //             certificates: certificates,
-        //             authorizationStatus: authorizationStatus,
-        //         }),
-        //     })
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        await download()
     }
 
     const {
@@ -162,7 +244,7 @@ export default function S5() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/resume-builder/s4"
+                        href="s4"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
@@ -394,34 +476,87 @@ export default function S5() {
                         >
                             Crear Currículum
                         </Button>
-                        {download && (
-                            <PDFDownloadLink
-                                document={
-                                    <MyResume
-                                        name={name}
-                                        email={email}
-                                        number={number}
-                                        proficiency={proficiency}
-                                        experiences={experiences}
-                                        educations={educations}
-                                        skills={skills}
-                                        age={age}
-                                        certificates={certificates}
-                                        authorizationStatus={
-                                            authorizationStatus
-                                        }
-                                    />
-                                }
-                                fileName={`${name}-resume.pdf`}
-                            >
-                                <div className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200">
-                                    Descargar
-                                </div>
-                            </PDFDownloadLink>
-                        )}
                     </div>
                 </form>
             </Form>
         </div>
     )
+}
+
+const dynamicTemplate = {
+    html: `
+<div class="p-10">
+  <div class="max-w-4xl mx-auto bg-white p-5">
+      <header class="flex justify-between mb-10">
+          <div>
+              <h1 class="text-xl font-bold">{{businessName}}</h1>
+              <p>{{businessAddress}}</p>
+              <p>Email: {{businessEmail}}</p>
+              <p>Phone: {{businessPhone}}</p>
+          </div>
+          <div>
+              <h2 class="text-lg font-bold">Invoice</h2>
+              <p>Invoice Number: {{invoiceNumber}}</p>
+              <p>Date: {{invoiceDate}}</p>
+              <p>Due Date: {{dueDate}}</p>
+          </div>
+      </header>
+      <section class="mb-5">
+          <h3 class="font-bold text-lg mb-3">Bill To:</h3>
+          <p>{{clientName}}</p>
+          <p>{{clientAddress}}</p>
+      </section>
+      <table class="min-w-full table-auto">
+          <thead>
+              <tr class="bg-gray-200">
+                  <th class="px-4 py-2 text-left">Item</th>
+                  <th class="px-4 py-2 text-left">Quantity</th>
+                  <th class="px-4 py-2 text-left">Price</th>
+                  <th class="px-4 py-2 text-left">Total</th>
+              </tr>
+          </thead>
+          <tbody>
+              {{#each items}}
+              <tr>
+                  <td class="border px-4 py-2">{{name}}</td>
+                  <td class="border px-4 py-2">{{quantity}}</td>
+                  <td class="border px-4 py-2">{{price}}</td>
+                  <td class="border px-4 py-2">{{total}}</td>
+              </tr>
+              {{/each}}
+          </tbody>
+      </table>
+      <div class="text-right mt-4">
+          <strong>Total Due: {{totalDue}}</strong>
+      </div>
+      <footer class="mt-5">
+          <p>Payment Terms: {{paymentTerms}}</p>
+          <p>Thank you for your business!</p>
+      </footer>
+  </div>
+</div>
+  `,
+    data: {
+        businessName: "Your Company Name",
+        businessAddress: "123 Business Rd, Business City, BC 12345",
+        businessEmail: "contact@yourcompany.com",
+        businessPhone: "+1 234 567 8900",
+        invoiceNumber: "2023-001",
+        invoiceDate: "April 10, 2024",
+        dueDate: "May 10, 2024",
+        clientName: "Client Co.",
+        clientAddress: "789 Client St, Client City, CC 67890",
+        items: [
+            { name: "Widget", quantity: 4, price: "$10.00", total: "$40.00" },
+            { name: "Gadget", quantity: 2, price: "$15.00", total: "$30.00" },
+            {
+                name: "Doohickey",
+                quantity: 1,
+                price: "$20.00",
+                total: "$20.00",
+            },
+        ],
+        totalDue: "90.00",
+        paymentTerms: "Net 30",
+    },
 }

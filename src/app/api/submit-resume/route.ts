@@ -15,11 +15,12 @@ export async function POST(request: Request) {
         email: data.email,
         proficiency: data.proficiency,
         educations: data.educations,
-        experience: data.experiences,
+        experiences: data.experiences,
         skills: data.skills,
         certificates: data.certificates,
         authorizationstatus: data.authorizationStatus,
     })
+    console.log(error)
 
     //     const openai = new OpenAI({
     //         apiKey: process.env.OPENAI_API_KEY,

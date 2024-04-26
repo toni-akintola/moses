@@ -109,7 +109,7 @@ export function S3B() {
         console.log(values.experiences)
         setExperiences(values.experiences)
 
-        router.push("/resume-builder/s4")
+        router.push("s4")
     }
 
     return (
@@ -120,7 +120,7 @@ export function S3B() {
                     className="rounded-md p-4 border bg-indigo-500 flex flex-col"
                 >
                     <Link
-                        href="/resume-builder/s2"
+                        href="s2"
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />

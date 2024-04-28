@@ -485,54 +485,61 @@ export default function S5() {
 
 const dynamicTemplate = {
     html: `
-<div class="p-10">
-  <div class="max-w-4xl mx-auto bg-white p-5">
-      <header class="flex justify-between mb-10">
-          <div>
-              <h1 class="text-xl font-bold">{{businessName}}</h1>
-              <p>{{businessAddress}}</p>
-              <p>Email: {{businessEmail}}</p>
-              <p>Phone: {{businessPhone}}</p>
-          </div>
-          <div>
-              <h2 class="text-lg font-bold">Invoice</h2>
-              <p>Invoice Number: {{invoiceNumber}}</p>
-              <p>Date: {{invoiceDate}}</p>
-              <p>Due Date: {{dueDate}}</p>
-          </div>
-      </header>
-      <section class="mb-5">
-          <h3 class="font-bold text-lg mb-3">Bill To:</h3>
-          <p>{{clientName}}</p>
-          <p>{{clientAddress}}</p>
-      </section>
-      <table class="min-w-full table-auto">
-          <thead>
-              <tr class="bg-gray-200">
-                  <th class="px-4 py-2 text-left">Item</th>
-                  <th class="px-4 py-2 text-left">Quantity</th>
-                  <th class="px-4 py-2 text-left">Price</th>
-                  <th class="px-4 py-2 text-left">Total</th>
-              </tr>
-          </thead>
-          <tbody>
-              {{#each items}}
-              <tr>
-                  <td class="border px-4 py-2">{{name}}</td>
-                  <td class="border px-4 py-2">{{quantity}}</td>
-                  <td class="border px-4 py-2">{{price}}</td>
-                  <td class="border px-4 py-2">{{total}}</td>
-              </tr>
-              {{/each}}
-          </tbody>
-      </table>
-      <div class="text-right mt-4">
-          <strong>Total Due: {{totalDue}}</strong>
+<div class="h-[297mm] w-[210mm] bg-gray-100 p-12">
+  <div class="flex">
+    <div class="mt-16 grid w-[40%] border-2 border-gray-400 p-10">
+      <div class="grid gap-8">
+        <p class="text-4xl font-semibold">{{name}}</p>
       </div>
-      <footer class="mt-5">
-          <p>Payment Terms: {{paymentTerms}}</p>
-          <p>Thank you for your business!</p>
-      </footer>
+      <div class="pt-5">
+        <p class="text-2xl font-medium">Contact</p>
+        <div class="grid gap-2 pt-4 text-sm font-light">
+          <p>{{phoneNumber}}</p>
+          <p>{{email}}</p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-5 pt-5">
+        <p class="text-2xl font-medium">Skills</p>
+        <div class="flex flex-col gap-2">
+          {{#each skills}}
+          <p class="">{{title}}</p>
+          {{/each}}
+        </div>
+      </div>
+      <p class="text-2xl font-medium">Cerfificates</p>
+      <div class="flex flex-col gap-2">
+        {{#each certificates}}
+        <p class="">{{title}}</p>
+        {{/each}}
+      </div>
+    </div>
+    <div>
+      <div class="pl-10 pt-10">
+        <p class="text-2xl font-semibold">Education History</p>
+        {{#each educations}}
+        <div class="flex items-center justify-between pt-4">
+          <p class="text-sm font-light">{{degree}}</p>
+          <p class="text-xs font-light">{{startYear}} - {{endYear}}</p>
+        </div>
+        <div>
+          <p class="pt-1 font-medium">{{school}} | {{city}}, {{country}}</p>
+        </div>
+        {{/each}}
+      </div>
+      <div class="pl-10 pt-10">
+        <p class="text-2xl font-semibold">Work Experience</p>
+        {{#each experiences}}
+        <div class="flex items-center justify-between pt-4">
+          <p class="text-sm font-light">{{employer}}</p>
+          <p class="text-xs font-light">{{startYear}} - {{endYear}}</p>
+        </div>
+        <div>
+          <p class="pt-1 font-medium">{{job}} | {{city}}, {{country}}</p>
+          <p class="text-sm font-light">{{duties}}</p>
+        </div>
+        {{/each}}
+      </div>
+    </div>
   </div>
 </div>
   `,

@@ -4,7 +4,6 @@ import "./globals.css"
 import Layout from "@/components/chat/Providers"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { MainNav } from "@/components/landing/Banner"
 const lato = Sofia_Sans({
     subsets: ["greek"],
     weight: ["100", "300", "400", "700", "900"],
@@ -27,10 +26,7 @@ export default function RootLayout({
             <body className={`${lato.className} `}>
                 <Analytics />
                 <SpeedInsights />
-                <Layout>
-                    <MainNav />
-                    {children}
-                </Layout>
+                <Layout>{children}</Layout>
             </body>
         </html>
     )

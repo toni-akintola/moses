@@ -13,18 +13,19 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import React from "react"
+import { useParams } from "next/navigation"
 
 export type NavProps = {
-    locale: string
     information: string
     language: string
     access: string
 }
 
 export function MainNav(props: NavProps) {
+    const { lang } = useParams()
     return (
         <div
-            className="flex items-center justify-between p-6 lg:px-8 bg-white"
+            className="flex items-center justify-between p-6 lg:px-8"
             aria-label="Global"
         >
             <div className="flex lg:flex-1">
@@ -55,7 +56,7 @@ export function MainNav(props: NavProps) {
                     <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <NavigationMenuTrigger className="text-black font-bold">
+                                <NavigationMenuTrigger className="text-black font-bold bg-clear">
                                     {props.language}
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
@@ -84,7 +85,7 @@ export function MainNav(props: NavProps) {
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a
-                    href={`${props.locale}/resume-builder/s1`}
+                    href={`${lang}/resume-builder/s1`}
                     className="text-sm font-semibold leading-6 text-white bg-indigo-500 rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

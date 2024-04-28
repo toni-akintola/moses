@@ -15,7 +15,6 @@ export default function Page({ params }: { params: { lang: string } }) {
                     information={t("information")}
                     language={t("language")}
                     access={t("access")}
-                    locale={params.lang}
                 />
             </header>
             <Home

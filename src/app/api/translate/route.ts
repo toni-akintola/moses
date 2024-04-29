@@ -48,5 +48,5 @@ export async function POST(request: Request) {
     }
 
     console.log(translatedResume)
-    return NextResponse.json({ translatedResume })
+    return NextResponse.json(translatedResume)
 }

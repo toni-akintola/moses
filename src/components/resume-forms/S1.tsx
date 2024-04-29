@@ -34,6 +34,13 @@ import { Slider } from "@/components/ui/slider"
 
 type S1BProps = {
     locale: string
+    back_button: string
+    name_header: string
+    age_header: string
+    phone_header: string
+    email_header: string
+    proficiency_header: string
+    next_button: string
 }
 const S1Schema = z.object({
     fullName: z.string().min(2, {
@@ -58,7 +65,7 @@ const englishProficiency = new Map<number, string>([
     [5, "ILR Level 4"],
 ])
 
-export function S1B(props: S1BProps) {
+export function S1(props: S1BProps) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof S1Schema>>({
         resolver: zodResolver(S1Schema),
@@ -107,7 +114,7 @@ export function S1B(props: S1BProps) {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        Inicio
+                        {props.back_button}
                     </Link>
                     <div className="rounded-md m-6 py-12 px-8 md:px-56 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="font-semibold leading-7 text-white">

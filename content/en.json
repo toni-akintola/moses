@@ -7,5 +7,15 @@
         "assistant": "Personal Assistant",
         "tos": "By creating an account, you accept our terms of service.",
         "read_more": "Read more"
+    },
+    "s1": {
+        "back_button": "Home",
+        "general": "General Information",
+        "name_header": "Nombre Completo",
+        "age_header": "Age",
+        "phone_number": "Phone Number",
+        "email_header": "Email",
+        "proficiency_header": "English Proficiency",
+        "next_button": "Next"
     }
 }

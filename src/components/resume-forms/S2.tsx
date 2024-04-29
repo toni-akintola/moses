@@ -29,7 +29,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
+export type S2Props = {}
 const educationSchema = z.object({
     school: z.string({ required_error: "Inválido." }),
     country: z.string({

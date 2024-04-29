@@ -6,16 +6,77 @@
         "create": "Create Resume",
         "assistant": "Personal Assistant",
         "tos": "By creating an account, you accept our terms of service.",
-        "read_more": "Read more"
+        "readMore": "Read more"
     },
     "s1": {
-        "back_button": "Home",
+        "backButton": "Home",
         "general": "General Information",
-        "name_header": "Nombre Completo",
-        "age_header": "Age",
-        "phone_number": "Phone Number",
-        "email_header": "Email",
-        "proficiency_header": "English Proficiency",
-        "next_button": "Next"
+        "name": {
+            "title": "Full Name",
+            "placeholder": "John Smith",
+            "subtitle": "Enter your full name."
+        },
+        "age": {
+            "title": "Age",
+            "placeholder": "24",
+            "subtitle": "Enter your age."
+        },
+        "phoneNumber": {
+            "title": "Phone Number",
+            "placeholder": "(800) 555-0100",
+            "subtitle": "Enter your phone number."
+        },
+        "email": {
+            "title": "Email",
+            "placeholder": "jsmith@gmail.com",
+            "subtitle": "Enter your email."
+        },
+        "proficiency": {
+            "title": "English Proficiency",
+            "one": "Little",
+            "five": "Fluent",
+            "subtitle": "How good is your English?"
+        },
+        "nextButton": "Next"
+    },
+    "s2": {
+        "backButton": "Back",
+        "title": "Education",
+        "education": {
+            "school": {
+                "title": "School",
+                "placeholder": "Phillips Academy",
+                "subtitle": "Enter a school."
+            },
+            "country": {
+                "title": "Country",
+                "placeholder": "USA",
+                "subtitle": "Enter a country."
+            },
+            "city": {
+                "title": "City",
+                "placeholder": "New York",
+                "subtitle": "Enter a city."
+            },
+            "degree": {
+                "title": "Degree",
+                "placeholder": "Select a degree",
+                "subtitle": "Enter a degree."
+            },
+            "startYear": {
+                "title": "Start Year",
+                "placeholder": "2000",
+                "subtitle": "Enter a start year."
+            },
+            "endYear": {
+                "title": "End Year",
+                "placeholder": "200",
+                "subtitle": "Enter an end year."
+            }
+        },
+        "completed": "Completed?",
+        "add": "Add Education",
+        "remove": "Remove Education",
+        "nextButton": "Next"
     }
 }

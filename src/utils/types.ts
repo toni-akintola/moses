@@ -49,3 +49,9 @@ export interface ResumeSubmission {
     certificates: Certificate[]
     authorizationStatus: string
 }
+
+export type FormItemText = {
+    title: string
+    placeholder: string
+    subtitle: string
+}

@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
+import type { TFunction } from "i18next"
 import {
     Form,
     FormControl,
@@ -31,16 +32,17 @@ import { useRouter } from "next/navigation"
 import { stagger, useAnimate } from "framer-motion"
 import { useEffect } from "react"
 import { Slider } from "@/components/ui/slider"
+import { FormItemText } from "@/utils/types"
+import { AbstractIntlMessages } from "next-intl"
 
-type S1BProps = {
-    locale: string
-    back_button: string
-    name_header: string
-    age_header: string
-    phone_header: string
-    email_header: string
-    proficiency_header: string
-    next_button: string
+export type S1Props = {
+    backButton: string
+    age: FormItemText
+    name: FormItemText
+    phoneNumber: FormItemText
+    email: FormItemText
+    proficiency: { title: string; one: string; five: string; subtitle: string }
+    nextButton: string
 }
 const S1Schema = z.object({
     fullName: z.string().min(2, {
@@ -64,8 +66,8 @@ const englishProficiency = new Map<number, string>([
     [4, "ILR Level 3"],
     [5, "ILR Level 4"],
 ])
-
-export function S1(props: S1BProps) {
+export interface I18T {}
+export function S1(props: S1Props) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof S1Schema>>({
         resolver: zodResolver(S1Schema),
@@ -114,7 +116,7 @@ export function S1(props: S1BProps) {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        {props.back_button}
+                        {props.backButton}
                     </Link>
                     <div className="rounded-md m-6 py-12 px-8 md:px-56 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="font-semibold leading-7 text-white">
@@ -126,16 +128,16 @@ export function S1(props: S1BProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-white">
-                                        Nombre Completo
+                                        {props.name.title}
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Miguel de Cervantes"
+                                            placeholder={props.name.placeholder}
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription className="text-white">
-                                        Entra su nombre completo.
+                                        {props.name.subtitle}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -147,13 +149,16 @@ export function S1(props: S1BProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-white">
-                                        Edad
+                                        {props.age.title}
                                     </FormLabel>
                                     <FormControl>
-                                        <Input placeholder="24" {...field} />
+                                        <Input
+                                            placeholder={props.age.placeholder}
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormDescription className="text-white">
-                                        Entra su edad.
+                                        {props.age.subtitle}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -165,16 +170,18 @@ export function S1(props: S1BProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-white">
-                                        Número de Teléfono
+                                        {props.phoneNumber.title}
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="(800) 555-0100"
+                                            placeholder={
+                                                props.phoneNumber.placeholder
+                                            }
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription className="text-white">
-                                        Entra su número de teléfono.
+                                        {props.phoneNumber.subtitle}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -186,16 +193,18 @@ export function S1(props: S1BProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-white">
-                                        Correo Electrónico
+                                        {props.email.title}
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="miguel@gmail.com"
+                                            placeholder={
+                                                props.email.placeholder
+                                            }
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription className="text-white">
-                                        Entra su correo electrónico.
+                                        {props.email.subtitle}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -207,7 +216,7 @@ export function S1(props: S1BProps) {
                             render={({ field: { value, onChange } }) => (
                                 <FormItem>
                                     <FormLabel className="text-white">
-                                        Nivel de Inglés
+                                        {props.proficiency.title}
                                     </FormLabel>
                                     <FormControl>
                                         <Slider
@@ -223,14 +232,14 @@ export function S1(props: S1BProps) {
                                     <FormDescription className="text-white"></FormDescription>
                                     <div className="flex justify-between flex-row">
                                         <p className="text-white text-sm">
-                                            Poco
+                                            {props.proficiency.one}
                                         </p>
                                         <p className="text-white text-sm">
-                                            Fluidez
+                                            {props.proficiency.five}
                                         </p>
                                     </div>
                                     <p className="text-white text-sm">
-                                        ¿Cuán bueno es su inglés?
+                                        {props.proficiency.subtitle}
                                     </p>
                                     <FormMessage />
                                 </FormItem>
@@ -327,7 +336,7 @@ export function S1(props: S1BProps) {
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Próximo
+                            {props.nextButton}
                         </Button>
                     </div>
                 </form>

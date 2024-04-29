@@ -53,7 +53,7 @@ export function MainNav(props: NavProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <NavigationMenu>
+                    {/* <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="text-black font-bold bg-clear">
@@ -80,7 +80,7 @@ export function MainNav(props: NavProps) {
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                         </NavigationMenuList>
-                    </NavigationMenu>
+                    </NavigationMenu> */}
                 </motion.div>
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">

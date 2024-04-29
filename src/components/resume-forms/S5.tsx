@@ -31,7 +31,7 @@ import {
     skillsAtom,
     translateAtom,
 } from "@/utils/atoms"
-import { useAtom, useSetAtom } from "jotai"
+import { useAtom, useAtomValue, useSetAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import {
     Select,
@@ -52,6 +52,7 @@ import {
     ResumeSubmission,
     Skill,
 } from "@/utils/types"
+import { Spinner } from "@/components/motion/Spinner"
 
 const certificateSchema = z.object({
     title: z.string({
@@ -98,7 +99,7 @@ type BodyPayload = {
 }
 export default function S5() {
     const [error, setError] = useState("")
-    const [downloading, setDownloading] = useState(false)
+    const [downloading, setDownloading] = useAtom(downloadAtom)
     const [payload, setPayload] = useState<BodyPayload>({
         // comment `html` when `template` prop is used
         output: "pdf",
@@ -489,7 +490,7 @@ export default function S5() {
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Crear Currículum
+                            {downloading ? <Spinner /> : "Crear Currículum"}
                         </Button>
                     </div>
                 </form>

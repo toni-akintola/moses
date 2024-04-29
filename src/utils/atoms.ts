@@ -148,6 +148,7 @@ async function downloadWithRetry(
     }, RETRY_INTERVAL_MS)
 }
 export const translateAtom = atom(null, async (get, set) => {
+    set(downloadAtom, true)
     const age = get(ageAtom)
     const name = get(nameAtom)
     const number = get(numberAtom)
@@ -186,6 +187,9 @@ export const translateAtom = atom(null, async (get, set) => {
         return data
     } catch (error) {
         console.log(error)
+        set(downloadAtom, false)
+    } finally {
+        set(downloadAtom, false)
     }
 })
 

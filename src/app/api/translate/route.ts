@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import * as deepl from "deepl-node"
 import { Education, Experience, ResumeSubmission } from "@/utils/types"
 import { translateText } from "@/functions/server"
+import { createClient } from "@/utils/supabase/server"
 
 export async function POST(request: Request) {
     const { educations, experiences, ...otherProps }: ResumeSubmission =
@@ -47,6 +48,48 @@ export async function POST(request: Request) {
         experiences: translatedExperiences,
     }
 
-    console.log(translatedResume)
+    const supabase = createClient()
+    const { error } = await supabase.from("resume_submissions").insert({
+        age: translatedResume.age,
+        name: translatedResume.name,
+        number: translatedResume.number,
+        email: translatedResume.email,
+        proficiency: translatedResume.proficiency,
+        educations: translatedResume.educations,
+        experiences: translatedResume.experiences,
+        skills: translatedResume.skills,
+        certificates: translatedResume.certificates,
+        authorizationstatus: translatedResume.authorizationStatus,
+    })
+    console.log(error)
+
+    //     const openai = new OpenAI({
+    //         apiKey: process.env.OPENAI_API_KEY,
+    //     })
+
+    //     const response = await openai.chat.completions.create({
+    //         model: "gpt-3.5-turbo",
+    //         messages: [
+    //             {
+    //                 role: "user",
+    //                 content: `Give me the 10 most likely career areas for a job applicant with this information:
+    //     age: ${translatedResume.age},
+    //     name: ${translatedResume.name},
+    //     number: ${translatedResume.number},
+    //     email: ${translatedResume.email},
+    //     proficiency: ${translatedResume.proficiency},
+    //     educations: ${translatedResume.educations},
+    //     skills: ${translatedResume.skills},
+    //     certificates: ${translatedResume.certificates},
+    //     authorizationStatus: ${translatedResume.authorizationStatus},
+
+    //     Format them in a JSON response please.
+    //    `,
+    //             },
+    //         ],
+    //         temperature: 0.7,
+    //     })
+    //     console.log(response.choices[0].message)
+    //     console.log(error)
     return NextResponse.json(translatedResume)
 }

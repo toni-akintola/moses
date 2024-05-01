@@ -9,9 +9,11 @@ const Page = ({ params }: { params: { lang: string } }) => {
     const S2Content = messages.s2 as unknown as S2Props
     return (
         <S2
+            title={S2Content.title}
             placeholders={S2Content.placeholders}
             backButton={S2Content.backButton}
-            title={S2Content.title}
+            highSchool={S2Content.highSchool}
+            university={S2Content.university}
             education={S2Content.education}
             completed={S2Content.completed}
             add={S2Content.add}

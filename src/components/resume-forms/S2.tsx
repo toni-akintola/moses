@@ -33,6 +33,8 @@ import { FormItemText } from "@/utils/types"
 export type S2Props = {
     backButton: string
     title: string
+    highSchool: string
+    university: string
     education: {
         school: FormItemText
         country: FormItemText
@@ -45,6 +47,7 @@ export type S2Props = {
         diploma: string
         ged: string
         bachelors: string
+        none: string
     }
     completed: string
     add: string
@@ -61,9 +64,6 @@ const educationSchema = z.object({
     }),
     degree: z.string({ required_error: "Inválido." }).min(1, {
         message: "Invalido.",
-    }),
-    startYear: z.string({ required_error: "Inválido." }).min(4, {
-        message: "Inválido.",
     }),
     endYear: z.string({ required_error: "Inválido." }).min(4, {
         message: "Inválido.",
@@ -87,7 +87,6 @@ export function S2(props: S2Props) {
                 {
                     school: "",
                     degree: "",
-                    startYear: "",
                     endYear: "",
                     country: "",
                     city: "",
@@ -136,7 +135,9 @@ export function S2(props: S2Props) {
                                 className="gap-y-4 flex flex-col md:px-8"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
-                                    {props.title} {index + 1}
+                                    {fields.length > 1
+                                        ? props.university
+                                        : props.highSchool}
                                 </h2>
                                 <FormField
                                     control={form.control}
@@ -243,6 +244,13 @@ export function S2(props: S2Props) {
                                                     <SelectContent>
                                                         <SelectGroup>
                                                             <SelectLabel></SelectLabel>
+                                                            <SelectItem value="None">
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .none
+                                                                }
+                                                            </SelectItem>
                                                             <SelectItem value="High School Diploma">
                                                                 {
                                                                     props
@@ -280,37 +288,6 @@ export function S2(props: S2Props) {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={`educations.${index}.startYear`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-white">
-                                                {
-                                                    props.education.startYear
-                                                        .title
-                                                }
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder={
-                                                        props.education
-                                                            .startYear
-                                                            .placeholder
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormDescription className="text-white">
-                                                {
-                                                    props.education.startYear
-                                                        .subtitle
-                                                }
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
                                     name={`educations.${index}.endYear`}
                                     render={({ field }) => (
                                         <FormItem>
@@ -336,7 +313,7 @@ export function S2(props: S2Props) {
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
+                                {/* <FormField
                                     control={form.control}
                                     name={`educations.${index}.completed`}
                                     render={({ field }) => (
@@ -357,7 +334,7 @@ export function S2(props: S2Props) {
                                             </div>
                                         </FormItem>
                                     )}
-                                />
+                                /> */}
                                 {fields.length >= 2 && (
                                     <button
                                         type="button"
@@ -379,7 +356,6 @@ export function S2(props: S2Props) {
                                 append({
                                     school: "",
                                     degree: "",
-                                    startYear: "",
                                     endYear: "",
                                     country: "",
                                     city: "",

@@ -2,7 +2,6 @@ export interface Education {
     id?: number
     school: string
     degree: string
-    startYear: string
     endYear: string
     country: string
     city: string

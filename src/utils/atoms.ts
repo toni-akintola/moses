@@ -52,7 +52,6 @@ export const educationsAtom = atom<Education[]>([
         id: 1,
         school: "",
         degree: "",
-        startYear: "",
         endYear: "",
         country: "",
         city: "",
@@ -229,7 +228,7 @@ const htmlTemplate = `
         {{#each educations}}
         <div class="flex items-center justify-between pt-4">
           <p class="text-sm font-light">{{degree}}</p>
-          <p class="text-xs font-light">{{startYear}} - {{endYear}}</p>
+          <p class="text-xs font-light">{{endYear}}</p>
         </div>
         <div>
           <p class="pt-1 font-medium">{{school}} | {{city}}, {{country}}</p>

@@ -42,6 +42,8 @@
     "s2": {
         "backButton": "Back",
         "title": "Education",
+        "highSchool": "High School",
+        "university": "University",
         "education": {
             "school": {
                 "title": "School",
@@ -75,6 +77,7 @@
             }
         },
         "placeholders": {
+            "none": "None",
             "diploma": "High School Diploma",
             "ged": "GED",
             "bachelors": "Bachelor's Degree"
@@ -104,7 +107,7 @@
         },
         "country": {
             "title": "Country",
-            "placeholder": "New York",
+            "placeholder": "USA",
             "subtitle": "Enter the country."
         },
         "startYear": {

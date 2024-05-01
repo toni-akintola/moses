@@ -44,7 +44,6 @@ import {
 } from "@/components/ui/select"
 import { useState } from "react"
 import { PDFDownloadLink } from "@react-pdf/renderer"
-import MyResume from "@/components/resume-preview/Resume"
 import {
     Certificate,
     Education,

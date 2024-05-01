@@ -1,5 +1,6 @@
 import { S1, S1Props } from "@/components/resume-forms/S1"
-import { useMessages } from "next-intl"
+import { FormItemText } from "@/utils/types"
+import { AbstractIntlMessages, useMessages, useTranslations } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 import React from "react"
 
@@ -11,6 +12,7 @@ const Page = ({ params }: { params: { lang: string } }) => {
         <S1
             backButton={S1Content.backButton}
             nextButton={S1Content.nextButton}
+            general={S1Content.general}
             email={S1Content.email}
             phoneNumber={S1Content.phoneNumber}
             proficiency={S1Content.proficiency}

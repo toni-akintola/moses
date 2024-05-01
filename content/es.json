@@ -3,9 +3,198 @@
         "information": "Información",
         "language": "Idioma",
         "access": "Acceso",
-        "create": "Construir Currículum",
+        "create": "Crear Currículum",
         "assistant": "Asistente Personal",
-        "tos": "Al crear una cuenta, acepta nuestros términos de servicio.",
-        "read_more": "Leer más"
+        "tos": "Al crear una cuenta, aceptas nuestros términos de servicio.",
+        "readMore": "Leer más"
+    },
+    "s1": {
+        "backButton": "Inicio",
+        "general": "Información General",
+        "name": {
+            "title": "Nombre Completo",
+            "placeholder": "Juan Pérez",
+            "subtitle": "Ingrese su nombre completo."
+        },
+        "age": {
+            "title": "Edad",
+            "placeholder": "24",
+            "subtitle": "Ingrese su edad."
+        },
+        "phoneNumber": {
+            "title": "Número de Teléfono",
+            "placeholder": "(800) 555-0100",
+            "subtitle": "Ingrese su número de teléfono."
+        },
+        "email": {
+            "title": "Correo Electrónico",
+            "placeholder": "jperez@gmail.com",
+            "subtitle": "Ingrese su correo electrónico."
+        },
+        "proficiency": {
+            "title": "Dominio del Inglés",
+            "one": "Poco",
+            "five": "Fluido",
+            "subtitle": "¿Qué tan bueno es tu inglés?"
+        },
+        "nextButton": "Siguiente"
+    },
+    "s2": {
+        "backButton": "Atrás",
+        "title": "Educación",
+        "education": {
+            "school": {
+                "title": "Escuela",
+                "placeholder": "Academia Phillips",
+                "subtitle": "Ingrese una escuela."
+            },
+            "country": {
+                "title": "País",
+                "placeholder": "EE. UU.",
+                "subtitle": "Ingrese un país."
+            },
+            "city": {
+                "title": "Ciudad",
+                "placeholder": "Nueva York",
+                "subtitle": "Ingrese una ciudad."
+            },
+            "degree": {
+                "title": "Grado",
+                "placeholder": "Seleccione un grado",
+                "subtitle": "Ingrese un grado."
+            },
+            "startYear": {
+                "title": "Año de Inicio",
+                "placeholder": "2000",
+                "subtitle": "Ingrese un año de inicio."
+            },
+            "endYear": {
+                "title": "Año de Finalización",
+                "placeholder": "2000",
+                "subtitle": "Ingrese un año de finalización."
+            }
+        },
+        "placeholders": {
+            "diploma": "Diploma de Secundaria",
+            "ged": "GED",
+            "bachelors": "Grado de Bachiller"
+        },
+        "completed": "¿Completado?",
+        "add": "Agregar Educación",
+        "remove": "Eliminar Educación",
+        "nextButton": "Siguiente"
+    },
+    "s3": {
+        "backButton": "Atrás",
+        "title": "Experiencia",
+        "employer": {
+            "title": "Empleador",
+            "placeholder": "Google",
+            "subtitle": "Ingrese el empleador."
+        },
+        "jobTitle": {
+            "title": "Título del Trabajo",
+            "placeholder": "Ingeniero de Software",
+            "subtitle": "Ingrese el título del trabajo."
+        },
+        "city": {
+            "title": "Ciudad",
+            "placeholder": "Nueva York",
+            "subtitle": "Ingrese la ciudad."
+        },
+        "country": {
+            "title": "País",
+            "placeholder": "Nueva York",
+            "subtitle": "Ingrese el país."
+        },
+        "startYear": {
+            "title": "Año de Inicio",
+            "placeholder": "2000",
+            "subtitle": "Ingrese un año de inicio."
+        },
+        "endYear": {
+            "title": "Año de Finalización",
+            "placeholder": "2000",
+            "subtitle": "Ingrese un año de finalización."
+        },
+        "duties": {
+            "title": "Deberes",
+            "placeholder": "...",
+            "subtitle": "¿Qué hiciste específicamente?"
+        },
+        "add": "Agregar Experiencia",
+        "remove": "Eliminar Experiencia",
+        "nextButton": "Siguiente"
+    },
+    "s4": {
+        "backButton": "Atrás",
+        "title": "Habilidades",
+        "heading": "Habilidad",
+        "skills": {
+            "title": "Habilidad",
+            "placeholder": "Habilidades",
+            "subtitle": "Seleccione una habilidad."
+        },
+        "placeholders": {
+            "driving": "Conducción",
+            "vehicleMaintenance": "Mantenimiento de Vehículos",
+            "construction": "Construcción",
+            "plumbing": "Fontanería",
+            "welding": "Soldadura",
+            "equipmentOperation": "Operación de Equipos",
+            "heavyMachineryOperation": "Operación de Maquinaria Pesada",
+            "landscaping": "Jardinería",
+            "recycling": "Reciclaje",
+            "fishing": "Pesca",
+            "agriculturalWork": "Trabajo Agrícola",
+            "mining": "Minería",
+            "manufacturing": "Manufactura",
+            "mechanicalSkills": "Habilidades Mecánicas",
+            "problemSolvingSkills": "Habilidades para Resolver Problemas",
+            "technicalSkills": "Habilidades Técnicas",
+            "physicalStrengthAndEndurance": "Fuerza y Resistencia Física",
+            "safetyProtocolsAdherence": "Adherencia a Protocolos de Seguridad",
+            "teamworkAndCollaboration": "Trabajo en Equipo y Colaboración",
+            "attentionToDetail": "Atención al Detalle"
+        },
+        "add": "Agregar Habilidad",
+        "remove": "Eliminar Habilidad",
+        "nextButton": "Siguiente"
+    },
+    "s5": {
+        "backButton": "Atrás",
+        "title": "Certificados",
+        "heading": "Certificado",
+        "certificates": {
+            "title": "Título",
+            "placeholder": "Certificados",
+            "subtitle": "Seleccione un certificado."
+        },
+        "placeholders": {
+            "cdlCommercialDriversLicense": "Licencia de Conductor Comercial (CDL)",
+            "aseCertificationAutomotiveServiceExcellence": "Certificación ASE (Excelencia en Servicio Automotriz)",
+            "oshaCertificationOccupationalSafetyAndHealthAdministration": "Certificación OSHA (Administración de Seguridad y Salud Ocupacional)",
+            "weldingCertification": "Certificación de Soldadura",
+            "forkliftOperatorCertification": "Certificación de Operador de Montacargas",
+            "heavyEquipmentOperatorCertification": "Certificación de Operador de Equipos Pesados",
+            "cprCertificationCardiopulmonaryResuscitation": "Certificación de RCP (Reanimación Cardiopulmonar)",
+            "firstAidCertification": "Certificación de Primeros Auxilios",
+            "confinedSpaceEntryCertification": "Certificación de Entrada a Espacios Confinados",
+            "scaffoldSafetyCertification": "Certificación de Seguridad en Andamios",
+            "hazardousMaterialsHandlingCertification": "Certificación de Manejo de Materiales Peligrosos",
+            "fishingVesselSafetyCertification": "Certificación de Seguridad en Embarcaciones de Pesca",
+            "agriculturalPesticideApplicatorCertification": "Certificación de Aplicador de Pesticidas Agrícolas",
+            "miningSafetyCertification": "Certificación de Seguridad en Minería",
+            "constructionSafetyCertification": "Certificación de Seguridad en Construcción",
+            "electricalSafetyCertification": "Certificación de Seguridad Eléctrica",
+            "fireSafetyCertification": "Certificación de Seguridad contra Incendios",
+            "machineGuardingCertification": "Certificación de Protección de Maquinaria",
+            "fallProtectionCertification": "Certificación de Protección contra Caídas"
+        },
+        "add": "Agregar Certificado",
+        "remove": "Eliminar Certificado",
+        "authHeader": "Estado de Autorización",
+        "authorization": "¿Tienes autorización legal para trabajar en los Estados Unidos?",
+        "create": "Crear Currículum"
     }
 }

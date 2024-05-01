@@ -70,13 +70,132 @@
             },
             "endYear": {
                 "title": "End Year",
-                "placeholder": "200",
+                "placeholder": "2000",
                 "subtitle": "Enter an end year."
             }
+        },
+        "placeholders": {
+            "diploma": "High School Diploma",
+            "ged": "GED",
+            "bachelors": "Bachelor's Degree"
         },
         "completed": "Completed?",
         "add": "Add Education",
         "remove": "Remove Education",
         "nextButton": "Next"
+    },
+    "s3": {
+        "backButton": "Back",
+        "title": "Experience",
+        "employer": {
+            "title": "Employer",
+            "placeholder": "Google",
+            "subtitle": "Enter the employer."
+        },
+        "jobTitle": {
+            "title": "Job Title",
+            "placeholder": "Software Engineer",
+            "subtitle": "Enter the job title."
+        },
+        "city": {
+            "title": "City",
+            "placeholder": "New York",
+            "subtitle": "Enter the city."
+        },
+        "country": {
+            "title": "Country",
+            "placeholder": "New York",
+            "subtitle": "Enter the country."
+        },
+        "startYear": {
+            "title": "Start Year",
+            "placeholder": "2000",
+            "subtitle": "Enter a start year."
+        },
+        "endYear": {
+            "title": "End Year",
+            "placeholder": "2000",
+            "subtitle": "Enter an end year."
+        },
+        "duties": {
+            "title": "Duties",
+            "placeholder": "...",
+            "subtitle": "What did you do specifically?"
+        },
+        "add": "Add Experience",
+        "remove": "Remove Experience",
+        "nextButton": "Next"
+    },
+    "s4": {
+        "backButton": "Back",
+        "title": "Skills",
+        "heading": "Skill",
+        "skills": {
+            "title": "Skill",
+            "placeholder": "Skills",
+            "subtitle": "Select a skill."
+        },
+        "placeholders": {
+            "driving": "Driving",
+            "vehicleMaintenance": "Vehicle Maintenance",
+            "construction": "Construction",
+            "plumbing": "Plumbing",
+            "welding": "Welding",
+            "equipmentOperation": "Equipment Operation",
+            "heavyMachineryOperation": "Heavy Machinery Operation",
+            "landscaping": "Landscaping",
+            "recycling": "Recycling",
+            "fishing": "Fishing",
+            "agriculturalWork": "Agricultural Work",
+            "mining": "Mining",
+            "manufacturing": "Manufacturing",
+            "mechanicalSkills": "Mechanical Skills",
+            "problemSolvingSkills": "Problem-Solving Skills",
+            "technicalSkills": "Technical Skills",
+            "physicalStrengthAndEndurance": "Physical Strength and Endurance",
+            "safetyProtocolsAdherence": "Safety Protocols Adherence",
+            "teamworkAndCollaboration": "Teamwork and Collaboration",
+            "attentionToDetail": "Attention to Detail"
+        },
+
+        "add": "Add Skill",
+        "remove": "Remove Skill",
+        "nextButton": "Next"
+    },
+    "s5": {
+        "backButton": "Back",
+        "title": "Certificates",
+        "heading": "Certificate",
+        "certificates": {
+            "title": "Title",
+            "placeholder": "Certificates",
+            "subtitle": "Select a certificate."
+        },
+        "placeholders": {
+            "cdlCommercialDriversLicense": "Commercial Driver's License (CDL)",
+            "aseCertificationAutomotiveServiceExcellence": "ASE Certification (Automotive Service Excellence)",
+            "oshaCertificationOccupationalSafetyAndHealthAdministration": "OSHA Certification (Occupational Safety and Health Administration)",
+            "weldingCertification": "Welding Certification",
+            "forkliftOperatorCertification": "Forklift Operator Certification",
+            "heavyEquipmentOperatorCertification": "Heavy Equipment Operator Certification",
+            "cprCertificationCardiopulmonaryResuscitation": "CPR Certification (Cardiopulmonary Resuscitation)",
+            "firstAidCertification": "First Aid Certification",
+            "confinedSpaceEntryCertification": "Confined Space Entry Certification",
+            "scaffoldSafetyCertification": "Scaffold Safety Certification",
+            "hazardousMaterialsHandlingCertification": "Hazardous Materials Handling Certification",
+            "fishingVesselSafetyCertification": "Fishing Vessel Safety Certification",
+            "agriculturalPesticideApplicatorCertification": "Agricultural Pesticide Applicator Certification",
+            "miningSafetyCertification": "Mining Safety Certification",
+            "constructionSafetyCertification": "Construction Safety Certification",
+            "electricalSafetyCertification": "Electrical Safety Certification",
+            "fireSafetyCertification": "Fire Safety Certification",
+            "machineGuardingCertification": "Machine Guarding Certification",
+            "fallProtectionCertification": "Fall Protection Certification"
+        },
+        "add": "Add Certificate",
+        "remove": "Remove Certificate",
+        "authHeader": "Authorization Status",
+        "authorization": "Do you have legal authorization to work in the United States?",
+        "create": "Create Resume"
     }
 }

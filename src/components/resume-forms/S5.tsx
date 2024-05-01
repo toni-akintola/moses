@@ -49,6 +49,7 @@ import {
     Certificate,
     Education,
     Experience,
+    FormItemText,
     ResumeSubmission,
     Skill,
 } from "@/utils/types"
@@ -66,7 +67,38 @@ const stepFiveSchema = z.object({
     }),
     certificates: z.array(certificateSchema),
 })
-
+export type S5Props = {
+    backButton: string
+    title: string
+    heading: string
+    certificates: FormItemText
+    placeholders: {
+        cdlCommercialDriversLicense: string
+        aseCertificationAutomotiveServiceExcellence: string
+        oshaCertificationOccupationalSafetyAndHealthAdministration: string
+        weldingCertification: string
+        forkliftOperatorCertification: string
+        heavyEquipmentOperatorCertification: string
+        cprCertificationCardiopulmonaryResuscitation: string
+        firstAidCertification: string
+        confinedSpaceEntryCertification: string
+        scaffoldSafetyCertification: string
+        hazardousMaterialsHandlingCertification: string
+        fishingVesselSafetyCertification: string
+        agriculturalPesticideApplicatorCertification: string
+        miningSafetyCertification: string
+        constructionSafetyCertification: string
+        electricalSafetyCertification: string
+        fireSafetyCertification: string
+        machineGuardingCertification: string
+        fallProtectionCertification: string
+    }
+    add: string
+    remove: string
+    authHeader: string
+    authorization: string
+    create: string
+}
 type BodyPayload = {
     html?: string // must be undefined if 'template' prop is used
     format?: // applicable only for pdf, default a4
@@ -97,7 +129,7 @@ type BodyPayload = {
         data: Record<string, any>
     }
 }
-export default function S5() {
+export default function S5(props: S5Props) {
     const [error, setError] = useState("")
     const [downloading, setDownloading] = useAtom(downloadAtom)
     const [payload, setPayload] = useState<BodyPayload>({
@@ -264,11 +296,11 @@ export default function S5() {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        Atrás
+                        {props.backButton}
                     </Link>
                     <div className="rounded-md m-6 py-12 px-8 md:px-20 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="text-base font-semibold leading-7 text-white">
-                            Certificados
+                            {props.heading}
                         </h2>
                         {certificateFields.map((certificateField, index) => (
                             <div
@@ -276,7 +308,7 @@ export default function S5() {
                                 className="gap-y-4 flex flex-col"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white self-center">
-                                    Certificado {index + 1}
+                                    {props.title} {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
@@ -284,7 +316,7 @@ export default function S5() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Titulo
+                                                {props.certificates.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Select
@@ -294,120 +326,156 @@ export default function S5() {
                                                     defaultValue={field.value}
                                                 >
                                                     <SelectTrigger className="w-56">
-                                                        <SelectValue placeholder="Certificados" />
+                                                        <SelectValue
+                                                            placeholder={
+                                                                props
+                                                                    .certificates
+                                                                    .placeholder
+                                                            }
+                                                        />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
                                                             <SelectLabel></SelectLabel>
                                                             <SelectItem value="CDL (Commercial Driver's License)">
-                                                                Licencia de
-                                                                Conductor
-                                                                Comercial (CDL)
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .cdlCommercialDriversLicense
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="ASE Certification (Automotive Service Excellence)">
-                                                                Certificación
-                                                                ASE (Excelencia
-                                                                en Servicio
-                                                                Automotriz)
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .aseCertificationAutomotiveServiceExcellence
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="OSHA Certification (Occupational Safety and Health Administration)">
-                                                                Certificación
-                                                                OSHA
-                                                                (Administración
-                                                                de Seguridad y
-                                                                Salud
-                                                                Ocupacional)
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .oshaCertificationOccupationalSafetyAndHealthAdministration
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Welding Certification">
-                                                                Certificación de
-                                                                Soldadura
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .weldingCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Forklift Operator Certification">
-                                                                Certificación de
-                                                                Operador de
-                                                                Montacargas
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .forkliftOperatorCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Heavy Equipment Operator Certification">
-                                                                Certificación de
-                                                                Operador de
-                                                                Equipos Pesados
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .heavyEquipmentOperatorCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="CPR Certification (Cardiopulmonary Resuscitation)">
-                                                                Certificación de
-                                                                RCP (Reanimación
-                                                                Cardiopulmonar)
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .cprCertificationCardiopulmonaryResuscitation
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="First Aid Certification">
-                                                                Certificación de
-                                                                Primeros
-                                                                Auxilios
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .firstAidCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Confined Space Entry Certification">
-                                                                Certificación de
-                                                                Entrada a
-                                                                Espacios
-                                                                Confinados
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .confinedSpaceEntryCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Scaffold Safety Certification">
-                                                                Certificación de
-                                                                Seguridad en
-                                                                Andamios
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .scaffoldSafetyCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Hazardous Materials Handling Certification">
-                                                                Certificación de
-                                                                Manejo de
-                                                                Materiales
-                                                                Peligrosos
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .hazardousMaterialsHandlingCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Fishing Vessel Safety Certification">
-                                                                Certificación de
-                                                                Seguridad en
-                                                                Embarcaciones de
-                                                                Pesca
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .fishingVesselSafetyCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Agricultural Pesticide Applicator Certification">
-                                                                Certificación de
-                                                                Aplicador de
-                                                                Pesticidas
-                                                                Agrícolas
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .agriculturalPesticideApplicatorCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Mining Safety Certification">
-                                                                Certificación de
-                                                                Seguridad en
-                                                                Minería
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .miningSafetyCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Construction Safety Certification">
-                                                                Certificación de
-                                                                Seguridad en
-                                                                Construcción
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .constructionSafetyCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Electrical Safety Certification">
-                                                                Certificación de
-                                                                Seguridad
-                                                                Eléctrica
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .electricalSafetyCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Fire Safety Certification">
-                                                                Certificación de
-                                                                Seguridad contra
-                                                                Incendios
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .fireSafetyCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Machine Guarding Certification">
-                                                                Certificación de
-                                                                Protección de
-                                                                Maquinaria
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .machineGuardingCertification
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Fall Protection Certification">
-                                                                Certificación de
-                                                                Protección
-                                                                contra Caídas
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .fallProtectionCertification
+                                                                }
                                                             </SelectItem>
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el nombre del su
-                                                certificado.
+                                                {props.certificates.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -445,7 +513,7 @@ export default function S5() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar certificado
+                                        {props.remove}
                                     </button>
                                 )}
                             </div>
@@ -460,10 +528,10 @@ export default function S5() {
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar certificado
+                            {props.add}
                         </button>
                         <h2 className="text-base font-semibold leading-7 text-white">
-                            Estado de Autorización
+                            {props.authHeader}
                         </h2>
                         <FormField
                             control={form.control}
@@ -479,8 +547,7 @@ export default function S5() {
                                     </FormControl>
                                     <div className="space-y-1 leading-none">
                                         <FormLabel className="text-white">
-                                            ¿Tiene autorización legal de
-                                            trabajar en los Estados Unidos?
+                                            {props.authorization}
                                         </FormLabel>
                                     </div>
                                 </FormItem>
@@ -490,7 +557,7 @@ export default function S5() {
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            {downloading ? <Spinner /> : "Crear Currículum"}
+                            {downloading ? <Spinner /> : props.create}
                         </Button>
                     </div>
                 </form>

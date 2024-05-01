@@ -37,6 +37,7 @@ import { AbstractIntlMessages } from "next-intl"
 
 export type S1Props = {
     backButton: string
+    general: string
     age: FormItemText
     name: FormItemText
     phoneNumber: FormItemText
@@ -120,7 +121,7 @@ export function S1(props: S1Props) {
                     </Link>
                     <div className="rounded-md m-6 py-12 px-8 md:px-56 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="font-semibold leading-7 text-white">
-                            Información General
+                            {props.general}
                         </h2>
                         <FormField
                             control={form.control}

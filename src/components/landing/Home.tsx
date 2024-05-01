@@ -8,7 +8,7 @@ export type HomeProps = {
     create: string
     assistant: string
     tos: string
-    read_more: string
+    readMore: string
 }
 const animation: MotionProps = {
     transition: {
@@ -67,7 +67,7 @@ export default function Home(home: HomeProps) {
                                     className="absolute inset-0"
                                     aria-hidden="true"
                                 />
-                                {home.read_more}{" "}
+                                {home.readMore}{" "}
                                 <span aria-hidden="true">&rarr;</span>
                             </a>
                         </div>

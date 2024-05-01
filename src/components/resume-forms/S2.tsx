@@ -29,7 +29,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-export type S2Props = {}
+import { FormItemText } from "@/utils/types"
+export type S2Props = {
+    backButton: string
+    title: string
+    education: {
+        school: FormItemText
+        country: FormItemText
+        city: FormItemText
+        degree: FormItemText
+        startYear: FormItemText
+        endYear: FormItemText
+    }
+    placeholders: {
+        diploma: string
+        ged: string
+        bachelors: string
+    }
+    completed: string
+    add: string
+    remove: string
+    nextButton: string
+}
 const educationSchema = z.object({
     school: z.string({ required_error: "Inválido." }),
     country: z.string({
@@ -55,7 +76,7 @@ const educationSchema = z.object({
 const educationsSchema = z.object({
     educations: z.array(educationSchema),
 })
-export function S2B() {
+export function S2(props: S2Props) {
     const [educations, setEducations] = useAtom(educationsAtom)
     const router = useRouter()
     // 1. Define your form.
@@ -103,11 +124,11 @@ export function S2B() {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        Atrás
+                        {props.backButton}
                     </Link>
                     <div className="rounded-md m-6 py-12 px-8 md:px-48 bg-indigo-500 flex flex-col space-y-4 items-center">
                         <h2 className="text-base font-semibold leading-7 text-white">
-                            Educación
+                            {props.title}
                         </h2>
                         {fields.map((field, index) => (
                             <div
@@ -115,7 +136,7 @@ export function S2B() {
                                 className="gap-y-4 flex flex-col md:px-8"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
-                                    Educación {index + 1}
+                                    {props.title} {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
@@ -123,16 +144,22 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Escuela
+                                                {props.education.school.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Las Palmas"
+                                                    placeholder={
+                                                        props.education.school
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra una escuela.
+                                                {
+                                                    props.education.school
+                                                        .subtitle
+                                                }
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -144,16 +171,22 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                País
+                                                {props.education.country.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Venezuela"
+                                                    placeholder={
+                                                        props.education.country
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el país.
+                                                {
+                                                    props.education.country
+                                                        .subtitle
+                                                }
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -165,16 +198,19 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Ciudad
+                                                {props.education.city.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Caracas"
+                                                    placeholder={
+                                                        props.education.city
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra la ciudad.
+                                                {props.education.city.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -186,7 +222,7 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Grado
+                                                {props.education.degree.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Select
@@ -196,27 +232,47 @@ export function S2B() {
                                                     defaultValue={field.value}
                                                 >
                                                     <SelectTrigger className="w-[180px]">
-                                                        <SelectValue placeholder="Selecciones su grado" />
+                                                        <SelectValue
+                                                            placeholder={
+                                                                props.education
+                                                                    .degree
+                                                                    .placeholder
+                                                            }
+                                                        />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
                                                             <SelectLabel></SelectLabel>
                                                             <SelectItem value="High School Diploma">
-                                                                Diploma de
-                                                                Secundaria
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .diploma
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="GED">
-                                                                GED
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .ged
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Bachelor's Degree">
-                                                                Licenciatura
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .bachelors
+                                                                }
                                                             </SelectItem>
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el grado.
+                                                {
+                                                    props.education.degree
+                                                        .subtitle
+                                                }
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -228,16 +284,26 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Año de inicio
+                                                {
+                                                    props.education.startYear
+                                                        .title
+                                                }
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="2000"
+                                                    placeholder={
+                                                        props.education
+                                                            .startYear
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el año de inicio.
+                                                {
+                                                    props.education.startYear
+                                                        .subtitle
+                                                }
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -249,16 +315,22 @@ export function S2B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Año de termino
+                                                {props.education.endYear.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="2000"
+                                                    placeholder={
+                                                        props.education.endYear
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el año de termino.
+                                                {
+                                                    props.education.endYear
+                                                        .subtitle
+                                                }
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -280,7 +352,7 @@ export function S2B() {
                                             </FormControl>
                                             <div className="space-y-1 leading-none">
                                                 <FormLabel className="text-white">
-                                                    ¿Completaste?
+                                                    {props.completed}
                                                 </FormLabel>
                                             </div>
                                         </FormItem>
@@ -295,7 +367,7 @@ export function S2B() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar educación
+                                        {props.remove}
                                     </button>
                                 )}
                             </div>
@@ -316,13 +388,13 @@ export function S2B() {
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar educación
+                            {props.add}
                         </button>
                         <Button
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Próximo
+                            {props.nextButton}
                         </Button>
                     </div>
                 </form>

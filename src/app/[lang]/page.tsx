@@ -21,7 +21,7 @@ export default function Page({ params }: { params: { lang: string } }) {
                 create={t("create")}
                 assistant={t("assistant")}
                 tos={t("tos")}
-                read_more={t("read_more")}
+                readMore={t("readMore")}
                 locale={params.lang}
             />
         </div>

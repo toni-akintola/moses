@@ -34,6 +34,7 @@ import {
     skillsAtom,
     translateAtom,
 } from "@/utils/atoms"
+import { FormItemText } from "@/utils/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import { useAtom, useSetAtom } from "jotai"
@@ -59,6 +60,37 @@ const skillsSchema = z.object({
     }),
 })
 
+export type S4Props = {
+    backButton: string
+    title: string
+    heading: string
+    skills: FormItemText
+    placeholders: {
+        driving: string
+        vehicleMaintenance: string
+        construction: string
+        plumbing: string
+        welding: string
+        equipmentOperation: string
+        heavyMachineryOperation: string
+        landscaping: string
+        recycling: string
+        fishing: string
+        agriculturalWork: string
+        mining: string
+        manufacturing: string
+        mechanicalSkills: string
+        problemSolvingSkills: string
+        technicalSkills: string
+        physicalStrengthAndEndurance: string
+        safetyProtocolsAdherence: string
+        teamworkAndCollaboration: string
+        attentionToDetail: string
+    }
+    add: string
+    remove: string
+    nextButton: string
+}
 const additionalInfoSchema = z.object({
     authorizationStatus: z.boolean({
         required_error: "Inválido.",
@@ -67,7 +99,7 @@ const additionalInfoSchema = z.object({
     certificates: z.array(certificateSchema),
 })
 
-export default function S4() {
+export default function S4(props: S4Props) {
     const [skills, setSkills] = useAtom(skillsAtom)
     const router = useRouter()
     // 1. Define your form.
@@ -92,29 +124,6 @@ export default function S4() {
 
         setSkills(values.skills)
         router.push("s5")
-
-        // try {
-        //     const response = await fetch("/api/submit-resume", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({
-        //             age: age,
-        //             name: name,
-        //             number: number,
-        //             email: email,
-        //             proficiency: proficiency,
-        //             educations: educations,
-        //             experiences: experiences,
-        //             skills: skills,
-        //             certificates: certificates,
-        //             authorizationStatus: authorizationStatus,
-        //         }),
-        //     })
-        // } catch (error) {
-        //     console.log(error)
-        // }
     }
 
     const {
@@ -138,11 +147,11 @@ export default function S4() {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        Atrás
+                        {props.backButton}
                     </Link>
                     <div className="rounded-md m-6 py-12 px-8 md:px-20 bg-indigo-500 flex flex-col space-y-8 items-center">
                         <h2 className="text-base font-semibold leading-7 text-white">
-                            Habilidades
+                            {props.title}
                         </h2>
                         {skillFields.map((skillField, index) => (
                             <div
@@ -150,7 +159,7 @@ export default function S4() {
                                 className="gap-y-4 flex flex-col"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white self-center">
-                                    Habilidad {index + 1}
+                                    {props.heading} {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
@@ -158,7 +167,7 @@ export default function S4() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Titulo
+                                                {props.skills.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Select
@@ -168,93 +177,162 @@ export default function S4() {
                                                     defaultValue={field.value}
                                                 >
                                                     <SelectTrigger className="w-56">
-                                                        <SelectValue placeholder="Habilidades" />
+                                                        <SelectValue
+                                                            placeholder={
+                                                                props.skills
+                                                                    .placeholder
+                                                            }
+                                                        />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
                                                             <SelectLabel></SelectLabel>
                                                             <SelectItem value="Driving">
-                                                                Conducción
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .driving
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Vehicle Maintenance">
-                                                                Mantenimiento de
-                                                                Vehículos
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .vehicleMaintenance
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Construction">
-                                                                Construcción
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .construction
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Plumbing">
-                                                                Fontanería
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .plumbing
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Welding">
-                                                                Soldadura
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .welding
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Equipment Operation">
-                                                                Operación de
-                                                                Equipos
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .equipmentOperation
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Heavy Machinery Operation">
-                                                                Operación de
-                                                                Maquinaria
-                                                                Pesada
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .heavyMachineryOperation
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Landscaping">
-                                                                Jardinería
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .landscaping
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Recycling">
-                                                                Reciclaje
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .recycling
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Fishing">
-                                                                Pesca
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .fishing
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Agricultural Work">
-                                                                Trabajo Agrícola
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .agriculturalWork
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Mining">
-                                                                Minería
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .mining
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Manufacturing">
-                                                                Manufactura
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .manufacturing
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Mechanical Skills">
-                                                                Habilidades
-                                                                Mecánicas
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .mechanicalSkills
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Problem-solving Skills">
-                                                                Habilidades para
-                                                                Resolver
-                                                                Problemas
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .problemSolvingSkills
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Technical Skills">
-                                                                Habilidades
-                                                                Técnicas
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .technicalSkills
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Physical Strength and Endurance">
-                                                                Fuerza y
-                                                                Resistencia
-                                                                Física
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .physicalStrengthAndEndurance
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Safety Protocols Adherence">
-                                                                Adherencia a
-                                                                Protocolos de
-                                                                Seguridad
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .safetyProtocolsAdherence
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Teamwork and Collaboration">
-                                                                Trabajo en
-                                                                Equipo y
-                                                                Colaboración
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .teamworkAndCollaboration
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="Attention to Detail">
-                                                                Atención al
-                                                                Detalle
+                                                                {
+                                                                    props
+                                                                        .placeholders
+                                                                        .attentionToDetail
+                                                                }
                                                             </SelectItem>
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el nombre del su
-                                                habilidad.
+                                                {props.skills.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -270,7 +348,7 @@ export default function S4() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar habilidad
+                                        {props.remove}
                                     </button>
                                 )}
                             </div>
@@ -285,13 +363,13 @@ export default function S4() {
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar habilidad
+                            {props.add}
                         </button>
                         <Button
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Próximo
+                            {props.nextButton}
                         </Button>
                     </div>
                 </form>

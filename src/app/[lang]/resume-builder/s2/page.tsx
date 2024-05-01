@@ -1,4 +1,4 @@
-import { S2B, S2Props } from "@/components/resume-forms/S2"
+import { S2, S2Props } from "@/components/resume-forms/S2"
 import { useMessages } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 import React from "react"
@@ -6,8 +6,19 @@ import React from "react"
 const Page = ({ params }: { params: { lang: string } }) => {
     unstable_setRequestLocale(params.lang)
     const messages = useMessages()
-    const S1Content = messages.s2 as unknown as S2Props
-    return <S2B />
+    const S2Content = messages.s2 as unknown as S2Props
+    return (
+        <S2
+            placeholders={S2Content.placeholders}
+            backButton={S2Content.backButton}
+            title={S2Content.title}
+            education={S2Content.education}
+            completed={S2Content.completed}
+            add={S2Content.add}
+            remove={S2Content.remove}
+            nextButton={S2Content.nextButton}
+        />
+    )
 }
 
 export default Page

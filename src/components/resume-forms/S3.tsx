@@ -31,6 +31,7 @@ import {
     translateAtom,
 } from "@/utils/atoms"
 import { useRouter } from "next/navigation"
+import { FormItemText } from "@/utils/types"
 
 const experienceSchema = z.object({
     employer: z.string({
@@ -63,12 +64,25 @@ const experienceSchema = z.object({
         required_error: "Inválido.",
     }),
 })
-
+export type S3Props = {
+    backButton: string
+    title: string
+    employer: FormItemText
+    jobTitle: FormItemText
+    city: FormItemText
+    country: FormItemText
+    startYear: FormItemText
+    endYear: FormItemText
+    duties: FormItemText
+    add: string
+    remove: string
+    nextButton: string
+}
 const experiencesSchema = z.object({
     experiences: z.array(experienceSchema),
 })
 
-export function S3B() {
+export function S3(props: S3Props) {
     const router = useRouter()
     const [download, setDownload] = useState(false)
     const [experiences, setExperiences] = useAtom(experiencesAtom)
@@ -124,7 +138,7 @@ export function S3B() {
                         className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
                     >
                         <ArrowLeft className="h-4 w-4 text-indigo-500" />
-                        Atrás
+                        {props.backButton}
                     </Link>
                     <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
                         {fields.map((field, index) => (
@@ -133,7 +147,7 @@ export function S3B() {
                                 className="gap-y-4 flex flex-col"
                             >
                                 <h2 className="text-base font-semibold leading-7 text-white">
-                                    Experiencia {index + 1}
+                                    {props.title} {index + 1}
                                 </h2>
                                 <FormField
                                     control={form.control}
@@ -141,16 +155,19 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Empleador
+                                                {props.employer.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Google"
+                                                    placeholder={
+                                                        props.employer
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el empleador.
+                                                {props.employer.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -162,16 +179,19 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Título Profesional
+                                                {props.jobTitle.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Ingeniero de software"
+                                                    placeholder={
+                                                        props.jobTitle
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el título profesional.
+                                                {props.jobTitle.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -183,16 +203,18 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Ciudad
+                                                {props.city.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Caracas"
+                                                    placeholder={
+                                                        props.city.placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra la ciudad.
+                                                {props.city.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -204,16 +226,19 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                País
+                                                {props.country.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Venezuela"
+                                                    placeholder={
+                                                        props.country
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra el país.
+                                                {props.country.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -225,16 +250,19 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Año de inicio
+                                                {props.startYear.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="2000"
+                                                    placeholder={
+                                                        props.startYear
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su año de inicio.
+                                                {props.startYear.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -246,16 +274,19 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Año de termino
+                                                {props.endYear.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="2000"
+                                                    placeholder={
+                                                        props.endYear
+                                                            .placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                Entra su año de termino.
+                                                {props.endYear.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -267,16 +298,18 @@ export function S3B() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-white">
-                                                Responsabilidades
+                                                {props.duties.title}
                                             </FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    placeholder="..."
+                                                    placeholder={
+                                                        props.duties.placeholder
+                                                    }
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <FormDescription className="text-white">
-                                                ¿Qué hiciste específicamente?
+                                                {props.duties.subtitle}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -291,7 +324,7 @@ export function S3B() {
                                         }}
                                     >
                                         <MinusCircle className="h-4 w-4" />
-                                        Eliminar experiencia
+                                        {props.remove}
                                     </button>
                                 )}
                             </div>
@@ -312,13 +345,13 @@ export function S3B() {
                             }}
                         >
                             <PlusCircle className="h-4 w-4" />
-                            Agregar experiencia
+                            {props.add}
                         </button>
                         <Button
                             type="submit"
                             className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
                         >
-                            Próximo
+                            {props.nextButton}
                         </Button>
                     </div>
                 </form>

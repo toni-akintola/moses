@@ -12,6 +12,7 @@ const Page = ({ params }: { params: { lang: string } }) => {
         <S1
             backButton={S1Content.backButton}
             nextButton={S1Content.nextButton}
+            general={S1Content.general}
             email={S1Content.email}
             phoneNumber={S1Content.phoneNumber}
             proficiency={S1Content.proficiency}

@@ -30,7 +30,7 @@ export function MainNav(props: NavProps) {
         >
             <div className="flex lg:flex-1">
                 <motion.a
-                    href="\"
+                    href={`/${lang}`}
                     className="-m-1.5 p-1.5 flex-row items-center flex"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -53,7 +53,7 @@ export function MainNav(props: NavProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    {/* <NavigationMenu>
+                    <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="text-black font-bold bg-clear">
@@ -67,20 +67,20 @@ export function MainNav(props: NavProps) {
                                         <ListItem href="/es" title="Español">
                                             Spanish
                                         </ListItem>
-                                        <ListItem href="/" title="中国人">
+                                        <ListItem href="/zh-CN" title="中国人">
                                             Chinese
                                         </ListItem>
-                                        <ListItem href="/" title="українська">
+                                        <ListItem href="/uk" title="українська">
                                             Ukrainian
                                         </ListItem>
-                                        <ListItem href="/" title="عربي">
+                                        <ListItem href="/ar-SA" title="عربي">
                                             Arabic
                                         </ListItem>
                                     </ul>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                         </NavigationMenuList>
-                    </NavigationMenu> */}
+                    </NavigationMenu>
                 </motion.div>
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">

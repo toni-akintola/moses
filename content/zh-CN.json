@@ -1,0 +1,200 @@
+{
+    "home": {
+        "information": "信息",
+        "language": "语言",
+        "access": "访问",
+        "create": "创建简历",
+        "assistant": "个人助理",
+        "tos": "创建帐户即表示您接受我们的服务条款。",
+        "readMore": "阅读更多"
+    },
+    "s1": {
+        "backButton": "主页",
+        "general": "一般信息",
+        "name": {
+            "title": "全名",
+            "placeholder": "约翰·史密斯",
+            "subtitle": "请输入您的全名。"
+        },
+        "age": {
+            "title": "年龄",
+            "placeholder": "24",
+            "subtitle": "请输入您的年龄。"
+        },
+        "phoneNumber": {
+            "title": "电话号码",
+            "placeholder": "(800) 555-0100",
+            "subtitle": "请输入您的电话号码。"
+        },
+        "email": {
+            "title": "电子邮箱",
+            "placeholder": "jsmith@gmail.com",
+            "subtitle": "请输入您的电子邮箱。"
+        },
+        "proficiency": {
+            "title": "英语熟练度",
+            "one": "很少",
+            "five": "流利",
+            "subtitle": "您的英语水平如何？"
+        },
+        "nextButton": "下一步"
+    },
+    "s2": {
+        "backButton": "返回",
+        "title": "教育",
+        "education": {
+            "school": {
+                "title": "学校",
+                "placeholder": "菲利普斯学院",
+                "subtitle": "请输入学校名称。"
+            },
+            "country": {
+                "title": "国家",
+                "placeholder": "美国",
+                "subtitle": "请输入国家。"
+            },
+            "city": {
+                "title": "城市",
+                "placeholder": "纽约",
+                "subtitle": "请输入城市。"
+            },
+            "degree": {
+                "title": "学位",
+                "placeholder": "选择学位",
+                "subtitle": "请输入学位。"
+            },
+            "startYear": {
+                "title": "开始年份",
+                "placeholder": "2000",
+                "subtitle": "请输入开始年份。"
+            },
+            "endYear": {
+                "title": "结束年份",
+                "placeholder": "2000",
+                "subtitle": "请输入结束年份。"
+            }
+        },
+        "placeholders": {
+            "diploma": "高中毕业文凭",
+            "ged": "GED",
+            "bachelors": "学士学位"
+        },
+        "completed": "已完成？",
+        "add": "添加教育",
+        "remove": "删除教育",
+        "nextButton": "下一步"
+    },
+    "s3": {
+        "backButton": "返回",
+        "title": "经验",
+        "employer": {
+            "title": "雇主",
+            "placeholder": "谷歌",
+            "subtitle": "请输入雇主名称。"
+        },
+        "jobTitle": {
+            "title": "职位名称",
+            "placeholder": "软件工程师",
+            "subtitle": "请输入职位名称。"
+        },
+        "city": {
+            "title": "城市",
+            "placeholder": "纽约",
+            "subtitle": "请输入城市。"
+        },
+        "country": {
+            "title": "国家",
+            "placeholder": "纽约",
+            "subtitle": "请输入国家。"
+        },
+        "startYear": {
+            "title": "开始年份",
+            "placeholder": "2000",
+            "subtitle": "请输入开始年份。"
+        },
+        "endYear": {
+            "title": "结束年份",
+            "placeholder": "2000",
+            "subtitle": "请输入结束年份。"
+        },
+        "duties": {
+            "title": "职责",
+            "placeholder": "...",
+            "subtitle": "您具体做了些什么？"
+        },
+        "add": "添加经验",
+        "remove": "删除经验",
+        "nextButton": "下一步"
+    },
+    "s4": {
+        "backButton": "返回",
+        "title": "技能",
+        "heading": "技能",
+        "skills": {
+            "title": "技能",
+            "placeholder": "技能",
+            "subtitle": "选择一种技能。"
+        },
+        "placeholders": {
+            "driving": "驾驶",
+            "vehicleMaintenance": "车辆维护",
+            "construction": "建筑",
+            "plumbing": "管道工程",
+            "welding": "焊接",
+            "equipmentOperation": "设备操作",
+            "heavyMachineryOperation": "重型机械操作",
+            "landscaping": "景观设计",
+            "recycling": "回收",
+            "fishing": "捕鱼",
+            "agriculturalWork": "农业工作",
+            "mining": "采矿",
+            "manufacturing": "制造",
+            "mechanicalSkills": "机械技能",
+            "problemSolvingSkills": "解决问题的能力",
+            "technicalSkills": "技术技能",
+            "physicalStrengthAndEndurance": "体力与耐力",
+            "safetyProtocolsAdherence": "遵守安全规程",
+            "teamworkAndCollaboration": "团队合作",
+            "attentionToDetail": "关注细节"
+        },
+        "add": "添加技能",
+        "remove": "删除技能",
+        "nextButton": "下一步"
+    },
+    "s5": {
+        "backButton": "返回",
+        "title": "证书",
+        "heading": "证书",
+        "certificates": {
+            "title": "标题",
+            "placeholder": "证书",
+            "subtitle": "选择一种证书。"
+        },
+        "placeholders": {
+            "cdlCommercialDriversLicense": "商业驾驶执照（CDL）",
+            "aseCertificationAutomotiveServiceExcellence": "ASE 认证（汽车服务卓越）",
+            "oshaCertificationOccupationalSafetyAndHealthAdministration": "OSHA 认证（职业安全与健康管理局）",
+            "weldingCertification": "焊接认证",
+            "forkliftOperatorCertification": "叉车操作员认证",
+            "heavyEquipmentOperatorCertification": "重型设备操作员认证",
+            "cprCertificationCardiopulmonaryResuscitation": "心肺复苏认证",
+            "firstAidCertification": "急救认证",
+            "confinedSpaceEntryCertification": "狭窄空间进入认证",
+            "scaffoldSafetyCertification": "脚手架安全认证",
+            "hazardousMaterialsHandlingCertification": "危险材料处理认证",
+            "fishingVesselSafetyCertification": "捕鱼船只安全认证",
+            "agriculturalPesticideApplicatorCertification": "农业农药应用认证",
+            "miningSafetyCertification": "采矿安全认证",
+            "constructionSafetyCertification": "建筑安全认证",
+            "electricalSafetyCertification": "电气安全认证",
+            "fireSafetyCertification": "消防安全认证",
+            "machineGuardingCertification": "机械防护认证",
+            "fallProtectionCertification": "防跌落认证"
+        },
+        "add": "添加证书",
+        "remove": "删除证书",
+        "authHeader": "授权状态",
+        "authorization": "您是否获得在美国工作的合法授权？",
+        "create": "创建简历"
+    }
+}

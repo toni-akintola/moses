@@ -1,0 +1,200 @@
+{
+    "home": {
+        "information": "Інформація",
+        "language": "Мова",
+        "access": "Доступ",
+        "create": "Створити резюме",
+        "assistant": "Персональний асистент",
+        "tos": "Створюючи обліковий запис, ви погоджуєтеся з нашими умовами обслуговування.",
+        "readMore": "Читати далі"
+    },
+    "s1": {
+        "backButton": "Головна",
+        "general": "Загальна інформація",
+        "name": {
+            "title": "Повне ім'я",
+            "placeholder": "Джон Сміт",
+            "subtitle": "Введіть ваше повне ім'я."
+        },
+        "age": {
+            "title": "Вік",
+            "placeholder": "24",
+            "subtitle": "Введіть ваш вік."
+        },
+        "phoneNumber": {
+            "title": "Номер телефону",
+            "placeholder": "(800) 555-0100",
+            "subtitle": "Введіть ваш номер телефону."
+        },
+        "email": {
+            "title": "Електронна адреса",
+            "placeholder": "jsmith@gmail.com",
+            "subtitle": "Введіть вашу електронну адресу."
+        },
+        "proficiency": {
+            "title": "Знання англійської мови",
+            "one": "Маленький",
+            "five": "Вільний",
+            "subtitle": "Наскільки добре ви знаєте англійську?"
+        },
+        "nextButton": "Далі"
+    },
+    "s2": {
+        "backButton": "Назад",
+        "title": "Освіта",
+        "education": {
+            "school": {
+                "title": "Школа",
+                "placeholder": "Академія Філліпса",
+                "subtitle": "Введіть школу."
+            },
+            "country": {
+                "title": "Країна",
+                "placeholder": "США",
+                "subtitle": "Введіть країну."
+            },
+            "city": {
+                "title": "Місто",
+                "placeholder": "Нью-Йорк",
+                "subtitle": "Введіть місто."
+            },
+            "degree": {
+                "title": "Ступінь",
+                "placeholder": "Виберіть ступінь",
+                "subtitle": "Введіть ступінь."
+            },
+            "startYear": {
+                "title": "Рік початку",
+                "placeholder": "2000",
+                "subtitle": "Введіть рік початку."
+            },
+            "endYear": {
+                "title": "Рік закінчення",
+                "placeholder": "2000",
+                "subtitle": "Введіть рік закінчення."
+            }
+        },
+        "placeholders": {
+            "diploma": "Атестат про середню освіту",
+            "ged": "GED",
+            "bachelors": "Бакалаврат"
+        },
+        "completed": "Завершено?",
+        "add": "Додати освіту",
+        "remove": "Видалити освіту",
+        "nextButton": "Далі"
+    },
+    "s3": {
+        "backButton": "Назад",
+        "title": "Досвід",
+        "employer": {
+            "title": "Роботодавець",
+            "placeholder": "Google",
+            "subtitle": "Введіть роботодавця."
+        },
+        "jobTitle": {
+            "title": "Назва посади",
+            "placeholder": "Інженер-програміст",
+            "subtitle": "Введіть назву посади."
+        },
+        "city": {
+            "title": "Місто",
+            "placeholder": "Нью-Йорк",
+            "subtitle": "Введіть місто."
+        },
+        "country": {
+            "title": "Країна",
+            "placeholder": "Нью-Йорк",
+            "subtitle": "Введіть країну."
+        },
+        "startYear": {
+            "title": "Рік початку",
+            "placeholder": "2000",
+            "subtitle": "Введіть рік початку."
+        },
+        "endYear": {
+            "title": "Рік закінчення",
+            "placeholder": "2000",
+            "subtitle": "Введіть рік закінчення."
+        },
+        "duties": {
+            "title": "Обов'язки",
+            "placeholder": "...",
+            "subtitle": "Що ви конкретно робили?"
+        },
+        "add": "Додати досвід",
+        "remove": "Видалити досвід",
+        "nextButton": "Далі"
+    },
+    "s4": {
+        "backButton": "Назад",
+        "title": "Навички",
+        "heading": "Навичка",
+        "skills": {
+            "title": "Навичка",
+            "placeholder": "Навички",
+            "subtitle": "Виберіть навичку."
+        },
+        "placeholders": {
+            "driving": "Водіння",
+            "vehicleMaintenance": "Технічне обслуговування автомобіля",
+            "construction": "Будівництво",
+            "plumbing": "Сантехніка",
+            "welding": "Зварювання",
+            "equipmentOperation": "Експлуатація обладнання",
+            "heavyMachineryOperation": "Експлуатація важкої техніки",
+            "landscaping": "Ландшафтний дизайн",
+            "recycling": "Переробка",
+            "fishing": "Риболовля",
+            "agriculturalWork": "Сільськогосподарська робота",
+            "mining": "Гірничодобувна промисловість",
+            "manufacturing": "Виробництво",
+            "mechanicalSkills": "Механічні навички",
+            "problemSolvingSkills": "Навички вирішення проблем",
+            "technicalSkills": "Технічні навички",
+            "physicalStrengthAndEndurance": "Фізична сила і витривалість",
+            "safetyProtocolsAdherence": "Дотримання протоколів безпеки",
+            "teamworkAndCollaboration": "Робота в команді та співпраця",
+            "attentionToDetail": "Увага до деталей"
+        },
+        "add": "Додати навичку",
+        "remove": "Видалити навичку",
+        "nextButton": "Далі"
+    },
+    "s5": {
+        "backButton": "Назад",
+        "title": "Сертифікати",
+        "heading": "Сертифікат",
+        "certificates": {
+            "title": "Назва",
+            "placeholder": "Сертифікати",
+            "subtitle": "Виберіть сертифікат."
+        },
+        "placeholders": {
+            "cdlCommercialDriversLicense": "Комерційне водійське посвідчення (CDL)",
+            "aseCertificationAutomotiveServiceExcellence": "Сертифікат ASE (Автомобільний сервісний стандарт)",
+            "oshaCertificationOccupationalSafetyAndHealthAdministration": "Сертифікат OSHA (Управління з охорони праці та техніки безпеки)",
+            "weldingCertification": "Сертифікат зварювання",
+            "forkliftOperatorCertification": "Сертифікат оператора навантажувача",
+            "heavyEquipmentOperatorCertification": "Сертифікат оператора важкої техніки",
+            "cprCertificationCardiopulmonaryResuscitation": "Сертифікат із серцево-легеневої реанімації",
+            "firstAidCertification": "Сертифікат першої медичної допомоги",
+            "confinedSpaceEntryCertification": "Сертифікат на вхід у замкнуті простори",
+            "scaffoldSafetyCertification": "Сертифікат безпеки підмостків",
+            "hazardousMaterialsHandlingCertification": "Сертифікат з обробки небезпечних матеріалів",
+            "fishingVesselSafetyCertification": "Сертифікат з безпеки рибальських суден",
+            "agriculturalPesticideApplicatorCertification": "Сертифікат з обробки сільськогосподарських пестицидів",
+            "miningSafetyCertification": "Сертифікат з безпеки гірничодобувної промисловості",
+            "constructionSafetyCertification": "Сертифікат з безпеки будівництва",
+            "electricalSafetyCertification": "Сертифікат з електробезпеки",
+            "fireSafetyCertification": "Сертифікат з пожежної безпеки",
+            "machineGuardingCertification": "Сертифікат з охорони обладнання",
+            "fallProtectionCertification": "Сертифікат із захисту від падіння"
+        },
+        "add": "Додати сертифікат",
+        "remove": "Видалити сертифікат",
+        "authHeader": "Статус авторизації",
+        "authorization": "Чи маєте ви юридичний дозвіл на роботу в США?",
+        "create": "Створити резюме"
+    }
+}

@@ -1,5 +1,4 @@
 "use client"
-import MyResume from "@/components/resume-preview/Resume"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {

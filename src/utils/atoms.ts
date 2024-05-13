@@ -193,7 +193,7 @@ export const translateAtom = atom(null, async (get, set) => {
 })
 
 const htmlTemplate = `
-<div class="h-[297mm] w-[210mm] bg-gray-100 p-12">
+<div class="h-full w-full bg-gray-100 p-12">
   <div class="flex">
     <div class="mt-16 grid w-[40%] border-2 border-gray-400 p-10">
       <div class="grid gap-8">

@@ -611,7 +611,7 @@ const placeholderTemplate = {
       <div class="pl-10 pt-10">
         <p class="text-2xl font-semibold">Work Experience</p>
         {{#each experiences}}
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex flex-col pt-4">
           <p class="text-sm font-light">{{employer}}</p>
           <p class="text-xs font-light">{{startYear}} - {{endYear}}</p>
         </div>
@@ -651,9 +651,9 @@ const placeholderTemplate = {
 }
 
 const htmlTemplate = `
-<div class="h-[297mm] w-[210mm] bg-gray-100 p-12">
+<div class="h-full w-full flex p-2">
   <div class="flex">
-    <div class="mt-16 grid w-[40%] border-2 border-gray-400 p-10">
+    <div class="mt-16 flex border-2 border-gray-400 p-10">
       <div class="grid gap-8">
         <p class="text-4xl font-semibold">{{name}}</p>
       </div>
@@ -684,7 +684,7 @@ const htmlTemplate = `
       <div class="pl-10 pt-10">
         <p class="text-2xl font-semibold">Education History</p>
         {{#each educations}}
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex flex-col pt-4">
           <p class="text-sm font-light">{{degree}}</p>
           <p class="text-xs font-light">{{endYear}}</p>
         </div>

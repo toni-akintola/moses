@@ -60,9 +60,13 @@ const experienceSchema = z.object({
         .min(4, {
             message: "Inválido.",
         }),
-    duties: z.string({
-        required_error: "Inválido.",
-    }),
+    duties: z
+        .string({
+            required_error: "Inválido.",
+        })
+        .min(3, {
+            message: "Inválido.",
+        }),
 })
 export type S3Props = {
     backButton: string
@@ -105,7 +109,7 @@ export function S3(props: S3Props) {
                     country: "",
                     startYear: "",
                     endYear: "",
-                    duties: "",
+                    duties: "...",
                 },
             ],
         },

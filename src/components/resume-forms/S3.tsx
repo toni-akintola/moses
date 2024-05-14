@@ -319,7 +319,7 @@ export function S3(props: S3Props) {
                                         </FormItem>
                                     )}
                                 />
-                                {fields.length >= 2 && (
+                                {fields.length >= 2 && fields.length <= 3 && (
                                     <button
                                         type="button"
                                         className="text-white py-1 px-4 rounded-md flex flex-row items-center gap-x-3"

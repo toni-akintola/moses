@@ -653,9 +653,9 @@ const placeholderTemplate = {
 const htmlTemplate = `
 <div class="h-full w-full flex p-2">
   <div class="flex">
-    <div class="mt-16 flex border-2 border-gray-400 p-10">
+    <div class="mt-16 grid border-2 border-gray-400 p-10">
       <div class="grid gap-8">
-        <p class="text-4xl font-semibold">{{name}}</p>
+        <p class="text-2xl text-wrap font-semibold">{{name}}</p>
       </div>
       <div class="pt-5">
         <p class="text-2xl font-medium">Contact</p>
@@ -667,17 +667,11 @@ const htmlTemplate = `
       <div class="flex flex-col gap-5 pt-5 pb-5">
         <p class="text-2xl font-medium">Skills</p>
         <div class="flex flex-col gap-2">
-          <p class="">English Proficiency: {{proficiency}}</p>
+          <p class="text-xs">English Proficiency: {{proficiency}}</p>
           {{#each skills}}
-          <p class="">{{title}}</p>
+          <p class="text-xs">{{title}}</p>
           {{/each}}
         </div>
-      </div>
-      <p class="text-2xl font-medium">Cerfificates</p>
-      <div class="flex flex-col gap-5 pt-5">
-        {{#each certificates}}
-        <p class="">{{title}}</p>
-        {{/each}}
       </div>
     </div>
     <div>
@@ -705,6 +699,12 @@ const htmlTemplate = `
           <p class="text-sm font-light">{{duties}}</p>
         </div>
         {{/each}}
+        <p class="text-2xl font-medium">Cerfificates</p>
+      <div class="flex flex-col gap-5 pt-5">
+        {{#each certificates}}
+        <p class="text-xs">{{title}}</p>
+        {{/each}}
+      </div>
       </div>
     </div>
   </div>

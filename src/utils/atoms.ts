@@ -193,11 +193,11 @@ export const translateAtom = atom(null, async (get, set) => {
 })
 
 const htmlTemplate = `
-<div class="h-full w-full bg-gray-100 p-12">
+<div class="h-full w-full flex p-2">
   <div class="flex">
-    <div class="mt-16 grid border-b-2 border-t-2 border-gray-400 p-10">
+    <div class="mt-16 grid border-2 border-gray-400 p-10">
       <div class="grid gap-8">
-        <p class="text-4xl font-semibold">{{name}}</p>
+        <p class="text-2xl text-wrap font-semibold">{{name}}</p>
       </div>
       <div class="pt-5">
         <p class="text-2xl font-medium">Contact</p>
@@ -209,16 +209,16 @@ const htmlTemplate = `
       <div class="flex flex-col gap-5 pt-5 pb-5">
         <p class="text-2xl font-medium">Skills</p>
         <div class="flex flex-col gap-2">
-          <p class="">English Proficiency: {{proficiency}}</p>
+          <p class="text-xs">English Proficiency: {{proficiency}}</p>
           {{#each skills}}
-          <p class="">{{title}}</p>
+          <p class="text-xs">{{title}}</p>
           {{/each}}
         </div>
       </div>
       <p class="text-2xl font-medium">Cerfificates</p>
       <div class="flex flex-col gap-5 pt-5">
         {{#each certificates}}
-        <p class="">{{title}}</p>
+        <p class="text-xs">{{title}}</p>
         {{/each}}
       </div>
     </div>
@@ -226,7 +226,7 @@ const htmlTemplate = `
       <div class="pl-10 pt-10">
         <p class="text-2xl font-semibold">Education History</p>
         {{#each educations}}
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex flex-row justify-between pt-4">
           <p class="text-sm font-light">{{degree}}</p>
           <p class="text-xs font-light">{{endYear}}</p>
         </div>

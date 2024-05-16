@@ -19,6 +19,7 @@ const config = {
         },
         extend: {
             colors: {
+                pIndigo: "#6366f1",
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",

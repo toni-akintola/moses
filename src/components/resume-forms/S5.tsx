@@ -699,7 +699,7 @@ const htmlTemplate = `
           <p class="text-sm font-light">{{duties}}</p>
         </div>
         {{/each}}
-        <p class="text-2xl font-medium">Cerfificates</p>
+        <p class="text-2xl font-medium">Certificates</p>
       <div class="flex flex-col gap-5 pt-5">
         {{#each certificates}}
         <p class="text-xs">{{title}}</p>

@@ -59,12 +59,12 @@ export default function Auth(props: Props) {
                             </ul>
                         </div>
                     </div>
-                    <div className="bg-pIndigo h-full flex flex-col text-white rounded-md items-center justify-start p-4">
+                    <div className="bg-laserBlue h-full flex flex-col text-white rounded-md items-center justify-start p-4">
                         <div className="justify-between items-center flex flex-row w-full">
                             <p className="font-semibold">
                                 Already have an account?
                             </p>
-                            <Button className="text-pIndigo bg-white place-self-end">
+                            <Button className="text-laserBlue bg-white place-self-end">
                                 Login
                             </Button>
                         </div>
@@ -159,7 +159,7 @@ export default function Auth(props: Props) {
                                             )}
                                         />
                                     </div>
-                                    <Button className="bg-white text-pIndigo w-full">
+                                    <Button className="bg-white text-laserBlue w-full">
                                         Next
                                     </Button>
                                     <div className="flex-row flex items-center space-x-3">

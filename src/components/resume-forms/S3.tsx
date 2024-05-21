@@ -135,16 +135,16 @@ export function S3(props: S3Props) {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="rounded-md p-4 border bg-indigo-500 flex flex-col"
+                    className="rounded-md p-4 border bg-laserBlue flex flex-col"
                 >
                     <Link
                         href="s2"
-                        className="flex flex-row w-1/4 items-center justify-center text-indigo-500 bg-white rounded-md p-1 mb-2"
+                        className="flex flex-row w-1/4 items-center justify-center text-laserBlue bg-white rounded-md p-1 mb-2"
                     >
-                        <ArrowLeft className="h-4 w-4 text-indigo-500" />
+                        <ArrowLeft className="h-4 w-4 text-laserBlue" />
                         {props.backButton}
                     </Link>
-                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-indigo-500 flex flex-col space-y-8 items-center">
+                    <div className="rounded-md m-6 py-12 px-16 md:px-48 bg-laserBlue flex flex-col space-y-8 items-center">
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
@@ -353,7 +353,7 @@ export function S3(props: S3Props) {
                         </button>
                         <Button
                             type="submit"
-                            className="bg-white text-indigo-500 py-2 px-4 rounded-md hover:bg-gray-200"
+                            className="bg-white text-laserBlue py-2 px-4 rounded-md hover:bg-gray-200"
                         >
                             {props.nextButton}
                         </Button>

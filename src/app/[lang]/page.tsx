@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { lang: string } }) {
     const t = useTranslations("home")
 
     return (
-        <div className="flex h-screen justify-center bg-black">
+        <div className="flex justify-center overflow-y-auto h-screen bg-slate-950">
             <header className="absolute inset-x-0 top-0 z-50">
                 <MainNav
                     information={t("information")}

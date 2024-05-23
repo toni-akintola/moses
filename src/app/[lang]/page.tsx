@@ -9,17 +9,16 @@ export default function Page({ params }: { params: { lang: string } }) {
     const t = useTranslations("home")
 
     return (
-        <div className="flex justify-center overflow-y-auto h-screen bg-slate-950">
-            <header className="absolute inset-x-0 top-0 z-50">
-                <MainNav
-                    information={t("information")}
-                    language={t("language")}
-                    access={t("access")}
-                />
-            </header>
+        <div className="flex justify-center overflow-y-auto h-screen bg-slate-950 flex-col">
+            
             <Home
+                information={t("information")}
+                language={t("language")}
+                access={t("access")}
                 create={t("create")}
+                createSubtitle={t("createSubtitle")}
                 assistant={t("assistant")}
+                assistantSubtitle={t("assistantSubtitle")}
                 title={t("title")}
                 tos={t("tos")}
                 readMore={t("readMore")}

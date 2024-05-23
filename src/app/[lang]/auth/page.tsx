@@ -30,36 +30,9 @@ export default function Auth(props: Props) {
     const form = useForm()
     return (
         <div>
-            <div className=" justify-center items-center h-screen p-12">
-                <div className="container rounded-md grid grid-cols-2 h-full">
-                    <div className="p-10 h-full flex-col justify-between text-white rounded-md bg-muted">
-                        <Logo locale="en" />
-                        <div className="flex flex-col items-center">
-                            <h2 className="text-black font-semibold text-xl">
-                                Individual
-                            </h2>
-                            <ul className="self-start text-black list-disc">
-                                <li>Individual accounts...</li>
-                            </ul>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <h2 className="text-black font-semibold text-xl">
-                                Enterprise
-                            </h2>
-                            <ul className="self-start text-black list-disc">
-                                <li>Enterprise accounts...</li>
-                            </ul>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <h2 className="text-black font-semibold text-xl">
-                                Employer
-                            </h2>
-                            <ul className="self-start text-black list-disc">
-                                <li>Employer accounts...</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="bg-laserBlue h-full flex flex-col text-white rounded-md items-center justify-start p-4">
+            <div className="justify-center items-center h-screen p-12">
+                <div className="container rounded-md h-full">
+                    <div className="bg-laserBlue h-full flex flex-col text-white rounded-md items-center justify-center p-4">
                         <div className="justify-between items-center flex flex-row w-full">
                             <p className="font-semibold">
                                 Already have an account?

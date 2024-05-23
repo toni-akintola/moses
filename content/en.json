@@ -4,8 +4,10 @@
         "language": "Language",
         "access": "Access",
         "create": "Create Resume",
+        "createSubtitle": "Build a robust resume in any language. We'll translate it into English and format it for you.",
         "title": "Resume builder and personal assistant for the world",
         "assistant": "Personal Assistant",
+        "assistantSubtitle": "Access your free AI personal assistant here. Powered by OpenAI's GPT-3.5 turbo model.",
         "tos": "By creating an account, you accept our terms of service.",
         "readMore": "Read more"
     },

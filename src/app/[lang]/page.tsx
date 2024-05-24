@@ -10,7 +10,6 @@ export default function Page({ params }: { params: { lang: string } }) {
 
     return (
         <div className="flex justify-center overflow-y-auto h-screen bg-slate-950 flex-col">
-            
             <Home
                 information={t("information")}
                 language={t("language")}

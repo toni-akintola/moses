@@ -75,7 +75,7 @@ export default function Home(home: HomeProps) {
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl mt-10"
+                        className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-7xl mt-10"
                     >
                         {home.title}
                     </motion.h1>

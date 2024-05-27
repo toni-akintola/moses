@@ -56,7 +56,6 @@ const S1Schema = z.object({
     email: z.string().email({
         message: "Inválido.",
     }),
-
     numberSlider: z.number(),
 })
 

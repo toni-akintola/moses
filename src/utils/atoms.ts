@@ -1,3 +1,4 @@
+import { download } from "@/lib/utils"
 import {
     Certificate,
     Education,
@@ -64,11 +65,11 @@ export const experiencesAtom = atom<Experience[]>([
     {
         id: 1,
         employer: "",
-        job: "",
+        jobTitle: "",
         city: "",
         country: "",
-        startYear: "",
-        endYear: "",
+        startDate: "",
+        endDate: "",
         duties: "",
     },
 ])
@@ -76,22 +77,6 @@ export const experiencesAtom = atom<Experience[]>([
 export const authorizationStatusAtom = atom<boolean>(false)
 export const skillsAtom = atom<Skill[]>([{ id: 1, title: "" }])
 export const certificatesAtom = atom<Certificate[]>([{ id: 1, title: "" }])
-const download = async (payload: BodyPayload) => {
-    try {
-        const response = await requestDownload(payload)
-        if (response.error) {
-            console.log(response.error)
-        }
-        if (response.requestId) {
-            const onComplete = (error: string = "") => {}
-            downloadWithRetry(
-                response.requestId,
-                onComplete,
-                payload.template?.data.name
-            )
-        }
-    } catch (error) {}
-}
 
 /**
  * api utils
@@ -192,8 +177,7 @@ export const translateAtom = atom(null, async (get, set) => {
     }
 })
 
-const htmlTemplate = `
-<div class="h-full w-full flex p-2">
+const htmlTemplate = `<div class="h-full w-full flex p-2">
   <div class="flex">
     <div class="mt-16 grid border-2 border-gray-400 p-10">
       <div class="grid gap-8">

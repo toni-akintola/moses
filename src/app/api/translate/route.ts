@@ -30,11 +30,11 @@ export async function POST(request: Request) {
             const translatedExperience: Experience = {
                 ...experience,
                 employer: await translateText(experience.employer),
-                job: await translateText(experience.job),
+                jobTitle: await translateText(experience.jobTitle),
                 city: await translateText(experience.city),
                 country: await translateText(experience.country),
-                startYear: await translateText(experience.startYear),
-                endYear: await translateText(experience.endYear),
+                startDate: await translateText(experience.startDate),
+                endDate: await translateText(experience.endDate),
                 duties: await translateText(experience.duties),
             }
             return translatedExperience

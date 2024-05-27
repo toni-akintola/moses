@@ -11,11 +11,11 @@ export interface Education {
 export interface Experience {
     id?: number
     employer: string
-    job: string
+    jobTitle: string
     city: string
     country: string
-    startYear: string
-    endYear: string
+    startDate: string
+    endDate: string
     duties: string
 }
 
@@ -53,4 +53,35 @@ export type FormItemText = {
     title: string
     placeholder: string
     subtitle: string
+}
+
+export type BodyPayload = {
+    html?: string // must be undefined if 'template' prop is used
+    format?: // applicable only for pdf, default a4
+    | "LETTER"
+        | "LEGAL"
+        | "TABLOID"
+        | "LEDGER"
+        | "A0"
+        | "A1"
+        | "A2"
+        | "A3"
+        | "A4"
+        | "A5"
+        | "A6"
+        | "Letter"
+        | "Legal"
+        | "Tabloid"
+        | "Ledger"
+    output?: "pdf" | "png" | "jpeg" | "webp" // default pdf
+    size?: {
+        scale?: string | number // default 2, can be up to 6
+        width?: string | number // default 210
+        height?: string | number // default 297
+        unit?: "px" | "in" | "cm" | "mm" // default mm
+    }
+    template?: {
+        html: string
+        data: Record<string, any>
+    }
 }

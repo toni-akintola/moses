@@ -2,17 +2,16 @@
 // import ThemeToggle from '@/components/layout/ThemeToggle/theme-toggle';
 import { cn } from "@/lib/utils"
 import { MobileSidebar } from "./mobile-sidebar"
-import Link from "next/link"
 import Logo from "@/components/landing/Logo"
 import { useParams } from "next/navigation"
 
 export default function Header() {
-    const params = useParams()
+    const { lang } = useParams()
     return (
         <div className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur">
             <nav className="flex h-14 items-center justify-between px-4">
                 <div className="hidden lg:block">
-                    <Logo locale={params.lang as string} />
+                    <Logo locale={lang as string} />
                 </div>
                 <div className={cn("block lg:!hidden")}>
                     <MobileSidebar />

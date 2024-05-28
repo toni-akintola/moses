@@ -36,7 +36,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
-import { cn, download } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { BodyPayload, FormItemText, ResumeSubmission } from "@/utils/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react"
@@ -293,8 +293,13 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 }),
             })
             const data: ResumeSubmission = await response.json()
-            const template = { html: htmlTemplate, data: data }
-            const payload: BodyPayload = { output: "pdf", template: template }
+            // const template = { html: htmlTemplate, data: data }
+            const payload: BodyPayload = {
+                output: "pdf",
+                html: htmlTemplate,
+                data: data,
+                engine: "handlebars",
+            }
             console.log(payload)
             await download(payload)
             console.log("downloaded")
@@ -993,7 +998,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
-                                                                    Start date
+                                                                    {
+                                                                        s3Content
+                                                                            .startYear
+                                                                            .title
+                                                                    }
                                                                 </FormLabel>
                                                                 <FormControl>
                                                                     <Input
@@ -1014,7 +1023,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
-                                                                    End date
+                                                                    {
+                                                                        s3Content
+                                                                            .endYear
+                                                                            .title
+                                                                    }
                                                                 </FormLabel>
                                                                 <FormControl>
                                                                     <Input
@@ -1035,7 +1048,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
-                                                                    Job country
+                                                                    {
+                                                                        s3Content
+                                                                            .country
+                                                                            .title
+                                                                    }
                                                                 </FormLabel>
                                                                 <Select
                                                                     disabled={
@@ -1057,7 +1074,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                                 defaultValue={
                                                                                     field.value
                                                                                 }
-                                                                                placeholder="Select your job country"
+                                                                                placeholder={
+                                                                                    s3Content
+                                                                                        .country
+                                                                                        .placeholder
+                                                                                }
                                                                             />
                                                                         </SelectTrigger>
                                                                     </FormControl>
@@ -1092,7 +1113,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
-                                                                    Job city
+                                                                    {
+                                                                        s3Content
+                                                                            .city
+                                                                            .title
+                                                                    }
                                                                 </FormLabel>
                                                                 <Select
                                                                     disabled={
@@ -1114,7 +1139,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                                 defaultValue={
                                                                                     field.value
                                                                                 }
-                                                                                placeholder="Select your job city"
+                                                                                placeholder={
+                                                                                    s3Content
+                                                                                        .city
+                                                                                        .placeholder
+                                                                                }
                                                                             />
                                                                         </SelectTrigger>
                                                                     </FormControl>
@@ -1396,7 +1425,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                                     .mechanicalSkills
                                                                             }
                                                                         </SelectItem>
-                                                                        <SelectItem value="Problem-solving Skills">
+                                                                        <SelectItem value="Problem-Solving Skills">
                                                                             {
                                                                                 s4Content
                                                                                     .placeholders
@@ -1704,11 +1733,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                         onCheckedChange={
                                                                             field.onChange
                                                                         }
-                                                                        className="data-[state=checked]:bg-white data-[state=checked]:text-laserBlue border-white"
+                                                                        className="data-[state=checked]:bg-laserBlue data-[state=checked]:text-white border"
                                                                     />
                                                                 </FormControl>
                                                                 <div className="space-y-1 leading-none">
-                                                                    <FormLabel className="text-white">
+                                                                    <FormLabel className="text-black">
                                                                         {
                                                                             s5Content.authorization
                                                                         }
@@ -1806,6 +1835,75 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             </div>
         </>
     )
+}
+/**
+ * resume api utils
+ */
+
+const apiUrl = `https://api.tailwindstream.io`
+
+export function downloadToBrowser(blob: Blob, name?: string) {
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = name + " Resume" + "." + blob.type.split("/")[1]
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+}
+
+export async function requestDownload(payload: BodyPayload) {
+    const response = await fetch(apiUrl + "/request", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+    })
+    return (await response.json()) as { requestId?: string; error?: string }
+}
+
+// Main retry logic
+const RETRY_INTERVAL_MS = 2500
+const MAX_RETRIES = 4
+
+export const download = async (payload: BodyPayload) => {
+    try {
+        const response = await requestDownload(payload)
+        if (response.error) {
+            console.log(response.error)
+        }
+        if (response.requestId) {
+            const onComplete = (error: string = "") => {}
+            downloadWithRetry(
+                response.requestId,
+                onComplete,
+                payload.data?.name
+            )
+        }
+    } catch (error) {}
+}
+export async function downloadWithRetry(
+    requestId: string,
+    onComplete: (error?: string) => void,
+    name?: string
+) {
+    let retried = 0
+    const intervalId = setInterval(async () => {
+        const response = await fetch(`${apiUrl}/request/${requestId}/download`)
+        if (response.ok) {
+            const blob = await response.blob()
+            clearInterval(intervalId)
+            downloadToBrowser(blob, name)
+            onComplete()
+        } else {
+            console.log(response)
+            retried++
+            if (retried >= MAX_RETRIES) {
+                clearInterval(intervalId)
+                onComplete("Download failed.")
+            }
+            console.error("Download failed, retrying...")
+        }
+    }, RETRY_INTERVAL_MS)
 }
 
 export const htmlTemplate = `<div class="h-full w-full flex p-2">

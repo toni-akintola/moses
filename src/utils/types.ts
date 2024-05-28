@@ -54,34 +54,31 @@ export type FormItemText = {
     placeholder: string
     subtitle: string
 }
+type Size =
+    | "LETTER"
+    | "LEGAL"
+    | "TABLOID"
+    | "LEDGER"
+    | "A0"
+    | "A1"
+    | "A2"
+    | "A3"
+    | "A4"
+    | "A5"
+    | "A6"
+    | "Letter"
+    | "Legal"
+    | "Tabloid"
+    | "Ledger"
 
 export type BodyPayload = {
-    html?: string // must be undefined if 'template' prop is used
-    format?: // applicable only for pdf, default a4
-    | "LETTER"
-        | "LEGAL"
-        | "TABLOID"
-        | "LEDGER"
-        | "A0"
-        | "A1"
-        | "A2"
-        | "A3"
-        | "A4"
-        | "A5"
-        | "A6"
-        | "Letter"
-        | "Legal"
-        | "Tabloid"
-        | "Ledger"
-    output?: "pdf" | "png" | "jpeg" | "webp" // default pdf
-    size?: {
-        scale?: string | number // default 2, can be up to 6
-        width?: string | number // default 210
-        height?: string | number // default 297
-        unit?: "px" | "in" | "cm" | "mm" // default mm
-    }
-    template?: {
-        html: string
-        data: Record<string, any>
-    }
+    html: string
+    output?: "pdf" | "png" | "jpeg" | "webp"
+    size?: Size | string // or i.e 12x10in
+    scale?: number // 1 - 6
+    engine?: "handlebars" | "ejs"
+    data?: Record<string, any> // required if engine provided
+    style?: string
+    scripts?: { src: string }[]
+    links?: { href: string }[]
 }

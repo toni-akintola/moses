@@ -1,5 +1,5 @@
 "use client"
-import { MainNav } from "@/components/landing/Banner"
+import { MainNav } from "@/components/layout/banner"
 import { LazyMotion, MotionProps, motion, domAnimation, m } from "framer-motion"
 import AnimText from "@/components/motion/AnimText"
 import { SparklesCore } from "@/components/ui/sparkles"

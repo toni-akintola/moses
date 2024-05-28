@@ -1,5 +1,4 @@
 "use client"
-import { MainNav } from "@/components/landing/Banner"
 import Logo from "@/components/landing/Logo"
 import { createBrowserClient } from "@supabase/ssr"
 import { Button } from "@/components/ui/button"
@@ -71,7 +70,7 @@ export default function Auth(props: Props) {
     }
     return (
         <div>
-            <div className="justify-center items-center h-screen p-12">
+            <div className="justify-center items-center h-screen md:px-40 md:py-16">
                 <div className="container rounded-md h-full">
                     <div className="bg-laserBlue h-full flex flex-col text-white rounded-md items-center justify-center p-4">
                         <div className="flex flex-col items-center justify-center">

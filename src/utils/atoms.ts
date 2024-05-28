@@ -1,4 +1,3 @@
-import { download } from "@/lib/utils"
 import {
     Certificate,
     Education,
@@ -45,7 +44,6 @@ export const nameAtom = atom<string>("")
 export const numberAtom = atom<string>("")
 export const emailAtom = atom<string>("")
 export const proficiencyAtom = atom<string>("")
-export const downloadAtom = atom(false)
 
 // Education Atoms
 export const educationsAtom = atom<Education[]>([
@@ -78,6 +76,9 @@ export const authorizationStatusAtom = atom<boolean>(false)
 export const skillsAtom = atom<Skill[]>([{ id: 1, title: "" }])
 export const certificatesAtom = atom<Certificate[]>([{ id: 1, title: "" }])
 
+// State Atoms
+export const downloadAtom = atom(false)
+export const isMinimizedAtom = atom(false)
 /**
  * api utils
  */
@@ -131,51 +132,6 @@ async function downloadWithRetry(
         }
     }, RETRY_INTERVAL_MS)
 }
-export const translateAtom = atom(null, async (get, set) => {
-    set(downloadAtom, true)
-    const age = get(ageAtom)
-    const name = get(nameAtom)
-    const number = get(numberAtom)
-    const email = get(emailAtom)
-    const proficiency = get(proficiencyAtom)
-    const skills = get(skillsAtom)
-    const authorizationStatus = get(authorizationStatusAtom)
-    const educations = get(educationsAtom)
-    const experiences = get(experiencesAtom)
-    const certificates = get(certificatesAtom)
-    try {
-        const response = await fetch("/api/translate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                age: age,
-                name: name,
-                number: number,
-                email: email,
-                proficiency: proficiency,
-                educations: educations,
-                experiences: experiences,
-                skills: skills,
-                certificates: certificates,
-                authorizationStatus: authorizationStatus,
-            }),
-        })
-        const data: ResumeSubmission = await response.json()
-        set(educationsAtom, data.educations)
-        set(experiencesAtom, data.experiences)
-        const template = { html: htmlTemplate, data: data }
-        const payload: BodyPayload = { output: "pdf", template: template }
-        await download(payload)
-        return data
-    } catch (error) {
-        console.log(error)
-        set(downloadAtom, false)
-    } finally {
-        set(downloadAtom, false)
-    }
-})
 
 const htmlTemplate = `<div class="h-full w-full flex p-2">
   <div class="flex">

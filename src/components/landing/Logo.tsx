@@ -13,7 +13,7 @@ export default function Logo(props: LogoProps) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
             >
-                <h1 className="lg:text-2xl font-extrabold tracking-tight text-indigo-500">
+                <h1 className="lg:text-2xl font-extrabold tracking-tight text-laserBlue">
                     Èxodo
                 </h1>
             </motion.a>

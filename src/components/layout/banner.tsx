@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import React, { useState } from "react"
 import { useParams } from "next/navigation"
+import Logo from "@/components/landing/Logo"
 
 export type NavProps = {
     information: string
@@ -29,18 +30,7 @@ export function MainNav(props: NavProps) {
             className="flex w-full items-center justify-between p-6 lg:px-8"
             aria-label="Global"
         >
-            <div className="flex lg:flex-1">
-                <motion.a
-                    href={`/${lang}`}
-                    className="-m-1.5 p-1.5 flex-row items-center flex"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    <h1 className="lg:text-2xl font-medium tracking-tight text-laserBlue">
-                        Èxodo
-                    </h1>
-                </motion.a>
-            </div>
+            <Logo locale={lang as string} />
             <div className="flex space-x-2 items-center">
                 {/* <motion.a
                     href="#"

@@ -27,6 +27,8 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
+import { redirect, useParams } from "next/navigation"
+import { createClient } from "@/utils/supabase/client"
 
 type Props = {}
 
@@ -42,10 +44,8 @@ const formSchema = z.object({
 })
 
 export default function Auth(props: Props) {
-    const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    const supabase = createClient()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -55,6 +55,9 @@ export default function Auth(props: Props) {
         },
     })
 
+    const params = useParams()
+    const lang = params.lang as string
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
@@ -63,7 +66,7 @@ export default function Auth(props: Props) {
             email: values.email,
             password: values.password,
             options: {
-                emailRedirectTo: "/en",
+                emailRedirectTo: `/${lang}/core`,
             },
         })
         console.log(data, error)
@@ -93,6 +96,7 @@ export default function Auth(props: Props) {
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
+                                                            className="text-black"
                                                             placeholder="email@example.com"
                                                             {...field}
                                                         />
@@ -179,8 +183,8 @@ export default function Auth(props: Props) {
                                         <hr className="bg-gray-300 h-0.5 w-16"></hr>
                                     </div>
                                     <div className="flex flex-col space-y-3 w-full">
-                                        <GoogleButton />
-                                        <MicrosoftButton />
+                                        <GoogleButton lang={lang} />
+                                        <MicrosoftButton lang={lang} />
                                     </div>
                                     <div className="justify-between items-center flex flex-row w-full">
                                         <Link

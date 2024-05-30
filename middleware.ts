@@ -50,5 +50,9 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: ["/", "/(en|es)/:page*"],
+    matcher: [
+        "/",
+        "/(en|es)/:page*",
+        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    ],
 }

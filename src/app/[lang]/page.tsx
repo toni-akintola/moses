@@ -1,4 +1,3 @@
-import { MainNav } from "@/components/landing/Banner"
 import { useTranslations } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 import Home from "@/components/landing/Home"

@@ -5,15 +5,17 @@ const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-export const GoogleButton = () => {
+export const GoogleButton = (lang: any) => {
     return (
         <button
             className="flex w-full items-center rounded bg-white px-4 py-4 text-sm font-bold drop-shadow-md hover:bg-gray-50"
             onClick={async () => {
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: "google",
+                    options: {
+                        redirectTo: `http://localhost:3000/auth/callback`,
+                    },
                 })
-
                 console.log(data, error)
             }}
         >
@@ -52,7 +54,7 @@ const GoogleLogo = () => (
     </svg>
 )
 
-export const MicrosoftButton = () => {
+export const MicrosoftButton = (lang: any) => {
     return (
         <button
             className="flex w-full items-center rounded bg-white px-4 py-4 text-sm font-bold drop-shadow-md hover:bg-gray-50"
@@ -61,6 +63,7 @@ export const MicrosoftButton = () => {
                     provider: "azure",
                     options: {
                         scopes: "email",
+                        redirectTo: `/${lang}/core`,
                     },
                 })
 

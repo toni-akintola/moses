@@ -3,9 +3,23 @@
 import { MessagesContext } from "@/context/messages"
 import { cn } from "@/utils/helpers"
 import { FC, HTMLAttributes, useContext } from "react"
-import MarkdownLite from "./MarkdownLite"
-
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import Balancer from "react-wrap-balancer"
 interface ChatMessagesProps extends HTMLAttributes<HTMLDivElement> {}
+const wrappedText = (text: string) =>
+    text.split("\n").map((line, i) => (
+        <span key={i}>
+            {line}
+            <br />
+        </span>
+    ))
 
 const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
     const { messages } = useContext(MessagesContext)
@@ -21,12 +35,32 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
         >
             <div className="flex-1 flex-grow" />
             {inverseMessages.map((message) => {
+                const wrappedMessage = wrappedText(message.text)
                 return (
                     <div
                         className="chat-message"
                         key={`${message.id}-${message.id}`}
                     >
-                        <div
+                        <Card className="mb-2">
+                            <CardHeader>
+                                <CardTitle
+                                    className={
+                                        message.isUserMessage
+                                            ? "text-slate-700 dark:text-slate-400"
+                                            : "text-laserBlue dark:text-cyan-700"
+                                    }
+                                >
+                                    {message.isUserMessage ? "You" : "Moses"}
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="text-sm">
+                                <Balancer>{wrappedMessage}</Balancer>
+                            </CardContent>
+                            <CardFooter>
+                                <CardDescription className="w-full"></CardDescription>
+                            </CardFooter>
+                        </Card>
+                        {/* <div
                             className={cn("flex items-end", {
                                 "justify-end": message.isUserMessage,
                             })}
@@ -53,7 +87,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                     <MarkdownLite text={message.text} />
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 )
             })}

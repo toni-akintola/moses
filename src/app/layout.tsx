@@ -3,6 +3,7 @@ import { Sofia_Sans } from "next/font/google"
 import "./globals.css"
 import Layout from "@/components/chat/Providers"
 import { Analytics } from "@vercel/analytics/react"
+import NextTopLoader from "nextjs-toploader"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 const lato = Sofia_Sans({
     subsets: ["greek"],
@@ -26,6 +27,7 @@ export default function RootLayout({
             <body className={`${lato.className} `}>
                 <Analytics />
                 <SpeedInsights />
+                <NextTopLoader />
                 <Layout>{children}</Layout>
             </body>
         </html>

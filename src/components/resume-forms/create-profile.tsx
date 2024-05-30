@@ -56,7 +56,7 @@ const educationSchema = z.object({
     degree: z.string({ required_error: "Inválido." }).min(1, {
         message: "Invalido.",
     }),
-    endYear: z.string().refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
+    endDate: z.string().refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
         message: "End date should be in the format YYYY-MM-DD",
     }),
 })
@@ -123,9 +123,37 @@ export const profileSchema = z.object({
 })
 
 export type ProfileFormValues = z.infer<typeof profileSchema>
+
+export type ResumeBuilderProps = {
+    titleOne: string
+    titleTwo: string
+    subtitleOne: string
+    subtitleTwo: string
+    actionOne: string
+    actionTwo: string
+    stepOneTitle: string
+    stepOneSubtitle: string
+    stepTwoTitle: string
+    stepTwoSubtitle: string
+    stepThreeTitle: string
+    stepThreeSubtitle: string
+    stepFourTitle: string
+    stepFourSubtitle: string
+    stepFiveTitle: string
+    stepFiveSubtitle: string
+    stepSixTitle: string
+    stepSixSubtitle: string
+    loadingOne: string
+    loadingTwo: string
+    loadingThree: string
+    loadingFour: string
+    loadingFive: string
+    loadingSix: string
+}
 interface ProfileFormType {
     initialData: any | null
     categories: any
+    resumeBuilder: ResumeBuilderProps
     S1Props: S1Props
     S2Props: S2Props
     S3Props: S3Props
@@ -136,6 +164,7 @@ interface ProfileFormType {
 export const CreateProfileOne: React.FC<ProfileFormType> = ({
     initialData,
     categories,
+    resumeBuilder: resume,
     S1Props: s1Content,
     S2Props: s2Content,
     S3Props: s3Content,
@@ -166,11 +195,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [downloadState, setDownloadState] = useState(false)
-    const title = initialData ? "Edit information" : "Build your resume"
-    const description = initialData
-        ? "Edit your information."
-        : "To create your resume, we first need some basic information about you."
-    const toastMessage = initialData ? "Product updated." : "Product created."
+    const title = initialData ? resume.titleOne : resume.titleTwo
+    const description = initialData ? resume.subtitleOne : resume.subtitleTwo
     const action = initialData ? "Save changes" : "Create"
     const [previousStep, setPreviousStep] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
@@ -194,7 +220,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             {
                 school: "",
                 degree: "",
-                endYear: "",
+                endDate: "",
                 country: "",
                 city: "",
             },
@@ -323,8 +349,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
 
     const steps = [
         {
-            id: "Step 1",
-            name: "Personal Information",
+            id: resume.stepOneTitle,
+            name: resume.stepOneSubtitle,
             fields: [
                 "firstname",
                 "lastname",
@@ -336,21 +362,21 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             ],
         },
         {
-            id: "Step 2",
-            name: "Educational Information",
+            id: resume.stepTwoTitle,
+            name: resume.stepTwoSubtitle,
             fields: educationsFields
                 ?.map((_, index) => [
                     `educations.${index}.school`,
                     `educations.${index}.city`,
                     `educations.${index}.country`,
                     `educations.${index}.degree`,
-                    `educations.${index}.enddate`,
+                    `educations.${index}.endDate`,
                 ])
                 .flat(),
         },
         {
-            id: "Step 3",
-            name: "Professional Information",
+            id: resume.stepThreeTitle,
+            name: resume.stepThreeSubtitle,
             // fields are mapping and flattening for the error to be trigger  for the dynamic fields
             fields: experiencesFields
                 ?.map((_, index) => [
@@ -366,21 +392,21 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 .flat(),
         },
         {
-            id: "Step 4",
-            name: "Skills",
+            id: resume.stepFourTitle,
+            name: resume.stepFourSubtitle,
             fields: skillsFields
                 ?.map((_, index) => [`skills.${index}.title`])
                 .flat(),
         },
         {
-            id: "Step 5",
-            name: "Certificates",
+            id: resume.stepFiveTitle,
+            name: resume.stepFiveSubtitle,
             // fields are mapping and flattening for the error to be trigger  for the dynamic fields
             fields: certificatesFields
                 ?.map((_, index) => [`certificates.${index}.title`])
                 .flat(),
         },
-        { id: "Step 6", name: "Complete" },
+        { id: resume.stepSixTitle, name: resume.stepSixSubtitle },
     ]
 
     const next = async () => {
@@ -407,9 +433,6 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             setCurrentStep((step) => step - 1)
         }
     }
-
-    const countries = [{ id: "wow", name: "india" }]
-    const cities = [{ id: "2", name: "kerala" }]
 
     return (
         <>
@@ -764,7 +787,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
 
                                                     <FormField
                                                         control={form.control}
-                                                        name={`educations.${index}.endYear`}
+                                                        name={`educations.${index}.endDate`}
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
@@ -883,7 +906,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                             educationsAppend({
                                                 school: "",
                                                 degree: "",
-                                                endYear: "",
+                                                endDate: "",
                                                 country: "",
                                                 city: "",
                                             })
@@ -1054,55 +1077,13 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                             .title
                                                                     }
                                                                 </FormLabel>
-                                                                <Select
+                                                                <Input
+                                                                    type="text"
                                                                     disabled={
                                                                         loading
                                                                     }
-                                                                    onValueChange={
-                                                                        field.onChange
-                                                                    }
-                                                                    value={
-                                                                        field.value
-                                                                    }
-                                                                    defaultValue={
-                                                                        field.value
-                                                                    }
-                                                                >
-                                                                    <FormControl>
-                                                                        <SelectTrigger>
-                                                                            <SelectValue
-                                                                                defaultValue={
-                                                                                    field.value
-                                                                                }
-                                                                                placeholder={
-                                                                                    s3Content
-                                                                                        .country
-                                                                                        .placeholder
-                                                                                }
-                                                                            />
-                                                                        </SelectTrigger>
-                                                                    </FormControl>
-                                                                    <SelectContent>
-                                                                        {countries.map(
-                                                                            (
-                                                                                country
-                                                                            ) => (
-                                                                                <SelectItem
-                                                                                    key={
-                                                                                        country.id
-                                                                                    }
-                                                                                    value={
-                                                                                        country.id
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        country.name
-                                                                                    }
-                                                                                </SelectItem>
-                                                                            )
-                                                                        )}
-                                                                    </SelectContent>
-                                                                </Select>
+                                                                    {...field}
+                                                                />
                                                                 <FormMessage />
                                                             </FormItem>
                                                         )}
@@ -1119,55 +1100,13 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                             .title
                                                                     }
                                                                 </FormLabel>
-                                                                <Select
+                                                                <Input
+                                                                    type="text"
                                                                     disabled={
                                                                         loading
                                                                     }
-                                                                    onValueChange={
-                                                                        field.onChange
-                                                                    }
-                                                                    value={
-                                                                        field.value
-                                                                    }
-                                                                    defaultValue={
-                                                                        field.value
-                                                                    }
-                                                                >
-                                                                    <FormControl>
-                                                                        <SelectTrigger>
-                                                                            <SelectValue
-                                                                                defaultValue={
-                                                                                    field.value
-                                                                                }
-                                                                                placeholder={
-                                                                                    s3Content
-                                                                                        .city
-                                                                                        .placeholder
-                                                                                }
-                                                                            />
-                                                                        </SelectTrigger>
-                                                                    </FormControl>
-                                                                    <SelectContent>
-                                                                        {cities.map(
-                                                                            (
-                                                                                city
-                                                                            ) => (
-                                                                                <SelectItem
-                                                                                    key={
-                                                                                        city.id
-                                                                                    }
-                                                                                    value={
-                                                                                        city.id
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        city.name
-                                                                                    }
-                                                                                </SelectItem>
-                                                                            )
-                                                                        )}
-                                                                    </SelectContent>
-                                                                </Select>
+                                                                    {...field}
+                                                                />
                                                                 <FormMessage />
                                                             </FormItem>
                                                         )}
@@ -1941,7 +1880,7 @@ export const htmlTemplate = `<div class="h-full w-full flex p-2">
         {{#each educations}}
         <div class="flex flex-row justify-between pt-4">
           <p class="text-sm font-light">{{degree}}</p>
-          <p class="text-xs font-light">{{endYear}}</p>
+          <p class="text-xs font-light">{{endDate}}</p>
         </div>
         <div>
           <p class="pt-1 font-medium">{{school}} | {{city}}, {{country}}</p>
@@ -1953,10 +1892,10 @@ export const htmlTemplate = `<div class="h-full w-full flex p-2">
         {{#each experiences}}
         <div class="flex items-center justify-between pt-4">
           <p class="text-sm font-light">{{employer}}</p>
-          <p class="text-xs font-light">{{startYear}} - {{endYear}}</p>
+          <p class="text-xs font-light">{{startDate}} - {{endDate}}</p>
         </div>
         <div>
-          <p class="pt-1 font-medium">{{job}} | {{city}}, {{country}}</p>
+          <p class="pt-1 font-medium">{{jobTitle}} | {{city}}, {{country}}</p>
           <p class="text-sm font-light">{{duties}}</p>
         </div>
         {{/each}}

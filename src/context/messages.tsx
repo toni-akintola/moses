@@ -5,7 +5,7 @@ import { Message } from "@/lib/message"
 const defaultValue = [
     {
         id: nanoid(),
-        text: "¿Hola, como puedo ayudarte?",
+        text: "Hi! I am Moses, your personal assistant. Please ask me any questions you want.",
         isUserMessage: false,
     },
 ]

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu"
 
 import { cn } from "@/lib/utils"
-import { Copy, WaypointsIcon } from "lucide-react"
+import { ChevronDownCircle, Copy, WaypointsIcon } from "lucide-react"
 import { motion } from "framer-motion"
 import {
     NavigationMenu,
@@ -16,6 +16,19 @@ import {
 import React, { useState } from "react"
 import { useParams } from "next/navigation"
 import Logo from "@/components/landing/Logo"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 export type NavProps = {
     information: string
@@ -44,7 +57,49 @@ export function MainNav(props: NavProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <NavigationMenu>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="bg-transparent hover:bg-transparent flex flex-row justify-center">
+                                <h2 className="text-laserBlue md:text-lg">
+                                    {props.language}
+                                </h2>
+                                <ChevronDownCircle className="text-laserBlue h-4" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>Change language</DialogTitle>
+                                <DialogDescription>
+                                    Choose your language below.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                <Link href="/en" title="English" className="">
+                                    English
+                                </Link>
+                                <Link href="/es" title="Español">
+                                    Spanish
+                                </Link>
+                                <Link href="/zh-CN" title="中国人">
+                                    Chinese
+                                </Link>
+                                <Link href="/uk" title="українська">
+                                    Ukrainian
+                                </Link>
+                                <Link href="/ar-SA" title="عربي">
+                                    Arabic
+                                </Link>
+                            </ul>
+                            <DialogFooter className="sm:justify-start">
+                                <DialogClose asChild>
+                                    <Button type="button" variant="secondary">
+                                        Close
+                                    </Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                    {/* <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="text-laserBlue font-medium bg-clear">
@@ -71,12 +126,12 @@ export function MainNav(props: NavProps) {
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                         </NavigationMenuList>
-                    </NavigationMenu>
+                    </NavigationMenu> */}
                 </motion.div>
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a
-                    href={`${lang}/resume-builder/s1`}
+                    href={`/${lang}/resume-builder`}
                     className="text-sm font-medium tracking-tight leading-6 text-white bg-laserBlue rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

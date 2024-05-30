@@ -9,50 +9,57 @@ import Image from "next/image"
 import { TracingBeam } from "@/components/ui/tracing-beam"
 import { PinContainer } from "@/components/ui/3d-pin"
 import Link from "next/link"
-export type HomeProps = {
+export type HomeMessage = {
     information: string
     language: string
     access: string
-    locale: string
+    title: string
     create: string
     createSubtitle: string
-    title: string
     assistant: string
     assistantSubtitle: string
-    tos: string
-    readMore: string
+    scrollOneTitle: string
+    scrollOneDescription: string
+    scrollOneCaption: string
+    scrollTwoTitle: string
+    scrollTwoDescription: string
+    scrollTwoCaption: string
+    scrollThreeTitle: string
+    scrollThreeDescription: string
+    scrollThreeCaption: string
+}
+export type HomeProps = {
+    home: HomeMessage
+    locale: string
 }
 
-export default function Home(home: HomeProps) {
+export default function Home({ home, locale }: HomeProps) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
     const content = [
         {
-            title: "Deep learning powered resume builder",
-            description:
-                "Thanks to DeepL's state of the art language translation technology, our resume builder can translate your information from any source language into English.",
+            title: home.scrollOneTitle,
+            description: home.scrollOneDescription,
             content: (
                 <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-                    Language-agnostic
+                    {home.scrollOneCaption}
                 </div>
             ),
         },
         {
-            title: "AI personal assistant",
-            description:
-                "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+            title: home.scrollTwoTitle,
+            description: home.scrollTwoDescription,
             content: (
                 <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-                    At your service
+                    {home.scrollTwoCaption}
                 </div>
             ),
         },
         {
-            title: "Supply and demand marketplace",
-            description:
-                "Note: this feature is currently still in development. Exodo matches candidates and employers based on candidate qualifications and employer requirements.",
+            title: home.scrollThreeTitle,
+            description: home.scrollThreeDescription,
             content: (
                 <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--violet-500),var(--cyan-500))] flex items-center justify-center text-white">
-                    Matches candidates with employers
+                    {home.scrollThreeCaption}
                 </div>
             ),
         },
@@ -82,10 +89,10 @@ export default function Home(home: HomeProps) {
                 </div>
             </LampContainer>
             <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">
-                <Link href={`${home.locale}/resume-builder/s1`}>
+                <Link href={`${locale}/resume-builder`}>
                     <PinContainer
                         title={home.create}
-                        href={`${home.locale}/resume-builder/s1`}
+                        href={`${locale}/resume-builder`}
                     >
                         <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem] ">
                             <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-slate-100">
@@ -100,10 +107,10 @@ export default function Home(home: HomeProps) {
                         </div>
                     </PinContainer>
                 </Link>
-                <Link href={`${home.locale}/moses`}>
+                <Link href={`${locale}/moses`}>
                     <PinContainer
                         title={home.assistant}
-                        href={`${home.locale}/moses`}
+                        href={`${locale}/moses`}
                     >
                         <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem]">
                             <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-slate-100">

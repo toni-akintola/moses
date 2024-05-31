@@ -3,7 +3,7 @@ export interface Education {
     id?: number
     school: string
     degree: string
-    endYear: string
+    endDate: string
     country: string
     city: string
     completed: boolean

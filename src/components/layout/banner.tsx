@@ -66,29 +66,59 @@ export function MainNav(props: NavProps) {
                                 <ChevronDownCircle className="text-laserBlue h-4" />
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-md">
+                        <DialogContent className="flex flex-col">
                             <DialogHeader>
                                 <DialogTitle>Change language</DialogTitle>
                                 <DialogDescription>
                                     Choose your language below.
                                 </DialogDescription>
                             </DialogHeader>
-                            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                <Link href="/en" title="English" className="">
+                            <ul className="grid gap-3 p-6 grid-cols-2">
+                                <motion.a
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    href="/en"
+                                    title="English"
+                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
+                                >
                                     English
-                                </Link>
-                                <Link href="/es" title="Español">
+                                </motion.a>
+                                <motion.a
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    href="/es"
+                                    title="Español"
+                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
+                                >
                                     Spanish
-                                </Link>
-                                <Link href="/zh-CN" title="中国人">
+                                </motion.a>
+                                <motion.a
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    href="/zh-CN"
+                                    title="中国人"
+                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
+                                >
                                     Chinese
-                                </Link>
-                                <Link href="/uk" title="українська">
+                                </motion.a>
+                                <motion.a
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    href="/uk"
+                                    title="українська"
+                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
+                                >
                                     Ukrainian
-                                </Link>
-                                <Link href="/ar-SA" title="عربي">
+                                </motion.a>
+                                <motion.a
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    href="/ar-SA"
+                                    title="عربي"
+                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
+                                >
                                     Arabic
-                                </Link>
+                                </motion.a>
                             </ul>
                             <DialogFooter className="sm:justify-start">
                                 <DialogClose asChild>

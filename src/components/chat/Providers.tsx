@@ -11,7 +11,6 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
     const queryClient = new QueryClient()
-
     return (
         <QueryClientProvider client={queryClient}>
             <Provider>

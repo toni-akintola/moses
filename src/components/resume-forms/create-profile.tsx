@@ -1,9 +1,4 @@
 "use client"
-import { S1Props } from "@/components/resume-forms/S1"
-import { S2Props } from "@/components/resume-forms/S2"
-import { S3Props } from "@/components/resume-forms/S3"
-import { S4Props } from "@/components/resume-forms/S4"
-import { S5Props } from "@/components/resume-forms/S5"
 import {
     Accordion,
     AccordionContent,
@@ -36,7 +31,9 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
+import { delay } from "@/utils/helpers"
 import { BodyPayload, FormItemText, ResumeSubmission } from "@/utils/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react"
@@ -46,15 +43,15 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 
 const educationSchema = z.object({
-    school: z.string({ required_error: "Inválido." }),
+    school: z.string({ required_error: "Please enter a school" }),
     country: z.string({
-        required_error: "Inválido.",
+        required_error: "Please enter a country",
     }),
     city: z.string({
-        required_error: "Inválido.",
+        required_error: "Please enter a city",
     }),
-    degree: z.string({ required_error: "Inválido." }).min(1, {
-        message: "Invalido.",
+    degree: z.string().min(1, {
+        message: "Please enter a degree",
     }),
     endDate: z.string().refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
         message: "End date should be in the format YYYY-MM-DD",
@@ -63,42 +60,36 @@ const educationSchema = z.object({
 
 const skillsSchema = z.object({
     title: z.string({
-        required_error: "Inválido.",
+        required_error: "Required",
     }),
 })
 
 const certificateSchema = z.object({
     title: z.string({
-        required_error: "Inválido.",
+        required_error: "Required",
     }),
 })
 
 export const profileSchema = z.object({
-    firstName: z
-        .string()
-        .min(3, { message: "Product Name must be at least 3 characters" }),
-    lastName: z
-        .string()
-        .min(3, { message: "Product Name must be at least 3 characters" }),
-    age: z.string().min(1, {
-        message: "Inválido.",
+    firstName: z.string().min(1, { message: "Must be at least 1 character" }),
+    lastName: z.string().min(1, { message: "Must be at least 1 character" }),
+    age: z.string().min(2, {
+        message: "Invalid",
     }),
-    email: z
-        .string()
-        .email({ message: "Product Name must be at least 3 characters" }),
+    email: z.string().email({ message: "Must be at least 1 character" }),
     phoneNumber: z.coerce.number(),
     numberSlider: z.number(),
     educations: z.array(educationSchema),
     // experiences array is for the dynamic fields
     experiences: z.array(
         z.object({
-            country: z.string().min(1, { message: "Please select a category" }),
-            city: z.string().min(1, { message: "Please select a category" }),
-            jobTitle: z.string().min(3, {
-                message: "Product Name must be at least 3 characters",
+            country: z.string().min(1, { message: "Please enter a country" }),
+            city: z.string().min(1, { message: "Please enter a city" }),
+            jobTitle: z.string().min(1, {
+                message: "Please enter a title",
             }),
-            employer: z.string().min(3, {
-                message: "Product Name must be at least 3 characters",
+            employer: z.string().min(1, {
+                message: "Please specify an employer",
             }),
             startDate: z
                 .string()
@@ -111,19 +102,138 @@ export const profileSchema = z.object({
                     message: "End date should be in the format YYYY-MM-DD",
                 }),
             duties: z.string({
-                required_error: "Inválido.",
+                required_error: "Required",
             }),
         })
     ),
     skills: z.array(skillsSchema),
     certificates: z.array(certificateSchema),
     authorizationStatus: z.boolean({
-        required_error: "Must specify.",
+        required_error: "Must specify",
     }),
 })
 
 export type ProfileFormValues = z.infer<typeof profileSchema>
+export type S1Props = {
+    backButton: string
+    general: string
+    age: FormItemText
+    name: {
+        title: string
+        placeholderOne: string
+        placeholderTwo: string
+        subtitle: string
+    }
+    phoneNumber: FormItemText
+    email: FormItemText
+    proficiency: { title: string; one: string; five: string; subtitle: string }
+    nextButton: string
+}
 
+export type S2Props = {
+    backButton: string
+    title: string
+    highSchool: string
+    university: string
+    education: {
+        school: FormItemText
+        country: FormItemText
+        city: FormItemText
+        degree: FormItemText
+        startYear: FormItemText
+        endYear: FormItemText
+    }
+    placeholders: {
+        diploma: string
+        ged: string
+        bachelors: string
+        none: string
+    }
+    completed: string
+    add: string
+    remove: string
+    nextButton: string
+}
+
+export type S3Props = {
+    backButton: string
+    title: string
+    employer: FormItemText
+    jobTitle: FormItemText
+    city: FormItemText
+    country: FormItemText
+    startYear: FormItemText
+    endYear: FormItemText
+    duties: FormItemText
+    add: string
+    remove: string
+    nextButton: string
+}
+
+export type S4Props = {
+    backButton: string
+    title: string
+    heading: string
+    skills: FormItemText
+    placeholders: {
+        driving: string
+        vehicleMaintenance: string
+        construction: string
+        plumbing: string
+        welding: string
+        equipmentOperation: string
+        heavyMachineryOperation: string
+        landscaping: string
+        recycling: string
+        fishing: string
+        agriculturalWork: string
+        mining: string
+        manufacturing: string
+        mechanicalSkills: string
+        problemSolvingSkills: string
+        technicalSkills: string
+        physicalStrengthAndEndurance: string
+        safetyProtocolsAdherence: string
+        teamworkAndCollaboration: string
+        attentionToDetail: string
+    }
+    add: string
+    remove: string
+    nextButton: string
+}
+
+export type S5Props = {
+    backButton: string
+    title: string
+    heading: string
+    certificates: FormItemText
+    placeholders: {
+        cdlCommercialDriversLicense: string
+        aseCertificationAutomotiveServiceExcellence: string
+        oshaCertificationOccupationalSafetyAndHealthAdministration: string
+        weldingCertification: string
+        forkliftOperatorCertification: string
+        heavyEquipmentOperatorCertification: string
+        cprCertificationCardiopulmonaryResuscitation: string
+        firstAidCertification: string
+        confinedSpaceEntryCertification: string
+        scaffoldSafetyCertification: string
+        hazardousMaterialsHandlingCertification: string
+        fishingVesselSafetyCertification: string
+        agriculturalPesticideApplicatorCertification: string
+        miningSafetyCertification: string
+        constructionSafetyCertification: string
+        electricalSafetyCertification: string
+        fireSafetyCertification: string
+        machineGuardingCertification: string
+        fallProtectionCertification: string
+    }
+    add: string
+    remove: string
+    authHeader: string
+    authorization: string
+    create: string
+}
 export type ResumeBuilderProps = {
     titleOne: string
     titleTwo: string
@@ -149,6 +259,8 @@ export type ResumeBuilderProps = {
     loadingFour: string
     loadingFive: string
     loadingSix: string
+    error: string
+    errorDescription: string
 }
 interface ProfileFormType {
     initialData: any | null
@@ -173,22 +285,22 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
 }) => {
     const loadingStates = [
         {
-            text: "Compiling responses",
+            text: resume.loadingOne,
         },
         {
-            text: "Translating responses",
+            text: resume.loadingTwo,
         },
         {
-            text: "Filling resume",
+            text: resume.loadingThree,
         },
         {
-            text: "Formatting resume",
+            text: resume.loadingFour,
         },
         {
-            text: "Preparing download",
+            text: resume.loadingFive,
         },
         {
-            text: "Download complete",
+            text: resume.loadingSix,
         },
     ]
 
@@ -197,11 +309,12 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     const [downloadState, setDownloadState] = useState(false)
     const title = initialData ? resume.titleOne : resume.titleTwo
     const description = initialData ? resume.subtitleOne : resume.subtitleTwo
-    const action = initialData ? "Save changes" : "Create"
+    const action = initialData ? resume.actionOne : resume.actionTwo
     const [previousStep, setPreviousStep] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
     const [data, setData] = useState({})
     const delta = currentStep - previousStep
+    const { toast } = useToast()
 
     const defaultValues = {
         numberSlider: 1,
@@ -328,12 +441,16 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             }
             console.log(payload)
             await download(payload)
-            console.log("downloaded")
             return data
         } catch (error) {
             console.log(error)
             setDownloadState(false)
+            toast({
+                title: resume.error,
+                description: resume.errorDescription,
+            })
         } finally {
+            delay(2000)
             setDownloadState(false)
         }
     }
@@ -354,6 +471,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             fields: [
                 "firstname",
                 "lastname",
+                "age",
                 "email",
                 "contactno",
                 "numberSlider",
@@ -526,7 +644,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                     disabled={loading}
                                                     placeholder={
                                                         s1Content.name
-                                                            .placeholder
+                                                            .placeholderOne
                                                     }
                                                     {...field}
                                                 />
@@ -548,7 +666,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                     disabled={loading}
                                                     placeholder={
                                                         s1Content.name
-                                                            .placeholder
+                                                            .placeholderTwo
                                                     }
                                                     {...field}
                                                 />
@@ -912,7 +1030,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                             })
                                         }
                                     >
-                                        Add More
+                                        {s2Content.add}
                                     </Button>
                                 </div>
                             </>
@@ -1167,7 +1285,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                             })
                                         }
                                     >
-                                        Add More
+                                        {s3Content.add}
                                     </Button>
                                 </div>
                             </>
@@ -1429,7 +1547,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                             })
                                         }
                                     >
-                                        Add More
+                                        {s4Content.add}
                                     </Button>
                                 </div>
                             </>
@@ -1453,19 +1571,17 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                 )}
                                             >
                                                 {`${s5Content.heading} ${index + 1}`}
-                                                {certificatesFields.length >
-                                                    1 && (
-                                                    <Button
-                                                        variant="outline"
-                                                        size="icon"
-                                                        className="absolute right-8"
-                                                        onClick={() =>
-                                                            skillsRemove(index)
-                                                        }
-                                                    >
-                                                        <Trash2Icon className="h-4 w-4 " />
-                                                    </Button>
-                                                )}
+
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="absolute right-8"
+                                                    onClick={() =>
+                                                        skillsRemove(index)
+                                                    }
+                                                >
+                                                    <Trash2Icon className="h-4 w-4 " />
+                                                </Button>
 
                                                 {errors?.experiences?.[
                                                     index
@@ -1702,20 +1818,16 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                             })
                                         }
                                     >
-                                        Add More
+                                        {s5Content.add}
                                     </Button>
                                 </div>
                             </>
                         )}
                         {currentStep === 5 && (
                             <div>
-                                <h1>Completed</h1>
-                                <pre className="whitespace-pre-wrap">
-                                    {JSON.stringify(data)}
-                                </pre>
                                 <Button
                                     disabled={loading}
-                                    className="ml-auto"
+                                    className="ml-auto bg-laserBlue"
                                     type="submit"
                                 >
                                     {action}

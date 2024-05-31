@@ -1,14 +1,10 @@
 import { createContext, useState } from "react"
 import { nanoid } from "nanoid"
 import { Message } from "@/lib/message"
+import { useMessages, useTranslations } from "next-intl"
+import { unstable_setRequestLocale } from "next-intl/server"
+import { useParams } from "next/navigation"
 
-const defaultValue = [
-    {
-        id: nanoid(),
-        text: "Hi! I am Moses, your personal assistant. Please ask me any questions you want.",
-        isUserMessage: false,
-    },
-]
 export const MessagesContext = createContext<{
     messages: Message[]
     isMessageUpdating: boolean
@@ -24,8 +20,19 @@ export const MessagesContext = createContext<{
     updateMessage: () => {},
     setIsMessageUpdating: () => {},
 })
-
+export type MosesProps = {
+    inputPlaceholder: string
+    sendButton: string
+    initialMessage: string
+}
 export function MessagesProvider({ children }: { children: React.ReactNode }) {
+    const defaultValue = [
+        {
+            id: nanoid(),
+            text: "Hi! I am Moses, your personal assistant. Please ask me any questions you want.",
+            isUserMessage: false,
+        },
+    ]
     const [messages, setMessages] = useState(defaultValue)
     const [isMessageUpdating, setIsMessageUpdating] = useState<boolean>(false)
 

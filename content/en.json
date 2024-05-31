@@ -49,7 +49,8 @@
         "general": "General Information",
         "name": {
             "title": "Full Name",
-            "placeholder": "John Smith",
+            "placeholderOne": "John",
+            "placeholderTwo": "Smith",
             "subtitle": "Enter your full name."
         },
         "age": {
@@ -102,14 +103,14 @@
                 "subtitle": "Enter a degree."
             },
             "startYear": {
-                "title": "Start Year",
+                "title": "Start Date",
                 "placeholder": "2000",
-                "subtitle": "Enter a start year."
+                "subtitle": "Enter a start date."
             },
             "endYear": {
-                "title": "End Year",
+                "title": "End Date",
                 "placeholder": "2000",
-                "subtitle": "Enter an end year."
+                "subtitle": "Enter an end date."
             }
         },
         "placeholders": {
@@ -147,14 +148,14 @@
             "subtitle": "Enter the country."
         },
         "startYear": {
-            "title": "Start Year",
+            "title": "Start Date",
             "placeholder": "2000",
-            "subtitle": "Enter a start year."
+            "subtitle": "Enter a start date."
         },
         "endYear": {
-            "title": "End Year",
+            "title": "End Date",
             "placeholder": "2000",
-            "subtitle": "Enter an end year."
+            "subtitle": "Enter an end date."
         },
         "duties": {
             "title": "Duties",
@@ -231,6 +232,7 @@
             "machineGuardingCertification": "Machine Guarding Certification",
             "fallProtectionCertification": "Fall Protection Certification"
         },
+        "required": "Required/Invalid",
         "add": "Add Certificate",
         "remove": "Remove Certificate",
         "authHeader": "Authorization Status",
@@ -239,6 +241,7 @@
     },
     "moses": {
         "inputPlaceholder": "Write a message...",
-        "sendButton": "Send"
+        "sendButton": "Send",
+        "initialMessage": "Hi! I am Moses, your personal assistant. Please ask me any questions you want."
     }
 }

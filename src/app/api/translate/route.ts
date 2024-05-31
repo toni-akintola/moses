@@ -16,7 +16,7 @@ export async function POST(request: Request) {
                 ...education,
                 school: await translateText(education.school),
                 degree: await translateText(education.degree),
-                endYear: await translateText(education.endYear),
+                endDate: await translateText(education.endDate),
                 country: await translateText(education.country),
                 city: await translateText(education.city),
             }

@@ -3,37 +3,73 @@
         "information": "Información",
         "language": "Idioma",
         "access": "Acceso",
-        "create": "Crear Currículum",
-        "title": "Creador de currículums y asistente personal para el mundo",
+        "create": "Crear currículum",
+        "createSubtitle": "Construye un currículum robusto en cualquier idioma. Lo traduciremos al inglés y lo formatearemos para ti.",
+        "title": "Constructor de currículums y asistente personal para el mundo",
         "assistant": "Asistente Personal",
-        "tos": "Al crear una cuenta, aceptas nuestros términos de servicio.",
-        "readMore": "Leer más"
+        "assistantSubtitle": "Accede a tu asistente personal de IA gratis aquí. Impulsado por el último modelo GPT-4 de OpenAI.",
+        "scrollOneTitle": "Constructor de currículums impulsado por aprendizaje profundo",
+        "scrollOneDescription": "Gracias a la tecnología de traducción de idiomas de última generación de DeepL, nuestro constructor de currículums puede traducir tu información de cualquier idioma de origen al inglés.",
+        "scrollOneCaption": "Independiente del idioma",
+        "scrollTwoTitle": "Asistente personal de IA",
+        "scrollTwoDescription": "Èxodo presenta un asistente personal revolucionario diseñado específicamente para trabajadores migrantes y profesionales de oficios. Impulsado por la avanzada IA de ChatGPT, nuestro asistente personal ofrece un soporte sin fisuras adaptado a las necesidades únicas de las personas trabajadoras.",
+        "scrollTwoCaption": "A tu servicio",
+        "scrollThreeTitle": "Mercado de oferta y demanda",
+        "scrollThreeDescription": "Nota: esta función aún está en desarrollo. Exodo empareja candidatos y empleadores según las calificaciones de los candidatos y los requisitos de los empleadores.",
+        "scrollThreeCaption": "Empareja candidatos con empleadores"
+    },
+    "resumeBuilder": {
+        "titleOne": "Editar información",
+        "titleTwo": "Construir tu currículum",
+        "subtitleOne": "Editar tu información",
+        "subtitleTwo": "Para crear tu currículum, primero necesitamos alguna información básica sobre ti.",
+        "actionOne": "Guardar cambios",
+        "actionTwo": "Crear",
+        "stepOneTitle": "Paso 1",
+        "stepOneSubtitle": "Información personal",
+        "stepTwoTitle": "Paso 2",
+        "stepTwoSubtitle": "Información educativa",
+        "stepThreeTitle": "Paso 3",
+        "stepThreeSubtitle": "Información profesional",
+        "stepFourTitle": "Paso 4",
+        "stepFourSubtitle": "Habilidades",
+        "stepFiveTitle": "Paso 5",
+        "stepFiveSubtitle": "Certificados",
+        "stepSixTitle": "Paso 6",
+        "stepSixSubtitle": "Completo",
+        "loadingOne": "Compilando respuestas",
+        "loadingTwo": "Traduciendo respuestas",
+        "loadingThree": "Llenando el currículum",
+        "loadingFour": "Formateando el currículum",
+        "loadingFive": "Preparando la descarga",
+        "loadingSix": "Descarga completa"
     },
     "s1": {
         "backButton": "Inicio",
-        "general": "Información General",
+        "general": "Información general",
         "name": {
-            "title": "Nombre Completo",
-            "placeholder": "Juan Pérez",
-            "subtitle": "Ingrese su nombre completo."
+            "title": "Nombre completo",
+            "placeholderOne": "Nombre",
+            "placeholderTwo": "Apellido",
+            "subtitle": "Introduce tu nombre completo."
         },
         "age": {
             "title": "Edad",
             "placeholder": "24",
-            "subtitle": "Ingrese su edad."
+            "subtitle": "Introduce tu edad."
         },
         "phoneNumber": {
-            "title": "Número de Teléfono",
+            "title": "Número de teléfono",
             "placeholder": "(800) 555-0100",
-            "subtitle": "Ingrese su número de teléfono."
+            "subtitle": "Introduce tu número de teléfono."
         },
         "email": {
-            "title": "Correo Electrónico",
-            "placeholder": "jperez@gmail.com",
-            "subtitle": "Ingrese su correo electrónico."
+            "title": "Correo electrónico",
+            "placeholder": "jsmith@gmail.com",
+            "subtitle": "Introduce tu correo electrónico."
         },
         "proficiency": {
-            "title": "Dominio del Inglés",
+            "title": "Dominio del inglés",
             "one": "Poco",
             "five": "Fluido",
             "subtitle": "¿Qué tan bueno es tu inglés?"
@@ -43,49 +79,49 @@
     "s2": {
         "backButton": "Atrás",
         "title": "Educación",
-        "highSchool": "Escuela Secundaria",
+        "highSchool": "Escuela secundaria",
         "university": "Universidad",
         "education": {
             "school": {
                 "title": "Escuela",
                 "placeholder": "Academia Phillips",
-                "subtitle": "Ingrese una escuela."
+                "subtitle": "Introduce una escuela."
             },
             "country": {
                 "title": "País",
                 "placeholder": "EE. UU.",
-                "subtitle": "Ingrese un país."
+                "subtitle": "Introduce un país."
             },
             "city": {
                 "title": "Ciudad",
                 "placeholder": "Nueva York",
-                "subtitle": "Ingrese una ciudad."
+                "subtitle": "Introduce una ciudad."
             },
             "degree": {
                 "title": "Grado",
-                "placeholder": "Seleccione un grado",
-                "subtitle": "Ingrese un grado."
+                "placeholder": "Selecciona un grado",
+                "subtitle": "Introduce un grado."
             },
             "startYear": {
-                "title": "Año de Inicio",
+                "title": "Fecha de inicio",
                 "placeholder": "2000",
-                "subtitle": "Ingrese un año de inicio."
+                "subtitle": "Introduce una fecha de inicio."
             },
             "endYear": {
-                "title": "Año de Finalización",
+                "title": "Fecha de finalización",
                 "placeholder": "2000",
-                "subtitle": "Ingrese un año de finalización."
+                "subtitle": "Introduce una fecha de finalización."
             }
         },
         "placeholders": {
-            "none": "ninguno",
-            "diploma": "Diploma de Secundaria",
+            "none": "Ninguno",
+            "diploma": "Diploma de escuela secundaria",
             "ged": "GED",
-            "bachelors": "Grado de Bachiller"
+            "bachelors": "Grado de bachiller"
         },
         "completed": "¿Completado?",
-        "add": "Agregar Educación",
-        "remove": "Eliminar Educación",
+        "add": "Agregar educación",
+        "remove": "Eliminar educación",
         "nextButton": "Siguiente"
     },
     "s3": {
@@ -94,40 +130,40 @@
         "employer": {
             "title": "Empleador",
             "placeholder": "Google",
-            "subtitle": "Ingrese el empleador."
+            "subtitle": "Introduce el empleador."
         },
         "jobTitle": {
-            "title": "Título del Trabajo",
-            "placeholder": "Ingeniero de Software",
-            "subtitle": "Ingrese el título del trabajo."
+            "title": "Título del trabajo",
+            "placeholder": "Ingeniero de software",
+            "subtitle": "Introduce el título del trabajo."
         },
         "city": {
             "title": "Ciudad",
             "placeholder": "Nueva York",
-            "subtitle": "Ingrese la ciudad."
+            "subtitle": "Introduce la ciudad."
         },
         "country": {
             "title": "País",
-            "placeholder": "Nueva York",
-            "subtitle": "Ingrese el país."
+            "placeholder": "EE. UU.",
+            "subtitle": "Introduce el país."
         },
         "startYear": {
-            "title": "Año de Inicio",
+            "title": "Fecha de inicio",
             "placeholder": "2000",
-            "subtitle": "Ingrese un año de inicio."
+            "subtitle": "Introduce una fecha de inicio."
         },
         "endYear": {
-            "title": "Año de Finalización",
+            "title": "Fecha de finalización",
             "placeholder": "2000",
-            "subtitle": "Ingrese un año de finalización."
+            "subtitle": "Introduce una fecha de finalización."
         },
         "duties": {
             "title": "Deberes",
             "placeholder": "...",
             "subtitle": "¿Qué hiciste específicamente?"
         },
-        "add": "Agregar Experiencia",
-        "remove": "Eliminar Experiencia",
+        "add": "Agregar experiencia",
+        "remove": "Eliminar experiencia",
         "nextButton": "Siguiente"
     },
     "s4": {
@@ -137,32 +173,33 @@
         "skills": {
             "title": "Habilidad",
             "placeholder": "Habilidades",
-            "subtitle": "Seleccione una habilidad."
+            "subtitle": "Selecciona una habilidad."
         },
         "placeholders": {
             "driving": "Conducción",
-            "vehicleMaintenance": "Mantenimiento de Vehículos",
+            "vehicleMaintenance": "Mantenimiento de vehículos",
             "construction": "Construcción",
             "plumbing": "Fontanería",
             "welding": "Soldadura",
-            "equipmentOperation": "Operación de Equipos",
-            "heavyMachineryOperation": "Operación de Maquinaria Pesada",
+            "equipmentOperation": "Operación de equipos",
+            "heavyMachineryOperation": "Operación de maquinaria pesada",
             "landscaping": "Jardinería",
             "recycling": "Reciclaje",
             "fishing": "Pesca",
-            "agriculturalWork": "Trabajo Agrícola",
+            "agriculturalWork": "Trabajo agrícola",
             "mining": "Minería",
             "manufacturing": "Manufactura",
-            "mechanicalSkills": "Habilidades Mecánicas",
-            "problemSolvingSkills": "Habilidades para Resolver Problemas",
-            "technicalSkills": "Habilidades Técnicas",
-            "physicalStrengthAndEndurance": "Fuerza y Resistencia Física",
-            "safetyProtocolsAdherence": "Adherencia a Protocolos de Seguridad",
-            "teamworkAndCollaboration": "Trabajo en Equipo y Colaboración",
-            "attentionToDetail": "Atención al Detalle"
+            "mechanicalSkills": "Habilidades mecánicas",
+            "problemSolvingSkills": "Habilidades para resolver problemas",
+            "technicalSkills": "Habilidades técnicas",
+            "physicalStrengthAndEndurance": "Fuerza física y resistencia",
+            "safetyProtocolsAdherence": "Adherencia a los protocolos de seguridad",
+            "teamworkAndCollaboration": "Trabajo en equipo y colaboración",
+            "attentionToDetail": "Atención al detalle"
         },
-        "add": "Agregar Habilidad",
-        "remove": "Eliminar Habilidad",
+
+        "add": "Agregar habilidad",
+        "remove": "Eliminar habilidad",
         "nextButton": "Siguiente"
     },
     "s5": {
@@ -172,33 +209,39 @@
         "certificates": {
             "title": "Título",
             "placeholder": "Certificados",
-            "subtitle": "Seleccione un certificado."
+            "subtitle": "Selecciona un certificado."
         },
         "placeholders": {
-            "cdlCommercialDriversLicense": "Licencia de Conductor Comercial (CDL)",
-            "aseCertificationAutomotiveServiceExcellence": "Certificación ASE (Excelencia en Servicio Automotriz)",
+            "cdlCommercialDriversLicense": "Licencia de conductor comercial (CDL)",
+            "aseCertificationAutomotiveServiceExcellence": "Certificación ASE (Excelencia en el Servicio Automotriz)",
             "oshaCertificationOccupationalSafetyAndHealthAdministration": "Certificación OSHA (Administración de Seguridad y Salud Ocupacional)",
-            "weldingCertification": "Certificación de Soldadura",
-            "forkliftOperatorCertification": "Certificación de Operador de Montacargas",
-            "heavyEquipmentOperatorCertification": "Certificación de Operador de Equipos Pesados",
-            "cprCertificationCardiopulmonaryResuscitation": "Certificación de RCP (Reanimación Cardiopulmonar)",
-            "firstAidCertification": "Certificación de Primeros Auxilios",
-            "confinedSpaceEntryCertification": "Certificación de Entrada a Espacios Confinados",
-            "scaffoldSafetyCertification": "Certificación de Seguridad en Andamios",
-            "hazardousMaterialsHandlingCertification": "Certificación de Manejo de Materiales Peligrosos",
-            "fishingVesselSafetyCertification": "Certificación de Seguridad en Embarcaciones de Pesca",
-            "agriculturalPesticideApplicatorCertification": "Certificación de Aplicador de Pesticidas Agrícolas",
-            "miningSafetyCertification": "Certificación de Seguridad en Minería",
-            "constructionSafetyCertification": "Certificación de Seguridad en Construcción",
-            "electricalSafetyCertification": "Certificación de Seguridad Eléctrica",
-            "fireSafetyCertification": "Certificación de Seguridad contra Incendios",
-            "machineGuardingCertification": "Certificación de Protección de Maquinaria",
-            "fallProtectionCertification": "Certificación de Protección contra Caídas"
+            "weldingCertification": "Certificación de soldadura",
+            "forkliftOperatorCertification": "Certificación de operador de montacargas",
+            "heavyEquipmentOperatorCertification": "Certificación de operador de equipo pesado",
+            "cprCertificationCardiopulmonaryResuscitation": "Certificación de RCP (resucitación cardiopulmonar)",
+            "firstAidCertification": "Certificación de primeros auxilios",
+            "confinedSpaceEntryCertification": "Certificación de entrada a espacios confinados",
+            "scaffoldSafetyCertification": "Certificación de seguridad de andamios",
+            "hazardousMaterialsHandlingCertification": "Certificación de manejo de materiales peligrosos",
+            "fishingVesselSafetyCertification": "Certificación de seguridad de embarcaciones pesqueras",
+            "agriculturalPesticideApplicatorCertification": "Certificación de aplicador de pesticidas agrícolas",
+            "miningSafetyCertification": "Certificación de seguridad minera",
+            "constructionSafetyCertification": "Certificación de seguridad en construcción",
+            "electricalSafetyCertification": "Certificación de seguridad eléctrica",
+            "fireSafetyCertification": "Certificación de seguridad contra incendios",
+            "machineGuardingCertification": "Certificación de protección de máquinas",
+            "fallProtectionCertification": "Certificación de protección contra caídas"
         },
-        "add": "Agregar Certificado",
-        "remove": "Eliminar Certificado",
-        "authHeader": "Estado de Autorización",
+        "required": "Requerido/Inválido",
+        "add": "Agregar certificado",
+        "remove": "Eliminar certificado",
+        "authHeader": "Estado de autorización",
         "authorization": "¿Tienes autorización legal para trabajar en los Estados Unidos?",
-        "create": "Crear Currículum"
+        "create": "Crear currículum"
+    },
+    "moses": {
+        "inputPlaceholder": "Escribe un mensaje...",
+        "sendButton": "Enviar",
+        "initialMessage": "¡Hola! Soy Moisés, tu asistente personal. Hazme cualquier pregunta que quieras."
     }
 }

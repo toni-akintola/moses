@@ -3,18 +3,54 @@
         "information": "معلومات",
         "language": "لغة",
         "access": "وصول",
-        "create": "إنشاء سيرة ذاتية",
+        "create": "إنشاء السيرة الذاتية",
+        "createSubtitle": "قم ببناء سيرة ذاتية قوية بأي لغة. سنترجمها إلى الإنجليزية وننسقها لك.",
         "title": "منشئ السيرة الذاتية والمساعد الشخصي للعالم",
-        "assistant": "مساعد شخصي",
-        "tos": "بإنشاء حساب، أنت توافق على شروط الخدمة الخاصة بنا.",
-        "readMore": "اقرأ المزيد"
+        "assistant": "المساعد الشخصي",
+        "assistantSubtitle": "يمكنك الوصول إلى مساعدك الشخصي المجاني هنا. مدعوم بنموذج GPT-4 الأحدث من OpenAI.",
+        "scrollOneTitle": "منشئ السيرة الذاتية المدعوم بالتعلم العميق",
+        "scrollOneDescription": "بفضل تقنية ترجمة اللغات المتقدمة من DeepL، يمكن لمنشئ السيرة الذاتية الخاص بنا ترجمة معلوماتك من أي لغة مصدر إلى الإنجليزية.",
+        "scrollOneCaption": "مستقل عن اللغة",
+        "scrollTwoTitle": "المساعد الشخصي الذكي",
+        "scrollTwoDescription": "Èxodo يتميز بمساعد شخصي ثوري مصمم خصيصًا للعمال المهاجرين والمحترفين في المهن اليدوية. مدعوم بالذكاء الاصطناعي المتقدم ChatGPT، يقدم مساعدنا الشخصي دعمًا سلسًا يتناسب مع الاحتياجات الفريدة للأفراد العاملين بجد.",
+        "scrollTwoCaption": "في خدمتك",
+        "scrollThreeTitle": "سوق العرض والطلب",
+        "scrollThreeDescription": "ملاحظة: هذه الميزة لا تزال قيد التطوير. يقوم Exodo بمطابقة المرشحين وأصحاب العمل بناءً على مؤهلات المرشحين ومتطلبات أصحاب العمل.",
+        "scrollThreeCaption": "مطابق المرشحين مع أصحاب العمل"
+    },
+    "resumeBuilder": {
+        "titleOne": "تحرير المعلومات",
+        "titleTwo": "بناء سيرتك الذاتية",
+        "subtitleOne": "تحرير معلوماتك",
+        "subtitleTwo": "لإنشاء سيرتك الذاتية، نحتاج أولاً إلى بعض المعلومات الأساسية عنك.",
+        "actionOne": "حفظ التغييرات",
+        "actionTwo": "إنشاء",
+        "stepOneTitle": "الخطوة 1",
+        "stepOneSubtitle": "معلومات شخصية",
+        "stepTwoTitle": "الخطوة 2",
+        "stepTwoSubtitle": "معلومات تعليمية",
+        "stepThreeTitle": "الخطوة 3",
+        "stepThreeSubtitle": "معلومات مهنية",
+        "stepFourTitle": "الخطوة 4",
+        "stepFourSubtitle": "مهارات",
+        "stepFiveTitle": "الخطوة 5",
+        "stepFiveSubtitle": "شهادات",
+        "stepSixTitle": "الخطوة 6",
+        "stepSixSubtitle": "اكتمل",
+        "loadingOne": "تجميع الردود",
+        "loadingTwo": "ترجمة الردود",
+        "loadingThree": "ملء السيرة الذاتية",
+        "loadingFour": "تنسيق السيرة الذاتية",
+        "loadingFive": "تحضير التنزيل",
+        "loadingSix": "اكتمل التنزيل"
     },
     "s1": {
         "backButton": "الصفحة الرئيسية",
         "general": "معلومات عامة",
         "name": {
             "title": "الاسم الكامل",
-            "placeholder": "جون سميث",
+            "placeholderOne": "الاسم الأول",
+            "placeholderTwo": "الاسم الأخير",
             "subtitle": "أدخل اسمك الكامل."
         },
         "age": {
@@ -35,71 +71,71 @@
         "proficiency": {
             "title": "إتقان اللغة الإنجليزية",
             "one": "قليل",
-            "five": "طليق",
-            "subtitle": "كيف هو إتقانك للغة الإنجليزية؟"
+            "five": "بطلاقة",
+            "subtitle": "ما مدى إتقانك للغة الإنجليزية؟"
         },
         "nextButton": "التالي"
     },
     "s2": {
-        "backButton": "العودة",
+        "backButton": "رجوع",
         "title": "التعليم",
-        "highSchool": "مدرسة ثانوية",
-        "university": "جامعة",
+        "highSchool": "المدرسة الثانوية",
+        "university": "الجامعة",
         "education": {
             "school": {
                 "title": "المدرسة",
                 "placeholder": "أكاديمية فيليبس",
-                "subtitle": "أدخل مدرسة."
+                "subtitle": "أدخل المدرسة."
             },
             "country": {
-                "title": "الدولة",
+                "title": "البلد",
                 "placeholder": "الولايات المتحدة الأمريكية",
-                "subtitle": "أدخل دولة."
+                "subtitle": "أدخل البلد."
             },
             "city": {
                 "title": "المدينة",
                 "placeholder": "نيويورك",
-                "subtitle": "أدخل مدينة."
+                "subtitle": "أدخل المدينة."
             },
             "degree": {
                 "title": "الدرجة",
                 "placeholder": "اختر درجة",
-                "subtitle": "أدخل درجة."
+                "subtitle": "أدخل الدرجة."
             },
             "startYear": {
-                "title": "سنة البداية",
+                "title": "سنة البدء",
                 "placeholder": "2000",
-                "subtitle": "أدخل سنة البداية."
+                "subtitle": "أدخل سنة البدء."
             },
             "endYear": {
-                "title": "سنة النهاية",
+                "title": "سنة الانتهاء",
                 "placeholder": "2000",
-                "subtitle": "أدخل سنة النهاية."
+                "subtitle": "أدخل سنة الانتهاء."
             }
         },
         "placeholders": {
             "none": "لا شيء",
             "diploma": "دبلوم المدرسة الثانوية",
             "ged": "GED",
-            "bachelors": "درجة البكالوريوس"
+            "bachelors": "بكالوريوس"
         },
-        "completed": "هل اكتمل؟",
+        "completed": "مكتمل؟",
         "add": "إضافة التعليم",
         "remove": "إزالة التعليم",
         "nextButton": "التالي"
     },
     "s3": {
-        "backButton": "العودة",
+        "backButton": "رجوع",
         "title": "الخبرة",
         "employer": {
-            "title": "رب العمل",
-            "placeholder": "Google",
-            "subtitle": "أدخل رب العمل."
+            "title": "صاحب العمل",
+            "placeholder": "جوجل",
+            "subtitle": "أدخل صاحب العمل."
         },
         "jobTitle": {
-            "title": "عنوان الوظيفة",
+            "title": "المسمى الوظيفي",
             "placeholder": "مهندس برمجيات",
-            "subtitle": "أدخل عنوان الوظيفة."
+            "subtitle": "أدخل المسمى الوظيفي."
         },
         "city": {
             "title": "المدينة",
@@ -107,37 +143,37 @@
             "subtitle": "أدخل المدينة."
         },
         "country": {
-            "title": "الدولة",
-            "placeholder": "نيويورك",
-            "subtitle": "أدخل الدولة."
+            "title": "البلد",
+            "placeholder": "الولايات المتحدة الأمريكية",
+            "subtitle": "أدخل البلد."
         },
         "startYear": {
-            "title": "سنة البداية",
+            "title": "سنة البدء",
             "placeholder": "2000",
-            "subtitle": "أدخل سنة البداية."
+            "subtitle": "أدخل سنة البدء."
         },
         "endYear": {
-            "title": "سنة النهاية",
+            "title": "سنة الانتهاء",
             "placeholder": "2000",
-            "subtitle": "أدخل سنة النهاية."
+            "subtitle": "أدخل سنة الانتهاء."
         },
         "duties": {
-            "title": "المهام",
+            "title": "الواجبات",
             "placeholder": "...",
-            "subtitle": "ماذا فعلت بالتحديد؟"
+            "subtitle": "ما الذي فعلته بالتحديد؟"
         },
-        "add": "إضافة خبرة",
-        "remove": "إزالة خبرة",
+        "add": "إضافة الخبرة",
+        "remove": "إزالة الخبرة",
         "nextButton": "التالي"
     },
     "s4": {
-        "backButton": "العودة",
+        "backButton": "رجوع",
         "title": "المهارات",
-        "heading": "مهارة",
+        "heading": "المهارة",
         "skills": {
-            "title": "مهارة",
-            "placeholder": "مهارات",
-            "subtitle": "اختر مهارة."
+            "title": "المهارة",
+            "placeholder": "المهارات",
+            "subtitle": "اختر المهارة."
         },
         "placeholders": {
             "driving": "القيادة",
@@ -146,7 +182,7 @@
             "plumbing": "السباكة",
             "welding": "اللحام",
             "equipmentOperation": "تشغيل المعدات",
-            "heavyMachineryOperation": "تشغيل المعدات الثقيلة",
+            "heavyMachineryOperation": "تشغيل الآلات الثقيلة",
             "landscaping": "تنسيق الحدائق",
             "recycling": "إعادة التدوير",
             "fishing": "الصيد",
@@ -156,49 +192,56 @@
             "mechanicalSkills": "المهارات الميكانيكية",
             "problemSolvingSkills": "مهارات حل المشكلات",
             "technicalSkills": "المهارات التقنية",
-            "physicalStrengthAndEndurance": "القوة والقدرة الجسدية",
+            "physicalStrengthAndEndurance": "القوة البدنية والقدرة على التحمل",
             "safetyProtocolsAdherence": "الالتزام ببروتوكولات السلامة",
             "teamworkAndCollaboration": "العمل الجماعي والتعاون",
             "attentionToDetail": "الاهتمام بالتفاصيل"
         },
+
         "add": "إضافة مهارة",
         "remove": "إزالة مهارة",
         "nextButton": "التالي"
     },
     "s5": {
-        "backButton": "العودة",
+        "backButton": "رجوع",
         "title": "الشهادات",
         "heading": "شهادة",
         "certificates": {
             "title": "العنوان",
             "placeholder": "الشهادات",
-            "subtitle": "اختر شهادة."
+            "subtitle": "اختر الشهادة."
         },
         "placeholders": {
             "cdlCommercialDriversLicense": "رخصة القيادة التجارية (CDL)",
-            "aseCertificationAutomotiveServiceExcellence": "شهادة ASE (التميز في خدمة السيارات)",
+            "aseCertificationAutomotiveServiceExcellence": "شهادة ASE (خدمة السيارات الممتازة)",
             "oshaCertificationOccupationalSafetyAndHealthAdministration": "شهادة OSHA (إدارة السلامة والصحة المهنية)",
             "weldingCertification": "شهادة اللحام",
-            "forkliftOperatorCertification": "شهادة مشغل الرافعة الشوكية",
+            "forkliftOperatorCertification": "شهادة تشغيل الرافعة الشوكية",
             "heavyEquipmentOperatorCertification": "شهادة تشغيل المعدات الثقيلة",
-            "cprCertificationCardiopulmonaryResuscitation": "شهادة الإنعاش القلبي الرئوي",
+            "cprCertificationCardiopulmonaryResuscitation": "شهادة CPR (إنعاش قلبي رئوي)",
             "firstAidCertification": "شهادة الإسعافات الأولية",
-            "confinedSpaceEntryCertification": "شهادة دخول الأماكن الضيقة",
+            "confinedSpaceEntryCertification": "شهادة دخول الأماكن المحصورة",
             "scaffoldSafetyCertification": "شهادة سلامة السقالات",
             "hazardousMaterialsHandlingCertification": "شهادة التعامل مع المواد الخطرة",
-            "fishingVesselSafetyCertification": "شهادة سلامة قوارب الصيد",
+            "fishingVesselSafetyCertification": "شهادة سلامة سفن الصيد",
             "agriculturalPesticideApplicatorCertification": "شهادة تطبيق المبيدات الزراعية",
             "miningSafetyCertification": "شهادة سلامة التعدين",
             "constructionSafetyCertification": "شهادة سلامة البناء",
-            "electricalSafetyCertification": "شهادة سلامة الكهرباء",
-            "fireSafetyCertification": "شهادة سلامة الحريق",
-            "machineGuardingCertification": "شهادة حماية الماكينات",
-            "fallProtectionCertification": "شهادة الحماية من السقوط"
+            "electricalSafetyCertification": "شهادة السلامة الكهربائية",
+            "fireSafetyCertification": "شهادة سلامة الحرائق",
+            "machineGuardingCertification": "شهادة حماية الآلات",
+            "fallProtectionCertification": "شهادة حماية من السقوط"
         },
+        "required": "مطلوب/غير صالح",
         "add": "إضافة شهادة",
         "remove": "إزالة شهادة",
         "authHeader": "حالة التفويض",
-        "authorization": "هل لديك تفويض قانوني للعمل في الولايات المتحدة؟",
-        "create": "إنشاء سيرة ذاتية"
+        "authorization": "هل لديك تصريح قانوني للعمل في الولايات المتحدة؟",
+        "create": "إنشاء السيرة الذاتية"
+    },
+    "moses": {
+        "inputPlaceholder": "اكتب رسالة...",
+        "sendButton": "إرسال",
+        "initialMessage": "مرحبًا! أنا موسى، مساعدك الشخصي. اسألني أي سؤال تريده."
     }
 }

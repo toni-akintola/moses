@@ -7,7 +7,7 @@
         "createSubtitle": "Build a robust resume in any language. We'll translate it into English and format it for you.",
         "title": "Resume builder and personal assistant for the world",
         "assistant": "Personal Assistant",
-        "assistantSubtitle": "Access your free AI personal assistant here. Powered by OpenAI's GPT-3.5 turbo model.",
+        "assistantSubtitle": "Access your free AI personal assistant here. Powered by OpenAI's latest GPT-4o model.",
         "scrollOneTitle": "Deep learning powered resume builder",
         "scrollOneDescription": "Thanks to DeepL's state of the art language translation technology, our resume builder can translate your information from any source language into English.",
         "scrollOneCaption": "Language-agnostic",
@@ -236,5 +236,9 @@
         "authHeader": "Authorization Status",
         "authorization": "Do you have legal authorization to work in the United States?",
         "create": "Create Resume"
+    },
+    "moses": {
+        "inputPlaceholder": "Write a message...",
+        "sendButton": "Send"
     }
 }

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 
 import { initialMessages, scrollToBottom } from "@/utils/helpers"
 import { Message, useChat } from "ai/react"
+import { useParams } from "next/navigation"
 import { useEffect, useRef } from "react"
 
 export function Chat() {
@@ -22,6 +23,7 @@ export function Chat() {
         initialMessages,
     })
 
+    const { lang } = useParams()
     useEffect(() => {
         setTimeout(() => scrollToBottom(containerRef), 100)
     }, [messages])

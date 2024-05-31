@@ -4,41 +4,77 @@
         "language": "语言",
         "access": "访问",
         "create": "创建简历",
-        "title": "世界各地的简历制作者和个人助理",
-        "assistant": "个人助理",
-        "tos": "创建帐户即表示您接受我们的服务条款。",
-        "readMore": "阅读更多"
+        "createSubtitle": "用任何语言创建强大的简历。我们将把它翻译成英语并为你进行格式化。",
+        "title": "全球简历构建器和个人助手",
+        "assistant": "个人助手",
+        "assistantSubtitle": "在这里免费访问你的个人 AI 助手。由 OpenAI 最新的 GPT-4 提供支持。",
+        "scrollOneTitle": "深度学习驱动的简历生成器",
+        "scrollOneDescription": "借助 DeepL 最先进的语言翻译技术，我们的简历生成器可以将你的信息从任何源语言翻译成英语。",
+        "scrollOneCaption": "语言无关",
+        "scrollTwoTitle": "AI 个人助手",
+        "scrollTwoDescription": "Èxodo 推出了一款革命性的个人助手，专为移民工人和手艺专业人士设计。由先进的 ChatGPT AI 提供支持，我们的个人助手提供无缝支持，适应勤奋工作者的独特需求。",
+        "scrollTwoCaption": "随时为你服务",
+        "scrollThreeTitle": "供需市场",
+        "scrollThreeDescription": "注意：此功能尚在开发中。Exodo 根据候选人的资格和雇主的要求来匹配候选人和雇主。",
+        "scrollThreeCaption": "匹配候选人与雇主"
+    },
+    "resumeBuilder": {
+        "titleOne": "编辑信息",
+        "titleTwo": "构建你的简历",
+        "subtitleOne": "编辑你的信息",
+        "subtitleTwo": "要创建简历，我们首先需要一些关于你的基本信息。",
+        "actionOne": "保存更改",
+        "actionTwo": "创建",
+        "stepOneTitle": "步骤 1",
+        "stepOneSubtitle": "个人信息",
+        "stepTwoTitle": "步骤 2",
+        "stepTwoSubtitle": "教育信息",
+        "stepThreeTitle": "步骤 3",
+        "stepThreeSubtitle": "工作信息",
+        "stepFourTitle": "步骤 4",
+        "stepFourSubtitle": "技能",
+        "stepFiveTitle": "步骤 5",
+        "stepFiveSubtitle": "证书",
+        "stepSixTitle": "步骤 6",
+        "stepSixSubtitle": "完成",
+        "loadingOne": "汇总答复",
+        "loadingTwo": "翻译答复",
+        "loadingThree": "填写简历",
+        "loadingFour": "格式化简历",
+        "loadingFive": "准备下载",
+        "loadingSix": "下载完成"
     },
     "s1": {
         "backButton": "主页",
         "general": "一般信息",
         "name": {
             "title": "全名",
-            "placeholder": "约翰·史密斯",
-            "subtitle": "请输入您的全名。"
+            "placeholderOne": "名字",
+            "placeholderTwo": "姓氏",
+            "subtitle": "请输入你的全名。"
         },
         "age": {
             "title": "年龄",
             "placeholder": "24",
-            "subtitle": "请输入您的年龄。"
+            "subtitle": "请输入你的年龄。"
         },
         "phoneNumber": {
             "title": "电话号码",
             "placeholder": "(800) 555-0100",
-            "subtitle": "请输入您的电话号码。"
+            "subtitle": "请输入你的电话号码。"
         },
         "email": {
-            "title": "电子邮箱",
+            "title": "电子邮件",
             "placeholder": "jsmith@gmail.com",
-            "subtitle": "请输入您的电子邮箱。"
+            "subtitle": "请输入你的电子邮件。"
         },
         "proficiency": {
-            "title": "英语熟练度",
-            "one": "很少",
+            "title": "英语熟练程度",
+            "one": "一点",
             "five": "流利",
-            "subtitle": "您的英语水平如何？"
+            "subtitle": "你英语说得多好？"
         },
-        "nextButton": "下一步"
+        "nextButton": "下一个"
     },
     "s2": {
         "backButton": "返回",
@@ -54,12 +90,12 @@
             "country": {
                 "title": "国家",
                 "placeholder": "美国",
-                "subtitle": "请输入国家。"
+                "subtitle": "请输入国家名称。"
             },
             "city": {
                 "title": "城市",
                 "placeholder": "纽约",
-                "subtitle": "请输入城市。"
+                "subtitle": "请输入城市名称。"
             },
             "degree": {
                 "title": "学位",
@@ -78,38 +114,38 @@
             }
         },
         "placeholders": {
-            "none": "没有",
-            "diploma": "高中毕业文凭",
+            "none": "无",
+            "diploma": "高中毕业证",
             "ged": "GED",
             "bachelors": "学士学位"
         },
-        "completed": "已完成？",
+        "completed": "完成?",
         "add": "添加教育",
         "remove": "删除教育",
-        "nextButton": "下一步"
+        "nextButton": "下一个"
     },
     "s3": {
         "backButton": "返回",
-        "title": "经验",
+        "title": "工作经验",
         "employer": {
             "title": "雇主",
             "placeholder": "谷歌",
             "subtitle": "请输入雇主名称。"
         },
         "jobTitle": {
-            "title": "职位名称",
+            "title": "职位",
             "placeholder": "软件工程师",
-            "subtitle": "请输入职位名称。"
+            "subtitle": "请输入职位。"
         },
         "city": {
             "title": "城市",
             "placeholder": "纽约",
-            "subtitle": "请输入城市。"
+            "subtitle": "请输入城市名称。"
         },
         "country": {
             "title": "国家",
-            "placeholder": "纽约",
-            "subtitle": "请输入国家。"
+            "placeholder": "美国",
+            "subtitle": "请输入国家名称。"
         },
         "startYear": {
             "title": "开始年份",
@@ -124,11 +160,11 @@
         "duties": {
             "title": "职责",
             "placeholder": "...",
-            "subtitle": "您具体做了些什么？"
+            "subtitle": "你具体做了什么？"
         },
-        "add": "添加经验",
-        "remove": "删除经验",
-        "nextButton": "下一步"
+        "add": "添加工作经验",
+        "remove": "删除工作经验",
+        "nextButton": "下一个"
     },
     "s4": {
         "backButton": "返回",
@@ -137,33 +173,34 @@
         "skills": {
             "title": "技能",
             "placeholder": "技能",
-            "subtitle": "选择一种技能。"
+            "subtitle": "选择一个技能。"
         },
         "placeholders": {
             "driving": "驾驶",
             "vehicleMaintenance": "车辆维护",
             "construction": "建筑",
-            "plumbing": "管道工程",
+            "plumbing": "管道",
             "welding": "焊接",
             "equipmentOperation": "设备操作",
             "heavyMachineryOperation": "重型机械操作",
-            "landscaping": "景观设计",
+            "landscaping": "园艺",
             "recycling": "回收",
-            "fishing": "捕鱼",
+            "fishing": "渔业",
             "agriculturalWork": "农业工作",
             "mining": "采矿",
             "manufacturing": "制造",
             "mechanicalSkills": "机械技能",
             "problemSolvingSkills": "解决问题的能力",
             "technicalSkills": "技术技能",
-            "physicalStrengthAndEndurance": "体力与耐力",
-            "safetyProtocolsAdherence": "遵守安全规程",
-            "teamworkAndCollaboration": "团队合作",
+            "physicalStrengthAndEndurance": "体力和耐力",
+            "safetyProtocolsAdherence": "遵守安全协议",
+            "teamworkAndCollaboration": "团队合作与协作",
             "attentionToDetail": "关注细节"
         },
+
         "add": "添加技能",
         "remove": "删除技能",
-        "nextButton": "下一步"
+        "nextButton": "下一个"
     },
     "s5": {
         "backButton": "返回",
@@ -172,33 +209,39 @@
         "certificates": {
             "title": "标题",
             "placeholder": "证书",
-            "subtitle": "选择一种证书。"
+            "subtitle": "选择一个证书。"
         },
         "placeholders": {
-            "cdlCommercialDriversLicense": "商业驾驶执照（CDL）",
-            "aseCertificationAutomotiveServiceExcellence": "ASE 认证（汽车服务卓越）",
-            "oshaCertificationOccupationalSafetyAndHealthAdministration": "OSHA 认证（职业安全与健康管理局）",
+            "cdlCommercialDriversLicense": "商业驾驶执照 (CDL)",
+            "aseCertificationAutomotiveServiceExcellence": "ASE 认证 (汽车服务卓越)",
+            "oshaCertificationOccupationalSafetyAndHealthAdministration": "OSHA 认证 (职业安全与健康管理局)",
             "weldingCertification": "焊接认证",
             "forkliftOperatorCertification": "叉车操作员认证",
             "heavyEquipmentOperatorCertification": "重型设备操作员认证",
-            "cprCertificationCardiopulmonaryResuscitation": "心肺复苏认证",
+            "cprCertificationCardiopulmonaryResuscitation": "CPR 认证 (心肺复苏)",
             "firstAidCertification": "急救认证",
-            "confinedSpaceEntryCertification": "狭窄空间进入认证",
+            "confinedSpaceEntryCertification": "受限空间进入认证",
             "scaffoldSafetyCertification": "脚手架安全认证",
             "hazardousMaterialsHandlingCertification": "危险材料处理认证",
-            "fishingVesselSafetyCertification": "捕鱼船只安全认证",
-            "agriculturalPesticideApplicatorCertification": "农业农药应用认证",
-            "miningSafetyCertification": "采矿安全认证",
+            "fishingVesselSafetyCertification": "渔船安全认证",
+            "agriculturalPesticideApplicatorCertification": "农业杀虫剂施用者认证",
+            "miningSafetyCertification": "矿山安全认证",
             "constructionSafetyCertification": "建筑安全认证",
             "electricalSafetyCertification": "电气安全认证",
             "fireSafetyCertification": "消防安全认证",
             "machineGuardingCertification": "机械防护认证",
-            "fallProtectionCertification": "防跌落认证"
+            "fallProtectionCertification": "防坠落认证"
         },
+        "required": "必填/无效",
         "add": "添加证书",
         "remove": "删除证书",
         "authHeader": "授权状态",
-        "authorization": "您是否获得在美国工作的合法授权？",
+        "authorization": "你有合法在美国工作的授权吗？",
         "create": "创建简历"
+    },
+    "moses": {
+        "inputPlaceholder": "输入消息...",
+        "sendButton": "发送",
+        "initialMessage": "你好！我是摩西，你的个人助手。你可以问我任何问题。"
     }
 }

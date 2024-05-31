@@ -2,7 +2,13 @@ import {
     CreateProfileOne,
     ResumeBuilderProps,
 } from "@/components/resume-forms/create-profile"
-import { S1Props, S2Props, S3Props, S4Props, S5Props } from "@/components/resume-forms/create-profile"
+import {
+    S1Props,
+    S2Props,
+    S3Props,
+    S4Props,
+    S5Props,
+} from "@/components/resume-forms/create-profile"
 import { useMessages } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 import React from "react"

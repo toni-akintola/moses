@@ -1,13 +1,15 @@
 import { cookies } from "next/headers"
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { type CookieOptions, createServerClient } from "@supabase/ssr"
 
-export async function GET(request: Request) {
+export async function GET(
+    request: NextRequest,
+    { params }: { params: { locale: string } }
+) {
     const { searchParams, origin } = new URL(request.url)
     const code = searchParams.get("code")
     // if "next" is in param, use it as the redirect URL
     const next = searchParams.get("next") ?? "/"
-
     if (code) {
         const cookieStore = cookies()
         const supabase = createServerClient(
@@ -28,8 +30,11 @@ export async function GET(request: Request) {
             }
         )
         const { error } = await supabase.auth.exchangeCodeForSession(code)
+        const locale = searchParams.get("locale")
+            ? searchParams.get("locale")
+            : "en" // Extracting locale's value: 'en'
         if (!error) {
-            return NextResponse.redirect(`${origin}${next}`)
+            return NextResponse.redirect(`${origin}${next}/${locale}/core`)
         }
     }
 

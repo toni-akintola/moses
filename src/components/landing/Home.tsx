@@ -1,12 +1,9 @@
 "use client"
 import { MainNav } from "@/components/layout/banner"
-import { LazyMotion, MotionProps, motion, domAnimation, m } from "framer-motion"
-import AnimText from "@/components/motion/AnimText"
-import { SparklesCore } from "@/components/ui/sparkles"
+import { motion } from "framer-motion"
 import { LampContainer } from "@/components/ui/lamp"
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
-import Image from "next/image"
-import { TracingBeam } from "@/components/ui/tracing-beam"
+
 import { PinContainer } from "@/components/ui/3d-pin"
 import Link from "next/link"
 export type HomeMessage = {

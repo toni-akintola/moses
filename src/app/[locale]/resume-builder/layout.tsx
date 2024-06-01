@@ -7,9 +7,9 @@ export default function Layout({
     children,
 }: {
     children: React.ReactNode
-    params: { lang: string }
+    params: { locale: string }
 }) {
-    unstable_setRequestLocale(params.lang)
+    unstable_setRequestLocale(params.locale)
     const t = useTranslations("home")
     return (
         <>

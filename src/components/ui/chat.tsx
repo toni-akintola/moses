@@ -23,7 +23,7 @@ export function Chat() {
         initialMessages,
     })
 
-    const { lang } = useParams()
+    const { locale } = useParams()
     useEffect(() => {
         setTimeout(() => scrollToBottom(containerRef), 100)
     }, [messages])

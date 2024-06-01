@@ -56,7 +56,7 @@ export default function Auth(props: Props) {
     })
 
     const params = useParams()
-    const lang = params.lang as string
+    const locale = params.locale as string
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
@@ -66,7 +66,7 @@ export default function Auth(props: Props) {
             email: values.email,
             password: values.password,
             options: {
-                emailRedirectTo: `/${lang}/core`,
+                emailRedirectTo: "core",
             },
         })
         console.log(data, error)
@@ -80,7 +80,7 @@ export default function Auth(props: Props) {
                             <Form {...form}>
                                 <form
                                     onSubmit={form.handleSubmit(onSubmit)}
-                                    className="flex items-center flex-col justify-center space-y-4"
+                                    className="flex items-center flex-col justify-center space-y-4 w-full"
                                 >
                                     <h2 className="font-semibold text-2xl">
                                         Get started
@@ -177,27 +177,27 @@ export default function Auth(props: Props) {
                                     >
                                         Next
                                     </Button>
-                                    <div className="flex-row flex items-center space-x-3">
-                                        <hr className="bg-gray-300 h-0.5 w-16"></hr>
-                                        <p>Or continue with</p>
-                                        <hr className="bg-gray-300 h-0.5 w-16"></hr>
-                                    </div>
-                                    <div className="flex flex-col space-y-3 w-full">
-                                        <GoogleButton lang={lang} />
-                                        <MicrosoftButton lang={lang} />
-                                    </div>
-                                    <div className="justify-between items-center flex flex-row w-full">
-                                        <Link
-                                            href="#"
-                                            className="flex justify-center w-full"
-                                        >
-                                            <p className="font-semibold underline">
-                                                Already have an account?
-                                            </p>
-                                        </Link>
-                                    </div>
                                 </form>
                             </Form>
+                            <div className="flex-row flex items-center space-x-3">
+                                <hr className="bg-gray-300 h-0.5 w-16"></hr>
+                                <p>Or continue with</p>
+                                <hr className="bg-gray-300 h-0.5 w-16"></hr>
+                            </div>
+                            <div className="flex flex-col space-y-3 w-full">
+                                <GoogleButton locale={locale} />
+                                <MicrosoftButton locale={locale} />
+                            </div>
+                            <div className="justify-between items-center flex flex-row w-full">
+                                <Link
+                                    href="#"
+                                    className="flex justify-center w-full"
+                                >
+                                    <p className="font-semibold underline">
+                                        Already have an account?
+                                    </p>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

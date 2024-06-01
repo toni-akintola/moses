@@ -22,7 +22,7 @@ export const navItems: NavItem[] = [
     },
     {
         title: "Profile",
-        href: "/dashboard/profile",
+        href: "core/profile",
         icon: "profile",
         label: "profile",
     },

@@ -13,8 +13,8 @@ import { useMessages } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 import React from "react"
 
-const Page = ({ params }: { params: { lang: string } }) => {
-    unstable_setRequestLocale(params.lang)
+const Page = ({ params }: { params: { locale: string } }) => {
+    unstable_setRequestLocale(params.locale)
     const messages = useMessages()
     const resumeBuilderContent =
         messages.resumeBuilder as unknown as ResumeBuilderProps

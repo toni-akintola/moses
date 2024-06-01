@@ -69,7 +69,7 @@ export default function Home({ home, locale }: HomeProps) {
                 language={home.language}
                 access={home.access}
             />
-            <LampContainer className="h-full -mb-10">
+            <LampContainer className="h-full -mb-10 overflow-x-hidden">
                 <div className="w-3/4 md:w-1/2">
                     <motion.h1
                         initial={{ opacity: 0.5, y: 100 }}

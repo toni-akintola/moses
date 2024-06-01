@@ -1,12 +1,35 @@
-import { ReactNode } from "react"
+import type { Metadata } from "next"
+import { Sofia_Sans } from "next/font/google"
 import "./globals.css"
+import Layout from "@/components/chat/Providers"
+import { Analytics } from "@vercel/analytics/react"
+import NextTopLoader from "nextjs-toploader"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+const lato = Sofia_Sans({
+    subsets: ["greek"],
+    weight: ["100", "300", "400", "700", "900"],
+})
 
-type Props = {
-    children: ReactNode
+export const metadata: Metadata = {
+    title: "Exodo",
+    description: "AI-powered Resume Builder",
 }
 
-// Since we have a `not-found.tsx` page on the root, a layout file
-// is required, even if it's just passing children through.
-export default function RootLayout({ children }: Props) {
-    return children
+export default function RootLayout({
+    children,
+    locale,
+}: {
+    children: React.ReactNode
+    locale: string
+}) {
+    return (
+        <html lang={locale}>
+            <body className={`${lato.className} `}>
+                <Analytics />
+                <SpeedInsights />
+                <NextTopLoader />
+                <Layout>{children}</Layout>
+            </body>
+        </html>
+    )
 }

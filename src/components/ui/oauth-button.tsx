@@ -7,6 +7,8 @@ const supabase = createBrowserClient(
 export type OAuthProps = {
     locale: string
 }
+
+export const signInWithOAuth = async () => {}
 export const GoogleButton = ({ locale }: OAuthProps) => {
     return (
         <button

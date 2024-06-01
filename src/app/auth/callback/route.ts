@@ -2,10 +2,7 @@ import { cookies } from "next/headers"
 import { NextResponse, NextRequest } from "next/server"
 import { type CookieOptions, createServerClient } from "@supabase/ssr"
 
-export async function GET(
-    request: NextRequest,
-    { params }: { params: { locale: string } }
-) {
+export async function GET(request: NextRequest) {
     const { searchParams, origin } = new URL(request.url)
     const code = searchParams.get("code")
     // if "next" is in param, use it as the redirect URL
@@ -30,9 +27,9 @@ export async function GET(
             }
         )
         const { error } = await supabase.auth.exchangeCodeForSession(code)
-        const locale = searchParams.get("locale")
-            ? searchParams.get("locale")
-            : "en" // Extracting locale's value: 'en'
+        const nextLocaleCookie = request.cookies.get("NEXT_LOCALE")
+        console.log(nextLocaleCookie)
+        const locale = nextLocaleCookie ? nextLocaleCookie.value : "en" // Extracting locale's value: 'en'
         if (!error) {
             return NextResponse.redirect(`${origin}${next}/${locale}/core`)
         }

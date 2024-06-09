@@ -3,10 +3,15 @@
 import { cn } from "@/lib/utils"
 import { MobileSidebar } from "./mobile-sidebar"
 import Logo from "@/components/landing/Logo"
-import { useParams } from "next/navigation"
+import { redirect, useParams, useRouter } from "next/navigation"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { createClient } from "@/utils/supabase/client"
 
 export default function Header() {
     const { locale } = useParams()
+    const router = useRouter()
+    const supabase = createClient()
     return (
         <div className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur">
             <nav className="flex h-14 items-center justify-between px-4">
@@ -18,6 +23,22 @@ export default function Header() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                    <Avatar>
+                        <AvatarImage src="" alt="@shadcn" />
+                        <AvatarFallback className="bg-gradient-to-b from-cyan-100 via bg-cyan-400"></AvatarFallback>
+                    </Avatar>
+                    <div className="p-4">
+                        <Button
+                            onClick={async () => {
+                                const { error } = await supabase.auth.signOut()
+                                if (!error) {
+                                    router.push(`/${locale}`)
+                                }
+                            }}
+                        >
+                            Sign Out
+                        </Button>
+                    </div>
                     {/* <ThemeToggle /> */}
                 </div>
             </nav>

@@ -1,26 +1,38 @@
 import { createBrowserClient } from "@supabase/ssr"
+import { Provider } from "@supabase/supabase-js"
 
 const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 export type OAuthProps = {
+    provider: Provider
     locale: string
 }
 
-export const signInWithOAuth = async () => {}
-export const GoogleButton = ({ locale }: OAuthProps) => {
+export const signInWithOAuth = async ({ locale, provider }: OAuthProps) => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+            redirectTo: `http://localhost:3000/auth/callback?locale=${locale}`,
+        },
+    })
+}
+
+export const signUpWithOAuth = async ({ locale, provider }: OAuthProps) => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+            redirectTo: `http://localhost:3000/auth/callback?locale=${locale}`,
+        },
+    })
+}
+export const GoogleButton = ({ locale, provider }: OAuthProps) => {
     return (
         <button
             className="flex w-full items-center rounded bg-white px-4 py-4 text-sm font-bold drop-shadow-md hover:bg-gray-50"
-            onClick={async () => {
-                const { data, error } = await supabase.auth.signInWithOAuth({
-                    provider: "google",
-                    options: {
-                        redirectTo: `http://localhost:3000/auth/callback?locale=${locale}`,
-                    },
-                })
-                console.log(data, error)
+            onClick={() => {
+                signInWithOAuth({ locale, provider })
             }}
         >
             <GoogleLogo />
@@ -58,20 +70,12 @@ const GoogleLogo = () => (
     </svg>
 )
 
-export const MicrosoftButton = (locale: any) => {
+export const MicrosoftButton = ({ locale, provider }: OAuthProps) => {
     return (
         <button
             className="flex w-full items-center rounded bg-white px-4 py-4 text-sm font-bold drop-shadow-md hover:bg-gray-50"
-            onClick={async () => {
-                const { data, error } = await supabase.auth.signInWithOAuth({
-                    provider: "azure",
-                    options: {
-                        scopes: "email",
-                        redirectTo: `/${locale}/core`,
-                    },
-                })
-
-                console.log(data, error)
+            onClick={() => {
+                signInWithOAuth({ locale, provider })
             }}
         >
             <MicrosoftLogo />

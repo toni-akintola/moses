@@ -27,9 +27,9 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
-import { redirect, useParams, useRouter } from "next/navigation"
+import { redirect, useParams } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
-import { Router } from "lucide-react"
+import { Provider } from "@supabase/supabase-js"
 
 type Props = {}
 
@@ -46,7 +46,6 @@ const formSchema = z.object({
 
 export default function Auth(props: Props) {
     const supabase = createClient()
-    const router = useRouter()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -64,13 +63,14 @@ export default function Auth(props: Props) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
-        const { data, error } = await supabase.auth.signInWithPassword({
+
+        const { data, error } = await supabase.auth.signUp({
             email: values.email,
             password: values.password,
+            options: {
+                emailRedirectTo: "core",
+            },
         })
-        if (!error) {
-            router.push("core")
-        }
         console.log(data, error)
     }
     return (
@@ -82,7 +82,7 @@ export default function Auth(props: Props) {
                             <Form {...form}>
                                 <form
                                     onSubmit={form.handleSubmit(onSubmit)}
-                                    className="flex items-center flex-col justify-center space-y-4"
+                                    className="flex items-center flex-col justify-center space-y-4 w-full"
                                 >
                                     <h2 className="font-semibold text-2xl">
                                         Get started
@@ -179,27 +179,33 @@ export default function Auth(props: Props) {
                                     >
                                         Next
                                     </Button>
-                                    <div className="flex-row flex items-center space-x-3">
-                                        <hr className="bg-gray-300 h-0.5 w-16"></hr>
-                                        <p>Or continue with</p>
-                                        <hr className="bg-gray-300 h-0.5 w-16"></hr>
-                                    </div>
-                                    <div className="flex flex-col space-y-3 w-full">
-                                        <GoogleButton locale={locale} />
-                                        <MicrosoftButton locale={locale} />
-                                    </div>
-                                    <div className="justify-between items-center flex flex-row w-full">
-                                        <Link
-                                            href="#"
-                                            className="flex justify-center w-full"
-                                        >
-                                            <p className="font-semibold underline">
-                                                Already have an account?
-                                            </p>
-                                        </Link>
-                                    </div>
                                 </form>
                             </Form>
+                            <div className="flex-row flex items-center space-x-3">
+                                <hr className="bg-gray-300 h-0.5 w-16"></hr>
+                                <p>Or continue with</p>
+                                <hr className="bg-gray-300 h-0.5 w-16"></hr>
+                            </div>
+                            <div className="flex flex-col space-y-3 w-full">
+                                <GoogleButton
+                                    locale={locale}
+                                    provider={"google" as Provider}
+                                />
+                                <MicrosoftButton
+                                    locale={locale}
+                                    provider={"microsoft" as Provider}
+                                />
+                            </div>
+                            <div className="justify-between items-center flex flex-row w-full">
+                                <Link
+                                    href="sign-up"
+                                    className="flex justify-center w-full"
+                                >
+                                    <p className="font-semibold underline">
+                                        {"Don't have an account?"}
+                                    </p>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

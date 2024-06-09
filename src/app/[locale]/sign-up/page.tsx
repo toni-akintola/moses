@@ -27,8 +27,10 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
-import { redirect, useParams } from "next/navigation"
+import { redirect, useParams, useRouter } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
+import { Provider } from "@supabase/supabase-js"
+import { Profile } from "@/utils/types"
 
 type Props = {}
 
@@ -57,6 +59,7 @@ export default function Auth(props: Props) {
 
     const params = useParams()
     const locale = params.locale as string
+    const router = useRouter()
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
@@ -185,16 +188,22 @@ export default function Auth(props: Props) {
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
                             </div>
                             <div className="flex flex-col space-y-3 w-full">
-                                <GoogleButton locale={locale} />
-                                <MicrosoftButton locale={locale} />
+                                <GoogleButton
+                                    locale={locale}
+                                    provider={"google" as Provider}
+                                />
+                                <MicrosoftButton
+                                    locale={locale}
+                                    provider={"microsoft" as Provider}
+                                />
                             </div>
                             <div className="justify-between items-center flex flex-row w-full">
                                 <Link
-                                    href="#"
+                                    href="login"
                                     className="flex justify-center w-full"
                                 >
                                     <p className="font-semibold underline">
-                                        Already have an account?
+                                        {"Already have an account?"}
                                     </p>
                                 </Link>
                             </div>

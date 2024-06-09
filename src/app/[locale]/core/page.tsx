@@ -8,8 +8,28 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { createClient } from "@/utils/supabase/server"
+import { Profile } from "@/utils/types"
 
-export default function page() {
+export default async function Page() {
+    const supabase = createClient()
+
+    const { data: userData } = await supabase.auth.getUser()
+    const { data: profileData, error } = await supabase
+        .from("Profiles")
+        .select("*")
+        .eq("id", userData.user?.id)
+    if (error && userData.user) {
+        const profile: Profile = {
+            email: userData.user.email!,
+            id: userData.user.id,
+            firstTimeUser: true,
+        }
+        const { data: profileData, error: profileError } = await supabase
+            .from("Profiles")
+            .insert(profile)
+        console.log(profileData, profileError)
+    }
     return (
         <ScrollArea className="h-full">
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">

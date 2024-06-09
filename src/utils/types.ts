@@ -39,7 +39,8 @@ export interface AdditionalInfo {
 
 export interface ResumeSubmission {
     age: string
-    name: string
+    firstName: string
+    lastName: string
     number: string
     email: string
     proficiency: string
@@ -48,6 +49,15 @@ export interface ResumeSubmission {
     skills: Skill[]
     certificates: Certificate[]
     authorizationStatus: string
+}
+
+export interface Profile {
+    id: string
+    firstName?: string
+    lastName?: string
+    avatarURL?: string
+    email: string
+    firstTimeUser: boolean
 }
 
 export type FormItemText = {

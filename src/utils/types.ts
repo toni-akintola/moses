@@ -41,7 +41,7 @@ export interface ResumeSubmission {
     age: string
     firstName: string
     lastName: string
-    number: string
+    phoneNumber: string
     email: string
     proficiency: string
     educations: Education[]
@@ -52,7 +52,7 @@ export interface ResumeSubmission {
 }
 
 export interface Profile {
-    id: string
+    user_id: string
     firstName?: string
     lastName?: string
     avatarURL?: string

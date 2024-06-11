@@ -13,7 +13,7 @@ const handleI18nRouting = createIntlMiddleware({
 })
 
 export async function middleware(request: NextRequest) {
-    if (request.nextUrl.pathname.startsWith("/auth")) {
+    if (request.nextUrl.pathname.startsWith("/auth") || request.nextUrl.pathname.startsWith("/api")) {
         return
     }
 

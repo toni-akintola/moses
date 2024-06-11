@@ -1932,7 +1932,7 @@ export const download = async (payload: BodyPayload) => {
             downloadWithRetry(
                 response.requestId,
                 onComplete,
-                payload.data?.name
+                payload.data?.firstName + " " + payload.data?.lastName
             )
         }
     } catch (error) {}

@@ -52,14 +52,14 @@ export async function POST(request: Request) {
         age: translatedResume.age,
         firstName: translatedResume.firstName,
         lastName: translatedResume.lastName,
-        number: translatedResume.number,
+        phoneNumber: translatedResume.phoneNumber,
         email: translatedResume.email,
         proficiency: translatedResume.proficiency,
         educations: translatedResume.educations,
         experiences: translatedResume.experiences,
         skills: translatedResume.skills,
         certificates: translatedResume.certificates,
-        authorizationstatus: translatedResume.authorizationStatus,
+        authorizationStatus: translatedResume.authorizationStatus,
     })
     console.log(error)
 

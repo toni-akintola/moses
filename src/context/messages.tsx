@@ -1,9 +1,6 @@
 import { createContext, useState } from "react"
 import { nanoid } from "nanoid"
 import { Message } from "@/lib/message"
-import { useMessages, useTranslations } from "next-intl"
-import { unstable_setRequestLocale } from "next-intl/server"
-import { useParams } from "next/navigation"
 
 export const MessagesContext = createContext<{
     messages: Message[]

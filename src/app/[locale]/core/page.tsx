@@ -16,17 +16,17 @@ export default async function Page() {
 
     const { data: userData } = await supabase.auth.getUser()
     const { data: profileData, error } = await supabase
-        .from("Profiles")
+        .from("profiles")
         .select("*")
         .eq("id", userData.user?.id)
     if (error && userData.user) {
         const profile: Profile = {
             email: userData.user.email!,
-            id: userData.user.id,
+            user_id: userData.user.id,
             firstTimeUser: true,
         }
         const { data: profileData, error: profileError } = await supabase
-            .from("Profiles")
+            .from("profiles")
             .insert(profile)
         console.log(profileData, profileError)
     }

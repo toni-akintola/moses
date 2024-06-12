@@ -33,8 +33,8 @@ export async function POST(request: Request) {
                 jobTitle: await translateText(experience.jobTitle),
                 city: await translateText(experience.city),
                 country: await translateText(experience.country),
-                startDate: await translateText(experience.startDate),
-                endDate: await translateText(experience.endDate),
+                startDate: experience.startDate,
+                endDate: experience.endDate,
                 duties: await translateText(experience.duties),
             }
             return translatedExperience

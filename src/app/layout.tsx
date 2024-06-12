@@ -20,7 +20,7 @@ export default function RootLayout({
     locale,
 }: {
     children: React.ReactNode
-    locale: string
+    locale: never
 }) {
     return (
         <html lang={locale}>

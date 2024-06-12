@@ -48,11 +48,13 @@
         "backButton": "الصفحة الرئيسية",
         "general": "معلومات عامة",
         "name": {
-            "title": "الاسم الكامل",
-            "placeholderOne": "الاسم الأول",
-            "placeholderTwo": "الاسم الأخير",
+            "titleOne": "الاسم الأول",
+            "titleTwo": "الاسم الأخير",
+            "placeholderOne": "جون",
+            "placeholderTwo": "سميث",
             "subtitle": "أدخل اسمك الكامل."
         },
+
         "age": {
             "title": "العمر",
             "placeholder": "24",
@@ -148,14 +150,14 @@
             "subtitle": "أدخل البلد."
         },
         "startYear": {
-            "title": "سنة البدء",
-            "placeholder": "2000",
-            "subtitle": "أدخل سنة البدء."
+            "title": "تاريخ البدء (اختياري)",
+            "placeholder": "٢٠٠٠",
+            "subtitle": "أدخل تاريخ البدء."
         },
         "endYear": {
-            "title": "سنة الانتهاء",
-            "placeholder": "2000",
-            "subtitle": "أدخل سنة الانتهاء."
+            "title": "تاريخ الانتهاء (اختياري)",
+            "placeholder": "٢٠٠٠",
+            "subtitle": "أدخل تاريخ الانتهاء."
         },
         "duties": {
             "title": "الواجبات",

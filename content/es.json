@@ -48,10 +48,11 @@
         "backButton": "Inicio",
         "general": "Información general",
         "name": {
-            "title": "Nombre completo",
-            "placeholderOne": "Nombre",
-            "placeholderTwo": "Apellido",
-            "subtitle": "Introduce tu nombre completo."
+            "titleOne": "Nombre",
+            "titleTwo": "Apellido",
+            "placeholderOne": "Juan",
+            "placeholderTwo": "Pérez",
+            "subtitle": "Ingrese su nombre completo."
         },
         "age": {
             "title": "Edad",
@@ -148,14 +149,14 @@
             "subtitle": "Introduce el país."
         },
         "startYear": {
-            "title": "Fecha de inicio",
+            "title": "Fecha de inicio (opcional)",
             "placeholder": "2000",
-            "subtitle": "Introduce una fecha de inicio."
+            "subtitle": "Ingrese una fecha de inicio."
         },
         "endYear": {
-            "title": "Fecha de finalización",
+            "title": "Fecha de finalización (opcional)",
             "placeholder": "2000",
-            "subtitle": "Introduce una fecha de finalización."
+            "subtitle": "Ingrese una fecha de finalización."
         },
         "duties": {
             "title": "Deberes",

@@ -48,9 +48,10 @@
         "backButton": "Головна",
         "general": "Загальна інформація",
         "name": {
-            "title": "Повне ім'я",
-            "placeholderOne": "Ім'я",
-            "placeholderTwo": "Прізвище",
+            "titleOne": "Ім'я",
+            "titleTwo": "Прізвище",
+            "placeholderOne": "Іван",
+            "placeholderTwo": "Сміт",
             "subtitle": "Введіть своє повне ім'я."
         },
         "age": {
@@ -148,14 +149,14 @@
             "subtitle": "Введіть назву країни."
         },
         "startYear": {
-            "title": "Дата початку",
+            "title": "Дата початку (необов'язково)",
             "placeholder": "2000",
             "subtitle": "Введіть дату початку."
         },
         "endYear": {
-            "title": "Дата закінчення",
+            "title": "Дата завершення (необов'язково)",
             "placeholder": "2000",
-            "subtitle": "Введіть дату закінчення."
+            "subtitle": "Введіть дату завершення."
         },
         "duties": {
             "title": "Обов'язки",

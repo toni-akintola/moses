@@ -119,7 +119,8 @@ export type S1Props = {
     general: string
     age: FormItemText
     name: {
-        title: string
+        titleOne: string
+        titleTwo: string
         placeholderOne: string
         placeholderTwo: string
         subtitle: string
@@ -501,8 +502,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 ?.map((_, index) => [
                     `experiences.${index}.jobTitle`,
                     `experiences.${index}.employer`,
-                    `experiences.${index}.startDate`,
-                    `experiences.${index}.endDate`,
+                    // `experiences.${index}.startDate`,
+                    // `experiences.${index}.endDate`,
                     `experiences.${index}.country`,
                     `experiences.${index}.city`,
                     `experiences.${index}.duties`,
@@ -638,7 +639,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                {s1Content.name.title}
+                                                {s1Content.name.titleOne}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
@@ -660,7 +661,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                {s1Content.name.title}
+                                                {s1Content.name.titleTwo}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
@@ -1966,7 +1967,7 @@ export const htmlTemplate = `<div class="h-full w-full flex p-2">
   <div class="flex">
     <div class="mt-16 grid border-2 border-gray-400 p-10">
       <div class="grid gap-8">
-        <p class="text-2xl text-wrap font-semibold">{{name}}</p>
+        <p class="text-2xl text-wrap font-semibold">{{firstName}} {{lastName}}</p>
       </div>
       <div class="pt-5">
         <p class="text-2xl font-medium">Contact</p>

@@ -15,8 +15,8 @@ export interface Experience {
     jobTitle: string
     city: string
     country: string
-    startDate: string
-    endDate: string
+    startDate?: string
+    endDate?: string
     duties: string
 }
 

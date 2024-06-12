@@ -48,10 +48,11 @@
         "backButton": "主页",
         "general": "一般信息",
         "name": {
-            "title": "全名",
-            "placeholderOne": "名字",
-            "placeholderTwo": "姓氏",
-            "subtitle": "请输入你的全名。"
+            "titleOne": "名字",
+            "titleTwo": "姓氏",
+            "placeholderOne": "约翰",
+            "placeholderTwo": "史密斯",
+            "subtitle": "请输入您的全名。"
         },
         "age": {
             "title": "年龄",
@@ -148,15 +149,16 @@
             "subtitle": "请输入国家名称。"
         },
         "startYear": {
-            "title": "开始年份",
+            "title": "开始日期（可选）",
             "placeholder": "2000",
-            "subtitle": "请输入开始年份。"
+            "subtitle": "请输入开始日期。"
         },
         "endYear": {
-            "title": "结束年份",
+            "title": "结束日期（可选）",
             "placeholder": "2000",
-            "subtitle": "请输入结束年份。"
+            "subtitle": "请输入结束日期。"
         },
+
         "duties": {
             "title": "职责",
             "placeholder": "...",

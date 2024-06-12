@@ -104,12 +104,12 @@
                 "subtitle": "Enter a degree."
             },
             "startYear": {
-                "title": "Start Date (optional)",
+                "title": "Start Date",
                 "placeholder": "2000",
                 "subtitle": "Enter a start date."
             },
             "endYear": {
-                "title": "End Date (optional)",
+                "title": "End Date",
                 "placeholder": "2000",
                 "subtitle": "Enter an end date."
             }

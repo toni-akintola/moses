@@ -149,12 +149,12 @@
             "subtitle": "Enter the country."
         },
         "startYear": {
-            "title": "Start Date",
+            "title": "Start Date (optional)",
             "placeholder": "2000",
             "subtitle": "Enter a start date."
         },
         "endYear": {
-            "title": "End Date",
+            "title": "End Date (optional)",
             "placeholder": "2000",
             "subtitle": "Enter an end date."
         },

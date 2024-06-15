@@ -58,6 +58,8 @@ export interface Profile {
     avatarURL?: string
     email: string
     firstTimeUser: boolean
+    accountType?: string
+    resumeSubmission?: ResumeSubmission
 }
 
 export type FormItemText = {

@@ -12,6 +12,7 @@ import {
     HelpCircle,
     Image,
     Laptop,
+    Layers,
     LayoutDashboardIcon,
     Loader2,
     LogIn,
@@ -21,6 +22,7 @@ import {
     MoreVertical,
     Pizza,
     Plus,
+    ScanSearch,
     Settings,
     SunMedium,
     Trash,
@@ -35,6 +37,7 @@ export type Icon = LucideIcon
 
 export const Icons = {
     dashboard: LayoutDashboardIcon,
+    layers: Layers,
     logo: Command,
     login: LogIn,
     close: X,
@@ -57,6 +60,7 @@ export const Icons = {
     arrowRight: ArrowRight,
     help: HelpCircle,
     pizza: Pizza,
+    search: ScanSearch,
     sun: SunMedium,
     moon: Moon,
     laptop: Laptop,

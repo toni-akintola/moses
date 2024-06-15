@@ -8,28 +8,8 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { createClient } from "@/utils/supabase/server"
-import { Profile } from "@/utils/types"
 
 export default async function Page() {
-    const supabase = createClient()
-
-    const { data: userData } = await supabase.auth.getUser()
-    const { data: profileData, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", userData.user?.id)
-    if (error && userData.user) {
-        const profile: Profile = {
-            email: userData.user.email!,
-            user_id: userData.user.id,
-            firstTimeUser: true,
-        }
-        const { data: profileData, error: profileError } = await supabase
-            .from("profiles")
-            .insert(profile)
-        console.log(profileData, profileError)
-    }
     return (
         <ScrollArea className="h-full">
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
@@ -37,9 +17,8 @@ export default async function Page() {
                     <h2 className="text-3xl font-bold tracking-tight">
                         Welcome Back 👋
                     </h2>
-                    <div className="hidden items-center space-x-2 md:flex">
-                        <Button>Download</Button>
-                    </div>
+                    {/* <div className="hidden items-center space-x-2 md:flex">
+                    </div> */}
                 </div>
                 <Tabs defaultValue="overview" className="space-y-4">
                     <TabsList>

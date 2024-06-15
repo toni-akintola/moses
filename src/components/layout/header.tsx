@@ -8,7 +8,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/utils/supabase/client"
 
-export default function Header() {
+export type HeaderProps = {
+    email: string
+}
+export default function Header({ email }: HeaderProps) {
     const { locale } = useParams()
     const router = useRouter()
     const supabase = createClient()
@@ -21,8 +24,8 @@ export default function Header() {
                 <div className={cn("block lg:!hidden")}>
                     <MobileSidebar />
                 </div>
-
                 <div className="flex items-center gap-2">
+                    <p>{email}</p>
                     <Avatar>
                         <AvatarImage src="" alt="@shadcn" />
                         <AvatarFallback className="bg-gradient-to-b from-cyan-100 via bg-cyan-400"></AvatarFallback>
@@ -39,6 +42,7 @@ export default function Header() {
                             Sign Out
                         </Button>
                     </div>
+
                     {/* <ThemeToggle /> */}
                 </div>
             </nav>

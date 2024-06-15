@@ -64,12 +64,9 @@ export default function Auth(props: Props) {
         // ✅ This will be type-safe and validated.
         console.log(values)
 
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: values.email,
             password: values.password,
-            options: {
-                emailRedirectTo: "core",
-            },
         })
         console.log(data, error)
     }

@@ -9,21 +9,21 @@ export const navItems: NavItem[] = [
         label: "Dashboard",
     },
     {
-        title: "User",
-        href: "/dashboard/user",
-        icon: "user",
-        label: "user",
-    },
-    {
-        title: "Employee",
-        href: "/dashboard/employee",
-        icon: "employee",
-        label: "employee",
-    },
-    {
         title: "Profile",
         href: "core/profile",
         icon: "profile",
-        label: "profile",
+        label: "Profile",
+    },
+    {
+        title: "Find Jobs",
+        href: "core/search",
+        icon: "search",
+        label: "Find Jobs",
+    },
+    {
+        title: "Applications",
+        href: "core/applications",
+        icon: "layers",
+        label: "Applications",
     },
 ]

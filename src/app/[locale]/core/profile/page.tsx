@@ -9,14 +9,12 @@ import {
     S4Props,
     S5Props,
 } from "@/components/resume-forms/create-profile"
+import Profile from "@/components/resume-forms/profile"
 import { createClient } from "@/utils/supabase/server"
 import { useMessages } from "next-intl"
-import { unstable_setRequestLocale } from "next-intl/server"
 import React from "react"
 
-const Page = async ({ params }: { params: { locale: string } }) => {
-    const supabase = createClient()
-    unstable_setRequestLocale(params.locale)
+const Page = ({ params }: { params: { locale: string } }) => {
     const messages = useMessages()
     const resumeBuilderContent =
         messages.resumeBuilder as unknown as ResumeBuilderProps
@@ -25,13 +23,6 @@ const Page = async ({ params }: { params: { locale: string } }) => {
     const S3Content = messages.s3 as unknown as S3Props
     const S4Content = messages.s4 as unknown as S4Props
     const S5Content = messages.s5 as unknown as S5Props
-
-    const { data: userData } = await supabase.auth.getUser()
-    const { data: profileData, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", userData.user?.id)
-    console.log(profileData)
 
     return (
         <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">

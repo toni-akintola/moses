@@ -23,7 +23,7 @@ export default async function DashboardLayout({
     }
     return (
         <>
-            <Header email={user.data.user?.email || ""} />
+            <Header email={""} />
             <div className="flex h-screen overflow-hidden">
                 <Sidebar />
                 <main className="w-full pt-16">{children}</main>

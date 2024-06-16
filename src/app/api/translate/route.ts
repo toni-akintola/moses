@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import * as deepl from "deepl-node"
 import { Education, Experience, ResumeSubmission } from "@/utils/types"
 import { translateText } from "@/functions/server"
 import { createClient } from "@/utils/supabase/server"
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     const { educations, experiences, ...otherProps }: ResumeSubmission =
         await request.json()
     console.log(educations, experiences)

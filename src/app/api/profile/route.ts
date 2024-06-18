@@ -10,6 +10,5 @@ export async function GET(request: NextRequest) {
         .select("*")
         .eq("user_id", userData.user?.id)
         .single()
-
     return NextResponse.json(profileData)
 }

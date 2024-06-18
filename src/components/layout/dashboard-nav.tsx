@@ -15,6 +15,20 @@ import {
 } from "@/components/ui/tooltip"
 import { isMinimizedAtom } from "@/utils/atoms"
 import { useAtom } from "jotai"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { HelpCircle } from "lucide-react"
 
 interface DashboardNavProps {
     items: NavItem[]
@@ -85,6 +99,31 @@ export function DashboardNav({
                         )
                     )
                 })}
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <button className="flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+                            <HelpCircle className="ml-3 size-5" />
+                            <p>Help</p>
+                        </button>
+                    </DialogTrigger>
+                    <DialogContent className="">
+                        <DialogHeader>
+                            <DialogTitle>Welcome to Exodo!</DialogTitle>
+                            <DialogDescription>
+                                Make changes to your profile here. Click save
+                                when you are done.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4"></div>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button type="button" variant="secondary">
+                                    Got it!
+                                </Button>
+                            </DialogClose>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </TooltipProvider>
         </nav>
     )

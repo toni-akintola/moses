@@ -18,12 +18,12 @@ export default async function DashboardLayout({
     const supabase = createClient()
     const user = await supabase.auth.getUser()
 
-    if (!user.data) {
+    if (!user.data.user) {
         redirect("login")
     }
     return (
         <>
-            <Header email={""} />
+            <Header email={user.data.user.email || ""} />
             <div className="flex h-screen overflow-hidden">
                 <Sidebar />
                 <main className="w-full pt-16">{children}</main>

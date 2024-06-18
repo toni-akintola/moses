@@ -5,6 +5,7 @@ import Layout from "@/components/chat/Providers"
 import { Analytics } from "@vercel/analytics/react"
 import NextTopLoader from "nextjs-toploader"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Toaster } from "@/components/ui/toaster"
 const lato = Sofia_Sans({
     subsets: ["greek"],
     weight: ["100", "300", "400", "700", "900"],
@@ -27,6 +28,7 @@ export default function RootLayout({
             <body className={`${lato.className} `}>
                 <Analytics />
                 <SpeedInsights />
+                <Toaster />
                 <NextTopLoader />
                 <Layout>{children}</Layout>
             </body>

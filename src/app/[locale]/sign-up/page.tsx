@@ -31,6 +31,7 @@ import { redirect, useParams, useRouter } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
 import { Provider } from "@supabase/supabase-js"
 import { Profile } from "@/utils/types"
+import { useToast } from "@/components/ui/use-toast"
 
 type Props = {}
 
@@ -60,6 +61,7 @@ export default function Auth(props: Props) {
     const params = useParams()
     const locale = params.locale as string
     const router = useRouter()
+    const { toast } = useToast()
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
@@ -68,11 +70,20 @@ export default function Auth(props: Props) {
         const { data, error } = await supabase.auth.signUp({
             email: values.email,
             password: values.password,
-            options: {
-                emailRedirectTo: "core",
-            },
         })
-        console.log(data, error)
+        console.log(error)
+        if (!error) {
+            toast({
+                title: "Success!",
+                description: `Check ${values.email} to confirm your email.`,
+            })
+        } else {
+            toast({
+                title: "Error...",
+                description:
+                    "Some error has occurred signing up. Please try again.",
+            })
+        }
     }
     return (
         <div>

@@ -20,6 +20,22 @@ export interface Experience {
     duties: string
 }
 
+export interface Job {
+    id: string
+    jobProviders: {
+        provider: string
+        url: string
+    }
+    url: string
+    location: string
+    salaryRange: string
+    title: string
+    company: string
+    datePosted: string
+    description: string
+    employmentType: string
+    image: string
+}
 export interface Skill {
     id?: number
     title: string

@@ -1,5 +1,3 @@
-"use client"
-
 // import Chat from "@/components/chat/Chat"
 import { Chat } from "@/components/ui/chat"
 export default function ChatPage() {

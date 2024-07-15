@@ -99,7 +99,7 @@ export function DashboardNav({
                         )
                     )
                 })}
-                <Dialog>
+                {/* <Dialog>
                     <DialogTrigger asChild>
                         <button className="flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
                             <HelpCircle className="ml-3 size-5" />
@@ -123,7 +123,7 @@ export function DashboardNav({
                             </DialogClose>
                         </DialogFooter>
                     </DialogContent>
-                </Dialog>
+                </Dialog> */}
             </TooltipProvider>
         </nav>
     )

@@ -26,4 +26,10 @@ export const navItems: NavItem[] = [
         icon: "layers",
         label: "Applications",
     },
+    {
+        title: "Help",
+        href: "#",
+        icon: "help",
+        label: "Help",
+    },
 ]

@@ -23,7 +23,7 @@ const Page = async () => {
                     <BentoGridItem
                         footer={
                             <div className="flex flex-row text-center items-center space-x-1">
-                                <p>{item.datePosted}</p>
+                                <p>Uploaded {item.datePosted}</p>
                             </div>
                         }
                         key={item.id}

@@ -9,8 +9,6 @@ import {
     S4Props,
     S5Props,
 } from "@/components/resume-forms/create-profile"
-import Profile from "@/components/resume-forms/profile"
-import { createClient } from "@/utils/supabase/server"
 import { useMessages } from "next-intl"
 import React from "react"
 

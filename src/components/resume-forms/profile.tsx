@@ -43,15 +43,16 @@ const ProfilePage = ({ initialData, title, description }: ProfileProps) => {
                                 </svg>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold">S</div>
                                 <p className="text-xs text-muted-foreground">
-                                    +20.1% from last month
+                                    ...
                                 </p>
                             </CardContent>
                         </Card>
                     ))}
             </div>
-            <Button>Edit</Button>
+            <div className="flex items-center justify-center p-4">
+                <Button className="w-1/3">Edit</Button>
+            </div>
             <div></div>
         </div>
     )

@@ -1,3 +1,4 @@
+import Candidates from "@/components/core/candidates"
 import {
     CreateProfileOne,
     ResumeBuilderProps,
@@ -16,6 +17,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { createClient } from "@/utils/supabase/server"
 import { useMessages } from "next-intl"
 import React from "react"
 
@@ -30,8 +32,14 @@ const Page = (props: Props) => {
     const S3Content = messages.s3 as unknown as S3Props
     const S4Content = messages.s4 as unknown as S4Props
     const S5Content = messages.s5 as unknown as S5Props
+
+    // const supabase = createClient()
+    // const user = await supabase.auth.getUser()
+    // const userID = user.data.user?.id
+    // const { data: candidateData, error } = await supabase.from("candidates").select().eq("profile_id", userID)
+    // console.log(error)
     return (
-        <div className="p-4 md:p-8">
+        <div className="p-4 md:p-8 flex flex-col space-y-5">
             <Dialog>
                 <DialogTrigger asChild>
                     <Button>Create New Candidate</Button>
@@ -49,6 +57,7 @@ const Page = (props: Props) => {
                     />
                 </DialogContent>
             </Dialog>
+            <Candidates />
         </div>
     )
 }

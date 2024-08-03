@@ -470,14 +470,17 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 const user = await supabase.auth.getUser()
                 const userID = user.data.user?.id
                 if (userID && user.data.user?.email) {
-                    const { error } = await supabase
-                        .from("profiles")
+                    // Create a new candidate
+                    const { data: candidateData, error } = await supabase
+                        .from("candidates")
                         .upsert({
-                            resumeSubmission: data,
+                            first_name: data.firstName,
+                            last_name: data.lastName,
+                            resume_submission: data,
                             email: user.data.user.email,
-                            user_id: userID,
+                            profile_id: userID,
                         })
-                        .eq("user_id", userID)
+                        .select()
                     console.log(error)
                 }
             }

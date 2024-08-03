@@ -8,12 +8,7 @@ export const navItems: NavItem[] = [
         icon: "dashboard",
         label: "Dashboard",
     },
-    // {
-    //     title: "Profile",
-    //     href: "/core/profile",
-    //     icon: "profile",
-    //     label: "Profile",
-    // },
+
     {
         title: "Candidates",
         href: "/core/candidates",
@@ -21,11 +16,18 @@ export const navItems: NavItem[] = [
         label: "Candidates",
     },
     {
-        title: "Find Jobs",
+        title: "Jobs",
         href: "/core/search",
         icon: "search",
         label: "Find Jobs",
     },
+    {
+        title: "Placements",
+        href: "/core/placements",
+        icon: "target",
+        label: "Placements",
+    },
+
     {
         title: "Applications",
         href: "/core/applications",

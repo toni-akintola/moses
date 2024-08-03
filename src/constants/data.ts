@@ -8,11 +8,17 @@ export const navItems: NavItem[] = [
         icon: "dashboard",
         label: "Dashboard",
     },
+    // {
+    //     title: "Profile",
+    //     href: "/core/profile",
+    //     icon: "profile",
+    //     label: "Profile",
+    // },
     {
-        title: "Profile",
-        href: "/core/profile",
+        title: "Candidates",
+        href: "/core/candidates",
         icon: "profile",
-        label: "Profile",
+        label: "Candidates",
     },
     {
         title: "Find Jobs",

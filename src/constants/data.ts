@@ -1,7 +1,7 @@
 import { Icons } from "@/components/ui/icons"
 import { NavItem, SidebarNavItem } from "@/utils/types"
 
-export const navItems: NavItem[] = [
+export const enterpriseNavItems: NavItem[] = [
     {
         title: "Dashboard",
         href: "/core",
@@ -28,6 +28,45 @@ export const navItems: NavItem[] = [
         label: "Placements",
     },
 
+    {
+        title: "Applications",
+        href: "/core/applications",
+        icon: "layers",
+        label: "Applications",
+    },
+    {
+        title: "Help",
+        href: "#",
+        icon: "help",
+        label: "Help",
+    },
+]
+
+export const employerNavItems: NavItem[] = [
+    {
+        title: "Dashboard",
+        href: "/core",
+        icon: "dashboard",
+        label: "Dashboard",
+    },
+    {
+        title: "Candidates",
+        href: "/core/candidates",
+        icon: "profile",
+        label: "Candidates",
+    },
+    {
+        title: "Jobs",
+        href: "/core/jobs",
+        icon: "briefcase",
+        label: "Jobs",
+    },
+    {
+        title: "Placements",
+        href: "/core/placements",
+        icon: "target",
+        label: "Placements",
+    },
     {
         title: "Applications",
         href: "/core/applications",

@@ -1,6 +1,7 @@
 import {
     AlertTriangle,
     ArrowRight,
+    BriefcaseIcon,
     Check,
     ChevronLeft,
     ChevronRight,
@@ -38,6 +39,7 @@ export type Icon = LucideIcon
 
 export const Icons = {
     dashboard: LayoutDashboardIcon,
+    briefcase: BriefcaseIcon,
     layers: Layers,
     logo: Command,
     login: LogIn,

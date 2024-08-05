@@ -10,5 +10,6 @@ export async function GET(request: NextRequest) {
         .select("*")
         .eq("user_id", userData.user?.id)
         .single()
+    console.log(error)
     return NextResponse.json(profileData)
 }

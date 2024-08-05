@@ -27,7 +27,7 @@ const Page = async () => {
                             </div>
                         }
                         key={item.id}
-                        href={"#"}
+                        href={`search/${item.id}`}
                         title={
                             <div className="flex flex-row space-x-3">
                                 <p className="text-md m-0 p-0">

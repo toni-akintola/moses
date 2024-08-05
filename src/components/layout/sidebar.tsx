@@ -1,18 +1,20 @@
 "use client"
 import React, { useState } from "react"
 import { DashboardNav } from "@/components/layout/dashboard-nav"
-import { navItems } from "@/constants/data"
+import { enterpriseNavItems, employerNavItems } from "@/constants/data"
 import { cn } from "@/lib/utils"
 import { ChevronLeft } from "lucide-react"
 import { useAtom } from "jotai"
 import { isMinimizedAtom } from "@/utils/atoms"
+import { NavItem } from "@/utils/types"
 // import { useSidebar } from '@/hooks/useSidebar';
 
 type SidebarProps = {
     className?: string
+    items: NavItem[]
 }
 
-export default function Sidebar({ className }: SidebarProps) {
+export default function Sidebar({ className, items }: SidebarProps) {
     const [isMinimized, toggle] = useAtom(isMinimizedAtom)
     const [status, setStatus] = useState(false)
 
@@ -40,7 +42,7 @@ export default function Sidebar({ className }: SidebarProps) {
             <div className="space-y-4 py-4">
                 <div className="px-3 py-2">
                     <div className="mt-3 space-y-1">
-                        <DashboardNav items={navItems} />
+                        <DashboardNav items={items} />
                     </div>
                 </div>
             </div>

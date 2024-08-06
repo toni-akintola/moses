@@ -7,11 +7,13 @@ import { redirect, useParams, useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/utils/supabase/client"
+import { NavItem } from "@/utils/types"
 
 export type HeaderProps = {
     email: string
+    items: NavItem[]
 }
-export default function Header({ email }: HeaderProps) {
+export default function Header({ email, items }: HeaderProps) {
     const { locale } = useParams()
     const router = useRouter()
     const supabase = createClient()
@@ -22,7 +24,7 @@ export default function Header({ email }: HeaderProps) {
                     <Logo locale={locale as string} />
                 </div>
                 <div className={cn("block lg:!hidden")}>
-                    <MobileSidebar />
+                    <MobileSidebar items={items} />
                 </div>
                 <div className="flex items-center gap-2">
                     <p>{email}</p>

@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server"
+import Link from "next/link"
 import React from "react"
 
 type Props = {}
@@ -15,7 +16,14 @@ const Candidates = async (props: Props) => {
     console.log(error)
     return (
         <div>
-            <p>{candidateData?.map((candidate) => candidate.candidate_id)}</p>
+            {candidateData?.map((candidate) => (
+                <Link
+                    href={`candidates/${candidate.candidate_id}`}
+                    key={candidate.candidate_id}
+                >
+                    {candidate.candidate_id}
+                </Link>
+            ))}
         </div>
     )
 }

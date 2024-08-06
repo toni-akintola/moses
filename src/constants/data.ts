@@ -62,7 +62,7 @@ export const employerNavItems: NavItem[] = [
         label: "Jobs",
     },
     {
-        title: "Placements",
+        title: "Matches",
         href: "/core/placements",
         icon: "target",
         label: "Placements",

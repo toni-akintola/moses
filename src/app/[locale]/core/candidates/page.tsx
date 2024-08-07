@@ -40,6 +40,7 @@ const Page = (props: Props) => {
     // console.log(error)
     return (
         <div className="p-4 md:p-8 flex flex-col space-y-5">
+            <Candidates />
             <Dialog>
                 <DialogTrigger asChild>
                     <Button>Create New Candidate</Button>
@@ -57,7 +58,6 @@ const Page = (props: Props) => {
                     />
                 </DialogContent>
             </Dialog>
-            <Candidates />
         </div>
     )
 }

@@ -4,7 +4,6 @@ type Props = {}
 
 const Job = async ({ params }: { params: { slug: string } }) => {
     const { slug: jobID } = params
-    console.log(jobID)
     const supabase = createClient()
     const { data: jobData, error } = await supabase
         .from("jobs")

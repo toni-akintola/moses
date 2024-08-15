@@ -22,7 +22,7 @@ const chartData = [{ browser: "safari", rating: 85, fill: "#06b6d4" }]
 
 const chartConfig = {
     visitors: {
-        label: "Visitors",
+        label: "Rating",
     },
     safari: {
         label: "Safari",
@@ -91,7 +91,7 @@ export function RadialChart() {
                                                     y={(viewBox.cy || 0) + 24}
                                                     className="fill-muted-foreground"
                                                 >
-                                                    Visitors
+                                                    Rating
                                                 </tspan>
                                             </text>
                                         )

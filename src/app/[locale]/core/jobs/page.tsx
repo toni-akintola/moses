@@ -1,11 +1,5 @@
+"use client"
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 import {
     Dialog,
     DialogContent,
@@ -25,91 +19,139 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import Link from "next/link"
+import { createClient } from "@/utils/supabase/client"
+import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
+import { Form, useForm } from "react-hook-form"
+import { z } from "zod"
 
-type Props = {}
-
-const Page = (props: Props) => {
+const formSchema = z.object({
+    location: z.string().min(2, {
+        message: "Location must be at least 2 characters.",
+    }),
+    salaryRange: z.string().min(2, {
+        message: "Salary range must be at least 2 characters.",
+    }),
+    title: z.string().min(2, {
+        message: "Job title must be at least 2 characters.",
+    }),
+    company: z.string().min(1, {
+        message: "Company name must be at least 1 character.",
+    }),
+    description: z.string().min(2, {
+        message: "Description must be at least 2 characters.",
+    }),
+    employmentType: z.string().min(2),
+})
+const Page = () => {
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            location: "",
+            salaryRange: "",
+            title: "",
+            company: "",
+            description: "",
+            employmentType: "",
+        },
+    })
+    const supabase = createClient()
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(values)
+        const { data, error } = await supabase
+            .from("jobs")
+            .insert([values])
+            .select()
+        console.log(data, error)
+    }
     return (
         <div className="p-4 md:p-8 flex flex-col space-y-5">
             <Dialog>
                 <DialogTrigger asChild>
                     <Button>Post New Job</Button>
                 </DialogTrigger>
-
                 <DialogContent className="max-w-full w-2/3 h-2/3">
                     <DialogHeader>
                         <DialogTitle className="text-xl">
                             Create New Job
                         </DialogTitle>
                         <DialogDescription>
-                            Enter the job information
+                            Enter the job information.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4">
-                        <div className="grid grid-cols-2 gap-4">
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="grid gap-4"
+                        >
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="location">Location</Label>
+                                    <Input
+                                        id="location"
+                                        placeholder="Chicago, IL"
+                                        required
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="wage">Wage</Label>
+                                    <Input
+                                        id="wage"
+                                        placeholder="$25"
+                                        required
+                                    />
+                                </div>
+                            </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="first-name">Location</Label>
+                                <Label htmlFor="title">Title</Label>
                                 <Input
-                                    id="first-name"
-                                    placeholder="Chicago, IL"
+                                    id="title"
+                                    type="title"
+                                    placeholder="Construction Laborer"
                                     required
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="last-name">Wage</Label>
-                                <Input
-                                    id="last-name"
-                                    placeholder="$25"
-                                    required
-                                />
+                                <Label htmlFor="company">Company</Label>
+                                <Input id="company" type="text" />
                             </div>
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="email">Title</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="Construction Laborer"
-                                required
-                            />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="password">Company</Label>
-                            <Input id="password" type="password" />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="password">Employment type</Label>
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Full-time" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="est">
-                                        Full-time
-                                    </SelectItem>
-                                    <SelectItem value="cst">
-                                        Part-time
-                                    </SelectItem>
-                                    <SelectItem value="mst">
-                                        Full-time and part-time
-                                    </SelectItem>
-                                    <SelectItem value="pst">
-                                        Contractor
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="employment-type">
+                                    Employment type
+                                </Label>
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Full-time" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Full-time">
+                                            Full-time
+                                        </SelectItem>
+                                        <SelectItem value="Part-time">
+                                            Part-time
+                                        </SelectItem>
+                                        <SelectItem value="Full-time and Part-time">
+                                            Full-time and part-time
+                                        </SelectItem>
+                                        <SelectItem value="Contractor">
+                                            Contractor
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                        <div className="flex flex-col gap-2">
-                            <Label>Description</Label>
-                            <Textarea />
-                            <Button type="submit" className="w-1/3 self-center">
-                                Post Job
-                            </Button>
-                        </div>
-                    </div>
+                            <div className="flex flex-col gap-2">
+                                <Label>Description</Label>
+                                <Textarea />
+                                <Button
+                                    type="submit"
+                                    className="w-1/3 self-center"
+                                >
+                                    Post Job
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
                 </DialogContent>
             </Dialog>
         </div>

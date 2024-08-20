@@ -27,7 +27,7 @@ export default async function DashboardLayout({
 
     console.log(profile)
     const items =
-        profile.accountType === "Individual"
+        profile.accountType === "Enterprise"
             ? enterpriseNavItems
             : employerNavItems
 
@@ -40,7 +40,7 @@ export default async function DashboardLayout({
             <Header items={items} email={userData.user.email || ""} />
             <div className="flex h-screen overflow-hidden">
                 <Sidebar items={items} />
-                <main className="w-full pt-16">{children}</main>
+                <main className="w-full pt-16 overflow-scroll">{children}</main>
             </div>
         </>
     )

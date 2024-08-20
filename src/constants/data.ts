@@ -50,12 +50,6 @@ export const employerNavItems: NavItem[] = [
         label: "Dashboard",
     },
     {
-        title: "Candidates",
-        href: "/core/candidates",
-        icon: "profile",
-        label: "Candidates",
-    },
-    {
         title: "Jobs",
         href: "/core/jobs",
         icon: "briefcase",

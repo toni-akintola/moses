@@ -7,14 +7,17 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
     const { slug: candidateID } = params
     console.log(candidateID)
     const supabase = createClient()
-    const { data: candidateData, error } = await supabase
+    const { data: candidateData, error: candidateError } = await supabase
         .from("candidates")
         .select("*")
         .eq("candidate_id", candidateID)
-    console.log(candidateData, error)
     const candidate = candidateData ? candidateData[0] : {}
     const resumeSubmission = candidate.resume_submission
     console.log(resumeSubmission.experiences)
+    const { data: matchData, error: matchError } = await supabase
+        .from("matches")
+        .select("*")
+        .eq("candidate_id", candidateID)
     return (
         <div className="flex flex-col">
             {candidate && (

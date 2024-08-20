@@ -22,7 +22,9 @@ const Page = async () => {
                 {jobs.map((item) => (
                     <BentoGridItem
                         footer={
-                            <div className="flex flex-row text-center items-center space-x-1">
+                            <div className="flex flex-col space-y-1">
+                                <p>{item.title}</p>
+                                <p>{item.location}</p>
                                 <p>Uploaded {item.datePosted}</p>
                             </div>
                         }

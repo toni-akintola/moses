@@ -79,13 +79,7 @@ const Candidates = async (props: Props) => {
                                         <Link
                                             href={`candidates/${candidate.candidate_id}`}
                                         >
-                                            <Image
-                                                alt="Product image"
-                                                className="aspect-square rounded-md object-cover"
-                                                height="64"
-                                                src="/placeholder.svg"
-                                                width="64"
-                                            />
+                                            <div className="aspect-square bg-gradient-to-b from-cyan-100 via-cyan-300 to-laserBlue rounded-md object-cover"></div>
                                         </Link>
                                     </TableCell>
                                     <TableCell className="font-medium">

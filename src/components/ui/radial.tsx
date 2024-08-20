@@ -18,6 +18,16 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
+
+export interface ChartProps {
+    chartData: [
+        {
+            browser: string
+            rating: number
+            fill: string
+        },
+    ]
+}
 const chartData = [{ browser: "safari", rating: 85, fill: "#06b6d4" }]
 
 const chartConfig = {
@@ -30,7 +40,7 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export function RadialChart() {
+export function RadialChart(props: ChartProps) {
     return (
         <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
@@ -42,9 +52,9 @@ export function RadialChart() {
                     className="mx-auto aspect-square max-h-[250px]"
                 >
                     <RadialBarChart
-                        data={chartData}
+                        data={props.chartData}
                         startAngle={0}
-                        endAngle={250}
+                        endAngle={360 * (props.chartData[0].rating / 100)}
                         innerRadius={80}
                         outerRadius={110}
                     >
@@ -84,7 +94,7 @@ export function RadialChart() {
                                                     y={viewBox.cy}
                                                     className="fill-foreground text-4xl font-bold"
                                                 >
-                                                    {chartData[0].rating.toLocaleString()}
+                                                    {props.chartData[0].rating.toLocaleString()}
                                                 </tspan>
                                                 <tspan
                                                     x={viewBox.cx}
@@ -103,9 +113,9 @@ export function RadialChart() {
                 </ChartContainer>
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
-                <div className="leading-none text-muted-foreground">
+                {/* <div className="leading-none text-muted-foreground">
                     Ranked 2nd out of 80 candidates
-                </div>
+                </div> */}
             </CardFooter>
         </Card>
     )

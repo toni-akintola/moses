@@ -18,10 +18,11 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
         .from("matches")
         .select("*")
         .eq("candidate_id", candidateID)
+    console.log(matchData)
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col p-4 px-8">
             {candidate && (
-                <div className="p-4 px-8 flex justify-between">
+                <div className=" flex justify-between">
                     <div>
                         <h2 className="font-semibold text-lg">General Info</h2>
                         <p>{candidate.first_name || ""}</p>
@@ -84,7 +85,21 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
                     </div>
                 </div>
             )}
-            <RadialChart />
+            <div className="flex flex-col space-y-5">
+                {matchData?.map((match) => (
+                    <RadialChart
+                        key={match.id}
+                        chartData={[
+                            {
+                                browser: "safari",
+                                rating: match.rating,
+                                fill: "#06b6d4",
+                            },
+                        ]}
+                    />
+                    // <p key={match.id}>{match.rating}</p>
+                ))}
+            </div>
         </div>
     )
 }

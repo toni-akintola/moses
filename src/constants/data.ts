@@ -16,7 +16,7 @@ export const enterpriseNavItems: NavItem[] = [
         label: "Candidates",
     },
     {
-        title: "Jobs",
+        title: "Search",
         href: "/core/search",
         icon: "search",
         label: "Find Jobs",
@@ -51,15 +51,9 @@ export const employerNavItems: NavItem[] = [
     },
     {
         title: "Matches",
-        href: "/core/placements",
+        href: "/core/matches",
         icon: "target",
-        label: "Placements",
-    },
-    {
-        title: "Applications",
-        href: "/core/applications",
-        icon: "layers",
-        label: "Applications",
+        label: "Matches",
     },
     {
         title: "Help",

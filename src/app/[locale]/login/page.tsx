@@ -27,7 +27,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
-import { redirect, useParams } from "next/navigation"
+import { redirect, useParams, usePathname } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
 import { Provider } from "@supabase/supabase-js"
 
@@ -57,6 +57,7 @@ export default function Auth(props: Props) {
     })
 
     const params = useParams()
+    const pathname = usePathname()
     const locale = params.locale as string
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -82,7 +83,7 @@ export default function Auth(props: Props) {
                                     className="flex items-center flex-col justify-center space-y-4 w-full"
                                 >
                                     <h2 className="font-semibold text-2xl">
-                                        Get started
+                                        Welcome back
                                     </h2>
                                     <div className="w-full">
                                         <FormField
@@ -100,9 +101,6 @@ export default function Auth(props: Props) {
                                                             {...field}
                                                         />
                                                     </FormControl>
-                                                    {/* <FormDescription className="text-white">
-                                                Enter your email.
-                                            </FormDescription> */}
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
@@ -121,50 +119,6 @@ export default function Auth(props: Props) {
                                                             {...field}
                                                         />
                                                     </FormControl>
-                                                    {/* <FormDescription className="text-white">
-                                                Enter your password.
-                                            </FormDescription> */}
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="accountType"
-                                            render={({ field }) => (
-                                                <FormItem className="text-gray-600">
-                                                    <FormLabel className="text-white">
-                                                        Account Type
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Select
-                                                            onValueChange={
-                                                                field.onChange
-                                                            }
-                                                            defaultValue={
-                                                                field.value
-                                                            }
-                                                        >
-                                                            <SelectTrigger className="w-full">
-                                                                <SelectValue placeholder="Individual" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectGroup>
-                                                                    <SelectLabel></SelectLabel>
-                                                                    <SelectItem value="Individual">
-                                                                        Individual
-                                                                    </SelectItem>
-                                                                    <SelectItem value="Enterprise">
-                                                                        Enterprise
-                                                                    </SelectItem>
-                                                                    <SelectItem value="Employer">
-                                                                        Employer
-                                                                    </SelectItem>
-                                                                </SelectGroup>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </FormControl>
-                                                    <FormDescription className="text-white"></FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
@@ -178,7 +132,7 @@ export default function Auth(props: Props) {
                                     </Button>
                                 </form>
                             </Form>
-                            <div className="flex-row flex items-center space-x-3">
+                            <div className="flex-row flex items-center space-x-3 py-4">
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
                                 <p>Or continue with</p>
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
@@ -193,7 +147,7 @@ export default function Auth(props: Props) {
                                     provider={"microsoft" as Provider}
                                 />
                             </div>
-                            <div className="justify-between items-center flex flex-row w-full">
+                            <div className="justify-between items-center flex flex-row w-full pt-4">
                                 <Link
                                     href="sign-up"
                                     className="flex justify-center w-full"

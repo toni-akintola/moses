@@ -193,7 +193,7 @@ export default function Auth(props: Props) {
                                     </Button>
                                 </form>
                             </Form>
-                            <div className="flex-row flex items-center space-x-3">
+                            <div className="flex-row flex items-center space-x-3 py-4">
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
                                 <p>Or continue with</p>
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
@@ -208,7 +208,7 @@ export default function Auth(props: Props) {
                                     provider={"microsoft" as Provider}
                                 />
                             </div>
-                            <div className="justify-between items-center flex flex-row w-full">
+                            <div className="justify-between items-center flex flex-row w-full pt-4">
                                 <Link
                                     href="login"
                                     className="flex justify-center w-full"

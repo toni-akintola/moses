@@ -29,12 +29,6 @@ export const enterpriseNavItems: NavItem[] = [
     },
 
     {
-        title: "Applications",
-        href: "/core/applications",
-        icon: "layers",
-        label: "Applications",
-    },
-    {
         title: "Help",
         href: "#",
         icon: "help",

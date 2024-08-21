@@ -39,7 +39,7 @@ const Page = (props: Props) => {
     // const { data: candidateData, error } = await supabase.from("candidates").select().eq("profile_id", userID)
     // console.log(error)
     return (
-        <div className="p-4 md:p-8 flex flex-col space-y-5">
+        <div className="flex flex-col space-y-5">
             <Candidates />
             <Dialog>
                 <DialogTrigger asChild>

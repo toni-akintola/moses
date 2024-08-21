@@ -17,7 +17,7 @@ const Page = async () => {
     }
 
     return (
-        <ScrollArea className="p-8 h-full w-full flex">
+        <ScrollArea className="h-full w-full flex">
             <BentoGrid className="max-w-full md:grid-cols-2">
                 {jobs.map((item) => (
                     <BentoGridItem

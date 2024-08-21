@@ -1,11 +1,28 @@
 import React from "react"
 import { createClient } from "@/utils/supabase/server"
 import { RadialChart } from "@/components/ui/radial"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 type Props = {}
 
 const Candidate = async ({ params }: { params: { slug: string } }) => {
     const { slug: candidateID } = params
-    console.log(candidateID)
     const supabase = createClient()
     const { data: candidateData, error: candidateError } = await supabase
         .from("candidates")
@@ -18,9 +35,27 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
         .from("matches")
         .select("*")
         .eq("candidate_id", candidateID)
-    console.log(matchData)
+    const matches = await Promise.all(
+        matchData.map(async (match) => {
+            const { data: candidateData, error: candidateError } =
+                await supabase
+                    .from("candidates")
+                    .select("*")
+                    .eq("candidate_id", match.candidate_id)
+            const { data: jobData, error: jobError } = await supabase
+                .from("jobs")
+                .select("*")
+                .eq("id", match.job_id)
+            const result = {
+                id: match.id,
+                rating: match.rating,
+                job: jobData[0],
+            }
+            return result
+        })
+    )
     return (
-        <div className="flex flex-col p-4 px-8">
+        <div className="flex flex-col">
             {candidate && (
                 <div className=" flex justify-between">
                     <div>
@@ -85,18 +120,30 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
                     </div>
                 </div>
             )}
-            <div className="flex flex-col space-y-5">
-                {matchData?.map((match) => (
-                    <RadialChart
-                        key={match.id}
-                        chartData={[
-                            {
-                                browser: "safari",
-                                rating: match.rating,
-                                fill: "#06b6d4",
-                            },
-                        ]}
-                    />
+            <div className="flex flex-col space-y-5 justify-center items-center pt-5">
+                {matches?.map((match) => (
+                    <Card key={match.id} className="flex flex-col w-2/3">
+                        <CardHeader>
+                            <CardTitle>{match.job.company}</CardTitle>
+                            <CardDescription>{match.job.title}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <RadialChart
+                                chartData={[
+                                    {
+                                        browser: "safari",
+                                        rating: match.rating,
+                                        fill: "#06b6d4",
+                                    },
+                                ]}
+                            />
+                        </CardContent>
+                        <CardFooter className="flex justify-between">
+                            <Button variant="outline">Cancel</Button>
+                            <Button>Contact Employer</Button>
+                        </CardFooter>
+                    </Card>
+
                     // <p key={match.id}>{match.rating}</p>
                 ))}
             </div>

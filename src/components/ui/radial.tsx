@@ -42,7 +42,7 @@ const chartConfig = {
 
 export function RadialChart(props: ChartProps) {
     return (
-        <Card className="flex flex-col">
+        <Card className="flex flex-col border-0 shadow-none">
             <CardHeader className="items-center pb-0">
                 <CardTitle>Candidate Rating</CardTitle>
             </CardHeader>
@@ -101,7 +101,7 @@ export function RadialChart(props: ChartProps) {
                                                     y={(viewBox.cy || 0) + 24}
                                                     className="fill-muted-foreground"
                                                 >
-                                                    Rating
+                                                    {/* Rating */}
                                                 </tspan>
                                             </text>
                                         )

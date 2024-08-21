@@ -23,7 +23,7 @@ const Page = ({ params }: { params: { locale: string } }) => {
     const S5Content = messages.s5 as unknown as S5Props
 
     return (
-        <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
+        <div className="flex-1 space-y-4">
             <CreateProfileOne
                 resumeBuilder={resumeBuilderContent}
                 S1Props={S1Content}

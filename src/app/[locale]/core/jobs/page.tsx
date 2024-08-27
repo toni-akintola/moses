@@ -8,6 +8,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -19,6 +27,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { nanoid } from "@/utils/helpers"
 import { createClient } from "@/utils/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
@@ -26,6 +35,7 @@ import { Form, useForm } from "react-hook-form"
 import { z } from "zod"
 
 const formSchema = z.object({
+    id: z.string(),
     location: z.string().min(2, {
         message: "Location must be at least 2 characters.",
     }),
@@ -44,9 +54,11 @@ const formSchema = z.object({
     employmentType: z.string().min(2),
 })
 const Page = () => {
+    const supabase = createClient()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            id: nanoid(),
             location: "",
             salaryRange: "",
             title: "",
@@ -55,13 +67,10 @@ const Page = () => {
             employmentType: "",
         },
     })
-    const supabase = createClient()
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
-        const { data, error } = await supabase
-            .from("jobs")
-            .insert([values])
-            .select()
+
+        const { data, error } = await supabase.from("jobs").insert({ values })
         console.log(data, error)
     }
     return (
@@ -70,7 +79,7 @@ const Page = () => {
                 <DialogTrigger asChild>
                     <Button>Post New Job</Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-full w-2/3 h-2/3">
+                <DialogContent className="max-w-full w-2/3">
                     <DialogHeader>
                         <DialogTitle className="text-xl">
                             Create New Job
@@ -81,31 +90,107 @@ const Page = () => {
                     </DialogHeader>
                     <Form {...form}>
                         <form
-                            onSubmit={form.handleSubmit(onSubmit)}
+                            onSubmit={(event) => {
+                                event.preventDefault()
+                                form.handleSubmit(onSubmit)
+                            }}
                             className="grid gap-4"
                         >
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="location">Location</Label>
-                                    <Input
-                                        id="location"
-                                        placeholder="Chicago, IL"
-                                        required
+                                    <FormField
+                                        control={form.control}
+                                        name="location"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Location</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        id="location"
+                                                        placeholder="Chicago, IL"
+                                                        required
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    This is your public display
+                                                    name.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
                                     />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="wage">Wage</Label>
-                                    <Input
-                                        id="wage"
-                                        placeholder="$25"
-                                        required
+                                    <FormField
+                                        control={form.control}
+                                        name="location"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Location</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        id="location"
+                                                        placeholder="Chicago, IL"
+                                                        required
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    This is your public display
+                                                    name.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="salaryRange"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Location</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        id="location"
+                                                        placeholder="$25"
+                                                        required
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    This is your public display
+                                                    name.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="title"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Job Title</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        placeholder="Chicago, IL"
+                                                        required
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    This is your public display
+                                                    name.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
                                     />
                                 </div>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="title">Title</Label>
+                                <Label htmlFor="job-title">Title</Label>
                                 <Input
-                                    id="title"
+                                    id="job-title"
                                     type="title"
                                     placeholder="Construction Laborer"
                                     required

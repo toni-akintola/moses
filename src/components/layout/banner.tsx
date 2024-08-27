@@ -161,7 +161,7 @@ export function MainNav(props: NavProps) {
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end">
                 <motion.a
-                    href={`/${locale}/resume-builder`}
+                    href={`/${locale}/core`}
                     className="text-sm font-medium tracking-tight leading-6 text-white bg-laserBlue rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

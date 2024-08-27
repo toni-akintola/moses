@@ -64,7 +64,7 @@ const Page = async (props: Props) => {
                 <CardHeader>
                     <CardTitle>Matches</CardTitle>
                     <CardDescription>
-                        Matches for your candidates.
+                        Candidates whose qualifications fit your needs.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -75,7 +75,7 @@ const Page = async (props: Props) => {
                                     <span className="">Image</span>
                                 </TableHead>
                                 <TableHead>Name</TableHead>
-                                <TableHead>Company</TableHead>
+                                {/* <TableHead>Company</TableHead> */}
                                 <TableHead>Job Title</TableHead>
                                 <TableHead className="hidden md:table-cell">
                                     Rating
@@ -97,9 +97,9 @@ const Page = async (props: Props) => {
                                         {match.candidate.first_name}{" "}
                                         {match.candidate.last_name}
                                     </TableCell>
-                                    <TableCell className="font-medium">
+                                    {/* <TableCell className="font-medium">
                                         {match.job.company}
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell className="font-medium">
                                         {match.job.title}
                                     </TableCell>

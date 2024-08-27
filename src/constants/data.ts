@@ -51,9 +51,15 @@ export const employerNavItems: NavItem[] = [
     },
     {
         title: "Matches",
-        href: "/core/matches",
+        href: "/core/placements",
         icon: "target",
         label: "Matches",
+    },
+    {
+        title: "AI Assistant",
+        href: "/core/moses",
+        icon: "atom",
+        label: "AI Assistant",
     },
     {
         title: "Help",

@@ -1,7 +1,7 @@
 "use client"
 
 import { MessagesContext } from "@/context/messages"
-import { cn } from "@/utils/helpers"
+import { cn } from "@/lib/utils"
 import { FC, HTMLAttributes, useContext } from "react"
 import {
     Card,
@@ -12,6 +12,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import Balancer from "react-wrap-balancer"
+import ReactMarkdown from "react-markdown"
+import { Button } from "@/components/ui/button"
+import { Copy } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
+
 interface ChatMessagesProps extends HTMLAttributes<HTMLDivElement> {}
 const wrappedText = (text: string) =>
     text.split("\n").map((line, i) => (
@@ -24,6 +29,19 @@ const wrappedText = (text: string) =>
 const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
     const { messages } = useContext(MessagesContext)
     const inverseMessages = [...messages].reverse()
+    const { toast } = useToast()
+
+    const copyToClipboard = (text: string) => {
+        navigator.clipboard
+            .writeText(text)
+            .then(() => {
+                console.log("Text copied to clipboard")
+                toast({ title: "Success", description: "Copied to clipboard!" })
+            })
+            .catch((err) => {
+                console.error("Failed to copy text: ", err)
+            })
+    }
 
     return (
         <div
@@ -35,14 +53,14 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
         >
             <div className="flex-1 flex-grow" />
             {inverseMessages.map((message) => {
-                const wrappedMessage = wrappedText(message.text)
+                // const wrappedMessage = wrappedText(message.text);
                 return (
                     <div
                         className="chat-message"
                         key={`${message.id}-${message.id}`}
                     >
                         <Card className="mb-2">
-                            <CardHeader>
+                            <CardHeader className="justify-between flex flex-row">
                                 <CardTitle
                                     className={
                                         message.isUserMessage
@@ -50,11 +68,27 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                             : "text-laserBlue dark:text-cyan-700"
                                     }
                                 >
-                                    {message.isUserMessage ? "You" : "Moses"}
+                                    {message.isUserMessage ? "You" : "Modelpy"}
                                 </CardTitle>
+                                {!message.isUserMessage &&
+                                    message.text.includes("```") && (
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() =>
+                                                copyToClipboard(message.text)
+                                            }
+                                        >
+                                            <Copy className="h-4 w-4" />
+                                        </Button>
+                                    )}
                             </CardHeader>
                             <CardContent className="text-sm">
-                                <Balancer>{wrappedMessage}</Balancer>
+                                <Balancer>
+                                    <ReactMarkdown>
+                                        {message.text}
+                                    </ReactMarkdown>
+                                </Balancer>
                             </CardContent>
                             <CardFooter>
                                 <CardDescription className="w-full"></CardDescription>

@@ -30,6 +30,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { nanoid } from "@/utils/helpers"
 import { createClient } from "@/utils/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { randomUUID } from "crypto"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -205,10 +206,10 @@ const Page = () => {
                                     </FormItem>
                                 )}
                             />
+                            <Button type="submit" className="w-1/3 self-center">
+                                Post Job
+                            </Button>
                         </form>
-                        <Button type="submit" className="w-1/3 self-center">
-                            Post Job
-                        </Button>
                     </Form>
                 </DialogContent>
             </Dialog>

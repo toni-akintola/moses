@@ -9,8 +9,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import {
+    Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -31,7 +31,7 @@ import { nanoid } from "@/utils/helpers"
 import { createClient } from "@/utils/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
-import { Form, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -69,8 +69,10 @@ const Page = () => {
     })
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
-
-        const { data, error } = await supabase.from("jobs").insert({ values })
+        const { data, error } = await supabase
+            .from("jobs")
+            .insert([values])
+            .select()
         console.log(data, error)
     }
     return (
@@ -90,152 +92,123 @@ const Page = () => {
                     </DialogHeader>
                     <Form {...form}>
                         <form
-                            onSubmit={(event) => {
-                                event.preventDefault()
-                                form.handleSubmit(onSubmit)
-                            }}
-                            className="grid gap-4"
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-4"
                         >
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="grid gap-2">
-                                    <FormField
-                                        control={form.control}
-                                        name="location"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Location</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        id="location"
-                                                        placeholder="Chicago, IL"
-                                                        required
-                                                    />
-                                                </FormControl>
-                                                <FormDescription>
-                                                    This is your public display
-                                                    name.
-                                                </FormDescription>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="location"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Location</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        id="location"
-                                                        placeholder="Chicago, IL"
-                                                        required
-                                                    />
-                                                </FormControl>
-                                                <FormDescription>
-                                                    This is your public display
-                                                    name.
-                                                </FormDescription>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="salaryRange"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Location</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        id="location"
-                                                        placeholder="$25"
-                                                        required
-                                                    />
-                                                </FormControl>
-                                                <FormDescription>
-                                                    This is your public display
-                                                    name.
-                                                </FormDescription>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="title"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Job Title</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        placeholder="Chicago, IL"
-                                                        required
-                                                    />
-                                                </FormControl>
-                                                <FormDescription>
-                                                    This is your public display
-                                                    name.
-                                                </FormDescription>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="job-title">Title</Label>
-                                <Input
-                                    id="job-title"
-                                    type="title"
-                                    placeholder="Construction Laborer"
-                                    required
+                                <FormField
+                                    control={form.control}
+                                    name="location"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Location</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Chicago, IL"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="salaryRange"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Wage</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="$25"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="company">Company</Label>
-                                <Input id="company" type="text" />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="employment-type">
-                                    Employment type
-                                </Label>
-                                <Select>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Full-time" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Full-time">
-                                            Full-time
-                                        </SelectItem>
-                                        <SelectItem value="Part-time">
-                                            Part-time
-                                        </SelectItem>
-                                        <SelectItem value="Full-time and Part-time">
-                                            Full-time and part-time
-                                        </SelectItem>
-                                        <SelectItem value="Contractor">
-                                            Contractor
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-                                <Label>Description</Label>
-                                <Textarea />
-                                <Button
-                                    type="submit"
-                                    className="w-1/3 self-center"
-                                >
-                                    Post Job
-                                </Button>
-                            </div>
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Title</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Construction Laborer"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="company"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Company</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="employmentType"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Employment type</FormLabel>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select employment type" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="Full-time">
+                                                    Full-time
+                                                </SelectItem>
+                                                <SelectItem value="Part-time">
+                                                    Part-time
+                                                </SelectItem>
+                                                <SelectItem value="Full-time and Part-time">
+                                                    Full-time and part-time
+                                                </SelectItem>
+                                                <SelectItem value="Contractor">
+                                                    Contractor
+                                                </SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <FormControl>
+                                            <Textarea {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </form>
+                        <Button type="submit" className="w-1/3 self-center">
+                            Post Job
+                        </Button>
                     </Form>
                 </DialogContent>
             </Dialog>

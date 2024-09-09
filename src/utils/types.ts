@@ -20,6 +20,36 @@ export interface Experience {
     duties: string
 }
 
+export interface Skill {
+    id?: number
+    title: string
+}
+
+export interface Certificate {
+    id?: number
+    title: string
+    // description: string
+}
+export interface ResumeSubmission {
+    age: string
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    email: string
+    proficiency: string
+    educations: Education[]
+    experiences: Experience[]
+    skills: Skill[]
+    certificates: Certificate[]
+    authorizationStatus: string
+}
+
+export interface AdditionalInfo {
+    authorizationStatus: string
+    skills: Skill[]
+    certificates: Certificate[]
+}
+
 export interface Job {
     id: string
     jobProviders: {
@@ -35,36 +65,6 @@ export interface Job {
     description: string
     employmentType: string
     image: string
-}
-export interface Skill {
-    id?: number
-    title: string
-}
-
-export interface Certificate {
-    id?: number
-    title: string
-    // description: string
-}
-
-export interface AdditionalInfo {
-    authorizationStatus: string
-    skills: Skill[]
-    certificates: Certificate[]
-}
-
-export interface ResumeSubmission {
-    age: string
-    firstName: string
-    lastName: string
-    phoneNumber: string
-    email: string
-    proficiency: string
-    educations: Education[]
-    experiences: Experience[]
-    skills: Skill[]
-    certificates: Certificate[]
-    authorizationStatus: string
 }
 
 export interface Profile {

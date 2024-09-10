@@ -6,12 +6,12 @@ import React from "react"
 
 type Props = {}
 
-const jobs = async (props: Props) => {
+const Jobs = async (props: Props) => {
     const supabase = createClient()
     const user = await supabase.auth.getUser()
     const employerID = user.data.user?.id
     const { data: jobsData, error } = await supabase
-        .from("candidates")
+        .from("jobs")
         .select()
         .eq("employer_id", employerID)
     let jobs: Job[] = []
@@ -25,8 +25,12 @@ const jobs = async (props: Props) => {
                 {jobs.map((item) => (
                     <BentoGridItem
                         footer={
-                            <div className="flex flex-row text-center items-center space-x-1">
-                                <p>Uploaded {item.datePosted}</p>
+                            <div className="flex flex-col space-y-1">
+                                <p>{item.title}</p>
+                                <p>{item.location}</p>
+                                <p>
+                                    Uploaded {item.datePosted || "2 days ago"}
+                                </p>
                             </div>
                         }
                         key={item.id}
@@ -45,4 +49,4 @@ const jobs = async (props: Props) => {
     )
 }
 
-export default jobs
+export default Jobs

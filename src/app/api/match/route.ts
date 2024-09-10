@@ -1,12 +1,28 @@
+import { createClient } from "@/utils/supabase/server"
+import { Job } from "@/utils/types"
 import { NextRequest, NextResponse } from "next/server"
 export const dynamic = "force-dynamic" // static by default, unless reading the request
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
     // Example usage
-    const similarities: number[] = [-0.5, 0, 0.3, 0.5, 0.7, 0.9, 1.0]
+    const supabase = createClient()
+    const { data, error } = await supabase.from("jobs").select("*")
+    const jobsData = data as Job[]
+    const matches = await Promise.all(
+        jobsData?.map(async (job) => {
+            const { data, error } = await supabase.rpc("match_candidates", {
+                query_embedding: job.embedding,
+                match_threshold: 0.2,
+                match_count: 10,
+            })
+            console.log(error)
+            return data
+        })
+    )
 
-    const res = similarities.map((sim) => cosineSimilarityToMatchScore(sim))
-    return NextResponse.json({ scores: res })
+    console.log(matches)
+    // const res = matches.map((documents) => (documents.map((document) => cosineSimilarityToMatchScore(document))))
+    return NextResponse.json({ scores: matches })
 }
 
 function cosineSimilarityToMatchScore(

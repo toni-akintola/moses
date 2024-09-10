@@ -30,6 +30,7 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
         .eq("candidate_id", candidateID)
     const candidate = candidateData ? candidateData[0] : {}
     const resumeSubmission = candidate.resume_submission
+    console.log(resumeSubmission)
     console.log(resumeSubmission.experiences)
     const { data: matchData, error: matchError } = await supabase
         .from("matches")
@@ -37,11 +38,6 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
         .eq("candidate_id", candidateID)
     const matches = await Promise.all(
         matchData.map(async (match) => {
-            const { data: candidateData, error: candidateError } =
-                await supabase
-                    .from("candidates")
-                    .select("*")
-                    .eq("candidate_id", match.candidate_id)
             const { data: jobData, error: jobError } = await supabase
                 .from("jobs")
                 .select("*")
@@ -140,7 +136,7 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
                         </CardContent>
                         <CardFooter className="flex justify-between">
                             <Button variant="outline">Cancel</Button>
-                            <Button>Contact Employer</Button>
+                            <Button>Contact Candidate</Button>
                         </CardFooter>
                     </Card>
 

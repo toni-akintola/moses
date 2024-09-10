@@ -58,6 +58,7 @@ const Page = async (props: Props) => {
             return result
         })
     )
+    console.log(matches)
     return (
         <div>
             <Card>
@@ -89,7 +90,9 @@ const Page = async (props: Props) => {
                             {matches?.map((match) => (
                                 <TableRow key={match.id}>
                                     <TableCell className="hidden sm:table-cell">
-                                        <Link href={`candidates/${match.id}`}>
+                                        <Link
+                                            href={`candidates/${match.candidate.candidate_id}`}
+                                        >
                                             <div className="aspect-square bg-gradient-to-b from-cyan-100 via-cyan-300 to-laserBlue rounded-md object-cover"></div>
                                         </Link>
                                     </TableCell>

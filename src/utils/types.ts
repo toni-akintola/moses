@@ -62,6 +62,7 @@ export interface Job {
     title: string
     company: string
     datePosted: string
+    embedding: number[]
     description: string
     employmentType: string
     image: string

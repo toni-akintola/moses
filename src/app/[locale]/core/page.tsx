@@ -9,6 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { createClient } from "@/utils/supabase/server"
+import { Candidate, Match } from "@/utils/types"
 import { CheckCircle2, TargetIcon, Users } from "lucide-react"
 
 export default async function Page() {
@@ -23,6 +24,8 @@ export default async function Page() {
         .from("candidates")
         .select()
         .eq("profile_id", profileID)
+    const matches = matchData as Match[]
+    const candidates = candidateData as Candidate[]
     return (
         <ScrollArea className="h-full">
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
@@ -51,7 +54,7 @@ export default async function Page() {
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold">
-                                        {matchData.length}
+                                        {matches.length}
                                     </div>
                                     <p className="text-xs text-muted-foreground">
                                         +20.1% from last month
@@ -67,7 +70,7 @@ export default async function Page() {
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold">
-                                        {candidateData.length}
+                                        {candidates.length}
                                     </div>
                                     <p className="text-xs text-muted-foreground">
                                         +180.1% from last month

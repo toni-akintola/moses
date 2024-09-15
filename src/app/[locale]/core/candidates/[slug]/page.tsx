@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Job, ResumeSubmission } from "@/utils/types"
 type Props = {}
 
 const Candidate = async ({ params }: { params: { slug: string } }) => {
@@ -29,7 +30,7 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
         .select("*")
         .eq("candidate_id", candidateID)
     const candidate = candidateData ? candidateData[0] : {}
-    const resumeSubmission = candidate.resume_submission
+    const resumeSubmission: ResumeSubmission = candidate.resume_submission
     console.log(resumeSubmission)
     console.log(resumeSubmission.experiences)
     const { data: matchData, error: matchError } = await supabase
@@ -42,10 +43,11 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
                 .from("jobs")
                 .select("*")
                 .eq("id", match.job_id)
+            const jobs = jobData as Job[]
             const result = {
                 id: match.id,
                 rating: match.rating,
-                job: jobData[0],
+                job: jobs[0],
             }
             return result
         })

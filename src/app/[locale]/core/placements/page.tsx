@@ -24,6 +24,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { createClient } from "@/utils/supabase/server"
+import { Candidate, Job, Match } from "@/utils/types"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import React from "react"
@@ -38,27 +39,29 @@ const Page = async (props: Props) => {
         .from("matches")
         .select("*")
         .eq("profile_id", profileID)
+    const rawMatches = matchData as Match[]
     const matches = await Promise.all(
-        matchData.map(async (match) => {
+        rawMatches.map(async (match) => {
             const { data: candidateData, error: candidateError } =
                 await supabase
                     .from("candidates")
                     .select("*")
                     .eq("candidate_id", match.candidate_id)
+            const candidates = candidateData as Candidate[]
             const { data: jobData, error: jobError } = await supabase
                 .from("jobs")
                 .select("*")
                 .eq("id", match.job_id)
+            const jobs = jobData as Job[]
             const result = {
                 id: match.id,
                 rating: match.rating,
-                candidate: candidateData[0],
-                job: jobData[0],
+                candidate: candidates[0],
+                job: jobs[0],
             }
             return result
         })
     )
-    console.log(matches)
     return (
         <div>
             <Card>

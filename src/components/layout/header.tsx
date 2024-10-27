@@ -6,8 +6,10 @@ import Logo from "@/components/landing/Logo"
 import { redirect, useParams, useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { createClient } from "@/utils/supabase/client"
+
 import { NavItem } from "@/utils/types"
+import { useSession } from "@clerk/nextjs"
+import createClerkSupabaseClient from "@/utils/supabase/client"
 
 export type HeaderProps = {
     email: string
@@ -16,7 +18,8 @@ export type HeaderProps = {
 export default function Header({ email, items }: HeaderProps) {
     const { locale } = useParams()
     const router = useRouter()
-    const supabase = createClient()
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
     return (
         <div className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur">
             <nav className="flex h-14 items-center justify-between px-4">

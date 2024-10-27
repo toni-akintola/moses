@@ -1,5 +1,5 @@
 import React from "react"
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { RadialChart } from "@/components/ui/radial"
 import {
     Card,
@@ -24,7 +24,7 @@ type Props = {}
 
 const Candidate = async ({ params }: { params: { slug: string } }) => {
     const { slug: candidateID } = params
-    const supabase = createClient()
+    const supabase = await createClerkSupabaseClientSsr()
     const { data: candidateData, error: candidateError } = await supabase
         .from("candidates")
         .select("*")

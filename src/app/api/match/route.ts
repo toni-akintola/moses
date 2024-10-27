@@ -21,14 +21,19 @@ export async function GET(request: NextRequest) {
     )
 
     console.log(matches)
-    // const res = matches.map((documents) => (documents.map((document) => cosineSimilarityToMatchScore(document))))
-    return NextResponse.json({ scores: matches })
+    const scores = matches.map((match) =>
+        match.map((matchObj) =>
+            cosineSimilarityToMatchScore(matchObj.similarity)
+        )
+    )
+
+    return NextResponse.json(scores)
 }
 
 function cosineSimilarityToMatchScore(
     cosineSimilarity: number,
     threshold: number = 0.5,
-    steepness: number = 10
+    steepness: number = 30
 ): number {
     /**
      * Convert cosine similarity to a match score between 0 and 100.

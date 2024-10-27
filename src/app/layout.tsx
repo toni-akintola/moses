@@ -1,6 +1,13 @@
 import type { Metadata } from "next"
 import { Sofia_Sans } from "next/font/google"
 import "./globals.css"
+import {
+    ClerkProvider,
+    SignInButton,
+    SignedIn,
+    SignedOut,
+    UserButton,
+} from "@clerk/nextjs"
 import Layout from "@/components/chat/Providers"
 import { Analytics } from "@vercel/analytics/react"
 import NextTopLoader from "nextjs-toploader"
@@ -15,7 +22,6 @@ export const metadata: Metadata = {
     title: "Exodo",
     description: "AI-powered Resume Builder",
 }
-
 export default function RootLayout({
     children,
     locale,
@@ -24,14 +30,16 @@ export default function RootLayout({
     locale: never
 }) {
     return (
-        <html lang={locale}>
-            <body className={`${lato.className} `}>
-                <Analytics />
-                <SpeedInsights />
-                <Toaster />
-                <NextTopLoader />
-                <Layout>{children}</Layout>
-            </body>
-        </html>
+        <ClerkProvider>
+            <html lang={locale}>
+                <body className={`${lato.className} `}>
+                    <Analytics />
+                    <SpeedInsights />
+                    <Toaster />
+                    <NextTopLoader />
+                    <Layout>{children}</Layout>
+                </body>
+            </html>
+        </ClerkProvider>
     )
 }

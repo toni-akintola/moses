@@ -8,12 +8,12 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { Candidate, Match } from "@/utils/types"
 import { CheckCircle2, TargetIcon, Users } from "lucide-react"
 
 export default async function Page() {
-    const supabase = createClient()
+    const supabase = await createClerkSupabaseClientSsr()
     const user = await supabase.auth.getUser()
     const profileID = user.data.user?.id
     const { data: matchData, error: matchError } = await supabase

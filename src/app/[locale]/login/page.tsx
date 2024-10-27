@@ -28,8 +28,10 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
 import { redirect, useParams, usePathname } from "next/navigation"
-import { createClient } from "@/utils/supabase/client"
+
 import { Provider } from "@supabase/supabase-js"
+import createClerkSupabaseClient from "@/utils/supabase/client"
+import { useSession } from "@clerk/nextjs"
 
 type Props = {}
 
@@ -45,7 +47,8 @@ const formSchema = z.object({
 })
 
 export default function Auth(props: Props) {
-    const supabase = createClient()
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -76,8 +79,8 @@ export default function Auth(props: Props) {
             <div className="justify-center items-center h-screen md:px-40 md:py-16">
                 <div className="container rounded-md h-full">
                     <div className="bg-laserBlue h-full flex flex-col text-white rounded-md items-center justify-center p-4">
-                        <div className="flex flex-col items-center justify-center">
-                            <Form {...form}>
+                        <div className="flex flex-col items-center justify-center w-1/4">
+                            {/* <Form {...form}>
                                 <form
                                     onSubmit={form.handleSubmit(onSubmit)}
                                     className="flex items-center flex-col justify-center space-y-4 w-full"
@@ -131,12 +134,12 @@ export default function Auth(props: Props) {
                                         Next
                                     </Button>
                                 </form>
-                            </Form>
-                            <div className="flex-row flex items-center space-x-3 py-4">
+                            </Form> */}
+                            {/* <div className="flex-row flex items-center space-x-3 py-4">
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
                                 <p>Or continue with</p>
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
-                            </div>
+                            </div> */}
                             <div className="flex flex-col space-y-3 w-full">
                                 <GoogleButton
                                     locale={locale}

@@ -86,7 +86,7 @@ export interface Candidate {
     last_name: string
     email: string
     resume_submission?: ResumeSubmission
-    embedding: number[]
+    embedding: string
 }
 
 export interface Match {
@@ -161,3 +161,13 @@ export interface FooterItem {
 export type MainNavItem = NavItemWithOptionalChildren
 
 export type SidebarNavItem = NavItemWithChildren
+
+export interface JobEmbedding {
+    id: string
+    metadata: {
+        title: string
+        company: string
+        employment_type: string
+    }
+    similarity: number
+}

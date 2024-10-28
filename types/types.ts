@@ -80,7 +80,7 @@ export interface Profile {
 }
 
 export interface Candidate {
-    candidate_id: string
+    id: string
     profile_id: string
     first_name: string
     last_name: string

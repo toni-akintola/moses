@@ -1,4 +1,3 @@
-import { createClient } from "@/functions/supabase"
 import * as deepl from "deepl-node"
 import {
     AdditionalInfo,

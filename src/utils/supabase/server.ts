@@ -1,6 +1,11 @@
 import { auth } from "@clerk/nextjs/server"
 import { createClient } from "@supabase/supabase-js"
-
+export async function createBackendSupabaseClient() {
+    return createClient(
+        process.env.SUPABASE_URL!,
+        process.env.SUPABASE_ANON_KEY!
+    )
+}
 export async function createClerkSupabaseClientSsr() {
     const { getToken } = await auth()
 
@@ -14,7 +19,6 @@ export async function createClerkSupabaseClientSsr() {
                     const clerkToken = await getToken({
                         template: "moses",
                     })
-                    console.log(clerkToken)
 
                     // Insert the Clerk Supabase token into the headers
                     const headers = new Headers(options?.headers)

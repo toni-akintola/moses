@@ -43,10 +43,7 @@ const Page = async (props: Props) => {
     const matches = await Promise.all(
         rawMatches.map(async (match) => {
             const { data: candidateData, error: candidateError } =
-                await supabase
-                    .from("candidates")
-                    .select("*")
-                    .eq("candidate_id", match.candidate_id)
+                await supabase.from("candidates").select("*").eq("id", match.id)
             const candidates = candidateData as Candidate[]
             const { data: jobData, error: jobError } = await supabase
                 .from("jobs")
@@ -94,7 +91,7 @@ const Page = async (props: Props) => {
                                 <TableRow key={match.id}>
                                     <TableCell className="hidden sm:table-cell">
                                         <Link
-                                            href={`candidates/${match.candidate.candidate_id}`}
+                                            href={`candidates/${match.candidate.id}`}
                                         >
                                             <div className="aspect-square bg-gradient-to-b from-cyan-100 via-cyan-300 to-laserBlue rounded-md object-cover"></div>
                                         </Link>
@@ -155,10 +152,10 @@ const Page = async (props: Props) => {
 
             {/* {candidateData?.map((candidate) => (
                 <Link
-                    href={`candidates/${candidate.candidate_id}`}
-                    key={candidate.candidate_id}
+                    href={`candidates/${candidate.id}`}
+                    key={candidate.id}
                 >
-                    {candidate.candidate_id}
+                    {candidate.id}
                 </Link>
             ))} */}
         </div>

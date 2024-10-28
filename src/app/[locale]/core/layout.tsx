@@ -25,9 +25,8 @@ export default async function DashboardLayout({
         .select("*")
         .eq("user_id", user?.id)
         .single()
-    console.log(error)
+    if (error) console.log(error)
 
-    console.log(profile)
     const items = enterpriseNavItems
 
     // if (!userData.user?.id) {

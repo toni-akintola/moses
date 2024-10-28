@@ -44,8 +44,7 @@ const Candidates = async (props: Props) => {
         .from("candidates")
         .select()
         .eq("profile_id", userId)
-    console.log(candidateData)
-    console.log(error)
+    if (error) console.log(error)
     return (
         <div>
             <Card>
@@ -75,10 +74,10 @@ const Candidates = async (props: Props) => {
                         </TableHeader>
                         <TableBody>
                             {candidateData?.map((candidate) => (
-                                <TableRow key={candidate.candidate_id}>
+                                <TableRow key={candidate.id}>
                                     <TableCell className="hidden sm:table-cell">
                                         <Link
-                                            href={`candidates/${candidate.candidate_id}`}
+                                            href={`candidates/${candidate.id}`}
                                         >
                                             <div className="aspect-square bg-gradient-to-b from-cyan-100 via-cyan-300 to-laserBlue rounded-md object-cover"></div>
                                         </Link>
@@ -140,10 +139,10 @@ const Candidates = async (props: Props) => {
 
             {/* {candidateData?.map((candidate) => (
                 <Link
-                    href={`candidates/${candidate.candidate_id}`}
-                    key={candidate.candidate_id}
+                    href={`candidates/${candidate.id}`}
+                    key={candidate.id}
                 >
-                    {candidate.candidate_id}
+                    {candidate.id}
                 </Link>
             ))} */}
         </div>

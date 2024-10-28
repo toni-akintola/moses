@@ -29,7 +29,8 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { nanoid } from "@/utils/helpers"
-import { createClient } from "@/utils/supabase/client"
+import createClerkSupabaseClient from "@/utils/supabase/client"
+import { useSession } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
 import { useForm } from "react-hook-form"
@@ -55,7 +56,6 @@ const formSchema = z.object({
     employmentType: z.string().min(2),
 })
 const JobDialog = () => {
-    const supabase = createClient()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -68,6 +68,8 @@ const JobDialog = () => {
             employmentType: "",
         },
     })
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
         const user = await supabase.auth.getUser()

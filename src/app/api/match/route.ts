@@ -1,42 +1,40 @@
-import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { Job } from "../../../../types/types"
+import {
+    createBackendSupabaseClient,
+    createClerkSupabaseClientSsr,
+} from "@/utils/supabase/server"
+import { Candidate, Job } from "../../../../types/types"
 import { createClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
 import { MatchPayload } from "../../../../types/routes"
-/*
- * Interface for this route:
- *
- *
- * */
+import { matchToCandidates, matchToJobs } from "@/app/api/match"
+
 export async function POST(request: NextRequest) {
-    // Example usage
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    const supabase = await createBackendSupabaseClient()
     const payload: MatchPayload = await request.json()
     console.log(payload)
-    const { data, error } = await supabase.from("jobs").select("*")
-    const jobsData = data as Job[]
-    const matches = await Promise.all(
-        jobsData?.map(async (job) => {
-            const { data, error } = await supabase.rpc("match_candidates", {
-                query_embedding: job.embedding,
-                match_threshold: 0.2,
-                match_count: 10,
-            })
-            console.log(error)
-            return data
-        })
-    )
 
-    const scores = matches.map((match) =>
-        match.map((matchObj) =>
-            cosineSimilarityToMatchScore(matchObj.similarity)
-        )
-    )
+    if (payload.candidate) {
+        if (!payload.candidateID) return NextResponse.error()
+        const { data } = await supabase
+            .from("candidates")
+            .select("*")
+            .eq("id", payload.candidateID)
+        console.log(data)
 
-    return NextResponse.json(scores)
+        const candidate = data as unknown as Candidate
+        const matches = await matchToJobs(candidate)
+        console.log(matches)
+    }
+    // const jobsData = data as Job[]
+    // const matches = await Promise.all(jobsData.map((job) => matchToCandidates(job)))
+    // console.log(matches)
+    // const scores = matches.map((match) =>
+    //     match.map((matchObj) =>
+    //         cosineSimilarityToMatchScore(matchObj.similarity)
+    //     )
+    // )
+
+    return NextResponse.json({ message: "Testing" })
 }
 
 function cosineSimilarityToMatchScore(

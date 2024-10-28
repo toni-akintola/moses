@@ -25,18 +25,18 @@ type Props = {}
 const Candidate = async ({ params }: { params: { slug: string } }) => {
     const { slug: candidateID } = params
     const supabase = await createClerkSupabaseClientSsr()
+
     const { data: candidateData, error: candidateError } = await supabase
         .from("candidates")
         .select("*")
-        .eq("candidate_id", candidateID)
+        .eq("id", candidateID)
     const candidate = candidateData ? candidateData[0] : {}
     const resumeSubmission: ResumeSubmission = candidate.resume_submission
-    console.log(resumeSubmission)
-    console.log(resumeSubmission.experiences)
     const { data: matchData, error: matchError } = await supabase
         .from("matches")
         .select("*")
-        .eq("candidate_id", candidateID)
+        .eq("id", candidateID)
+
     const matches = await Promise.all(
         matchData.map(async (match) => {
             const { data: jobData, error: jobError } = await supabase

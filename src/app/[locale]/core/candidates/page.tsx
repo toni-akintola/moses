@@ -17,7 +17,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { createClient } from "@/utils/supabase/server"
 import { useMessages } from "next-intl"
 import React from "react"
 

@@ -15,7 +15,7 @@ import { CheckCircle2, TargetIcon, Users } from "lucide-react"
 export default async function Page() {
     const supabase = await createClerkSupabaseClientSsr()
     const user = await supabase.auth.getUser()
-    const profileID = user.data.user?.id
+    const profileID = "b5a238bd-fb60-493c-8b87-de5feb40475b"
     const { data: matchData, error: matchError } = await supabase
         .from("matches")
         .select("*")

@@ -8,8 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 
 import { NavItem } from "@/utils/types"
-import { useSession } from "@clerk/nextjs"
-import createClerkSupabaseClient from "@/utils/supabase/client"
+import { useAuth } from "@clerk/nextjs"
 
 export type HeaderProps = {
     email: string
@@ -18,8 +17,9 @@ export type HeaderProps = {
 export default function Header({ email, items }: HeaderProps) {
     const { locale } = useParams()
     const router = useRouter()
-    const { session } = useSession()
-    const supabase = createClerkSupabaseClient(session)
+    const { signOut, isSignedIn } = useAuth()
+    if (!isSignedIn) router.push(`/${locale}`)
+
     return (
         <div className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur">
             <nav className="flex h-14 items-center justify-between px-4">
@@ -38,10 +38,12 @@ export default function Header({ email, items }: HeaderProps) {
                     <div className="p-4">
                         <Button
                             onClick={async () => {
-                                const { error } = await supabase.auth.signOut()
-                                if (!error) {
-                                    router.push(`/${locale}`)
-                                }
+                                await signOut()
+                                router.push(`/${locale}`)
+
+                                // if (!error) {
+                                //     router.push(`/${locale}`)
+                                // }
                             }}
                         >
                             Sign Out

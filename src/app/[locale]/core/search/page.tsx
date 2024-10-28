@@ -1,6 +1,6 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { Job } from "@/utils/types"
 import Image from "next/image"
 import React from "react"
@@ -8,7 +8,7 @@ import React from "react"
 type Props = {}
 
 const Page = async () => {
-    const supabase = createClient()
+    const supabase = await createClerkSupabaseClientSsr()
     const { data: jobsData, error } = await supabase.from("jobs").select("*")
     let jobs: Job[] = []
     if (jobsData) {

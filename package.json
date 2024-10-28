@@ -73,6 +73,7 @@
         "react-wrap-balancer": "^1.1.1",
         "recharts": "^2.12.7",
         "styled-components": "^6.1.8",
+        "svix": "^1.37.0",
         "tailwind-merge": "^2.2.1",
         "tailwindcss-animate": "^1.0.7",
         "ts-node": "^10.9.2",

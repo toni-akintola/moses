@@ -23,8 +23,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { Candidate, Job, Match } from "@/utils/types"
+import { auth } from "@clerk/nextjs/server"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import React from "react"
@@ -32,13 +33,12 @@ import React from "react"
 type Props = {}
 
 const Page = async (props: Props) => {
-    const supabase = createClient()
-    const user = await supabase.auth.getUser()
-    const profileID = user.data.user?.id
+    const supabase = await createClerkSupabaseClientSsr()
+    const { userId } = await auth()
     const { data: matchData, error: matchError } = await supabase
         .from("matches")
         .select("*")
-        .eq("profile_id", profileID)
+        .eq("profile_id", userId)
     const rawMatches = matchData as Match[]
     const matches = await Promise.all(
         rawMatches.map(async (match) => {

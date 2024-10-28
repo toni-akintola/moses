@@ -30,7 +30,7 @@ export default function RootLayout({
     locale: never
 }) {
     return (
-        <ClerkProvider>
+        <ClerkProvider dynamic>
             <html lang={locale}>
                 <body className={`${lato.className} `}>
                     <Analytics />

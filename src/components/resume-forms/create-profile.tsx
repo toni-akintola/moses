@@ -45,7 +45,9 @@ import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
-import { createClient } from "@/utils/supabase/client"
+import createClerkSupabaseClient from "@/utils/supabase/client"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
+import { useSession } from "@clerk/nextjs"
 
 const educationSchema = z.object({
     school: z.string({ required_error: "Please enter a school" }),
@@ -323,7 +325,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     const delta = currentStep - previousStep
     const { toast } = useToast()
     const pathname = usePathname()
-    const supabase = createClient()
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
 
     useEffect(() => {
         fetch("/api/profile", {

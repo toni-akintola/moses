@@ -20,18 +20,15 @@ export default async function DashboardLayout({
     const user = await currentUser()
     // const { data: userData } = await supabase.auth.getUser()
     // const userID = userData.user?.id
-    // const { data: profile, error } = await supabase
-    //     .from("profiles")
-    //     .select("*")
-    //     .eq("user_id", user?.id)
-    //     .single()
-    // console.log(error)
+    const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user?.id)
+        .single()
+    console.log(error)
 
-    // console.log(profile)
-    // const items =
-    //     profile.accountType === "Enterprise"
-    //         ? enterpriseNavItems
-    //         : employerNavItems
+    console.log(profile)
+    const items = enterpriseNavItems
 
     // if (!userData.user?.id) {
     //     redirect("login")
@@ -39,13 +36,16 @@ export default async function DashboardLayout({
 
     return (
         <>
-            {/* <Header items={items} email={user?.primaryEmailAddress?.emailAddress || ""} />
+            <Header
+                items={items}
+                email={user?.primaryEmailAddress?.emailAddress || ""}
+            />
             <div className="flex h-screen overflow-hidden">
                 <Sidebar items={items} />
                 <main className="w-full py-24 px-8 overflow-scroll">
                     {children}
                 </main>
-            </div> */}
+            </div>
         </>
     )
 }

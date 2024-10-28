@@ -14,6 +14,7 @@ export async function createClerkSupabaseClientSsr() {
                     const clerkToken = await getToken({
                         template: "moses",
                     })
+                    console.log(clerkToken)
 
                     // Insert the Clerk Supabase token into the headers
                     const headers = new Headers(options?.headers)

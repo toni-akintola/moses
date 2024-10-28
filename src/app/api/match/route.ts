@@ -1,11 +1,14 @@
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { Job } from "@/utils/types"
+import { createClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
-export const dynamic = "force-dynamic" // static by default, unless reading the request
 
 export async function GET(request: NextRequest) {
     // Example usage
-    const supabase = createClient()
+    const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     const { data, error } = await supabase.from("jobs").select("*")
     const jobsData = data as Job[]
     const matches = await Promise.all(

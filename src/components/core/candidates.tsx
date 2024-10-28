@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import Link from "next/link"
 import React from "react"
 
@@ -32,17 +32,18 @@ import {
 
 import { MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { auth } from "@clerk/nextjs/server"
 
 type Props = {}
 
 const Candidates = async (props: Props) => {
-    const supabase = createClient()
-    const user = await supabase.auth.getUser()
-    const userID = user.data.user?.id
+    const supabase = await createClerkSupabaseClientSsr()
+
+    const { userId } = await auth()
     const { data: candidateData, error } = await supabase
         .from("candidates")
         .select()
-        .eq("profile_id", userID)
+        .eq("profile_id", userId)
     console.log(candidateData)
     console.log(error)
     return (

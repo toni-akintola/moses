@@ -62,7 +62,7 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
                         <p>{candidate.last_name || ""}</p>
                         <p>{candidate.email || ""}</p>
                         <p>{resumeSubmission.age}</p>
-                        <p>{resumeSubmission.number}</p>
+                        <p>{resumeSubmission.phoneNumber}</p>
                         <p>
                             Work authorized:{" "}
                             {resumeSubmission.authorizationStatus

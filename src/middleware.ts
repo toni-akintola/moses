@@ -14,6 +14,7 @@ const isProtectedRoute = createRouteMatcher("/(.*core.*)")
 
 export default clerkMiddleware(async (auth, req) => {
     if (isProtectedRoute(req)) await auth.protect()
+    if (req.url.includes("api")) return
 
     return handleI18nRouting(req)
 })

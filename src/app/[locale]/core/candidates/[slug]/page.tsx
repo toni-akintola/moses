@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Job, ResumeSubmission } from "@/utils/types"
+import { Job, ResumeSubmission } from "../../../../../../types/types"
 type Props = {}
 
 const Candidate = async ({ params }: { params: { slug: string } }) => {

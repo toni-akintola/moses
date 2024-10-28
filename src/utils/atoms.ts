@@ -5,7 +5,7 @@ import {
     Profile,
     ResumeSubmission,
     Skill,
-} from "@/utils/types"
+} from "../../types/types"
 import { atom } from "jotai"
 
 // Profile Atom

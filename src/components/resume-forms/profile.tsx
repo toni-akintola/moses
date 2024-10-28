@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
-import { Profile } from "@/utils/types"
+import { Profile } from "../../../types/types"
 import { Trash } from "lucide-react"
 import React, { useEffect, useState } from "react"
 

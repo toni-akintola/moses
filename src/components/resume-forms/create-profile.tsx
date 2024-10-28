@@ -37,7 +37,11 @@ import { useToast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
 import { profileAtom } from "@/utils/atoms"
 import { delay } from "@/utils/helpers"
-import { BodyPayload, FormItemText, ResumeSubmission } from "@/utils/types"
+import {
+    BodyPayload,
+    FormItemText,
+    ResumeSubmission,
+} from "../../../types/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom } from "jotai"
 import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react"

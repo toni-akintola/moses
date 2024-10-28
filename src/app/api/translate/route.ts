@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
-import { Education, Experience, ResumeSubmission } from "@/utils/types"
+import {
+    Education,
+    Experience,
+    ResumeSubmission,
+} from "../../../../types/types"
 import { translateText } from "@/functions/server"
 import { createClient } from "@/utils/supabase/server"
 

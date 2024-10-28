@@ -1,15 +1,15 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { createClient } from "@/utils/supabase/server"
-import { Job } from "@/utils/types"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
+import { Job } from "../../../types/types"
 import React from "react"
+import { auth } from "@clerk/nextjs/server"
 
 type Props = {}
 
 const Jobs = async (props: Props) => {
-    const supabase = createClient()
-    const user = await supabase.auth.getUser()
-    const employerID = user.data.user?.id
+    const supabase = await createClerkSupabaseClientSsr()
+    const { userId: employerID } = await auth()
     const { data: jobsData, error } = await supabase
         .from("jobs")
         .select()
@@ -17,7 +17,6 @@ const Jobs = async (props: Props) => {
     let jobs: Job[] = []
     if (jobsData) {
         jobs = jobsData
-        console.log(jobs)
     }
     return (
         <ScrollArea className="p-8 h-full w-full flex">

@@ -30,7 +30,7 @@ import Link from "next/link"
 import { redirect, useParams, useRouter } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
 import { Provider } from "@supabase/supabase-js"
-import { Profile } from "@/utils/types"
+import { Profile } from "../../../../types/types"
 import { useToast } from "@/components/ui/use-toast"
 
 type Props = {}

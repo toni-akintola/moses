@@ -24,7 +24,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { Candidate, Job, Match } from "@/utils/types"
+import { Candidate, Job, Match } from "../../../../../types/types"
 import { auth } from "@clerk/nextjs/server"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"

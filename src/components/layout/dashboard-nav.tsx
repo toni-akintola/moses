@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 
 import { Icons } from "@/components/ui/icons"
 import { cn } from "@/lib/utils"
-import { NavItem } from "@/utils/types"
+import { NavItem } from "../../../types/types"
 import { Dispatch, SetStateAction } from "react"
 import {
     Tooltip,

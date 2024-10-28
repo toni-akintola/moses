@@ -1,7 +1,7 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { Job } from "@/utils/types"
+import { Job } from "../../../../../types/types"
 import Image from "next/image"
 import React from "react"
 

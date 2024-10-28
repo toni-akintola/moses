@@ -1,14 +1,21 @@
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { Job } from "@/utils/types"
+import { Job } from "../../../../types/types"
 import { createClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
-
-export async function GET(request: NextRequest) {
+import { MatchPayload } from "../../../../types/routes"
+/*
+ * Interface for this route:
+ *
+ *
+ * */
+export async function POST(request: NextRequest) {
     // Example usage
     const supabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
+    const payload: MatchPayload = await request.json()
+    console.log(payload)
     const { data, error } = await supabase.from("jobs").select("*")
     const jobsData = data as Job[]
     const matches = await Promise.all(
@@ -23,7 +30,6 @@ export async function GET(request: NextRequest) {
         })
     )
 
-    console.log(matches)
     const scores = matches.map((match) =>
         match.map((matchObj) =>
             cosineSimilarityToMatchScore(matchObj.similarity)

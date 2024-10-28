@@ -1,4 +1,4 @@
-import { BodyPayload } from "@/utils/types"
+import { BodyPayload } from "../../types/types"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 

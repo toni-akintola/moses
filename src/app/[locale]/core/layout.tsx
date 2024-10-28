@@ -1,7 +1,7 @@
 import Header from "@/components/layout/header"
 import Sidebar from "@/components/layout/sidebar"
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { Profile } from "@/utils/types"
+import { Profile } from "../../../../types/types"
 import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { enterpriseNavItems, employerNavItems } from "@/constants/data"

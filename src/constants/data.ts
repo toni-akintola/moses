@@ -1,5 +1,5 @@
 import { Icons } from "@/components/ui/icons"
-import { NavItem, SidebarNavItem } from "@/utils/types"
+import { NavItem, SidebarNavItem } from "../../types/types"
 
 export const enterpriseNavItems: NavItem[] = [
     {

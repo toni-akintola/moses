@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { ChevronLeft } from "lucide-react"
 import { useAtom } from "jotai"
 import { isMinimizedAtom } from "@/utils/atoms"
-import { NavItem } from "@/utils/types"
+import { NavItem } from "../../../types/types"
 // import { useSidebar } from '@/hooks/useSidebar';
 
 type SidebarProps = {

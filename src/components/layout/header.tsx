@@ -7,7 +7,7 @@ import { redirect, useParams, useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 
-import { NavItem } from "@/utils/types"
+import { NavItem } from "../../../types/types"
 import { useAuth } from "@clerk/nextjs"
 
 export type HeaderProps = {

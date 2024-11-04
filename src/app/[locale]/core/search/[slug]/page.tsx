@@ -1,10 +1,10 @@
 import React from "react"
-import { createClient } from "@/utils/supabase/server"
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 type Props = {}
 
 const Job = async ({ params }: { params: { slug: string } }) => {
     const { slug: jobID } = params
-    const supabase = createClient()
+    const supabase = await createClerkSupabaseClientSsr()
     const { data: jobData, error } = await supabase
         .from("jobs")
         .select("*")

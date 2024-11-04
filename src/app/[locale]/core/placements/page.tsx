@@ -43,7 +43,10 @@ const Page = async (props: Props) => {
     const matches = await Promise.all(
         rawMatches.map(async (match) => {
             const { data: candidateData, error: candidateError } =
-                await supabase.from("candidates").select("*").eq("id", match.id)
+                await supabase
+                    .from("candidates")
+                    .select("*")
+                    .eq("id", match.candidate_id)
             const candidates = candidateData as Candidate[]
             const { data: jobData, error: jobError } = await supabase
                 .from("jobs")
@@ -56,6 +59,7 @@ const Page = async (props: Props) => {
                 candidate: candidates[0],
                 job: jobs[0],
             }
+            console.log(result.candidate)
             return result
         })
     )

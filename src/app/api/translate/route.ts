@@ -5,7 +5,7 @@ import {
     ResumeSubmission,
 } from "../../../../types/types"
 import { translateText } from "@/functions/server"
-import { createClient } from "@/utils/supabase/server"
+import { createBackendSupabaseClient } from "@/utils/supabase/server"
 
 export async function POST(request: NextRequest) {
     const { educations, experiences, ...otherProps }: ResumeSubmission =
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
         experiences: translatedExperiences,
     }
 
-    const supabase = createClient()
+    const supabase = await createBackendSupabaseClient()
     const { error } = await supabase.from("resume_submissions").insert({
         age: translatedResume.age,
         firstName: translatedResume.firstName,

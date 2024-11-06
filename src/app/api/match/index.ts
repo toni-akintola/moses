@@ -1,7 +1,7 @@
 import { createBackendSupabaseClient } from "@/utils/supabase/server"
 import { Candidate, JobEmbedding, Job } from "../../../../types/types"
 
-const MINIMUM_SCORE = 50
+const MINIMUM_SCORE = 25
 
 function cosineSimilarityToMatchScore(
     cosineSimilarity: number,
@@ -59,5 +59,6 @@ export async function matchToJobs(candidate: Candidate) {
         match_count: 10,
     })
     console.log(error)
+    console.log(data)
     return transformAndFilterSimilarities(data)
 }

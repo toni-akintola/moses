@@ -28,6 +28,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { vectorize } from "@/functions/embedding"
 import { nanoid } from "@/utils/helpers"
 import createClerkSupabaseClient from "@/utils/supabase/client"
 import { useSession } from "@clerk/nextjs"
@@ -74,9 +75,10 @@ const JobDialog = () => {
         console.log(values)
         const user = await supabase.auth.getUser()
         const employer_id = user.data.user?.id
+        const embedding = await vectorize(JSON.stringify(values))
         const { data, error } = await supabase
             .from("jobs")
-            .insert([{ ...values, employer_id }])
+            .insert([{ ...values, employer_id, embedding }])
             .select()
         console.log(data, error)
     }

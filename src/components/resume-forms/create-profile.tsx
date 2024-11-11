@@ -52,6 +52,7 @@ import { z } from "zod"
 import createClerkSupabaseClient from "@/utils/supabase/client"
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { useSession } from "@clerk/nextjs"
+import { vectorize } from "@/functions/embedding"
 
 const educationSchema = z.object({
     school: z.string({ required_error: "Please enter a school" }),
@@ -478,6 +479,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 const userID = user.data.user?.id
                 if (userID && user.data.user?.email) {
                     // Create a new candidate
+                    const embedding = vectorize(JSON.stringify(data))
                     const { data: candidateData, error } = await supabase
                         .from("candidates")
                         .upsert({
@@ -486,6 +488,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                             resume_submission: data,
                             email: user.data.user.email,
                             profile_id: userID,
+                            embedding: embedding,
                         })
                         .select()
                     console.log(error)

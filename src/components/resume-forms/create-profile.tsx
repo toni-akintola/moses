@@ -475,9 +475,10 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 await download(payload)
                 return data
             } else {
-                const user = await supabase.auth.getUser()
-                const userID = user.data.user?.id
-                if (userID && user.data.user?.email) {
+                const user = session?.user
+
+                if (user && user.id && user.primaryEmailAddress?.emailAddress) {
+                    const userID = user.id
                     // Create a new candidate
                     const embedding = vectorize(JSON.stringify(data))
                     const { data: candidateData, error } = await supabase
@@ -486,7 +487,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                             first_name: data.firstName,
                             last_name: data.lastName,
                             resume_submission: data,
-                            email: user.data.user.email,
+                            email: user.primaryEmailAddress.emailAddress,
                             profile_id: userID,
                             embedding: embedding,
                         })
@@ -606,7 +607,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
 
     return (
         <>
-            <div className="flex flex-col space-y-3">
+            <div className="flex flex-col space-y-3 p-4">
                 <div className="flex items-center justify-between">
                     <Heading title={title} description={description} />
                     {initialData && (

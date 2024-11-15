@@ -25,6 +25,7 @@ export default async function Page() {
         .from("candidates")
         .select()
         .eq("profile_id", profileID)
+    console.log(profileID)
     const matches = matchData as Match[]
     const candidates = candidateData as Candidate[]
     return (

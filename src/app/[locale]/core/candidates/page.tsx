@@ -44,7 +44,7 @@ const Page = (props: Props) => {
                 <DialogTrigger asChild>
                     <Button>Create New Candidate</Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-screen-xl h-2/3">
+                <DialogContent className="max-w-screen-xl flex flex-col overflow-scroll">
                     <CreateProfileOne
                         resumeBuilder={resumeBuilderContent}
                         S1Props={S1Content}

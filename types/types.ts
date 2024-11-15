@@ -69,10 +69,11 @@ export interface Job {
 }
 
 export interface Profile {
+    profile_id: string
     user_id: string
     firstName?: string
     lastName?: string
-    avatarURL?: string
+    avatarUrl?: string
     email: string
     firstTimeUser: boolean
     accountType?: string

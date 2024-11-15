@@ -28,10 +28,11 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
 import { redirect, useParams, useRouter } from "next/navigation"
-import { createClient } from "@/utils/supabase/client"
+import createClerkSupabaseClient from "@/utils/supabase/client"
 import { Provider } from "@supabase/supabase-js"
 import { Profile } from "../../../../types/types"
 import { useToast } from "@/components/ui/use-toast"
+import { useSession } from "@clerk/nextjs"
 
 type Props = {}
 
@@ -47,7 +48,8 @@ const formSchema = z.object({
 })
 
 export default function Auth(props: Props) {
-    const supabase = createClient()
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),

@@ -1,6 +1,8 @@
 import { Webhook } from "svix"
 import { headers } from "next/headers"
 import { WebhookEvent } from "@clerk/nextjs/server"
+import { createProfile } from "@/functions/postgres"
+import { Profile } from "../../../../types/types"
 
 export async function POST(req: Request) {
     // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -28,7 +30,18 @@ export async function POST(req: Request) {
     // Get the body
     const payload = await req.json()
     const body = JSON.stringify(payload)
-    console.log(payload)
+    const data = payload.data
+    const profile: Profile = {
+        user_id: data.id,
+        profile_id: data.id,
+        email: data.email_addresses[0].email_address,
+        firstTimeUser: true,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        avatarUrl: data.has_image ? data.image_url : "",
+    }
+    const result = await createProfile(profile)
+    console.log(result)
     // Create a new Svix instance with your secret.
     const wh = new Webhook(WEBHOOK_SECRET)
 

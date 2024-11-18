@@ -6,6 +6,7 @@ export async function createBackendSupabaseClient() {
         process.env.SUPABASE_ANON_KEY!
     )
 }
+
 export async function createClerkSupabaseClientSsr() {
     const { getToken } = await auth()
 

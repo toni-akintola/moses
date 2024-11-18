@@ -1,3 +1,4 @@
+"use server"
 import OpenAI from "openai"
 
 export async function vectorize(data: string) {
@@ -9,6 +10,5 @@ export async function vectorize(data: string) {
         encoding_format: "float",
     })
 
-    console.log(embedding.data[0].embedding)
     return embedding.data[0].embedding
 }

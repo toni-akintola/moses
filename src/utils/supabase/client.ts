@@ -10,7 +10,7 @@ export default function createClerkSupabaseClient(session: any) {
                 // Get the custom Supabase token from Clerk
                 fetch: async (url, options = {}) => {
                     const clerkToken = await session?.getToken({
-                        template: "supabase",
+                        template: "moses",
                     })
 
                     // Insert the Clerk Supabase token into the headers

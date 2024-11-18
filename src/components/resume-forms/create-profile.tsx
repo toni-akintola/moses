@@ -50,7 +50,6 @@ import { useEffect, useState } from "react"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import createClerkSupabaseClient from "@/utils/supabase/client"
-import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
 import { useSession } from "@clerk/nextjs"
 import { vectorize } from "@/functions/embedding"
 
@@ -480,19 +479,17 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 if (user && user.id && user.primaryEmailAddress?.emailAddress) {
                     const userID = user.id
                     // Create a new candidate
-                    const embedding = vectorize(JSON.stringify(data))
-                    const { data: candidateData, error } = await supabase
-                        .from("candidates")
-                        .upsert({
-                            first_name: data.firstName,
-                            last_name: data.lastName,
-                            resume_submission: data,
-                            email: user.primaryEmailAddress.emailAddress,
-                            profile_id: userID,
-                            embedding: embedding,
-                        })
-                        .select()
-                    console.log(error)
+                    const embedding = await vectorize(JSON.stringify(data))
+                    console.log(embedding)
+                    const { error } = await supabase.from("candidates").insert({
+                        first_name: data.firstName,
+                        last_name: data.lastName,
+                        resume_submission: data,
+                        email: user.primaryEmailAddress.emailAddress,
+                        profile_id: userID,
+                        embedding: embedding,
+                    })
+                    console.log("This is the error =>", error)
                 }
             }
         } catch (error) {

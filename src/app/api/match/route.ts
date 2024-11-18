@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
             .select()
             .eq("id", payload.candidateID)
             .maybeSingle()
+        // check to see if the request body includes an embedding
 
         const candidate = data as unknown as Candidate
         const matches = await matchToJobs(candidate)
@@ -29,16 +30,6 @@ export async function POST(request: NextRequest) {
         .eq("id", payload.jobID)
     const job = data as unknown as Job
     const matches = await matchToCandidates(job)
-    console.log(matches)
-
-    // const jobsData = data as Job[]
-    // const matches = await Promise.all(jobsData.map((job) => matchToCandidates(job)))
-    // console.log(matches)
-    // const scores = matches.map((match) =>
-    //     match.map((matchObj) =>
-    //         cosineSimilarityToMatchScore(matchObj.similarity)
-    //     )
-    // )
 
     return NextResponse.json({ matches })
 }

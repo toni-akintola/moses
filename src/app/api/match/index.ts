@@ -46,7 +46,6 @@ export async function matchToCandidates(job: Job) {
         match_threshold: 0.2,
         match_count: 10,
     })
-    console.log(error)
     return transformAndFilterSimilarities(data)
 }
 
@@ -58,7 +57,6 @@ export async function matchToJobs(candidate: Candidate) {
         match_threshold: 0.2,
         match_count: 10,
     })
-    console.log(error)
-    console.log(data)
+
     return transformAndFilterSimilarities(data)
 }

@@ -10,11 +10,9 @@ import {
     S5Props,
 } from "@/components/resume-forms/create-profile"
 import { useMessages } from "next-intl"
-import { unstable_setRequestLocale } from "next-intl/server"
 import React from "react"
 
 const Page = ({ params }: { params: { locale: string } }) => {
-    unstable_setRequestLocale(params.locale)
     const messages = useMessages()
     const resumeBuilderContent =
         messages.resumeBuilder as unknown as ResumeBuilderProps
@@ -23,8 +21,9 @@ const Page = ({ params }: { params: { locale: string } }) => {
     const S3Content = messages.s3 as unknown as S3Props
     const S4Content = messages.s4 as unknown as S4Props
     const S5Content = messages.s5 as unknown as S5Props
+
     return (
-        <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
+        <div className="flex-1 space-y-4">
             <CreateProfileOne
                 resumeBuilder={resumeBuilderContent}
                 S1Props={S1Content}

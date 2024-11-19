@@ -28,9 +28,11 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
 import { redirect, useParams, useRouter } from "next/navigation"
-import { createClient } from "@/utils/supabase/client"
+import createClerkSupabaseClient from "@/utils/supabase/client"
 import { Provider } from "@supabase/supabase-js"
-import { Profile } from "@/utils/types"
+import { Profile } from "../../../../types/types"
+import { useToast } from "@/components/ui/use-toast"
+import { useSession } from "@clerk/nextjs"
 
 type Props = {}
 
@@ -46,7 +48,8 @@ const formSchema = z.object({
 })
 
 export default function Auth(props: Props) {
-    const supabase = createClient()
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -60,6 +63,7 @@ export default function Auth(props: Props) {
     const params = useParams()
     const locale = params.locale as string
     const router = useRouter()
+    const { toast } = useToast()
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
@@ -68,11 +72,20 @@ export default function Auth(props: Props) {
         const { data, error } = await supabase.auth.signUp({
             email: values.email,
             password: values.password,
-            options: {
-                emailRedirectTo: "core",
-            },
         })
-        console.log(data, error)
+        console.log(error)
+        if (!error) {
+            toast({
+                title: "Success!",
+                description: `Check ${values.email} to confirm your email.`,
+            })
+        } else {
+            toast({
+                title: "Error...",
+                description:
+                    "Some error has occurred signing up. Please try again.",
+            })
+        }
     }
     return (
         <div>
@@ -182,7 +195,7 @@ export default function Auth(props: Props) {
                                     </Button>
                                 </form>
                             </Form>
-                            <div className="flex-row flex items-center space-x-3">
+                            <div className="flex-row flex items-center space-x-3 py-4">
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
                                 <p>Or continue with</p>
                                 <hr className="bg-gray-300 h-0.5 w-16"></hr>
@@ -197,7 +210,7 @@ export default function Auth(props: Props) {
                                     provider={"microsoft" as Provider}
                                 />
                             </div>
-                            <div className="justify-between items-center flex flex-row w-full">
+                            <div className="justify-between items-center flex flex-row w-full pt-4">
                                 <Link
                                     href="login"
                                     className="flex justify-center w-full"

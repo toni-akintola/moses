@@ -1,34 +1,35 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr"
-import { cookies } from "next/headers"
+import { auth } from "@clerk/nextjs/server"
+import { createClient } from "@supabase/supabase-js"
+export async function createBackendSupabaseClient() {
+    return createClient(
+        process.env.SUPABASE_URL!,
+        process.env.SUPABASE_ANON_KEY!
+    )
+}
 
-export function createClient() {
-    const cookieStore = cookies()
+export async function createClerkSupabaseClientSsr() {
+    const { getToken } = await auth()
 
-    return createServerClient(
+    return createClient(
         process.env.SUPABASE_URL!,
         process.env.SUPABASE_ANON_KEY!,
         {
-            cookies: {
-                get(name: string) {
-                    return cookieStore.get(name)?.value
-                },
-                set(name: string, value: string, options: CookieOptions) {
-                    try {
-                        cookieStore.set({ name, value, ...options })
-                    } catch (error) {
-                        // The `set` method was called from a Server Component.
-                        // This can be ignored if you have middleware refreshing
-                        // user sessions.
-                    }
-                },
-                remove(name: string, options: CookieOptions) {
-                    try {
-                        cookieStore.set({ name, value: "", ...options })
-                    } catch (error) {
-                        // The `delete` method was called from a Server Component.
-                        // This can be ignored if you have middleware refreshing
-                        // user sessions.
-                    }
+            global: {
+                // Get the custom Supabase token from Clerk
+                fetch: async (url, options = {}) => {
+                    const clerkToken = await getToken({
+                        template: "moses",
+                    })
+
+                    // Insert the Clerk Supabase token into the headers
+                    const headers = new Headers(options?.headers)
+                    headers.set("Authorization", `Bearer ${clerkToken}`)
+
+                    // Now call the default fetch
+                    return fetch(url, {
+                        ...options,
+                        headers,
+                    })
                 },
             },
         }

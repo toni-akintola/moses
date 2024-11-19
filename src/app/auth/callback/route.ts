@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 import { NextResponse, NextRequest } from "next/server"
 import { type CookieOptions, createServerClient } from "@supabase/ssr"
+import { profile } from "console"
 
 export async function GET(request: NextRequest) {
     const { searchParams, origin } = new URL(request.url)
@@ -27,10 +28,26 @@ export async function GET(request: NextRequest) {
             }
         )
         const { error } = await supabase.auth.exchangeCodeForSession(code)
+        const user = (await supabase.auth.getUser()).data.user
         const nextLocaleCookie = request.cookies.get("NEXT_LOCALE")
-        console.log(nextLocaleCookie)
+        const { data } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("user_id", user?.id)
+            .single()
+        if (!data && user?.email) {
+            const { error: profileError } = await supabase
+                .from("profiles")
+                .insert({
+                    user_id: user.id,
+                    email: user.email,
+                    firstTimeUser: true,
+                    accountType: "Individual",
+                })
+            console.log(profileError)
+        }
         const locale = nextLocaleCookie ? nextLocaleCookie.value : "en" // Extracting locale's value: 'en'
-        if (!error) {
+        if (!error && user) {
             return NextResponse.redirect(`${origin}${next}/${locale}/core`)
         }
     }

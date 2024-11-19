@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
@@ -8,28 +7,27 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { createClient } from "@/utils/supabase/server"
-import { Profile } from "@/utils/types"
+
+import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
+import { Candidate, Match } from "../../../../types/types"
+import { auth } from "@clerk/nextjs/server"
+import { CheckCircle2, TargetIcon, Users } from "lucide-react"
 
 export default async function Page() {
-    const supabase = createClient()
-
-    const { data: userData } = await supabase.auth.getUser()
-    const { data: profileData, error } = await supabase
-        .from("profiles")
+    const supabase = await createClerkSupabaseClientSsr()
+    const { userId } = await auth()
+    const profileID = userId
+    const { data: matchData, error: matchError } = await supabase
+        .from("matches")
         .select("*")
-        .eq("id", userData.user?.id)
-    if (error && userData.user) {
-        const profile: Profile = {
-            email: userData.user.email!,
-            user_id: userData.user.id,
-            firstTimeUser: true,
-        }
-        const { data: profileData, error: profileError } = await supabase
-            .from("profiles")
-            .insert(profile)
-        console.log(profileData, profileError)
-    }
+        .eq("profile_id", profileID)
+    const { data: candidateData, error } = await supabase
+        .from("candidates")
+        .select()
+        .eq("profile_id", profileID)
+    console.log(profileID)
+    const matches = matchData as Match[]
+    const candidates = candidateData as Candidate[]
     return (
         <ScrollArea className="h-full">
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
@@ -37,9 +35,8 @@ export default async function Page() {
                     <h2 className="text-3xl font-bold tracking-tight">
                         Welcome Back 👋
                     </h2>
-                    <div className="hidden items-center space-x-2 md:flex">
-                        <Button>Download</Button>
-                    </div>
+                    {/* <div className="hidden items-center space-x-2 md:flex">
+                    </div> */}
                 </div>
                 <Tabs defaultValue="overview" className="space-y-4">
                     <TabsList>
@@ -49,28 +46,17 @@ export default async function Page() {
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="overview" className="space-y-4">
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
-                                        Total Revenue
+                                        Matches
                                     </CardTitle>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        className="h-4 w-4 text-muted-foreground"
-                                    >
-                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                    </svg>
+                                    <TargetIcon className="text-gray-500" />
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold">
-                                        $45,231.89
+                                        {matches.length}
                                     </div>
                                     <p className="text-xs text-muted-foreground">
                                         +20.1% from last month
@@ -80,26 +66,13 @@ export default async function Page() {
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
-                                        Subscriptions
+                                        Candidates
                                     </CardTitle>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        className="h-4 w-4 text-muted-foreground"
-                                    >
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                                    </svg>
+                                    <Users className="text-gray-500" />
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold">
-                                        +2350
+                                        {candidates.length}
                                     </div>
                                     <p className="text-xs text-muted-foreground">
                                         +180.1% from last month
@@ -109,82 +82,303 @@ export default async function Page() {
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
-                                        Sales
+                                        Job placements
                                     </CardTitle>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        className="h-4 w-4 text-muted-foreground"
-                                    >
-                                        <rect
-                                            width="20"
-                                            height="14"
-                                            x="2"
-                                            y="5"
-                                            rx="2"
-                                        />
-                                        <path d="M2 10h20" />
-                                    </svg>
+                                    <CheckCircle2 className="text-gray-500" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">
-                                        +12,234
-                                    </div>
+                                    <div className="text-2xl font-bold">0</div>
                                     <p className="text-xs text-muted-foreground">
-                                        +19% from last month
-                                    </p>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                    <CardTitle className="text-sm font-medium">
-                                        Active Now
-                                    </CardTitle>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        className="h-4 w-4 text-muted-foreground"
-                                    >
-                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                                    </svg>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-2xl font-bold">
-                                        +573
-                                    </div>
-                                    <p className="text-xs text-muted-foreground">
-                                        +201 since last hour
+                                        {/* +19% from last month */}
                                     </p>
                                 </CardContent>
                             </Card>
                         </div>
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-                            <Card className="col-span-4">
-                                <CardHeader>
-                                    <CardTitle>Overview</CardTitle>
-                                </CardHeader>
-                                <CardContent className="pl-2"></CardContent>
-                            </Card>
-                            <Card className="col-span-4 md:col-span-3">
-                                <CardHeader>
-                                    <CardTitle>Recent Sales</CardTitle>
+                        {/* <Card className="xl:col-span-2">
+                            <CardHeader className="flex flex-row items-center">
+                                <div className="grid gap-2">
+                                    <CardTitle>Transactions</CardTitle>
                                     <CardDescription>
-                                        You made 265 sales this month.
+                                        Recent transactions from your store.
                                     </CardDescription>
-                                </CardHeader>
-                                <CardContent></CardContent>
-                            </Card>
-                        </div>
+                                </div>
+                                <Button
+                                    asChild
+                                    size="sm"
+                                    className="ml-auto gap-1"
+                                >
+                                    <Link href="#">
+                                        View All
+                                        <ArrowUpRight className="h-4 w-4" />
+                                    </Link>
+                                </Button>
+                            </CardHeader>
+                            <CardContent>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Customer</TableHead>
+                                            <TableHead className="hidden xl:table-column">
+                                                Type
+                                            </TableHead>
+                                            <TableHead className="hidden xl:table-column">
+                                                Status
+                                            </TableHead>
+                                            <TableHead className="hidden xl:table-column">
+                                                Date
+                                            </TableHead>
+                                            <TableHead className="text-right">
+                                                Amount
+                                            </TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div className="font-medium">
+                                                    Liam Johnson
+                                                </div>
+                                                <div className="hidden text-sm text-muted-foreground md:inline">
+                                                    liam@example.com
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                Sale
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                <Badge
+                                                    className="text-xs"
+                                                    variant="outline"
+                                                >
+                                                    Approved
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+                                                2023-06-23
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                $250.00
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div className="font-medium">
+                                                    Olivia Smith
+                                                </div>
+                                                <div className="hidden text-sm text-muted-foreground md:inline">
+                                                    olivia@example.com
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                Refund
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                <Badge
+                                                    className="text-xs"
+                                                    variant="outline"
+                                                >
+                                                    Declined
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+                                                2023-06-24
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                $150.00
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div className="font-medium">
+                                                    Noah Williams
+                                                </div>
+                                                <div className="hidden text-sm text-muted-foreground md:inline">
+                                                    noah@example.com
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                Subscription
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                <Badge
+                                                    className="text-xs"
+                                                    variant="outline"
+                                                >
+                                                    Approved
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+                                                2023-06-25
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                $350.00
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div className="font-medium">
+                                                    Emma Brown
+                                                </div>
+                                                <div className="hidden text-sm text-muted-foreground md:inline">
+                                                    emma@example.com
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                Sale
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                <Badge
+                                                    className="text-xs"
+                                                    variant="outline"
+                                                >
+                                                    Approved
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+                                                2023-06-26
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                $450.00
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div className="font-medium">
+                                                    Liam Johnson
+                                                </div>
+                                                <div className="hidden text-sm text-muted-foreground md:inline">
+                                                    liam@example.com
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                Sale
+                                            </TableCell>
+                                            <TableCell className="hidden xl:table-column">
+                                                <Badge
+                                                    className="text-xs"
+                                                    variant="outline"
+                                                >
+                                                    Approved
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+                                                2023-06-27
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                $550.00
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
+                        <Card x-chunk="dashboard-01-chunk-5">
+                            <CardHeader>
+                                <CardTitle>Recent Sales</CardTitle>
+                            </CardHeader>
+                            <CardContent className="grid gap-8">
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="hidden h-9 w-9 sm:flex">
+                                        <AvatarImage
+                                            src="/avatars/01.png"
+                                            alt="Avatar"
+                                        />
+                                        <AvatarFallback>OM</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid gap-1">
+                                        <p className="text-sm font-medium leading-none">
+                                            Olivia Martin
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            olivia.martin@email.com
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto font-medium">
+                                        +$1,999.00
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="hidden h-9 w-9 sm:flex">
+                                        <AvatarImage
+                                            src="/avatars/02.png"
+                                            alt="Avatar"
+                                        />
+                                        <AvatarFallback>JL</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid gap-1">
+                                        <p className="text-sm font-medium leading-none">
+                                            Jackson Lee
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            jackson.lee@email.com
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto font-medium">
+                                        +$39.00
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="hidden h-9 w-9 sm:flex">
+                                        <AvatarImage
+                                            src="/avatars/03.png"
+                                            alt="Avatar"
+                                        />
+                                        <AvatarFallback>IN</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid gap-1">
+                                        <p className="text-sm font-medium leading-none">
+                                            Isabella Nguyen
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            isabella.nguyen@email.com
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto font-medium">
+                                        +$299.00
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="hidden h-9 w-9 sm:flex">
+                                        <AvatarImage
+                                            src="/avatars/04.png"
+                                            alt="Avatar"
+                                        />
+                                        <AvatarFallback>WK</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid gap-1">
+                                        <p className="text-sm font-medium leading-none">
+                                            William Kim
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            will@email.com
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto font-medium">
+                                        +$99.00
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="hidden h-9 w-9 sm:flex">
+                                        <AvatarImage
+                                            src="/avatars/05.png"
+                                            alt="Avatar"
+                                        />
+                                        <AvatarFallback>SD</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid gap-1">
+                                        <p className="text-sm font-medium leading-none">
+                                            Sofia Davis
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            sofia.davis@email.com
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto font-medium">
+                                        +$39.00
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card> */}
                     </TabsContent>
                 </Tabs>
             </div>

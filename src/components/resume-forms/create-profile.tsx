@@ -1,10 +1,12 @@
 "use client"
+import Profile from "@/components/resume-forms/profile"
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -33,14 +35,23 @@ import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
+import { profileAtom } from "@/utils/atoms"
 import { delay } from "@/utils/helpers"
-import { BodyPayload, FormItemText, ResumeSubmission } from "@/utils/types"
+import {
+    BodyPayload,
+    FormItemText,
+    ResumeSubmission,
+} from "../../../types/types"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useAtom } from "jotai"
 import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
+import createClerkSupabaseClient from "@/utils/supabase/client"
+import { useSession } from "@clerk/nextjs"
+import { vectorize } from "@/functions/embedding"
 
 const educationSchema = z.object({
     school: z.string({ required_error: "Please enter a school" }),
@@ -314,8 +325,26 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     const [previousStep, setPreviousStep] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
     const [data, setData] = useState({})
+    const [profile, setProfile] = useAtom(profileAtom)
     const delta = currentStep - previousStep
     const { toast } = useToast()
+    const pathname = usePathname()
+    const { session } = useSession()
+    const supabase = createClerkSupabaseClient(session)
+
+    useEffect(() => {
+        fetch("/api/profile", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setProfile(data)
+                setLoading(false)
+            })
+    }, [setProfile])
 
     const defaultValues = {
         numberSlider: 1,
@@ -435,15 +464,32 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             })
             const data: ResumeSubmission = await response.json()
             // const template = { html: htmlTemplate, data: data }
-            const payload: BodyPayload = {
-                output: "pdf",
-                html: htmlTemplate,
-                data: data,
-                engine: "handlebars",
+            if (pathname.includes("resume-builder")) {
+                const payload: BodyPayload = {
+                    output: "pdf",
+                    html: htmlTemplate,
+                    data: data,
+                    engine: "handlebars",
+                }
+                await download(payload)
+                return data
+            } else {
+                const user = session?.user
+
+                if (user && user.id && user.primaryEmailAddress?.emailAddress) {
+                    const userID = user.id
+                    // Create a new candidate
+                    const embedding = await vectorize(JSON.stringify(data))
+                    const { error } = await supabase.from("candidates").insert({
+                        first_name: data.firstName,
+                        last_name: data.lastName,
+                        resume_submission: data,
+                        email: user.primaryEmailAddress.emailAddress,
+                        profile_id: userID,
+                        embedding: embedding,
+                    })
+                }
             }
-            console.log(payload)
-            await download(payload)
-            return data
         } catch (error) {
             console.log(error)
             setDownloadState(false)
@@ -556,459 +602,774 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
 
     return (
         <>
-            <div className="flex items-center justify-between">
-                <Heading title={title} description={description} />
-                {initialData && (
-                    <Button
-                        disabled={loading}
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => setOpen(true)}
+            <div className="flex flex-col space-y-3 p-4">
+                <div className="flex items-center justify-between">
+                    <Heading title={title} description={description} />
+                    {initialData && (
+                        <Button
+                            disabled={loading}
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => setOpen(true)}
+                        >
+                            <Trash className="h-4 w-4" />
+                        </Button>
+                    )}
+                </div>
+                <Separator />
+                <div>
+                    <ul className="gap-4 grid md:flex">
+                        {steps.map((step, index) => (
+                            <li key={step.name} className="md:flex-1">
+                                {currentStep > index ? (
+                                    <div className="group flex w-full flex-col border-l-4 border-laserBlue py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
+                                        <span className="text-sm font-medium text-laserBlue transition-colors ">
+                                            {step.id}
+                                        </span>
+                                        <span className="text-sm font-medium">
+                                            {step.name}
+                                        </span>
+                                    </div>
+                                ) : currentStep === index ? (
+                                    <div
+                                        className="flex w-full flex-col border-l-4 border-laserBlue py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
+                                        aria-current="step"
+                                    >
+                                        <span className="text-sm font-medium text-laserBlue">
+                                            {step.id}
+                                        </span>
+                                        <span className="text-sm font-medium">
+                                            {step.name}
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <div className="group flex h-full w-full flex-col border-l-4 border-gray-200 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
+                                        <span className="text-sm font-medium text-gray-500 transition-colors">
+                                            {step.id}
+                                        </span>
+                                        <span className="text-sm font-medium">
+                                            {step.name}
+                                        </span>
+                                    </div>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <Separator />
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="w-full space-y-8"
                     >
-                        <Trash className="h-4 w-4" />
-                    </Button>
-                )}
-            </div>
-            <Separator />
-            <div>
-                <ul className="gap-4 grid md:flex">
-                    {steps.map((step, index) => (
-                        <li key={step.name} className="md:flex-1">
-                            {currentStep > index ? (
-                                <div className="group flex w-full flex-col border-l-4 border-laserBlue py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
-                                    <span className="text-sm font-medium text-laserBlue transition-colors ">
-                                        {step.id}
-                                    </span>
-                                    <span className="text-sm font-medium">
-                                        {step.name}
-                                    </span>
-                                </div>
-                            ) : currentStep === index ? (
-                                <div
-                                    className="flex w-full flex-col border-l-4 border-laserBlue py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
-                                    aria-current="step"
-                                >
-                                    <span className="text-sm font-medium text-laserBlue">
-                                        {step.id}
-                                    </span>
-                                    <span className="text-sm font-medium">
-                                        {step.name}
-                                    </span>
-                                </div>
-                            ) : (
-                                <div className="group flex h-full w-full flex-col border-l-4 border-gray-200 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
-                                    <span className="text-sm font-medium text-gray-500 transition-colors">
-                                        {step.id}
-                                    </span>
-                                    <span className="text-sm font-medium">
-                                        {step.name}
-                                    </span>
-                                </div>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <Separator />
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="w-full space-y-8"
-                >
-                    <MultiStepLoader
-                        loadingStates={loadingStates}
-                        loading={downloadState}
-                        duration={2000}
-                    />
+                        <MultiStepLoader
+                            loadingStates={loadingStates}
+                            loading={downloadState}
+                            duration={2000}
+                        />
 
-                    <div
-                        className={cn(
-                            currentStep === 1 ||
-                                currentStep === 2 ||
-                                currentStep === 3 ||
-                                currentStep === 4
-                                ? "w-full md:inline-block"
-                                : "gap-8 md:grid md:grid-cols-3"
-                        )}
-                    >
-                        {currentStep === 0 && (
-                            <>
-                                <FormField
-                                    control={form.control}
-                                    name="firstName"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                {s1Content.name.titleOne}
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={loading}
-                                                    placeholder={
-                                                        s1Content.name
-                                                            .placeholderOne
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="lastName"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                {s1Content.name.titleTwo}
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={loading}
-                                                    placeholder={
-                                                        s1Content.name
-                                                            .placeholderTwo
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="age"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                {s1Content.age.title}
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={loading}
-                                                    placeholder={
-                                                        s1Content.age
-                                                            .placeholder
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="email"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                {s1Content.email.title}
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={loading}
-                                                    placeholder={
-                                                        s1Content.email
-                                                            .placeholder
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="phoneNumber"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                {s1Content.phoneNumber.title}
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    type="number"
-                                                    placeholder={
+                        <div
+                            className={cn(
+                                currentStep === 1 ||
+                                    currentStep === 2 ||
+                                    currentStep === 3 ||
+                                    currentStep === 4
+                                    ? "w-full md:inline-block"
+                                    : "gap-8 md:grid md:grid-cols-3"
+                            )}
+                        >
+                            {currentStep === 0 && (
+                                <>
+                                    <FormField
+                                        control={form.control}
+                                        name="firstName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    {s1Content.name.titleOne}
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={loading}
+                                                        placeholder={
+                                                            s1Content.name
+                                                                .placeholderOne
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="lastName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    {s1Content.name.titleTwo}
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={loading}
+                                                        placeholder={
+                                                            s1Content.name
+                                                                .placeholderTwo
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="age"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    {s1Content.age.title}
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={loading}
+                                                        placeholder={
+                                                            s1Content.age
+                                                                .placeholder
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    {s1Content.email.title}
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={loading}
+                                                        placeholder={
+                                                            s1Content.email
+                                                                .placeholder
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="phoneNumber"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    {
                                                         s1Content.phoneNumber
-                                                            .placeholder
+                                                            .title
                                                     }
-                                                    disabled={loading}
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="numberSlider"
-                                    render={({
-                                        field: { value, onChange },
-                                    }) => (
-                                        <FormItem className="flex-col items-center h-full justify-end p-3">
-                                            <FormLabel className="text-black">
-                                                {s1Content.proficiency.title}
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Slider
-                                                    className=""
-                                                    max={5}
-                                                    step={1}
-                                                    defaultValue={[value]}
-                                                    onValueChange={(vals) => {
-                                                        onChange(vals[0])
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormDescription className="text-black"></FormDescription>
-                                            <div className="flex justify-between flex-row">
-                                                <p className="text-black text-sm">
-                                                    {s1Content.proficiency.one}{" "}
-                                                </p>
-                                                <p className="text-black text-sm">
-                                                    {s1Content.proficiency.five}{" "}
-                                                </p>
-                                            </div>
-                                            {/* <p className="text-black text-sm">
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder={
+                                                            s1Content
+                                                                .phoneNumber
+                                                                .placeholder
+                                                        }
+                                                        disabled={loading}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="numberSlider"
+                                        render={({
+                                            field: { value, onChange },
+                                        }) => (
+                                            <FormItem className="flex-col items-center h-full justify-end p-3">
+                                                <FormLabel className="text-black">
+                                                    {
+                                                        s1Content.proficiency
+                                                            .title
+                                                    }
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Slider
+                                                        className=""
+                                                        max={5}
+                                                        step={1}
+                                                        defaultValue={[value]}
+                                                        onValueChange={(
+                                                            vals
+                                                        ) => {
+                                                            onChange(vals[0])
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription className="text-black"></FormDescription>
+                                                <div className="flex justify-between flex-row">
+                                                    <p className="text-black text-sm">
+                                                        {
+                                                            s1Content
+                                                                .proficiency.one
+                                                        }{" "}
+                                                    </p>
+                                                    <p className="text-black text-sm">
+                                                        {
+                                                            s1Content
+                                                                .proficiency
+                                                                .five
+                                                        }{" "}
+                                                    </p>
+                                                </div>
+                                                {/* <p className="text-black text-sm">
                                                 {s1Content.proficiency.subtitle}
                                             </p> */}
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </>
-                        )}
-                        {currentStep === 1 && (
-                            <>
-                                {educationsFields?.map((field, index) => (
-                                    <Accordion
-                                        type="single"
-                                        collapsible
-                                        defaultValue="item-1"
-                                        key={field.id}
-                                    >
-                                        <AccordionItem value="item-1">
-                                            <AccordionTrigger
-                                                className={cn(
-                                                    "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
-                                                    errors?.experiences?.[
-                                                        index
-                                                    ] && "text-red-700"
-                                                )}
-                                            >
-                                                {`Education ${index + 1}`}
-                                                {educationsFields.length >
-                                                    1 && (
-                                                    <Button
-                                                        variant="outline"
-                                                        size="icon"
-                                                        className="absolute right-8"
-                                                        onClick={() =>
-                                                            educationsRemove(
-                                                                index
-                                                            )
-                                                        }
-                                                    >
-                                                        <Trash2Icon className="h-4 w-4 " />
-                                                    </Button>
-                                                )}
-                                                {errors?.experiences?.[
-                                                    index
-                                                ] && (
-                                                    <span className="alert absolute right-8">
-                                                        <AlertTriangleIcon className="h-4 w-4   text-red-700" />
-                                                    </span>
-                                                )}
-                                            </AccordionTrigger>
-                                            <AccordionContent>
-                                                <div
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </>
+                            )}
+                            {currentStep === 1 && (
+                                <>
+                                    {educationsFields?.map((field, index) => (
+                                        <Accordion
+                                            type="single"
+                                            collapsible
+                                            defaultValue="item-1"
+                                            key={field.id}
+                                        >
+                                            <AccordionItem value="item-1">
+                                                <AccordionTrigger
                                                     className={cn(
-                                                        "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
+                                                        "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
+                                                        errors?.experiences?.[
+                                                            index
+                                                        ] && "text-red-700"
                                                     )}
                                                 >
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`educations.${index}.school`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s2Content
-                                                                            .education
-                                                                            .school
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
+                                                    {`Education ${index + 1}`}
+                                                    {educationsFields.length >
+                                                        1 && (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="absolute right-8"
+                                                            onClick={() =>
+                                                                educationsRemove(
+                                                                    index
+                                                                )
+                                                            }
+                                                        >
+                                                            <Trash2Icon className="h-4 w-4 " />
+                                                        </Button>
+                                                    )}
+                                                    {errors?.experiences?.[
+                                                        index
+                                                    ] && (
+                                                        <span className="alert absolute right-8">
+                                                            <AlertTriangleIcon className="h-4 w-4   text-red-700" />
+                                                        </span>
+                                                    )}
+                                                </AccordionTrigger>
+                                                <AccordionContent>
+                                                    <div
+                                                        className={cn(
+                                                            "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
                                                         )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`educations.${index}.city`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s2Content
-                                                                            .education
-                                                                            .city
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        disabled={
-                                                                            loading
+                                                    >
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`educations.${index}.school`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s2Content
+                                                                                .education
+                                                                                .school
+                                                                                .title
                                                                         }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`educations.${index}.country`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s2Content
-                                                                            .education
-                                                                            .country
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        disabled={
-                                                                            loading
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="text"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`educations.${index}.city`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s2Content
+                                                                                .education
+                                                                                .city
+                                                                                .title
                                                                         }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="text"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`educations.${index}.country`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s2Content
+                                                                                .education
+                                                                                .country
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="text"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
 
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`educations.${index}.endDate`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s2Content
-                                                                            .education
-                                                                            .endYear
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`educations.${index}.endDate`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s2Content
+                                                                                .education
+                                                                                .endYear
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="date"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`educations.${index}.degree`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel className="text-black">
+                                                                        {
+                                                                            s2Content
+                                                                                .education
+                                                                                .degree
+                                                                                .title
+                                                                        }{" "}
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Select
+                                                                            onValueChange={
+                                                                                field.onChange
+                                                                            }
+                                                                            defaultValue={
+                                                                                field.value
+                                                                            }
+                                                                        >
+                                                                            <SelectTrigger className="w-full">
+                                                                                <SelectValue
+                                                                                    placeholder={
+                                                                                        s2Content
+                                                                                            .education
+                                                                                            .degree
+                                                                                            .placeholder
+                                                                                    }
+                                                                                />
+                                                                            </SelectTrigger>
+                                                                            <SelectContent>
+                                                                                <SelectGroup>
+                                                                                    <SelectLabel></SelectLabel>
+                                                                                    <SelectItem value="None">
+                                                                                        {
+                                                                                            s2Content
+                                                                                                .placeholders
+                                                                                                .none
+                                                                                        }
+                                                                                    </SelectItem>
+                                                                                    <SelectItem value="High School Diploma">
+                                                                                        {
+                                                                                            s2Content
+                                                                                                .placeholders
+                                                                                                .diploma
+                                                                                        }
+                                                                                    </SelectItem>
+                                                                                    <SelectItem value="GED">
+                                                                                        {
+                                                                                            s2Content
+                                                                                                .placeholders
+                                                                                                .ged
+                                                                                        }
+                                                                                    </SelectItem>
+                                                                                    <SelectItem value="Bachelor's Degree">
+                                                                                        {
+                                                                                            s2Content
+                                                                                                .placeholders
+                                                                                                .bachelors
+                                                                                        }
+                                                                                    </SelectItem>
+                                                                                </SelectGroup>
+                                                                            </SelectContent>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                                    <FormDescription className="text-white">
+                                                                        {
+                                                                            s2Content
+                                                                                .education
+                                                                                .degree
+                                                                                .subtitle
+                                                                        }
+                                                                    </FormDescription>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        </Accordion>
+                                    ))}
+
+                                    <div className="mt-4 flex justify-center">
+                                        <Button
+                                            type="button"
+                                            className="flex justify-center bg-laserBlue"
+                                            size={"lg"}
+                                            onClick={() =>
+                                                educationsAppend({
+                                                    school: "",
+                                                    degree: "",
+                                                    endDate: "",
+                                                    country: "",
+                                                    city: "",
+                                                })
+                                            }
+                                        >
+                                            {s2Content.add}
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                            {currentStep === 2 && (
+                                <>
+                                    {experiencesFields?.map((field, index) => (
+                                        <Accordion
+                                            type="single"
+                                            collapsible
+                                            defaultValue="item-1"
+                                            key={field.id}
+                                        >
+                                            <AccordionItem value="item-1">
+                                                <AccordionTrigger
+                                                    className={cn(
+                                                        "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
+                                                        errors?.experiences?.[
+                                                            index
+                                                        ] && "text-red-700"
+                                                    )}
+                                                >
+                                                    {`Work Experience ${index + 1}`}
+                                                    {experiencesFields.length >
+                                                        1 && (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="absolute right-8"
+                                                            onClick={() =>
+                                                                experiencesRemove(
+                                                                    index
+                                                                )
+                                                            }
+                                                        >
+                                                            <Trash2Icon className="h-4 w-4 " />
+                                                        </Button>
+                                                    )}
+                                                    {errors?.experiences?.[
+                                                        index
+                                                    ] && (
+                                                        <span className="alert absolute right-8">
+                                                            <AlertTriangleIcon className="h-4 w-4   text-red-700" />
+                                                        </span>
+                                                    )}
+                                                </AccordionTrigger>
+                                                <AccordionContent>
+                                                    <div
+                                                        className={cn(
+                                                            "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
+                                                        )}
+                                                    >
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`experiences.${index}.jobTitle`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s3Content
+                                                                                .jobTitle
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="text"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`experiences.${index}.employer`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s3Content
+                                                                                .employer
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="text"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`experiences.${index}.startDate`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s3Content
+                                                                                .startYear
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="date"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`experiences.${index}.endDate`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s3Content
+                                                                                .endYear
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="date"
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`experiences.${index}.country`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s3Content
+                                                                                .country
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
                                                                     <Input
-                                                                        type="date"
+                                                                        type="text"
                                                                         disabled={
                                                                             loading
                                                                         }
                                                                         {...field}
                                                                     />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`experiences.${index}.city`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s3Content
+                                                                                .city
+                                                                                .title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <Input
+                                                                        type="text"
+                                                                        disabled={
+                                                                            loading
+                                                                        }
+                                                                        {...field}
+                                                                    />
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
                                                     <FormField
                                                         control={form.control}
-                                                        name={`educations.${index}.degree`}
+                                                        name={`experiences.${index}.duties`}
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel className="text-black">
                                                                     {
-                                                                        s2Content
-                                                                            .education
-                                                                            .degree
+                                                                        s3Content
+                                                                            .duties
                                                                             .title
-                                                                    }{" "}
+                                                                    }
                                                                 </FormLabel>
                                                                 <FormControl>
-                                                                    <Select
-                                                                        onValueChange={
-                                                                            field.onChange
+                                                                    <Textarea
+                                                                        placeholder={
+                                                                            s3Content
+                                                                                .duties
+                                                                                .placeholder
                                                                         }
-                                                                        defaultValue={
-                                                                            field.value
-                                                                        }
-                                                                    >
-                                                                        <SelectTrigger className="w-full">
-                                                                            <SelectValue
-                                                                                placeholder={
-                                                                                    s2Content
-                                                                                        .education
-                                                                                        .degree
-                                                                                        .placeholder
-                                                                                }
-                                                                            />
-                                                                        </SelectTrigger>
-                                                                        <SelectContent>
-                                                                            <SelectGroup>
-                                                                                <SelectLabel></SelectLabel>
-                                                                                <SelectItem value="None">
-                                                                                    {
-                                                                                        s2Content
-                                                                                            .placeholders
-                                                                                            .none
-                                                                                    }
-                                                                                </SelectItem>
-                                                                                <SelectItem value="High School Diploma">
-                                                                                    {
-                                                                                        s2Content
-                                                                                            .placeholders
-                                                                                            .diploma
-                                                                                    }
-                                                                                </SelectItem>
-                                                                                <SelectItem value="GED">
-                                                                                    {
-                                                                                        s2Content
-                                                                                            .placeholders
-                                                                                            .ged
-                                                                                    }
-                                                                                </SelectItem>
-                                                                                <SelectItem value="Bachelor's Degree">
-                                                                                    {
-                                                                                        s2Content
-                                                                                            .placeholders
-                                                                                            .bachelors
-                                                                                    }
-                                                                                </SelectItem>
-                                                                            </SelectGroup>
-                                                                        </SelectContent>
-                                                                    </Select>
+                                                                        {...field}
+                                                                    />
                                                                 </FormControl>
-                                                                <FormDescription className="text-white">
+                                                                <FormDescription className="text-black">
                                                                     {
-                                                                        s2Content
-                                                                            .education
-                                                                            .degree
+                                                                        s3Content
+                                                                            .duties
                                                                             .subtitle
                                                                     }
                                                                 </FormDescription>
@@ -1016,307 +1377,67 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                             </FormItem>
                                                         )}
                                                     />
-                                                </div>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                ))}
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        </Accordion>
+                                    ))}
 
-                                <div className="mt-4 flex justify-center">
-                                    <Button
-                                        type="button"
-                                        className="flex justify-center bg-laserBlue"
-                                        size={"lg"}
-                                        onClick={() =>
-                                            educationsAppend({
-                                                school: "",
-                                                degree: "",
-                                                endDate: "",
-                                                country: "",
-                                                city: "",
-                                            })
-                                        }
-                                    >
-                                        {s2Content.add}
-                                    </Button>
-                                </div>
-                            </>
-                        )}
-                        {currentStep === 2 && (
-                            <>
-                                {experiencesFields?.map((field, index) => (
-                                    <Accordion
-                                        type="single"
-                                        collapsible
-                                        defaultValue="item-1"
-                                        key={field.id}
-                                    >
-                                        <AccordionItem value="item-1">
-                                            <AccordionTrigger
-                                                className={cn(
-                                                    "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
-                                                    errors?.experiences?.[
-                                                        index
-                                                    ] && "text-red-700"
-                                                )}
-                                            >
-                                                {`Work Experience ${index + 1}`}
-                                                {experiencesFields.length >
-                                                    1 && (
-                                                    <Button
-                                                        variant="outline"
-                                                        size="icon"
-                                                        className="absolute right-8"
-                                                        onClick={() =>
-                                                            experiencesRemove(
-                                                                index
-                                                            )
-                                                        }
-                                                    >
-                                                        <Trash2Icon className="h-4 w-4 " />
-                                                    </Button>
-                                                )}
-                                                {errors?.experiences?.[
-                                                    index
-                                                ] && (
-                                                    <span className="alert absolute right-8">
-                                                        <AlertTriangleIcon className="h-4 w-4   text-red-700" />
-                                                    </span>
-                                                )}
-                                            </AccordionTrigger>
-                                            <AccordionContent>
-                                                <div
+                                    <div className="mt-4 flex justify-center">
+                                        <Button
+                                            type="button"
+                                            className="flex justify-center bg-laserBlue"
+                                            size={"lg"}
+                                            onClick={() =>
+                                                experiencesAppend({
+                                                    jobTitle: "",
+                                                    employer: "",
+                                                    startDate: "",
+                                                    endDate: "",
+                                                    country: "",
+                                                    city: "",
+                                                    duties: "",
+                                                })
+                                            }
+                                        >
+                                            {s3Content.add}
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                            {currentStep === 3 && (
+                                <>
+                                    {skillsFields?.map((field, index) => (
+                                        <Accordion
+                                            type="single"
+                                            collapsible
+                                            defaultValue="item-1"
+                                            key={field.id}
+                                        >
+                                            <AccordionItem value="item-1">
+                                                <AccordionTrigger
                                                     className={cn(
-                                                        "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
+                                                        "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
+                                                        errors?.experiences?.[
+                                                            index
+                                                        ] && "text-red-700"
                                                     )}
                                                 >
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`experiences.${index}.jobTitle`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s3Content
-                                                                            .jobTitle
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`experiences.${index}.employer`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s3Content
-                                                                            .employer
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`experiences.${index}.startDate`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s3Content
-                                                                            .startYear
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="date"
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`experiences.${index}.endDate`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s3Content
-                                                                            .endYear
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="date"
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`experiences.${index}.country`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s3Content
-                                                                            .country
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <Input
-                                                                    type="text"
-                                                                    disabled={
-                                                                        loading
-                                                                    }
-                                                                    {...field}
-                                                                />
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`experiences.${index}.city`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s3Content
-                                                                            .city
-                                                                            .title
-                                                                    }
-                                                                </FormLabel>
-                                                                <Input
-                                                                    type="text"
-                                                                    disabled={
-                                                                        loading
-                                                                    }
-                                                                    {...field}
-                                                                />
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                </div>
-                                                <FormField
-                                                    control={form.control}
-                                                    name={`experiences.${index}.duties`}
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel className="text-black">
-                                                                {
-                                                                    s3Content
-                                                                        .duties
-                                                                        .title
-                                                                }
-                                                            </FormLabel>
-                                                            <FormControl>
-                                                                <Textarea
-                                                                    placeholder={
-                                                                        s3Content
-                                                                            .duties
-                                                                            .placeholder
-                                                                    }
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                            <FormDescription className="text-black">
-                                                                {
-                                                                    s3Content
-                                                                        .duties
-                                                                        .subtitle
-                                                                }
-                                                            </FormDescription>
-                                                            <FormMessage />
-                                                        </FormItem>
+                                                    {`${s4Content.heading} ${index + 1}`}
+                                                    {skillsFields.length >
+                                                        1 && (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="absolute right-8"
+                                                            onClick={() =>
+                                                                skillsRemove(
+                                                                    index
+                                                                )
+                                                            }
+                                                        >
+                                                            <Trash2Icon className="h-4 w-4 " />
+                                                        </Button>
                                                     )}
-                                                />
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                ))}
-
-                                <div className="mt-4 flex justify-center">
-                                    <Button
-                                        type="button"
-                                        className="flex justify-center bg-laserBlue"
-                                        size={"lg"}
-                                        onClick={() =>
-                                            experiencesAppend({
-                                                jobTitle: "",
-                                                employer: "",
-                                                startDate: "",
-                                                endDate: "",
-                                                country: "",
-                                                city: "",
-                                                duties: "",
-                                            })
-                                        }
-                                    >
-                                        {s3Content.add}
-                                    </Button>
-                                </div>
-                            </>
-                        )}
-                        {currentStep === 3 && (
-                            <>
-                                {skillsFields?.map((field, index) => (
-                                    <Accordion
-                                        type="single"
-                                        collapsible
-                                        defaultValue="item-1"
-                                        key={field.id}
-                                    >
-                                        <AccordionItem value="item-1">
-                                            <AccordionTrigger
-                                                className={cn(
-                                                    "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
-                                                    errors?.experiences?.[
-                                                        index
-                                                    ] && "text-red-700"
-                                                )}
-                                            >
-                                                {`${s4Content.heading} ${index + 1}`}
-                                                {skillsFields.length > 1 && (
                                                     <Button
                                                         variant="outline"
                                                         size="icon"
@@ -1327,567 +1448,569 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                     >
                                                         <Trash2Icon className="h-4 w-4 " />
                                                     </Button>
-                                                )}
-                                                <Button
-                                                    variant="outline"
-                                                    size="icon"
-                                                    className="absolute right-8"
-                                                    onClick={() =>
-                                                        skillsRemove(index)
-                                                    }
-                                                >
-                                                    <Trash2Icon className="h-4 w-4 " />
-                                                </Button>
-                                                {errors?.experiences?.[
-                                                    index
-                                                ] && (
-                                                    <span className="alert absolute right-8">
-                                                        <AlertTriangleIcon className="h-4 w-4   text-red-700" />
-                                                    </span>
-                                                )}
-                                            </AccordionTrigger>
-                                            <AccordionContent>
-                                                <div
-                                                    className={cn(
-                                                        "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
-                                                    )}
-                                                >
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`skills.${index}.title`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s4Content.title
-                                                                    }
-                                                                </FormLabel>
-                                                                <Select
-                                                                    disabled={
-                                                                        loading
-                                                                    }
-                                                                    onValueChange={
-                                                                        field.onChange
-                                                                    }
-                                                                    value={
-                                                                        field.value
-                                                                    }
-                                                                    defaultValue={
-                                                                        field.value
-                                                                    }
-                                                                >
-                                                                    <FormControl>
-                                                                        <SelectTrigger>
-                                                                            <SelectValue
-                                                                                defaultValue={
-                                                                                    field.value
-                                                                                }
-                                                                                placeholder={
-                                                                                    s4Content
-                                                                                        .skills
-                                                                                        .placeholder
-                                                                                }
-                                                                            />
-                                                                        </SelectTrigger>
-                                                                    </FormControl>
-                                                                    <SelectContent>
-                                                                        <SelectItem value="Driving">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .driving
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Vehicle Maintenance">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .vehicleMaintenance
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Construction">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .construction
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Plumbing">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .plumbing
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Welding">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .welding
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Equipment Operation">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .equipmentOperation
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Heavy Machinery Operation">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .heavyMachineryOperation
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Landscaping">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .landscaping
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Recycling">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .recycling
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Fishing">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .fishing
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Agricultural Work">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .agriculturalWork
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Mining">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .mining
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Manufacturing">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .manufacturing
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Mechanical Skills">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .mechanicalSkills
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Problem-Solving Skills">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .problemSolvingSkills
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Technical Skills">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .technicalSkills
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Physical Strength and Endurance">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .physicalStrengthAndEndurance
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Safety Protocols Adherence">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .safetyProtocolsAdherence
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Teamwork and Collaboration">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .teamworkAndCollaboration
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Attention to Detail">
-                                                                            {
-                                                                                s4Content
-                                                                                    .placeholders
-                                                                                    .attentionToDetail
-                                                                            }
-                                                                        </SelectItem>
-                                                                    </SelectContent>
-                                                                </Select>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                </div>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                ))}
-
-                                <div className="mt-4 flex justify-center">
-                                    <Button
-                                        type="button"
-                                        className="flex justify-center bg-laserBlue"
-                                        size={"lg"}
-                                        onClick={() =>
-                                            skillsAppend({
-                                                title: "",
-                                            })
-                                        }
-                                    >
-                                        {s4Content.add}
-                                    </Button>
-                                </div>
-                            </>
-                        )}
-                        {currentStep === 4 && (
-                            <>
-                                {certificatesFields?.map((field, index) => (
-                                    <Accordion
-                                        type="single"
-                                        collapsible
-                                        defaultValue="item-1"
-                                        key={field.id}
-                                    >
-                                        <AccordionItem value="item-1">
-                                            <AccordionTrigger
-                                                className={cn(
-                                                    "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
-                                                    errors?.experiences?.[
+                                                    {errors?.experiences?.[
                                                         index
-                                                    ] && "text-red-700"
-                                                )}
-                                            >
-                                                {`${s5Content.heading} ${index + 1}`}
-
-                                                <Button
-                                                    variant="outline"
-                                                    size="icon"
-                                                    className="absolute right-8"
-                                                    onClick={() =>
-                                                        skillsRemove(index)
-                                                    }
-                                                >
-                                                    <Trash2Icon className="h-4 w-4 " />
-                                                </Button>
-
-                                                {errors?.experiences?.[
-                                                    index
-                                                ] && (
-                                                    <span className="alert absolute right-8">
-                                                        <AlertTriangleIcon className="h-4 w-4   text-red-700" />
-                                                    </span>
-                                                )}
-                                            </AccordionTrigger>
-                                            <AccordionContent>
-                                                <div
-                                                    className={cn(
-                                                        "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
+                                                    ] && (
+                                                        <span className="alert absolute right-8">
+                                                            <AlertTriangleIcon className="h-4 w-4   text-red-700" />
+                                                        </span>
                                                     )}
-                                                >
-                                                    <FormField
-                                                        control={form.control}
-                                                        name={`certificates.${index}.title`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>
-                                                                    {
-                                                                        s5Content.title
-                                                                    }
-                                                                </FormLabel>
-                                                                <Select
-                                                                    disabled={
-                                                                        loading
-                                                                    }
-                                                                    onValueChange={
-                                                                        field.onChange
-                                                                    }
-                                                                    value={
-                                                                        field.value
-                                                                    }
-                                                                    defaultValue={
-                                                                        field.value
-                                                                    }
-                                                                >
-                                                                    <FormControl>
-                                                                        <SelectTrigger>
-                                                                            <SelectValue
-                                                                                defaultValue={
-                                                                                    field.value
-                                                                                }
-                                                                                placeholder={
-                                                                                    s5Content
-                                                                                        .certificates
-                                                                                        .placeholder
-                                                                                }
-                                                                            />
-                                                                        </SelectTrigger>
-                                                                    </FormControl>
-                                                                    <SelectContent>
-                                                                        <SelectItem value="CDL (Commercial Driver's License)">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .cdlCommercialDriversLicense
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="ASE Certification (Automotive Service Excellence)">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .aseCertificationAutomotiveServiceExcellence
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="OSHA Certification (Occupational Safety and Health Administration)">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .oshaCertificationOccupationalSafetyAndHealthAdministration
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Welding Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .weldingCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Forklift Operator Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .forkliftOperatorCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Heavy Equipment Operator Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .heavyEquipmentOperatorCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="CPR Certification (Cardiopulmonary Resuscitation)">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .cprCertificationCardiopulmonaryResuscitation
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="First Aid Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .firstAidCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Confined Space Entry Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .confinedSpaceEntryCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Scaffold Safety Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .scaffoldSafetyCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Hazardous Materials Handling Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .hazardousMaterialsHandlingCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Fishing Vessel Safety Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .fishingVesselSafetyCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Agricultural Pesticide Applicator Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .agriculturalPesticideApplicatorCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Mining Safety Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .miningSafetyCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Construction Safety Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .constructionSafetyCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Electrical Safety Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .electricalSafetyCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Fire Safety Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .fireSafetyCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Machine Guarding Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .machineGuardingCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                        <SelectItem value="Fall Protection Certification">
-                                                                            {
-                                                                                s5Content
-                                                                                    .placeholders
-                                                                                    .fallProtectionCertification
-                                                                            }
-                                                                        </SelectItem>
-                                                                    </SelectContent>
-                                                                </Select>
-                                                                <FormMessage />
-                                                            </FormItem>
+                                                </AccordionTrigger>
+                                                <AccordionContent>
+                                                    <div
+                                                        className={cn(
+                                                            "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
                                                         )}
-                                                    />
-                                                    <FormField
-                                                        control={form.control}
-                                                        name="authorizationStatus"
-                                                        render={({ field }) => (
-                                                            <FormItem className="flex flex-row items-center justify-center space-x-3 space-y-0 rounded-md border p-4">
-                                                                <FormControl>
-                                                                    <Checkbox
-                                                                        checked={
-                                                                            field.value
-                                                                        }
-                                                                        onCheckedChange={
-                                                                            field.onChange
-                                                                        }
-                                                                        className="data-[state=checked]:bg-laserBlue data-[state=checked]:text-white border"
-                                                                    />
-                                                                </FormControl>
-                                                                <div className="space-y-1 leading-none">
-                                                                    <FormLabel className="text-black">
+                                                    >
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`skills.${index}.title`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
                                                                         {
-                                                                            s5Content.authorization
+                                                                            s4Content.title
                                                                         }
                                                                     </FormLabel>
-                                                                </div>
-                                                            </FormItem>
+                                                                    <Select
+                                                                        disabled={
+                                                                            loading
+                                                                        }
+                                                                        onValueChange={
+                                                                            field.onChange
+                                                                        }
+                                                                        value={
+                                                                            field.value
+                                                                        }
+                                                                        defaultValue={
+                                                                            field.value
+                                                                        }
+                                                                    >
+                                                                        <FormControl>
+                                                                            <SelectTrigger>
+                                                                                <SelectValue
+                                                                                    defaultValue={
+                                                                                        field.value
+                                                                                    }
+                                                                                    placeholder={
+                                                                                        s4Content
+                                                                                            .skills
+                                                                                            .placeholder
+                                                                                    }
+                                                                                />
+                                                                            </SelectTrigger>
+                                                                        </FormControl>
+                                                                        <SelectContent>
+                                                                            <SelectItem value="Driving">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .driving
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Vehicle Maintenance">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .vehicleMaintenance
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Construction">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .construction
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Plumbing">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .plumbing
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Welding">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .welding
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Equipment Operation">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .equipmentOperation
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Heavy Machinery Operation">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .heavyMachineryOperation
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Landscaping">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .landscaping
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Recycling">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .recycling
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Fishing">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .fishing
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Agricultural Work">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .agriculturalWork
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Mining">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .mining
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Manufacturing">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .manufacturing
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Mechanical Skills">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .mechanicalSkills
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Problem-Solving Skills">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .problemSolvingSkills
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Technical Skills">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .technicalSkills
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Physical Strength and Endurance">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .physicalStrengthAndEndurance
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Safety Protocols Adherence">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .safetyProtocolsAdherence
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Teamwork and Collaboration">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .teamworkAndCollaboration
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Attention to Detail">
+                                                                                {
+                                                                                    s4Content
+                                                                                        .placeholders
+                                                                                        .attentionToDetail
+                                                                                }
+                                                                            </SelectItem>
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        </Accordion>
+                                    ))}
+
+                                    <div className="mt-4 flex justify-center">
+                                        <Button
+                                            type="button"
+                                            className="flex justify-center bg-laserBlue"
+                                            size={"lg"}
+                                            onClick={() =>
+                                                skillsAppend({
+                                                    title: "",
+                                                })
+                                            }
+                                        >
+                                            {s4Content.add}
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                            {currentStep === 4 && (
+                                <>
+                                    {certificatesFields?.map((field, index) => (
+                                        <Accordion
+                                            type="single"
+                                            collapsible
+                                            defaultValue="item-1"
+                                            key={field.id}
+                                        >
+                                            <AccordionItem value="item-1">
+                                                <AccordionTrigger
+                                                    className={cn(
+                                                        "relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden",
+                                                        errors?.experiences?.[
+                                                            index
+                                                        ] && "text-red-700"
+                                                    )}
+                                                >
+                                                    {`${s5Content.heading} ${index + 1}`}
+
+                                                    <Button
+                                                        variant="outline"
+                                                        size="icon"
+                                                        className="absolute right-8"
+                                                        onClick={() =>
+                                                            skillsRemove(index)
+                                                        }
+                                                    >
+                                                        <Trash2Icon className="h-4 w-4 " />
+                                                    </Button>
+
+                                                    {errors?.experiences?.[
+                                                        index
+                                                    ] && (
+                                                        <span className="alert absolute right-8">
+                                                            <AlertTriangleIcon className="h-4 w-4   text-red-700" />
+                                                        </span>
+                                                    )}
+                                                </AccordionTrigger>
+                                                <AccordionContent>
+                                                    <div
+                                                        className={cn(
+                                                            "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
                                                         )}
-                                                    />
-                                                </div>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                ))}
-                                <div className="mt-4 flex justify-center">
+                                                    >
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name={`certificates.${index}.title`}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>
+                                                                        {
+                                                                            s5Content.title
+                                                                        }
+                                                                    </FormLabel>
+                                                                    <Select
+                                                                        disabled={
+                                                                            loading
+                                                                        }
+                                                                        onValueChange={
+                                                                            field.onChange
+                                                                        }
+                                                                        value={
+                                                                            field.value
+                                                                        }
+                                                                        defaultValue={
+                                                                            field.value
+                                                                        }
+                                                                    >
+                                                                        <FormControl>
+                                                                            <SelectTrigger>
+                                                                                <SelectValue
+                                                                                    defaultValue={
+                                                                                        field.value
+                                                                                    }
+                                                                                    placeholder={
+                                                                                        s5Content
+                                                                                            .certificates
+                                                                                            .placeholder
+                                                                                    }
+                                                                                />
+                                                                            </SelectTrigger>
+                                                                        </FormControl>
+                                                                        <SelectContent>
+                                                                            <SelectItem value="CDL (Commercial Driver's License)">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .cdlCommercialDriversLicense
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="ASE Certification (Automotive Service Excellence)">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .aseCertificationAutomotiveServiceExcellence
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="OSHA Certification (Occupational Safety and Health Administration)">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .oshaCertificationOccupationalSafetyAndHealthAdministration
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Welding Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .weldingCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Forklift Operator Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .forkliftOperatorCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Heavy Equipment Operator Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .heavyEquipmentOperatorCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="CPR Certification (Cardiopulmonary Resuscitation)">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .cprCertificationCardiopulmonaryResuscitation
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="First Aid Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .firstAidCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Confined Space Entry Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .confinedSpaceEntryCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Scaffold Safety Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .scaffoldSafetyCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Hazardous Materials Handling Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .hazardousMaterialsHandlingCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Fishing Vessel Safety Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .fishingVesselSafetyCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Agricultural Pesticide Applicator Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .agriculturalPesticideApplicatorCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Mining Safety Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .miningSafetyCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Construction Safety Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .constructionSafetyCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Electrical Safety Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .electricalSafetyCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Fire Safety Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .fireSafetyCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Machine Guarding Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .machineGuardingCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                            <SelectItem value="Fall Protection Certification">
+                                                                                {
+                                                                                    s5Content
+                                                                                        .placeholders
+                                                                                        .fallProtectionCertification
+                                                                                }
+                                                                            </SelectItem>
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name="authorizationStatus"
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem className="flex flex-row items-center justify-center space-x-3 space-y-0 rounded-md border p-4">
+                                                                    <FormControl>
+                                                                        <Checkbox
+                                                                            checked={
+                                                                                field.value
+                                                                            }
+                                                                            onCheckedChange={
+                                                                                field.onChange
+                                                                            }
+                                                                            className="data-[state=checked]:bg-laserBlue data-[state=checked]:text-white border"
+                                                                        />
+                                                                    </FormControl>
+                                                                    <div className="space-y-1 leading-none">
+                                                                        <FormLabel className="text-black">
+                                                                            {
+                                                                                s5Content.authorization
+                                                                            }
+                                                                        </FormLabel>
+                                                                    </div>
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        </Accordion>
+                                    ))}
+                                    <div className="mt-4 flex justify-center">
+                                        <Button
+                                            type="button"
+                                            className="flex justify-center bg-laserBlue"
+                                            size={"lg"}
+                                            onClick={() =>
+                                                certificatesAppend({
+                                                    title: "",
+                                                })
+                                            }
+                                        >
+                                            {s5Content.add}
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                            {currentStep === 5 && (
+                                <div>
                                     <Button
-                                        type="button"
-                                        className="flex justify-center bg-laserBlue"
-                                        size={"lg"}
-                                        onClick={() =>
-                                            certificatesAppend({
-                                                title: "",
-                                            })
-                                        }
+                                        disabled={loading}
+                                        className="ml-auto bg-laserBlue"
+                                        type="submit"
                                     >
-                                        {s5Content.add}
+                                        {action}
                                     </Button>
                                 </div>
-                            </>
-                        )}
-                        {currentStep === 5 && (
-                            <div>
-                                <Button
-                                    disabled={loading}
-                                    className="ml-auto bg-laserBlue"
-                                    type="submit"
-                                >
-                                    {action}
-                                </Button>
-                            </div>
-                        )}
+                            )}
+                        </div>
+                    </form>
+                </Form>
+                {/* Navigation */}
+                <div className="mt-8 pt-5">
+                    <div className="flex justify-between">
+                        <button
+                            type="button"
+                            onClick={prev}
+                            disabled={currentStep === 0}
+                            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-6 w-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={next}
+                            disabled={currentStep === steps.length - 1}
+                            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-6 w-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                />
+                            </svg>
+                        </button>
                     </div>
-                </form>
-            </Form>
-            {/* Navigation */}
-            <div className="mt-8 pt-5">
-                <div className="flex justify-between">
-                    <button
-                        type="button"
-                        onClick={prev}
-                        disabled={currentStep === 0}
-                        className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-6 w-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15.75 19.5L8.25 12l7.5-7.5"
-                            />
-                        </svg>
-                    </button>
-                    <button
-                        type="button"
-                        onClick={next}
-                        disabled={currentStep === steps.length - 1}
-                        className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-6 w-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                            />
-                        </svg>
-                    </button>
                 </div>
             </div>
         </>

@@ -2,34 +2,40 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { rateLimiter } from "@/lib/rate-limiter"
-import { match } from "@formatjs/intl-localematcher"
-import Negotiator from "negotiator"
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 import createIntlMiddleware from "next-intl/middleware"
-import { createClient } from "@/utils/supabase/server"
 
 const handleI18nRouting = createIntlMiddleware({
     locales: ["en", "es", "uk", "zh-CN", "ar-SA"],
     defaultLocale: "en",
 })
 
-export async function middleware(request: NextRequest) {
-    if (
-        request.nextUrl.pathname.startsWith("/auth") ||
-        request.nextUrl.pathname.startsWith("/api")
-    ) {
-        return
-    }
+const isProtectedRoute = createRouteMatcher("/(.*core.*)")
 
-    const response = handleI18nRouting(request)
+export default clerkMiddleware(async (auth, req) => {
+    if (isProtectedRoute(req)) await auth.protect()
+    if (req.url.includes("api")) return
 
-    const supabase = createClient()
+    return handleI18nRouting(req)
+})
+// export async function middleware(request: NextRequest) {
+//     if (
+//         request.nextUrl.pathname.startsWith("/auth") ||
+//         request.nextUrl.pathname.startsWith("/api")
+//     ) {
+//         return
+//     }
 
-    const user = await supabase.auth.getUser()
-    if (request.nextUrl.pathname.includes("/core") && user.error) {
-        return NextResponse.redirect(new URL("login", request.url))
-    }
-    return response
-}
+//     const response = handleI18nRouting(request)
+
+//     const supabase = createClient()
+
+//     const user = await supabase.auth.getUser()
+//     if (request.nextUrl.pathname.includes("/core") && user.error) {
+//         return NextResponse.redirect(new URL("login", request.url))
+//     }
+//     return response
+// }
 
 // See "Matching Paths" below to learn more
 export const config = {

@@ -1,29 +1,70 @@
 import { Icons } from "@/components/ui/icons"
-import { NavItem, SidebarNavItem } from "@/utils/types"
+import { NavItem, SidebarNavItem } from "../../types/types"
 
-export const navItems: NavItem[] = [
+export const enterpriseNavItems: NavItem[] = [
     {
         title: "Dashboard",
-        href: "/dashboard",
+        href: "/core",
+        icon: "dashboard",
+        label: "Dashboard",
+    },
+
+    {
+        title: "Candidates",
+        href: "/core/candidates",
+        icon: "profile",
+        label: "Candidates",
+    },
+    {
+        title: "Search",
+        href: "/core/search",
+        icon: "search",
+        label: "Find Jobs",
+    },
+    {
+        title: "Placements",
+        href: "/core/placements",
+        icon: "target",
+        label: "Placements",
+    },
+
+    {
+        title: "Help",
+        href: "#",
+        icon: "help",
+        label: "Help",
+    },
+]
+
+export const employerNavItems: NavItem[] = [
+    {
+        title: "Dashboard",
+        href: "/core",
         icon: "dashboard",
         label: "Dashboard",
     },
     {
-        title: "User",
-        href: "/dashboard/user",
-        icon: "user",
-        label: "user",
+        title: "Jobs",
+        href: "/core/jobs",
+        icon: "briefcase",
+        label: "Jobs",
     },
     {
-        title: "Employee",
-        href: "/dashboard/employee",
-        icon: "employee",
-        label: "employee",
+        title: "Matches",
+        href: "/core/placements",
+        icon: "target",
+        label: "Matches",
     },
     {
-        title: "Profile",
-        href: "core/profile",
-        icon: "profile",
-        label: "profile",
+        title: "AI Assistant",
+        href: "/core/moses",
+        icon: "atom",
+        label: "AI Assistant",
+    },
+    {
+        title: "Help",
+        href: "#",
+        icon: "help",
+        label: "Help",
     },
 ]

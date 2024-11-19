@@ -1,13 +1,15 @@
-import { NextResponse } from "next/server"
-import * as deepl from "deepl-node"
-import { Education, Experience, ResumeSubmission } from "@/utils/types"
+import { NextRequest, NextResponse } from "next/server"
+import {
+    Education,
+    Experience,
+    ResumeSubmission,
+} from "../../../../types/types"
 import { translateText } from "@/functions/server"
-import { createClient } from "@/utils/supabase/server"
+import { createBackendSupabaseClient } from "@/utils/supabase/server"
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     const { educations, experiences, ...otherProps }: ResumeSubmission =
         await request.json()
-    console.log(educations, experiences)
 
     // Translate each string property of education objects
     const translatedEducations = await Promise.all(
@@ -47,7 +49,7 @@ export async function POST(request: Request) {
         experiences: translatedExperiences,
     }
 
-    const supabase = createClient()
+    const supabase = await createBackendSupabaseClient()
     const { error } = await supabase.from("resume_submissions").insert({
         age: translatedResume.age,
         firstName: translatedResume.firstName,

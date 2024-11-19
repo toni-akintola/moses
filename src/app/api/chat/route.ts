@@ -6,8 +6,8 @@ import {
 } from "@/lib/openai-stream"
 import { MessageArraySchema } from "@/lib/message"
 
-export async function POST(req: Request) {
-    const { messages } = await req.json()
+export async function POST(request: Request) {
+    const { messages } = await request.json()
 
     const parsedMessages = MessageArraySchema.parse(messages)
 
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
-        max_tokens: 150,
+        max_tokens: 1000,
         stream: true,
         n: 1,
     }

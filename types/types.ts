@@ -30,13 +30,6 @@ export interface Certificate {
     title: string
     // description: string
 }
-
-export interface AdditionalInfo {
-    authorizationStatus: string
-    skills: Skill[]
-    certificates: Certificate[]
-}
-
 export interface ResumeSubmission {
     age: string
     firstName: string
@@ -51,13 +44,59 @@ export interface ResumeSubmission {
     authorizationStatus: string
 }
 
+export interface AdditionalInfo {
+    authorizationStatus: string
+    skills: Skill[]
+    certificates: Certificate[]
+}
+
+export interface Job {
+    id: string
+    jobProviders: {
+        provider: string
+        url: string
+    }
+    url: string
+    location: string
+    salaryRange: string
+    title: string
+    company: string
+    datePosted: string
+    embedding: number[]
+    description: string
+    employmentType: string
+    image: string
+}
+
 export interface Profile {
+    profile_id: string
     user_id: string
     firstName?: string
     lastName?: string
-    avatarURL?: string
+    avatarUrl?: string
     email: string
     firstTimeUser: boolean
+    accountType?: string
+    resumeSubmission?: ResumeSubmission
+}
+
+export interface Candidate {
+    id: string
+    profile_id: string
+    first_name: string
+    last_name: string
+    email: string
+    resume_submission?: ResumeSubmission
+    embedding: number[]
+}
+
+export interface Match {
+    id: string
+    profile_id: string
+    job_id: string
+    employer_id: string
+    candidate_id: string
+    rating: number
 }
 
 export type FormItemText = {
@@ -124,3 +163,13 @@ export interface FooterItem {
 export type MainNavItem = NavItemWithOptionalChildren
 
 export type SidebarNavItem = NavItemWithChildren
+
+export interface JobEmbedding {
+    id: string
+    metadata: {
+        title: string
+        company: string
+        employment_type: string
+    }
+    similarity: number
+}

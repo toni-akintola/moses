@@ -1,4 +1,3 @@
-import { createClient } from "@/functions/supabase"
 import * as deepl from "deepl-node"
 import {
     AdditionalInfo,
@@ -7,7 +6,7 @@ import {
     Experience,
     ResumeSubmission,
     Skill,
-} from "@/utils/types"
+} from "../../types/types"
 
 // Function to translate a given text
 export async function translateText(

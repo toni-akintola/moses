@@ -10,16 +10,10 @@ export async function POST(request: NextRequest) {
     console.log(payload)
 
     if (payload.candidate) {
-        if (!payload.candidateID) return NextResponse.error()
-        const { data } = await supabase
-            .from("candidates")
-            .select()
-            .eq("id", payload.candidateID)
-            .maybeSingle()
         // check to see if the request body includes an embedding
+        if (!payload.embedding) return NextResponse.error()
 
-        const candidate = data as unknown as Candidate
-        const matches = await matchToJobs(candidate)
+        const matches = await matchToJobs(payload.embedding)
         console.log(matches)
         return NextResponse.json({ matches })
     }
@@ -29,7 +23,7 @@ export async function POST(request: NextRequest) {
         .select()
         .eq("id", payload.jobID)
     const job = data as unknown as Job
-    const matches = await matchToCandidates(job)
+    const matches = await matchToCandidates(job.embedding)
 
     return NextResponse.json({ matches })
 }

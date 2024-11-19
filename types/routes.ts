@@ -1,5 +1,7 @@
 export interface MatchPayload {
-    candidate: boolean
     candidateID?: string
     jobID?: string
+    profileID: string
+    candidate: boolean
+    embedding: number[]
 }

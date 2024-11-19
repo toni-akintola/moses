@@ -87,13 +87,14 @@ export interface Candidate {
     last_name: string
     email: string
     resume_submission?: ResumeSubmission
-    embedding: string
+    embedding: number[]
 }
 
 export interface Match {
     id: string
     profile_id: string
     job_id: string
+    employer_id: string
     candidate_id: string
     rating: number
 }

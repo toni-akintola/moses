@@ -480,7 +480,6 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     const userID = user.id
                     // Create a new candidate
                     const embedding = await vectorize(JSON.stringify(data))
-                    console.log(embedding)
                     const { error } = await supabase.from("candidates").insert({
                         first_name: data.firstName,
                         last_name: data.lastName,
@@ -489,7 +488,6 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                         profile_id: userID,
                         embedding: embedding,
                     })
-                    console.log("This is the error =>", error)
                 }
             }
         } catch (error) {

@@ -38,22 +38,22 @@ function transformAndFilterSimilarities(data: any[]): any | JobEmbedding {
         }))
         .filter((obj) => obj.similarity >= MINIMUM_SCORE)
 }
-export async function matchToCandidates(job: Job) {
+export async function matchToCandidates(embedding: number[]) {
     const supabase = await createBackendSupabaseClient()
 
     const { data, error } = await supabase.rpc("match_candidates", {
-        query_embedding: job.embedding,
+        query_embedding: embedding,
         match_threshold: 0.2,
         match_count: 10,
     })
     return transformAndFilterSimilarities(data)
 }
 
-export async function matchToJobs(candidate: Candidate) {
+export async function matchToJobs(embedding: number[]) {
     const supabase = await createBackendSupabaseClient()
 
     const { data, error } = await supabase.rpc("match_jobs", {
-        query_embedding: candidate.embedding,
+        query_embedding: embedding,
         match_threshold: 0.2,
         match_count: 10,
     })

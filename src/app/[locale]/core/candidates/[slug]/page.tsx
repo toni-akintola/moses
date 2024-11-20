@@ -37,21 +37,23 @@ const Candidate = async ({ params }: { params: { slug: string } }) => {
         .select("*")
         .eq("id", candidateID)
 
-    const matches = matchData ? await Promise.all(
-        matchData.map(async (match) => {
-            const { data: jobData, error: jobError } = await supabase
-                .from("jobs")
-                .select("*")
-                .eq("id", match.job_id)
-            const jobs = jobData as Job[]
-            const result = {
-                id: match.id,
-                rating: match.rating,
-                job: jobs[0],
-            }
-            return result
-        })
-    ) : []
+    const matches = matchData
+        ? await Promise.all(
+              matchData.map(async (match) => {
+                  const { data: jobData, error: jobError } = await supabase
+                      .from("jobs")
+                      .select("*")
+                      .eq("id", match.job_id)
+                  const jobs = jobData as Job[]
+                  const result = {
+                      id: match.id,
+                      rating: match.rating,
+                      job: jobs[0],
+                  }
+                  return result
+              })
+          )
+        : []
     return (
         <div className="flex flex-col">
             {candidate && (

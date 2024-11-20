@@ -1,5 +1,5 @@
 import { createBackendSupabaseClient } from "@/utils/supabase/server"
-import { Candidate, JobEmbedding, Job } from "../../../../types/types"
+import { Candidate, JobEmbedding, Job, Match } from "../../../../types/types"
 
 const MINIMUM_SCORE = 25
 
@@ -33,10 +33,10 @@ function cosineSimilarityToMatchScore(
 function transformAndFilterSimilarities(data: any[]): any | JobEmbedding {
     return data
         .map((obj) => ({
-            ...obj,
-            similarity: cosineSimilarityToMatchScore(obj.similarity),
+            id: obj.id,
+            rating: cosineSimilarityToMatchScore(obj.similarity),
         }))
-        .filter((obj) => obj.similarity >= MINIMUM_SCORE)
+        .filter((obj) => obj.rating >= MINIMUM_SCORE)
 }
 export async function matchToCandidates(embedding: number[]) {
     const supabase = await createBackendSupabaseClient()

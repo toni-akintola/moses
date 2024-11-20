@@ -1,3 +1,5 @@
+import { Job } from "../../../../types/types"
+
 export const dynamic = "force-dynamic" // static by default, unless reading the request
 
 export async function POST(request: Request) {
@@ -27,7 +29,6 @@ export async function POST(request: Request) {
         url.searchParams.append(key, value)
     })
 
-    console.log(url.toString())
     const options = {
         method: "GET",
         headers: {
@@ -39,8 +40,9 @@ export async function POST(request: Request) {
     try {
         const response = await fetch(url, options)
         const result = await response.json()
-        console.log(result)
-        return Response.json(result)
+        console.log(result, response.status)
+        const jobs: Job[] = result.jobs
+        return Response.json(jobs)
     } catch (error) {
         console.error(error)
     }

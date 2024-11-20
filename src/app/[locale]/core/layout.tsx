@@ -18,8 +18,7 @@ export default async function DashboardLayout({
 }) {
     const supabase = await createClerkSupabaseClientSsr()
     const user = await currentUser()
-    // const { data: userData } = await supabase.auth.getUser()
-    // const userID = userData.user?.id
+
     const { data: profile, error } = await supabase
         .from("profiles")
         .select("*")
@@ -27,7 +26,10 @@ export default async function DashboardLayout({
         .single()
     if (error) console.log(error)
 
-    const items = enterpriseNavItems
+    const items =
+        profile.accountType == "Employer"
+            ? employerNavItems
+            : enterpriseNavItems
 
     // if (!userData.user?.id) {
     //     redirect("login")

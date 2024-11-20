@@ -79,7 +79,7 @@ const JobDialog = () => {
         const { data, error } = await supabase
             .from("jobs")
             .insert([{ ...values, employer_id, embedding }])
-            .select()
+
         console.log(data, error)
     }
     return (
@@ -87,7 +87,7 @@ const JobDialog = () => {
             <DialogTrigger asChild>
                 <Button>Post New Job</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-full w-2/3">
+            <DialogContent className="max-w-full w-2/3 flex flex-col">
                 <DialogHeader>
                     <DialogTitle className="text-xl">
                         Create New Job
@@ -212,7 +212,7 @@ const JobDialog = () => {
                             )}
                         />
                         <DialogClose asChild>
-                            <Button type="submit" className="w-1/3 self-center">
+                            <Button type="submit" className="w-2/3 self-center">
                                 Post Job
                             </Button>
                         </DialogClose>

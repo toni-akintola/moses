@@ -36,6 +36,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { MatchPayload } from "../../../types/routes"
 
 const formSchema = z.object({
     id: z.string(),
@@ -73,13 +74,25 @@ const JobDialog = () => {
     const supabase = createClerkSupabaseClient(session)
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
-        const user = await supabase.auth.getUser()
-        const employer_id = user.data.user?.id
+        if (!session) return
+        const user = session.user
+        const employer_id = user.id
         const embedding = await vectorize(JSON.stringify(values))
         const { data, error } = await supabase
             .from("jobs")
             .insert([{ ...values, employer_id, embedding }])
-
+        const payload: MatchPayload = {
+            profileID: employer_id,
+            candidate: false,
+            embedding: embedding,
+        }
+        const response = await fetch("/api/match", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        })
         console.log(data, error)
     }
     return (

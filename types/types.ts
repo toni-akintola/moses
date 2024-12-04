@@ -173,3 +173,5 @@ export interface JobEmbedding {
     }
     similarity: number
 }
+
+export interface Match {}

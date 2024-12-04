@@ -31,10 +31,6 @@ export default async function DashboardLayout({
             ? employerNavItems
             : enterpriseNavItems
 
-    // if (!userData.user?.id) {
-    //     redirect("login")
-    // }
-
     return (
         <>
             <Header

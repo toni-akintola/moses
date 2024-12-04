@@ -52,6 +52,7 @@ import { z } from "zod"
 import createClerkSupabaseClient from "@/utils/supabase/client"
 import { useSession } from "@clerk/nextjs"
 import { vectorize } from "@/functions/embedding"
+import { MatchPayload } from "../../../types/routes"
 
 const educationSchema = z.object({
     school: z.string({ required_error: "Please enter a school" }),
@@ -487,6 +488,18 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                         email: user.primaryEmailAddress.emailAddress,
                         profile_id: userID,
                         embedding: embedding,
+                    })
+                    const payload: MatchPayload = {
+                        profileID: userID,
+                        candidate: true,
+                        embedding: embedding,
+                    }
+                    const response = await fetch("/api/match", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(payload),
                     })
                 }
             }

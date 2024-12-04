@@ -53,13 +53,13 @@ const Page = async (props: Props) => {
                 .select("*")
                 .eq("id", match.job_id)
             const jobs = jobData as Job[]
+
             const result = {
                 id: match.id,
                 rating: match.rating,
                 candidate: candidates[0],
-                job: jobs[0],
+                job: jobs ? jobs[0] : null,
             }
-            console.log(result.candidate)
             return result
         })
     )
@@ -108,7 +108,7 @@ const Page = async (props: Props) => {
                                         {match.job.company}
                                     </TableCell> */}
                                     <TableCell className="font-medium">
-                                        {match.job.title}
+                                        {match.job ? match.job.title : ""}
                                     </TableCell>
 
                                     <TableCell className="hidden md:table-cell font-bold">

@@ -1,7 +1,18 @@
 import { createBackendSupabaseClient } from "@/utils/supabase/server"
 import { Candidate, JobEmbedding, Job, Match } from "../../../../types/types"
+import { string } from "zod"
 
 const MINIMUM_SCORE = 25
+
+export interface MatchVector {
+    id: string
+    metadata: {
+        title: string
+        company: string
+        employment_type: string
+    }
+    similarity: string
+}
 
 function cosineSimilarityToMatchScore(
     cosineSimilarity: number,
@@ -31,17 +42,19 @@ function cosineSimilarityToMatchScore(
 }
 
 function transformAndFilterSimilarities(data: any[]): any | JobEmbedding {
-    return data
+    const res = data
         .map((obj) => ({
             id: obj.id,
             rating: cosineSimilarityToMatchScore(obj.similarity),
         }))
         .filter((obj) => obj.rating >= MINIMUM_SCORE)
+    console.log(res)
+    return res
 }
 export async function matchToCandidates(embedding: number[]) {
     const supabase = await createBackendSupabaseClient()
 
-    const { data, error } = await supabase.rpc("match_candidates", {
+    const { data } = await supabase.rpc("match_candidates", {
         query_embedding: embedding,
         match_threshold: 0.2,
         match_count: 10,
@@ -52,11 +65,13 @@ export async function matchToCandidates(embedding: number[]) {
 export async function matchToJobs(embedding: number[]) {
     const supabase = await createBackendSupabaseClient()
 
-    const { data, error } = await supabase.rpc("match_jobs", {
+    const { data } = await supabase.rpc("match_jobs", {
         query_embedding: embedding,
         match_threshold: 0.2,
         match_count: 10,
     })
-
+    console.log(data)
     return transformAndFilterSimilarities(data)
 }
+
+export async function storeMatch() {}

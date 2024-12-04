@@ -74,4 +74,10 @@ export async function matchToJobs(embedding: number[]) {
     return transformAndFilterSimilarities(data)
 }
 
-export async function storeMatch() {}
+export async function storeMatch(match: Match) {
+    const supabase = await createBackendSupabaseClient()
+
+    const { data, error } = await supabase.from("matches").upsert(match)
+
+    if (!error) console.log("Successfully created match.")
+}

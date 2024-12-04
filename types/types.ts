@@ -174,4 +174,9 @@ export interface JobEmbedding {
     similarity: number
 }
 
-export interface Match {}
+export interface Match {
+    profileID: string
+    candidateID: string
+    rating: number
+    jobID: string
+}

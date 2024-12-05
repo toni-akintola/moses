@@ -44,7 +44,7 @@ export function MainNav(props: NavProps) {
             aria-label="Global"
         >
             <Logo locale={locale as string} />
-            <div className="flex space-x-2 items-center">
+            <div className="flex space-x-5 items-center">
                 <motion.a
                     href="#"
                     whileHover={{ scale: 1.1 }}
@@ -89,7 +89,7 @@ export function MainNav(props: NavProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <Dialog>
+                    {/* <Dialog>
                         <DialogTrigger asChild>
                             <Button className="bg-transparent hover:bg-transparent flex flex-row justify-center">
                                 <h2 className="text-laserBlue md:text-lg">
@@ -160,7 +160,7 @@ export function MainNav(props: NavProps) {
                                 </DialogClose>
                             </DialogFooter>
                         </DialogContent>
-                    </Dialog>
+                    </Dialog> */}
                     {/* <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
@@ -202,7 +202,7 @@ export function MainNav(props: NavProps) {
                 </motion.a>
                 <motion.a
                     href={`/${locale}/core`}
-                    className="text-sm font-medium tracking-tight leading-6 text-white bg-laserBlue rounded-full py-1 px-2 md:py-2 md:px-4"
+                    className="text-sm font-medium tracking-tight leading-6 text-black bg-laserBlue rounded-full py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >

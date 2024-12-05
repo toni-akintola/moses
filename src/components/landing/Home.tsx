@@ -29,6 +29,9 @@ export type HomeProps = {
     home: HomeMessage
     locale: string
 }
+import { MongoDB } from "@/components/icons/mongo"
+import { ParallaxLogos } from "@/components/motion/ParallaxLogos"
+import { Firebase } from "@/components/icons/firebase"
 
 export default function Home({ home, locale }: HomeProps) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
@@ -70,7 +73,7 @@ export default function Home({ home, locale }: HomeProps) {
                 access={home.access}
             />
             <LampContainer className="h-full -mb-10 overflow-x-hidden">
-                <div className="w-3/4 md:w-2/3">
+                <div className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-2">
                     <motion.h1
                         initial={{ opacity: 0.5, y: 100 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -84,10 +87,45 @@ export default function Home({ home, locale }: HomeProps) {
                         {/* {home.title} */}
                         Job-matching redefined
                     </motion.h1>
-                    <motion.p className="text-white">
+                    <motion.p
+                        initial={{ opacity: 0.5, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{
+                            delay: 0.3,
+                            duration: 0.8,
+                            ease: "easeInOut",
+                        }}
+                        className="text-white text-lg"
+                    >
                         An AI-powered job placement solution for the vulnerable
                         and underserved.
                     </motion.p>
+                    <div className="w-3/4 md:w-2/3 text-center flex justify-between">
+                        <motion.button
+                            initial={{ opacity: 0.5, y: 100 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{
+                                delay: 0.3,
+                                duration: 0.8,
+                                ease: "easeInOut",
+                            }}
+                            className="text-clear bg-laserBlue text-lg p-1 px-4 rounded-full"
+                        >
+                            Sign up
+                        </motion.button>
+                        <motion.button
+                            initial={{ opacity: 0.5, y: 100 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{
+                                delay: 0.3,
+                                duration: 0.8,
+                                ease: "easeInOut",
+                            }}
+                            className="text-clear text-lg p-1 px-4 rounded-full border border-laserBlue text-laserBlue"
+                        >
+                            Learn more
+                        </motion.button>
+                    </div>
                 </div>
             </LampContainer>
             <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">

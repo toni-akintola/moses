@@ -91,7 +91,7 @@ export interface Candidate {
 }
 
 export interface Match {
-    id: string
+    id?: string
     profile_id: string
     job_id: string
     employer_id: string
@@ -172,11 +172,4 @@ export interface JobEmbedding {
         employment_type: string
     }
     similarity: number
-}
-
-export interface Match {
-    profileID: string
-    candidateID: string
-    rating: number
-    jobID: string
 }

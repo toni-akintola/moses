@@ -1,8 +1,8 @@
 import { createBackendSupabaseClient } from "@/utils/supabase/server"
-import { Candidate, Job } from "../../../../types/types"
+import { Candidate, Job, Match } from "../../../../types/types"
 import { NextRequest, NextResponse } from "next/server"
 import { MatchPayload } from "../../../../types/routes"
-import { matchToCandidates, matchToJobs } from "@/app/api/match"
+import { matchToCandidates, matchToJobs, storeMatch } from "@/app/api/match"
 
 export async function POST(request: NextRequest) {
     const supabase = await createBackendSupabaseClient()
@@ -329,8 +329,17 @@ export async function POST(request: NextRequest) {
     }
     if (!payload.jobID) return NextResponse.error()
 
-    const matches = await matchToCandidates(embedding)
-    matches.map((match) => {})
+    const rawMatches = await matchToCandidates(embedding)
+    rawMatches.map(async (rawMatch) => {
+        const match: Match = {
+            profile_id: profileID,
+            job_id: "",
+            employer_id: "",
+            candidate_id: "",
+            rating: rawMatch.rating,
+        }
+        await storeMatch(match)
+    })
 
     return NextResponse.json({ matches })
 }

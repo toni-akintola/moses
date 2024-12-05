@@ -70,7 +70,7 @@ export default function Home({ home, locale }: HomeProps) {
                 access={home.access}
             />
             <LampContainer className="h-full -mb-10 overflow-x-hidden">
-                <div className="w-3/4 md:w-1/2">
+                <div className="w-3/4 md:w-2/3">
                     <motion.h1
                         initial={{ opacity: 0.5, y: 100 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -81,8 +81,13 @@ export default function Home({ home, locale }: HomeProps) {
                         }}
                         className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-7xl mt-10"
                     >
-                        {home.title}
+                        {/* {home.title} */}
+                        Job-matching redefined
                     </motion.h1>
+                    <motion.p className="text-white">
+                        An AI-powered job placement solution for the vulnerable
+                        and underserved.
+                    </motion.p>
                 </div>
             </LampContainer>
             <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">

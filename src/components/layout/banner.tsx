@@ -45,14 +45,46 @@ export function MainNav(props: NavProps) {
         >
             <Logo locale={locale as string} />
             <div className="flex space-x-2 items-center">
-                {/* <motion.a
+                <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-laserBlue font-medium"
+                >
+                    Product
+                </motion.a>
+                <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-laserBlue font-medium"
+                >
+                    Solutions
+                </motion.a>
+                <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-laserBlue font-medium"
+                >
+                    Resources
+                </motion.a>
+                <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-laserBlue font-medium"
+                >
+                    Pricing
+                </motion.a>
+                <motion.a
                     href="#"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     className="text-laserBlue font-medium"
                 >
                     {props.information}
-                </motion.a> */}
+                </motion.a>
                 <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -159,14 +191,24 @@ export function MainNav(props: NavProps) {
                     </NavigationMenu> */}
                 </motion.div>
             </div>
-            <div className="lg:flex lg:flex-1 lg:justify-end">
+            <div className="lg:flex lg:flex-1 lg:justify-end space-x-2">
                 <motion.a
                     href={`/${locale}/core`}
-                    className="text-sm font-medium tracking-tight leading-6 text-white bg-laserBlue rounded-md py-1 px-2 md:py-2 md:px-4"
+                    className="text-sm font-medium tracking-tight leading-6 text-white rounded-md py-1 px-2 md:py-2 md:px-4"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    {props.access} <span aria-hidden="true">&rarr;</span>
+                    Sign in
+                </motion.a>
+                <motion.a
+                    href={`/${locale}/core`}
+                    className="text-sm font-medium tracking-tight leading-6 text-white bg-laserBlue rounded-full py-1 px-2 md:py-2 md:px-4"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    Sign up for free
+                    {/* {props.access}  */}
+                    <span aria-hidden="true">&rarr;</span>
                 </motion.a>
             </div>
         </div>

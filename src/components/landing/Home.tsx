@@ -74,7 +74,7 @@ export default function Home({ home, locale }: HomeProps) {
                 access={home.access}
             />
             <LampContainer className="h-full -mb-10 overflow-x-hidden">
-                <div className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-2">
+                <div className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-4">
                     <motion.h1
                         initial={{ opacity: 0.5, y: 100 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -101,19 +101,22 @@ export default function Home({ home, locale }: HomeProps) {
                         An AI-powered job placement solution for the vulnerable
                         and underserved.
                     </motion.p>
-                    <div className="w-3/4 md:w-2/3 text-center flex justify-between">
-                        <motion.button
-                            initial={{ opacity: 0.5, y: 100 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{
-                                delay: 0.3,
-                                duration: 0.8,
-                                ease: "easeInOut",
-                            }}
+                    <motion.div
+                        initial={{ opacity: 0.5, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{
+                            delay: 0.3,
+                            duration: 0.8,
+                            ease: "easeInOut",
+                        }}
+                        className="w-3/4 md:w-2/3 text-center flex justify-between"
+                    >
+                        <motion.a
                             className="text-clear bg-laserBlue text-lg p-1 px-4 rounded-full"
+                            href={`${locale}/core`}
                         >
                             Sign up
-                        </motion.button>
+                        </motion.a>
                         <HoverBorderGradient
                             containerClassName="rounded-full"
                             as="button"
@@ -133,7 +136,7 @@ export default function Home({ home, locale }: HomeProps) {
                         >
                             Learn more
                         </motion.button> */}
-                    </div>
+                    </motion.div>
                 </div>
             </LampContainer>
             <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">

@@ -330,7 +330,7 @@ export async function POST(request: NextRequest) {
     if (!payload.jobID) return NextResponse.error()
 
     const rawMatches = await matchToCandidates(embedding)
-    rawMatches.map(async (rawMatch) => {
+    const matches = rawMatches.map(async (rawMatch: { rating: number }) => {
         const match: Match = {
             profile_id: profileID,
             job_id: "",

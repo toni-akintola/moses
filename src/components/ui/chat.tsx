@@ -1,9 +1,6 @@
 "use client"
 import ChatInput from "@/components/chat/ChatInput"
 import ChatMessages from "@/components/chat/ChatMessages"
-import { Button } from "@/components/ui/button"
-import { ChatBubble } from "@/components/ui/chat-bubble"
-import { Input } from "@/components/ui/input"
 
 import { initialMessages, scrollToBottom } from "@/utils/helpers"
 import { Message, useChat } from "ai/react"

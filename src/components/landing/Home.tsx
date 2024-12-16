@@ -32,6 +32,7 @@ export type HomeProps = {
 import { MongoDB } from "@/components/icons/mongo"
 import { ParallaxLogos } from "@/components/motion/ParallaxLogos"
 import { Firebase } from "@/components/icons/firebase"
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
 
 export default function Home({ home, locale }: HomeProps) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
@@ -113,7 +114,14 @@ export default function Home({ home, locale }: HomeProps) {
                         >
                             Sign up
                         </motion.button>
-                        <motion.button
+                        <HoverBorderGradient
+                            containerClassName="rounded-full"
+                            as="button"
+                            className="text-clear text-lg p-1 px-4 rounded-full text-laserBlue"
+                        >
+                            Learn more
+                        </HoverBorderGradient>
+                        {/* <motion.button
                             initial={{ opacity: 0.5, y: 100 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{
@@ -124,7 +132,7 @@ export default function Home({ home, locale }: HomeProps) {
                             className="text-clear text-lg p-1 px-4 rounded-full border border-laserBlue text-laserBlue"
                         >
                             Learn more
-                        </motion.button>
+                        </motion.button> */}
                     </div>
                 </div>
             </LampContainer>
@@ -166,6 +174,7 @@ export default function Home({ home, locale }: HomeProps) {
                     </PinContainer>
                 </Link>
             </div>
+
             <div className="p-4 flex justify-center">
                 <StickyScroll content={content} />
             </div>

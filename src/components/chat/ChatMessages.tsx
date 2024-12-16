@@ -68,7 +68,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                             : "text-laserBlue dark:text-cyan-700"
                                     }
                                 >
-                                    {message.isUserMessage ? "You" : "Modelpy"}
+                                    {message.isUserMessage ? "You" : "Moses"}
                                 </CardTitle>
                                 {!message.isUserMessage &&
                                     message.text.includes("```") && (

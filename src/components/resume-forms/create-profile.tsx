@@ -614,7 +614,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     }
 
     return (
-        <>
+        <div className="">
             <div className="flex flex-col space-y-3 p-4">
                 <div className="flex items-center justify-between">
                     <Heading title={title} description={description} />
@@ -673,7 +673,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="w-full space-y-8"
+                        className="w-full space-y-8 overflow-scroll"
                     >
                         <MultiStepLoader
                             loadingStates={loadingStates}
@@ -687,8 +687,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                     currentStep === 2 ||
                                     currentStep === 3 ||
                                     currentStep === 4
-                                    ? "w-full md:inline-block"
-                                    : "gap-8 md:grid md:grid-cols-3"
+                                    ? "w-full md:inline-block overflow-scroll"
+                                    : "gap-8 md:grid md:grid-cols-3 overflow-scroll"
                             )}
                         >
                             {currentStep === 0 && (
@@ -2026,7 +2026,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 /**

@@ -32,7 +32,7 @@ export default function RootLayout({
     return (
         <ClerkProvider dynamic>
             <html lang={locale}>
-                <body className={`${lato.className} `}>
+                <body className={`${lato.className}`}>
                     <Analytics />
                     <SpeedInsights />
                     <Toaster />

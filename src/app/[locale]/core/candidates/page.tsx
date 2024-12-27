@@ -18,6 +18,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { useMessages } from "next-intl"
+import Link from "next/link"
 import React from "react"
 
 type Props = {}
@@ -38,9 +39,10 @@ const Page = (props: Props) => {
     // const { data: candidateData, error } = await supabase.from("candidates").select().eq("profile_id", userID)
     // console.log(error)
     return (
-        <div className="flex flex-col space-y-5">
+        <div className="flex flex-col space-y-5 overflow-scroll">
             <Candidates />
-            <Dialog>
+
+            {/* <Dialog>
                 <DialogTrigger asChild>
                     <Button>Create New Candidate</Button>
                 </DialogTrigger>
@@ -56,7 +58,10 @@ const Page = (props: Props) => {
                         initialData={null}
                     />
                 </DialogContent>
-            </Dialog>
+            </Dialog> */}
+            <Link className="flex" href="./candidates/create-candidate">
+                <Button className="flex w-full">Create New Candidate</Button>
+            </Link>
         </div>
     )
 }

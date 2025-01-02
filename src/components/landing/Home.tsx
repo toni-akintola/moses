@@ -33,6 +33,7 @@ import { MongoDB } from "@/components/icons/mongo"
 import { ParallaxLogos } from "@/components/motion/ParallaxLogos"
 import { Firebase } from "@/components/icons/firebase"
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
+import Features from "@/components/landing/Features"
 
 export default function Home({ home, locale }: HomeProps) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
@@ -181,6 +182,7 @@ export default function Home({ home, locale }: HomeProps) {
             <div className="p-4 flex justify-center">
                 <StickyScroll content={content} />
             </div>
+            <Features />
         </div>
     )
 }

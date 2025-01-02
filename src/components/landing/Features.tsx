@@ -11,7 +11,7 @@ const Features = () => {
                     </h2>
                     <div className="rounded-[30px] overflow-hidden">
                         <Image
-                            src="/features/resume-builder.png"
+                            src="/resume-builder.png"
                             alt="Resume Builder Interface"
                             width={746}
                             height={429}
@@ -27,7 +27,7 @@ const Features = () => {
                     </h2>
                     <div className="rounded-[18px] overflow-hidden">
                         <Image
-                            src="/features/multi-lingual.png"
+                            src="/multilingual.png"
                             alt="Language Options"
                             width={498}
                             height={284}
@@ -39,11 +39,11 @@ const Features = () => {
                 {/* Feature 3 - Performance Tracking */}
                 <div className="bg-gradient-radial from-[#278E9B80] to-[#B7BDC580] rounded-[45px] p-12 shadow-md">
                     <h2 className="text-white text-3xl font-bold mb-8">
-                        See how you perform over time
+                        Manage matches and candidates
                     </h2>
                     <div className="rounded-[26px] overflow-hidden">
                         <Image
-                            src="/features/performance.png"
+                            src="/candidates.png"
                             alt="Performance Analytics"
                             width={864}
                             height={275}
@@ -60,19 +60,10 @@ const Features = () => {
                     <div className="bg-white rounded-[27px] p-4">
                         <div className="rounded-[20px] overflow-hidden mb-4">
                             <Image
-                                src="/features/assistant-chat.png"
+                                src="/assistant.png"
                                 alt="Virtual Assistant Interface"
                                 width={750}
                                 height={181}
-                                className="w-full h-auto"
-                            />
-                        </div>
-                        <div className="rounded-[11px] overflow-hidden max-w-[329px]">
-                            <Image
-                                src="/features/assistant-input.png"
-                                alt="Assistant Input"
-                                width={329}
-                                height={89}
                                 className="w-full h-auto"
                             />
                         </div>

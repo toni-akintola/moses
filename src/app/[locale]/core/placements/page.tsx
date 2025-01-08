@@ -35,6 +35,7 @@ type Props = {}
 const Page = async (props: Props) => {
     const supabase = await createClerkSupabaseClientSsr()
     const { userId } = await auth()
+    console.log(userId)
     const { data: matchData, error: matchError } = await supabase
         .from("matches")
         .select("*")

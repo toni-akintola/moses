@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -55,13 +54,15 @@ const Page = async (props: Props) => {
                 .eq("id", match.job_id)
             const jobs = jobData as Job[]
 
-            const result = {
+            const candidate =
+                candidates && candidates.length > 0 ? candidates[0] : null
+
+            return {
                 id: match.id,
                 rating: match.rating,
-                candidate: candidates[0],
-                job: jobs ? jobs[0] : null,
+                candidate: candidate,
+                job: jobs && jobs.length > 0 ? jobs[0] : null,
             }
-            return result
         })
     )
     return (
@@ -95,15 +96,18 @@ const Page = async (props: Props) => {
                             {matches?.map((match) => (
                                 <TableRow key={match.id}>
                                     <TableCell className="hidden sm:table-cell">
-                                        <Link
-                                            href={`candidates/${match.candidate.id}`}
-                                        >
-                                            <div className="aspect-square bg-gradient-to-b from-cyan-100 via-cyan-300 to-laserBlue rounded-md object-cover"></div>
-                                        </Link>
+                                        {match.candidate && (
+                                            <Link
+                                                href={`candidates/${match.candidate.id}`}
+                                            >
+                                                <div className="aspect-square bg-gradient-to-b from-cyan-100 via-cyan-300 to-laserBlue rounded-md object-cover"></div>
+                                            </Link>
+                                        )}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        {match.candidate.first_name}{" "}
-                                        {match.candidate.last_name}
+                                        {match.candidate
+                                            ? `${match.candidate.first_name} ${match.candidate.last_name}`
+                                            : "Unknown Candidate"}
                                     </TableCell>
                                     {/* <TableCell className="font-medium">
                                         {match.job.company}

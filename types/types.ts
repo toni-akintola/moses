@@ -31,7 +31,6 @@ export interface Certificate {
     // description: string
 }
 export interface ResumeSubmission {
-    age: string
     firstName: string
     lastName: string
     phoneNumber: string

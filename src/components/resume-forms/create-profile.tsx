@@ -85,9 +85,6 @@ const certificateSchema = z.object({
 export const profileSchema = z.object({
     firstName: z.string().min(1, { message: "Must be at least 1 character" }),
     lastName: z.string().min(1, { message: "Must be at least 1 character" }),
-    age: z.string().min(2, {
-        message: "Invalid",
-    }),
     email: z.string().email({ message: "Must be at least 1 character" }),
     phoneNumber: z.coerce.number(),
     numberSlider: z.number(),
@@ -450,7 +447,6 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    age: values.age,
                     firstName: values.firstName,
                     lastName: values.lastName,
                     number: values.phoneNumber,
@@ -532,7 +528,6 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             fields: [
                 "firstName",
                 "lastName",
-                "age",
                 "email",
                 "phoneNumber",
                 "numberSlider",
@@ -729,28 +724,6 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                         placeholder={
                                                             s1Content.name
                                                                 .placeholderTwo
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="age"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>
-                                                    {s1Content.age.title}
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={loading}
-                                                        placeholder={
-                                                            s1Content.age
-                                                                .placeholder
                                                         }
                                                         {...field}
                                                     />

@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createBackendSupabaseClient()
     const { error } = await supabase.from("resume_submissions").insert({
-        age: translatedResume.age,
         firstName: translatedResume.firstName,
         lastName: translatedResume.lastName,
         phoneNumber: translatedResume.phoneNumber,

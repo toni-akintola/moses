@@ -7,9 +7,10 @@ import { Label } from "@/components/ui/label"
 import { Icons } from "@/components/ui/icons"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
+import { ProfileFormValues } from "./create-profile"
 
 interface ResumeUploadProps {
-    onUploadComplete: (data: any) => void
+    onUploadComplete: (data: ProfileFormValues) => void
     className?: string
 }
 
@@ -32,14 +33,12 @@ const ResumeUpload = ({ onUploadComplete, className }: ResumeUploadProps) => {
         try {
             setLoading(true)
             // Create FormData and append the file
-            const formData = new FormData()
-            formData.append("file", file)
+            const uploadData = new FormData()
+            uploadData.append("file", file)
 
             const response = await fetch("/api/parse-resume", {
                 method: "POST",
-                // Remove the Content-Type header - FormData will set it automatically
-                // with the correct boundary for multipart/form-data
-                body: formData,
+                body: uploadData,
             })
 
             if (!response.ok) {
@@ -47,7 +46,51 @@ const ResumeUpload = ({ onUploadComplete, className }: ResumeUploadProps) => {
             }
 
             const data = await response.json()
-            onUploadComplete(data)
+
+            // Convert the parsed resume data to match form fields
+            const formFields: ProfileFormValues = {
+                firstName: data.firstName || "",
+                lastName: data.lastName || "",
+                email: data.email || "",
+                phoneNumber: data.phoneNumber
+                    ? parseInt(data.phoneNumber.replace(/\D/g, ""))
+                    : 0,
+                proficiency: 1, // Default to Level 1 if not provided
+                educations: data.educations || [
+                    {
+                        school: "",
+                        country: "",
+                        city: "",
+                        degree: "",
+                        endDate: "",
+                        completed: false,
+                    },
+                ],
+                experiences: data.experiences || [
+                    {
+                        jobTitle: "",
+                        employer: "",
+                        startDate: "",
+                        endDate: "",
+                        country: "",
+                        city: "",
+                        duties: "",
+                    },
+                ],
+                skills: data.skills || [
+                    {
+                        title: "",
+                    },
+                ],
+                certificates: data.certificates || [
+                    {
+                        title: "",
+                    },
+                ],
+                authorizationStatus: data.authorizationStatus === "true",
+            }
+
+            onUploadComplete(formFields)
 
             toast({
                 title: "Resume uploaded successfully",

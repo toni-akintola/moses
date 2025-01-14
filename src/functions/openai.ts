@@ -2,6 +2,7 @@
 import OpenAI from "openai"
 import { ResumeSubmission } from "../../types/types"
 import PDFParser from "pdf2json"
+import { ProfileFormValues } from "@/components/resume-forms/create-profile"
 
 export async function extractTextFromPDF(file: Buffer): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -49,7 +50,7 @@ export async function vectorize(data: string) {
     return embedding.data[0].embedding
 }
 
-export async function parseResume(pdfText: string): Promise<ResumeSubmission> {
+export async function parseResume(pdfText: string): Promise<ProfileFormValues> {
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! })
 
     const resumeSchema = {
@@ -102,5 +103,5 @@ export async function parseResume(pdfText: string): Promise<ResumeSubmission> {
         throw new Error("Failed to parse resume")
     }
 
-    return JSON.parse(response.choices[0].message.content) as ResumeSubmission
+    return JSON.parse(response.choices[0].message.content) as ProfileFormValues
 }

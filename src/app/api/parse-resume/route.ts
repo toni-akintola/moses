@@ -37,8 +37,7 @@ export async function POST(req: NextRequest) {
         }
 
         const parsedResume = await parseResume(text)
-        console.log(parsedResume)
-        return NextResponse.json({ message: "File received" })
+        return NextResponse.json(parsedResume)
     } catch (error) {
         console.error("Error processing resume:", error)
         return NextResponse.json(

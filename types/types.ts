@@ -28,7 +28,6 @@ export interface Skill {
 export interface Certificate {
     id?: number
     title: string
-    // description: string
 }
 export interface ResumeSubmission {
     firstName: string

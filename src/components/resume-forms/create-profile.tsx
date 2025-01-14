@@ -72,15 +72,11 @@ const educationSchema = z.object({
 })
 
 const skillsSchema = z.object({
-    title: z.string({
-        required_error: "Required",
-    }),
+    title: z.string().min(1, { message: "Please enter a skill" }),
 })
 
 const certificateSchema = z.object({
-    title: z.string({
-        required_error: "Required",
-    }),
+    title: z.string().min(1, { message: "Please enter a certificate" }),
 })
 
 export const profileSchema = z.object({
@@ -88,7 +84,7 @@ export const profileSchema = z.object({
     lastName: z.string().min(1, { message: "Must be at least 1 character" }),
     email: z.string().email({ message: "Must be at least 1 character" }),
     phoneNumber: z.coerce.number(),
-    numberSlider: z.number(),
+    proficiency: z.number(),
     educations: z.array(educationSchema),
     // experiences array is for the dynamic fields
     experiences: z.array(
@@ -346,7 +342,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     }, [setProfile])
 
     const defaultValues = {
-        numberSlider: 1,
+        proficiency: 1,
         experiences: [
             {
                 jobTitle: "",
@@ -446,9 +442,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
         // ✅ This will be type-safe and validated.
         setDownloadState(true)
         console.log(values)
-        const proficiency = englishProficiency.get(
-            values.numberSlider
-        ) as string
+        const proficiency = englishProficiency.get(values.proficiency) as string
         try {
             const response = await fetch("/api/translate", {
                 method: "POST",
@@ -802,7 +796,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="numberSlider"
+                                        name="proficiency"
                                         render={({
                                             field: { value, onChange },
                                         }) => (
@@ -1481,177 +1475,12 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                             s4Content.title
                                                                         }
                                                                     </FormLabel>
-                                                                    <Select
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        onValueChange={
-                                                                            field.onChange
-                                                                        }
-                                                                        value={
-                                                                            field.value
-                                                                        }
-                                                                        defaultValue={
-                                                                            field.value
-                                                                        }
-                                                                    >
-                                                                        <FormControl>
-                                                                            <SelectTrigger>
-                                                                                <SelectValue
-                                                                                    defaultValue={
-                                                                                        field.value
-                                                                                    }
-                                                                                    placeholder={
-                                                                                        s4Content
-                                                                                            .skills
-                                                                                            .placeholder
-                                                                                    }
-                                                                                />
-                                                                            </SelectTrigger>
-                                                                        </FormControl>
-                                                                        <SelectContent>
-                                                                            <SelectItem value="Driving">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .driving
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Vehicle Maintenance">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .vehicleMaintenance
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Construction">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .construction
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Plumbing">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .plumbing
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Welding">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .welding
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Equipment Operation">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .equipmentOperation
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Heavy Machinery Operation">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .heavyMachineryOperation
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Landscaping">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .landscaping
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Recycling">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .recycling
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Fishing">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .fishing
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Agricultural Work">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .agriculturalWork
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Mining">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .mining
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Manufacturing">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .manufacturing
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Mechanical Skills">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .mechanicalSkills
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Problem-Solving Skills">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .problemSolvingSkills
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Technical Skills">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .technicalSkills
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Physical Strength and Endurance">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .physicalStrengthAndEndurance
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Safety Protocols Adherence">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .safetyProtocolsAdherence
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Teamwork and Collaboration">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .teamworkAndCollaboration
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Attention to Detail">
-                                                                                {
-                                                                                    s4Content
-                                                                                        .placeholders
-                                                                                        .attentionToDetail
-                                                                                }
-                                                                            </SelectItem>
-                                                                        </SelectContent>
-                                                                    </Select>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            placeholder="Enter your skill"
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
                                                                     <FormMessage />
                                                                 </FormItem>
                                                             )}
@@ -1737,170 +1566,12 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                             s5Content.title
                                                                         }
                                                                     </FormLabel>
-                                                                    <Select
-                                                                        disabled={
-                                                                            loading
-                                                                        }
-                                                                        onValueChange={
-                                                                            field.onChange
-                                                                        }
-                                                                        value={
-                                                                            field.value
-                                                                        }
-                                                                        defaultValue={
-                                                                            field.value
-                                                                        }
-                                                                    >
-                                                                        <FormControl>
-                                                                            <SelectTrigger>
-                                                                                <SelectValue
-                                                                                    defaultValue={
-                                                                                        field.value
-                                                                                    }
-                                                                                    placeholder={
-                                                                                        s5Content
-                                                                                            .certificates
-                                                                                            .placeholder
-                                                                                    }
-                                                                                />
-                                                                            </SelectTrigger>
-                                                                        </FormControl>
-                                                                        <SelectContent>
-                                                                            <SelectItem value="CDL (Commercial Driver's License)">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .cdlCommercialDriversLicense
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="ASE Certification (Automotive Service Excellence)">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .aseCertificationAutomotiveServiceExcellence
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="OSHA Certification (Occupational Safety and Health Administration)">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .oshaCertificationOccupationalSafetyAndHealthAdministration
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Welding Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .weldingCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Forklift Operator Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .forkliftOperatorCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Heavy Equipment Operator Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .heavyEquipmentOperatorCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="CPR Certification (Cardiopulmonary Resuscitation)">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .cprCertificationCardiopulmonaryResuscitation
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="First Aid Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .firstAidCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Confined Space Entry Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .confinedSpaceEntryCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Scaffold Safety Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .scaffoldSafetyCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Hazardous Materials Handling Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .hazardousMaterialsHandlingCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Fishing Vessel Safety Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .fishingVesselSafetyCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Agricultural Pesticide Applicator Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .agriculturalPesticideApplicatorCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Mining Safety Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .miningSafetyCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Construction Safety Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .constructionSafetyCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Electrical Safety Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .electricalSafetyCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Fire Safety Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .fireSafetyCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Machine Guarding Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .machineGuardingCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                            <SelectItem value="Fall Protection Certification">
-                                                                                {
-                                                                                    s5Content
-                                                                                        .placeholders
-                                                                                        .fallProtectionCertification
-                                                                                }
-                                                                            </SelectItem>
-                                                                        </SelectContent>
-                                                                    </Select>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            placeholder="Enter your certificate"
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
                                                                     <FormMessage />
                                                                 </FormItem>
                                                             )}

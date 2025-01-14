@@ -51,8 +51,9 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import createClerkSupabaseClient from "@/utils/supabase/client"
 import { useSession } from "@clerk/nextjs"
-import { vectorize } from "@/functions/embedding"
+import { vectorize } from "@/functions/openai"
 import { MatchPayload } from "../../../types/routes"
+import ResumeUpload from "./resume-upload"
 
 const educationSchema = z.object({
     school: z.string({ required_error: "Please enter a school" }),
@@ -432,6 +433,14 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
         name: "certificates",
     })
 
+    const { reset } = form
+
+    const handleUploadComplete = (data: ProfileFormValues) => {
+        reset(data)
+        // Move to the first step to show the pre-filled form
+        setCurrentStep(0)
+    }
+
     async function onSubmit(values: ProfileFormValues) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
@@ -625,6 +634,16 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     )}
                 </div>
                 <Separator />
+
+                <div className="bg-muted/50 p-4 rounded-lg">
+                    <h3 className="text-lg font-medium mb-2">Quick Start</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                        Upload your resume to automatically fill out the form,
+                        or fill it out manually using the steps below.
+                    </p>
+                    <ResumeUpload onUploadComplete={handleUploadComplete} />
+                </div>
+
                 <div>
                     <ul className="gap-4 grid md:flex">
                         {steps.map((step, index) => (

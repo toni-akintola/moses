@@ -28,7 +28,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { vectorize } from "@/functions/embedding"
+import { vectorize } from "@/functions/openai"
 import { nanoid } from "@/utils/helpers"
 import createClerkSupabaseClient from "@/utils/supabase/client"
 import { useSession } from "@clerk/nextjs"

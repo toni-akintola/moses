@@ -20,8 +20,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-import Image from "next/image"
-
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -30,9 +28,19 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { MoreHorizontal } from "lucide-react"
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+
+import { MoreHorizontal, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { auth } from "@clerk/nextjs/server"
+import { ResumeDetails } from "./resume-details"
 
 type Props = {}
 
@@ -95,34 +103,81 @@ const Candidates = async (props: Props) => {
                                         {candidate.email}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        {candidate.resume_submission.number}
+                                        {
+                                            candidate.resume_submission
+                                                ?.phoneNumber
+                                        }
                                     </TableCell>
                                     <TableCell>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    aria-haspopup="true"
-                                                    size="icon"
-                                                    variant="ghost"
+                                        <div className="flex items-center gap-2">
+                                            <Sheet>
+                                                <SheetTrigger asChild>
+                                                    <Button
+                                                        size="icon"
+                                                        variant="ghost"
+                                                    >
+                                                        <Eye className="h-4 w-4" />
+                                                        <span className="sr-only">
+                                                            View resume
+                                                        </span>
+                                                    </Button>
+                                                </SheetTrigger>
+                                                <SheetContent
+                                                    side="right"
+                                                    className="w-[400px] sm:w-[540px]"
                                                 >
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                    <span className="sr-only">
-                                                        Toggle menu
-                                                    </span>
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuLabel>
-                                                    Actions
-                                                </DropdownMenuLabel>
-                                                <DropdownMenuItem>
-                                                    Edit
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem>
-                                                    Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                                                    <SheetHeader>
+                                                        <SheetTitle>
+                                                            {
+                                                                candidate.first_name
+                                                            }{" "}
+                                                            {
+                                                                candidate.last_name
+                                                            }
+                                                            &apos;s Resume
+                                                        </SheetTitle>
+                                                        <SheetDescription>
+                                                            View detailed resume
+                                                            information
+                                                        </SheetDescription>
+                                                    </SheetHeader>
+                                                    <div className="mt-6">
+                                                        {candidate.resume_submission && (
+                                                            <ResumeDetails
+                                                                resumeSubmission={
+                                                                    candidate.resume_submission
+                                                                }
+                                                            />
+                                                        )}
+                                                    </div>
+                                                </SheetContent>
+                                            </Sheet>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button
+                                                        aria-haspopup="true"
+                                                        size="icon"
+                                                        variant="ghost"
+                                                    >
+                                                        <MoreHorizontal className="h-4 w-4" />
+                                                        <span className="sr-only">
+                                                            Toggle menu
+                                                        </span>
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent align="end">
+                                                    <DropdownMenuLabel>
+                                                        Actions
+                                                    </DropdownMenuLabel>
+                                                    <DropdownMenuItem>
+                                                        Edit
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem>
+                                                        Delete
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -136,15 +191,6 @@ const Candidates = async (props: Props) => {
                     </div>
                 </CardFooter>
             </Card>
-
-            {/* {candidateData?.map((candidate) => (
-                <Link
-                    href={`candidates/${candidate.id}`}
-                    key={candidate.id}
-                >
-                    {candidate.id}
-                </Link>
-            ))} */}
         </div>
     )
 }

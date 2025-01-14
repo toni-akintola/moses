@@ -1,166 +1,164 @@
-import React from "react"
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { RadialChart } from "@/components/ui/radial"
+import { auth } from "@clerk/nextjs/server"
+import { ResumeDetails } from "@/components/core/resume-details"
+import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Job, ResumeSubmission } from "../../../../../../types/types"
-type Props = {}
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ArrowLeft, Mail, Phone } from "lucide-react"
+import Link from "next/link"
+import { LastUpdated } from "@/components/ui/last-updated"
 
-const Candidate = async ({ params }: { params: { slug: string } }) => {
-    const { slug: candidateID } = params
+interface Props {
+    params: {
+        slug: string
+    }
+}
+
+export default async function CandidatePage({ params }: Props) {
     const supabase = await createClerkSupabaseClientSsr()
+    const { userId } = await auth()
 
-    const { data: candidateData, error: candidateError } = await supabase
+    const { data: candidate, error } = await supabase
         .from("candidates")
-        .select("*")
-        .eq("id", candidateID)
-    const candidate = candidateData ? candidateData[0] : {}
-    const resumeSubmission: ResumeSubmission = candidate.resume_submission
-    const { data: matchData, error: matchError } = await supabase
-        .from("matches")
-        .select("*")
-        .eq("id", candidateID)
+        .select()
+        .eq("id", params.slug)
+        .eq("profile_id", userId)
+        .single()
 
-    const matches = matchData
-        ? await Promise.all(
-              matchData.map(async (match) => {
-                  const { data: jobData, error: jobError } = await supabase
-                      .from("jobs")
-                      .select("*")
-                      .eq("id", match.job_id)
-                  const jobs = jobData as Job[]
-                  const result = {
-                      id: match.id,
-                      rating: match.rating,
-                      job: jobs[0],
-                  }
-                  return result
-              })
-          )
-        : []
+    if (error) {
+        console.log(error)
+        return <div>Error loading candidate</div>
+    }
+
+    if (!candidate) {
+        return <div>Candidate not found</div>
+    }
+
     return (
-        <div className="flex flex-col">
-            {candidate &&
-                resumeSubmission.educations &&
-                resumeSubmission.experiences && (
-                    <div className=" flex justify-between">
-                        <div>
-                            <h2 className="font-semibold text-lg">
-                                General Info
-                            </h2>
-                            <p>{candidate.first_name || ""}</p>
-                            <p>{candidate.last_name || ""}</p>
-                            <p>{candidate.email || ""}</p>
-                            <p>{resumeSubmission.phoneNumber}</p>
-                            <p>
-                                Work authorized:{" "}
-                                {resumeSubmission.authorizationStatus
-                                    ? "Yes"
-                                    : "No"}
-                            </p>
+        <div className="space-y-6">
+            <div className="flex items-center gap-4">
+                <Link href="/core/candidates">
+                    <Button variant="ghost" size="icon">
+                        <ArrowLeft className="h-4 w-4" />
+                    </Button>
+                </Link>
+                <div>
+                    <h1 className="text-2xl font-bold">
+                        {candidate.first_name} {candidate.last_name}
+                    </h1>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                            <Mail className="h-4 w-4" />
+                            {candidate.email}
                         </div>
-                        <div>
-                            <h2 className="font-semibold text-lg">Education</h2>
-                            {resumeSubmission.educations.map(
-                                (education, index) => (
-                                    <div key={index}>
-                                        <p>{education.school || ""}</p>
-                                        <p>
-                                            {education.city || ""},{" "}
-                                            {education.country || ""}
-                                        </p>
-                                        <p>{education.degree || ""}</p>
-                                        <p>{education.endDate || ""}</p>
-                                    </div>
-                                )
-                            )}
-                        </div>
-                        <div>
-                            <h2 className="font-semibold text-lg">
-                                Experience
-                            </h2>
-                            {resumeSubmission.experiences.map(
-                                (experience, index) => (
-                                    <div key={index}>
-                                        <p>
-                                            {experience.city || ""},{" "}
-                                            {experience.country || ""}
-                                        </p>
-                                        <p>{experience.jobTitle || ""}</p>
-                                        <p>{experience.employer || ""}</p>
-                                        <p>{experience.startDate || ""}</p>
-                                        <p>{experience.endDate || ""}</p>
-                                        <p>{experience.duties || ""}</p>
-                                    </div>
-                                )
-                            )}
-                        </div>
-                        <div>
-                            <h2 className="font-semibold text-lg">
-                                Skills & Certifications
-                            </h2>
-                            {resumeSubmission.skills.map((skill) => (
-                                <p key={skill.title}>{skill.title}</p>
-                            ))}
-                            {resumeSubmission.certificates.map(
-                                (certificate) => (
-                                    <p key={certificate.title}>
-                                        {certificate.title}
-                                    </p>
-                                )
-                            )}
-                            <p>
-                                English proficiency:{" "}
-                                {resumeSubmission.proficiency}
-                            </p>
-                        </div>
+                        {candidate.resume_submission?.phoneNumber && (
+                            <div className="flex items-center gap-1">
+                                <Phone className="h-4 w-4" />
+                                {candidate.resume_submission.phoneNumber}
+                            </div>
+                        )}
                     </div>
-                )}
-            <div className="flex flex-col space-y-5 justify-center items-center pt-5">
-                {matches?.map((match) => (
-                    <Card key={match.id} className="flex flex-col w-2/3">
+                </div>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Status</CardTitle>
+                        <CardDescription>
+                            Current application status
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            <div>
+                                <div className="text-sm font-medium">
+                                    Current Status
+                                </div>
+                                <Badge variant="outline" className="mt-1">
+                                    Searching
+                                </Badge>
+                            </div>
+                            <div>
+                                <div className="text-sm font-medium">
+                                    Last Updated
+                                </div>
+                                <LastUpdated date={Date.now().toString()} />
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Quick Actions</CardTitle>
+                        <CardDescription>
+                            Common tasks and actions
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex flex-wrap gap-2">
+                            <Button variant="outline">Update Status</Button>
+                            <Button variant="outline">Send Message</Button>
+                            <Button variant="outline">
+                                Schedule Interview
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <Tabs defaultValue="resume" className="w-full">
+                <TabsList>
+                    <TabsTrigger value="resume">Resume</TabsTrigger>
+                    <TabsTrigger value="jobs">Matched Jobs</TabsTrigger>
+                    <TabsTrigger value="timeline">Timeline</TabsTrigger>
+                </TabsList>
+                <TabsContent value="resume" className="mt-6">
+                    {candidate.resume_submission && (
+                        <ResumeDetails
+                            resumeSubmission={candidate.resume_submission}
+                        />
+                    )}
+                </TabsContent>
+                <TabsContent value="jobs">
+                    <Card>
                         <CardHeader>
-                            <CardTitle>{match.job.company}</CardTitle>
-                            <CardDescription>{match.job.title}</CardDescription>
+                            <CardTitle>Matched Jobs</CardTitle>
+                            <CardDescription>
+                                Jobs that match this candidate&apos;s profile
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <RadialChart
-                                chartData={[
-                                    {
-                                        browser: "safari",
-                                        rating: match.rating,
-                                        fill: "#06b6d4",
-                                    },
-                                ]}
-                            />
+                            <div className="text-sm text-muted-foreground">
+                                No matched jobs yet.
+                            </div>
                         </CardContent>
-                        <CardFooter className="flex justify-between">
-                            <Button variant="outline">Cancel</Button>
-                            <Button>Contact Candidate</Button>
-                        </CardFooter>
                     </Card>
-
-                    // <p key={match.id}>{match.rating}</p>
-                ))}
-            </div>
+                </TabsContent>
+                <TabsContent value="timeline">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Activity Timeline</CardTitle>
+                            <CardDescription>
+                                Recent activity and updates
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-sm text-muted-foreground">
+                                No recent activity.
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+            </Tabs>
         </div>
     )
 }
-
-export default Candidate

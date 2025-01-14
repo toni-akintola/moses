@@ -1,16 +1,40 @@
 "use server"
 import OpenAI from "openai"
 import { ResumeSubmission } from "../../types/types"
-import pdfParse from "pdf-parse"
+import PDFParser from "pdf2json"
 
 export async function extractTextFromPDF(file: Buffer): Promise<string> {
-    try {
-        const data = await pdfParse(file)
-        return data.text
-    } catch (error) {
-        console.error("Error parsing PDF:", error)
-        throw new Error("Failed to parse PDF file")
-    }
+    return new Promise((resolve, reject) => {
+        const pdfParser = new PDFParser()
+
+        pdfParser.on("pdfParser_dataReady", (pdfData) => {
+            try {
+                const text = decodeURIComponent(
+                    pdfData.Pages.reduce((acc, page) => {
+                        return (
+                            acc +
+                            page.Texts.map((text) =>
+                                text.R.map((r) => r.T).join(" ")
+                            ).join(" ")
+                        )
+                    }, "")
+                )
+                resolve(text)
+            } catch (error) {
+                reject(error)
+            }
+        })
+
+        pdfParser.on("pdfParser_dataError", (error) => {
+            reject(error)
+        })
+
+        try {
+            pdfParser.parseBuffer(file)
+        } catch (error) {
+            reject(error)
+        }
+    })
 }
 
 export async function vectorize(data: string) {

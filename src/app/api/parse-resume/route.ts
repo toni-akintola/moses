@@ -1,33 +1,44 @@
 import { NextRequest, NextResponse } from "next/server"
 import { extractTextFromPDF, parseResume } from "@/functions/openai"
 
-// // Temporary route for testing
-// export async function GET() {
-//     return NextResponse.json({ message: "API route is working" })
-// }
-
 export async function POST(req: NextRequest) {
     try {
-        const { file } = await req.json()
-
+        const formData = await req.formData()
+        const file = formData.get("file") as File
         if (!file) {
             return NextResponse.json(
                 { error: "No file provided" },
                 { status: 400 }
             )
         }
-        // console.log(file)
-        // // Convert File to Buffer
-        // const buffer = Buffer.from(await file.arrayBuffer())
 
-        // // Extract text from PDF
-        // const text = await extractTextFromPDF(buffer)
+        // Convert File to Buffer
+        let buffer: Buffer
+        try {
+            buffer = Buffer.from(await file.arrayBuffer())
+        } catch (bufferError) {
+            console.error("Error converting file to buffer:", bufferError)
+            return NextResponse.json(
+                { error: "Failed to process file" },
+                { status: 422 }
+            )
+        }
 
-        // // Parse resume using OpenAI
-        // const parsedData = await parseResume(text)
-        // console.log(parsedData)
-        // return NextResponse.json(parsedData)
-        return NextResponse.json({ message: "API route is working" })
+        let text
+        try {
+            text = await extractTextFromPDF(buffer)
+        } catch (pdfError) {
+            console.error("Error extracting text from PDF:", pdfError)
+            console.log(pdfError)
+            return NextResponse.json(
+                { error: "Failed to extract text from PDF" },
+                { status: 422 }
+            )
+        }
+
+        const parsedResume = await parseResume(text)
+        console.log(parsedResume)
+        return NextResponse.json({ message: "File received" })
     } catch (error) {
         console.error("Error processing resume:", error)
         return NextResponse.json(

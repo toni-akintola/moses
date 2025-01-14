@@ -31,16 +31,15 @@ const ResumeUpload = ({ onUploadComplete, className }: ResumeUploadProps) => {
 
         try {
             setLoading(true)
-            //   const formData = new FormData()
-            //   formData.append("file", file)
-            console.log(file)
+            // Create FormData and append the file
+            const formData = new FormData()
+            formData.append("file", file)
 
             const response = await fetch("/api/parse-resume", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ file: file }),
+                // Remove the Content-Type header - FormData will set it automatically
+                // with the correct boundary for multipart/form-data
+                body: formData,
             })
 
             if (!response.ok) {

@@ -1,44 +1,45 @@
 "use client"
 
 import { useState } from "react"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Icons } from "@/components/ui/icons"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
-import { ProfileFormValues } from "./create-profile"
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter,
+} from "@/components/ui/card"
+import { Loader2 } from "lucide-react"
 
 interface ResumeUploadProps {
-    onUploadComplete: (data: ProfileFormValues) => void
+    onUploadComplete: (data: any) => void
     className?: string
 }
 
-const ResumeUpload = ({ onUploadComplete, className }: ResumeUploadProps) => {
+export function ResumeUpload({
+    onUploadComplete,
+    className,
+}: ResumeUploadProps) {
     const [file, setFile] = useState<File | null>(null)
     const [loading, setLoading] = useState(false)
     const { toast } = useToast()
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (!file) {
-            toast({
-                title: "No file selected",
-                description: "Please select a resume file to upload",
-                variant: "destructive",
-            })
-            return
-        }
+    const handleUpload = async () => {
+        if (!file) return
+
+        setLoading(true)
+        const formData = new FormData()
+        formData.append("file", file)
 
         try {
-            setLoading(true)
-            // Create FormData and append the file
-            const uploadData = new FormData()
-            uploadData.append("file", file)
-
             const response = await fetch("/api/parse-resume", {
                 method: "POST",
-                body: uploadData,
+                body: formData,
             })
 
             if (!response.ok) {
@@ -46,63 +47,16 @@ const ResumeUpload = ({ onUploadComplete, className }: ResumeUploadProps) => {
             }
 
             const data = await response.json()
-
-            // Convert the parsed resume data to match form fields
-            const formFields: ProfileFormValues = {
-                firstName: data.firstName || "",
-                lastName: data.lastName || "",
-                email: data.email || "",
-                phoneNumber: data.phoneNumber
-                    ? parseInt(data.phoneNumber.replace(/\D/g, ""))
-                    : 0,
-                proficiency: 1, // Default to Level 1 if not provided
-                educations: data.educations || [
-                    {
-                        school: "",
-                        country: "",
-                        city: "",
-                        degree: "",
-                        endDate: "",
-                        completed: false,
-                    },
-                ],
-                experiences: data.experiences || [
-                    {
-                        jobTitle: "",
-                        employer: "",
-                        startDate: "",
-                        endDate: "",
-                        country: "",
-                        city: "",
-                        duties: "",
-                    },
-                ],
-                skills: data.skills || [
-                    {
-                        title: "",
-                    },
-                ],
-                certificates: data.certificates || [
-                    {
-                        title: "",
-                    },
-                ],
-                authorizationStatus: data.authorizationStatus === "true",
-            }
-
-            onUploadComplete(formFields)
-
+            onUploadComplete(data)
             toast({
-                title: "Resume uploaded successfully",
-                description:
-                    "Your resume has been processed and the form will be pre-filled with the extracted information.",
+                title: "Success",
+                description: "Resume uploaded successfully",
             })
         } catch (error) {
             console.error("Error uploading resume:", error)
             toast({
-                title: "Error uploading resume",
-                description:
-                    "There was a problem uploading your resume. Please try again.",
+                title: "Error",
+                description: "Failed to upload resume",
                 variant: "destructive",
             })
         } finally {
@@ -111,30 +65,37 @@ const ResumeUpload = ({ onUploadComplete, className }: ResumeUploadProps) => {
     }
 
     return (
-        <form onSubmit={onSubmit} className={cn("space-y-4", className)}>
-            <div className="grid w-full gap-1.5">
-                <Label htmlFor="resume">Upload Resume</Label>
-                <div className="flex items-center gap-2">
+        <Card>
+            <CardHeader>
+                <CardTitle>Upload Resume</CardTitle>
+                <CardDescription>
+                    Upload your resume in PDF or DOCX format
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="resume">Resume</Label>
                     <Input
                         id="resume"
                         type="file"
-                        accept=".pdf,.doc,.docx"
+                        accept=".pdf,.docx"
                         onChange={(e) => setFile(e.target.files?.[0] || null)}
-                        className="flex-1"
                     />
-                    <Button type="submit" disabled={!file || loading}>
-                        {loading ? (
-                            <Icons.spinner className="h-4 w-4 animate-spin" />
-                        ) : (
-                            "Upload"
-                        )}
-                    </Button>
+                    <p className="text-sm text-muted-foreground">
+                        Supported formats: PDF, DOCX
+                    </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                    Supported formats: PDF, DOC, DOCX
-                </p>
-            </div>
-        </form>
+            </CardContent>
+            <CardFooter>
+                <Button onClick={handleUpload} disabled={!file || loading}>
+                    {loading ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                        "Upload"
+                    )}
+                </Button>
+            </CardFooter>
+        </Card>
     )
 }
 

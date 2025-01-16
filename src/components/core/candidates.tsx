@@ -137,17 +137,28 @@ const Candidates = async (props: Props) => {
                                                             &apos;s Resume
                                                         </SheetTitle>
                                                         <SheetDescription>
-                                                            View detailed resume
-                                                            information
+                                                            <Link
+                                                                href={`candidates/${candidate.id}`}
+                                                                className="hover:text-primary transition-colors"
+                                                            >
+                                                                View detailed
+                                                                resume
+                                                                information
+                                                            </Link>
                                                         </SheetDescription>
                                                     </SheetHeader>
                                                     <div className="mt-6">
-                                                        {candidate.resume_submission && (
+                                                        {candidate.resume_submission ? (
                                                             <ResumeDetails
                                                                 resumeSubmission={
                                                                     candidate.resume_submission
                                                                 }
                                                             />
+                                                        ) : (
+                                                            <p className="text-muted-foreground">
+                                                                No resume data
+                                                                available
+                                                            </p>
                                                         )}
                                                     </div>
                                                 </SheetContent>

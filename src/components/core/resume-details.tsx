@@ -48,7 +48,7 @@ export function ResumeDetails({ resumeSubmission }: ResumeDetailsProps) {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-4">
-                                {resumeSubmission.educations.map(
+                                {resumeSubmission.educations?.map(
                                     (edu, index) => (
                                         <div
                                             key={index}
@@ -83,7 +83,7 @@ export function ResumeDetails({ resumeSubmission }: ResumeDetailsProps) {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-4">
-                                {resumeSubmission.experiences.map(
+                                {resumeSubmission.experiences?.map(
                                     (exp, index) => (
                                         <div
                                             key={index}
@@ -122,11 +122,13 @@ export function ResumeDetails({ resumeSubmission }: ResumeDetailsProps) {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className="flex flex-wrap gap-2">
-                                {resumeSubmission.skills.map((skill, index) => (
-                                    <Badge key={index} variant="secondary">
-                                        {skill.title}
-                                    </Badge>
-                                ))}
+                                {resumeSubmission.skills?.map(
+                                    (skill, index) => (
+                                        <Badge key={index} variant="secondary">
+                                            {skill.title}
+                                        </Badge>
+                                    )
+                                )}
                             </div>
                         </AccordionContent>
                     </AccordionItem>
@@ -140,7 +142,7 @@ export function ResumeDetails({ resumeSubmission }: ResumeDetailsProps) {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-2">
-                                {resumeSubmission.certificates.map(
+                                {resumeSubmission.certificates?.map(
                                     (cert, index) => (
                                         <div
                                             key={index}

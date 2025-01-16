@@ -1,51 +1,91 @@
+import {
+    isBlueCollarJob,
+    fetchJobsForLocation,
+    BLUE_COLLAR_QUERIES,
+    MIDWEST_LOCATIONS,
+    storeJobsInDatabase,
+    markOldJobsInactive,
+    waitForRateLimit,
+} from "./index"
 import { Job } from "../../../../types/types"
 
-export const dynamic = "force-dynamic" // static by default, unless reading the request
+export const dynamic = "force-dynamic"
+
+// Vercel Cron Job configuration
+export const config = {
+    maxDuration: 300, // Set maximum duration to 5 minutes
+}
+
+export async function GET(request: Request) {
+    // This is for testing the endpoint
+    const { searchParams } = new URL(request.url)
+    const testMode = searchParams.get("test") === "true"
+
+    if (testMode) {
+        // For testing, only use first location and first query
+        return handleJobFetch([MIDWEST_LOCATIONS[0]], [BLUE_COLLAR_QUERIES[0]])
+    }
+
+    return handleJobFetch(MIDWEST_LOCATIONS, BLUE_COLLAR_QUERIES)
+}
 
 export async function POST(request: Request) {
-    const data = await request.json()
+    // This endpoint will be called by the Vercel Cron Job
+    return handleJobFetch(MIDWEST_LOCATIONS, BLUE_COLLAR_QUERIES)
+}
 
-    if (!data.query || !data.location)
+async function handleJobFetch(locations: string[], queries: string[]) {
+    try {
+        const allJobs: Job[] = []
+        const processedLocations = new Set<string>()
+        const processedJobIds = new Set<string>()
+
+        // Mark old jobs as inactive before fetching new ones
+        await markOldJobsInactive()
+
+        // Fetch jobs for each location and query combination
+        for (const location of locations) {
+            for (const query of queries) {
+                // Respect rate limits
+                await waitForRateLimit()
+
+                const jobs = await fetchJobsForLocation(location, query)
+
+                // Filter and deduplicate jobs
+                for (const job of jobs) {
+                    if (!processedJobIds.has(job.id) && isBlueCollarJob(job)) {
+                        processedLocations.add(location)
+                        processedJobIds.add(job.id)
+                        allJobs.push(job)
+                    }
+                }
+            }
+        }
+
+        // Store jobs in database
+        if (allJobs.length > 0) {
+            await storeJobsInDatabase(allJobs)
+        }
+
+        // Return statistics along with the jobs
+        return Response.json({
+            success: true,
+            stats: {
+                totalJobs: allJobs.length,
+                locationsProcessed: Array.from(processedLocations),
+                timestamp: new Date().toISOString(),
+            },
+        })
+    } catch (error) {
+        console.error("Error in job sourcing:", error)
         return Response.json(
             {
-                error: "Please include query and location strings in your request body.",
+                success: false,
+                error: "Failed to source jobs",
+                details:
+                    error instanceof Error ? error.message : "Unknown error",
             },
             { status: 500 }
         )
-
-    const baseUrl = "https://jobs-api14.p.rapidapi.com/v2/list"
-
-    // Define query parameters
-    const params = {
-        query: data.query,
-        location: data.location,
     }
-
-    // Create a URL object
-    const url = new URL(baseUrl)
-
-    // Append query parameters
-    Object.entries(params).forEach(([key, value]) => {
-        url.searchParams.append(key, value)
-    })
-
-    const options = {
-        method: "GET",
-        headers: {
-            "x-rapidapi-key": process.env.RAPID_API_KEY!,
-            "x-rapidapi-host": "jobs-api14.p.rapidapi.com",
-        },
-    }
-
-    try {
-        const response = await fetch(url, options)
-        const result = await response.json()
-        console.log(result, response.status)
-        const jobs: Job[] = result.jobs
-        return Response.json(jobs)
-    } catch (error) {
-        console.error(error)
-    }
-
-    return new Response(`Hello from ${process.env.VERCEL_REGION}`)
 }

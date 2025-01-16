@@ -50,10 +50,10 @@ export interface AdditionalInfo {
 
 export interface Job {
     id: string
-    jobProviders: {
-        provider: string
+    jobProviders: Array<{
+        jobProvider: string
         url: string
-    }
+    }>
     url: string
     location: string
     salaryRange: string
@@ -64,6 +64,8 @@ export interface Job {
     description: string
     employmentType: string
     image: string
+    is_active: boolean
+    created_at: string
 }
 
 export interface Profile {

@@ -1,6 +1,10 @@
 import React from "react"
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-type Props = {}
+import { JobDetails } from "@/components/core/job-details"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
 const Job = async ({ params }: { params: { slug: string } }) => {
     const { slug: jobID } = params
@@ -9,21 +13,25 @@ const Job = async ({ params }: { params: { slug: string } }) => {
         .from("jobs")
         .select("*")
         .eq("id", jobID)
-    console.log(jobData, error)
-    const job = jobData ? jobData[0] : {}
+        .single()
+
+    if (error || !jobData) {
+        console.error("Error fetching job:", error)
+        notFound()
+    }
+
     return (
-        <div>
-            {job && (
-                <div>
-                    <p>{job.location || ""}</p>
-                    <p>{job.salaryRange || ""}</p>
-                    <p>{job.title || ""}</p>
-                    <p>{job.company || ""}</p>
-                    <p>{job.description || ""}</p>
-                    <p>{job.employmentType || ""}</p>
-                    <p>{job.datePosted || ""}</p>
-                </div>
-            )}
+        <div className="space-y-6">
+            <div className="flex items-center gap-4">
+                <Link href="/core/search">
+                    <Button variant="ghost" size="icon">
+                        <ArrowLeft className="h-4 w-4" />
+                    </Button>
+                </Link>
+                <h1 className="text-2xl font-bold">Job Details</h1>
+            </div>
+
+            <JobDetails job={jobData} />
         </div>
     )
 }

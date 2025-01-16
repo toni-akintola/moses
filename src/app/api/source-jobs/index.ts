@@ -1,5 +1,7 @@
 import { createBackendSupabaseClient } from "@/utils/supabase/server"
 import { Job } from "../../../../types/types"
+import { nanoid } from "@/utils/helpers"
+import { randomUUID } from "crypto"
 
 // Define Midwest locations
 export const MIDWEST_LOCATIONS = [
@@ -103,6 +105,7 @@ export async function storeJobsInDatabase(jobs: Job[]) {
     const { error } = await supabase.from("jobs").upsert(
         jobs.map((job) => ({
             ...job,
+            id: randomUUID(),
             created_at: new Date().toISOString(),
             is_active: true,
         })),

@@ -1,8 +1,8 @@
 "use client"
-import React, { useRef } from "react"
-import { useMotionValueEvent, useScroll } from "framer-motion"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+import { ArrowRight } from "lucide-react"
 
 export const StickyScroll = ({
     content,
@@ -11,100 +11,88 @@ export const StickyScroll = ({
     content: {
         title: string
         description: string
-        content?: React.ReactNode | any
+        image: string
+        icon?: React.ReactNode
     }[]
     contentClassName?: string
 }) => {
-    const [activeCard, setActiveCard] = React.useState(0)
-    const ref = useRef<any>(null)
-    const { scrollYProgress } = useScroll({
-        // uncomment line 22 and comment line 23 if you DONT want the overflow container and want to have it change on the entire page scroll
-        // target: ref
-        container: ref,
-        offset: ["start start", "end start"],
-    })
-    const cardLength = content.length
+    const [activeCard, setActiveCard] = useState(0)
 
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        const cardsBreakpoints = content.map((_, index) => index / cardLength)
-        const closestBreakpointIndex = cardsBreakpoints.reduce(
-            (acc, breakpoint, index) => {
-                const distance = Math.abs(latest - breakpoint)
-                if (distance < Math.abs(latest - cardsBreakpoints[acc])) {
-                    return index
-                }
-                return acc
-            },
-            0
-        )
-        setActiveCard(closestBreakpointIndex)
-    })
-
-    const backgroundColors = [
-        "var(--slate-900)",
-        "var(--black)",
-        "var(--neutral-900)",
-    ]
-    const linearGradients = [
-        "linear-gradient(to bottom right, var(--cyan-500), var(--emerald-500))",
-        "linear-gradient(to bottom right, var(--pink-500), var(--indigo-500))",
-        "linear-gradient(to bottom right, var(--orange-500), var(--yellow-500))",
-    ]
     return (
-        <motion.div
-            animate={{
-                backgroundColor:
-                    backgroundColors[activeCard % backgroundColors.length],
-            }}
-            className="h-[30rem] overflow-y-auto flex justify-center space-x-10 rounded-md p-10 text-center"
-            ref={ref}
-        >
-            <div className="div relative flex items-start px-4">
-                <div className="max-w-2xl">
+        <div className="bg-slate-950 py-24 px-4 w-full">
+            <div className="text-center mb-16">
+                <h2 className="text-4xl font-bold text-white mb-4">
+                    How We Transform Your Career Journey
+                </h2>
+                <p className="text-lg text-slate-400">
+                    Innovative features that set us apart
+                </p>
+            </div>
+            <div className="w-full max-w-[1920px] mx-auto flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-12 rounded-2xl bg-slate-900/40 backdrop-blur-sm p-8 lg:p-12">
+                {/* Left Side - Clickable Text Content */}
+                <div className="w-full lg:w-1/2 space-y-8 pr-4">
                     {content.map((item, index) => (
-                        <div
+                        <motion.div
                             key={item.title + index}
-                            className="my-20 text-center flex flex-col items-center"
+                            onClick={() => setActiveCard(index)}
+                            className={`p-6 rounded-2xl transition-all duration-300 cursor-pointer group ${
+                                activeCard === index
+                                    ? "bg-slate-800/60 border border-[#06b6d4]/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                                    : "bg-transparent hover:bg-slate-800/30"
+                            }`}
+                            initial={{ opacity: 0.3 }}
+                            animate={{
+                                opacity: activeCard === index ? 1 : 0.7,
+                            }}
+                            transition={{ duration: 0.3 }}
                         >
-                            <motion.h2
-                                initial={{
-                                    opacity: 0,
-                                }}
-                                animate={{
-                                    opacity: activeCard === index ? 1 : 0.3,
-                                }}
-                                className="text-2xl font-bold text-slate-100"
-                            >
-                                {item.title}
-                            </motion.h2>
-                            <motion.p
-                                initial={{
-                                    opacity: 0,
-                                }}
-                                animate={{
-                                    opacity: activeCard === index ? 1 : 0.3,
-                                }}
-                                className="text-kg text-slate-300 max-w-sm mt-10"
-                            >
+                            <div className="flex items-center space-x-4 mb-4">
+                                {item.icon && (
+                                    <div className="text-[#06b6d4]">
+                                        {item.icon}
+                                    </div>
+                                )}
+                                <h3 className="text-2xl font-bold text-white">
+                                    {item.title}
+                                </h3>
+                            </div>
+                            <p className="text-slate-300 text-lg">
                                 {item.description}
-                            </motion.p>
-                        </div>
+                            </p>
+                            <div className="mt-4 flex justify-end">
+                                <ArrowRight className="h-6 w-6 text-[#06b6d4] group-hover:translate-x-2 transition-transform" />
+                            </div>
+                        </motion.div>
                     ))}
-                    <div className="h-40" />
+                </div>
+
+                {/* Right Side - Dynamic Image Display */}
+                <div className="hidden lg:block w-1/2 h-[600px] relative">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeCard}
+                            className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{
+                                opacity: 1,
+                                scale: 1,
+                            }}
+                            exit={{
+                                opacity: 0,
+                                scale: 0.9,
+                            }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <Image
+                                src={content[activeCard].image}
+                                alt={content[activeCard].title}
+                                fill
+                                className="object-cover transition-all duration-500 hover:scale-105"
+                            />
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </div>
-            <motion.div
-                animate={{
-                    background:
-                        linearGradients[activeCard % linearGradients.length],
-                }}
-                className={cn(
-                    "hidden lg:block h-60 w-80 rounded-md bg-white sticky top-10 overflow-hidden",
-                    contentClassName
-                )}
-            >
-                {content[activeCard].content ?? null}
-            </motion.div>
-        </motion.div>
+        </div>
     )
 }

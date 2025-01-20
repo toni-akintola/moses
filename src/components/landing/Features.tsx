@@ -1,76 +1,97 @@
 import Image from "next/image"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowRight } from "lucide-react"
+
+const features = [
+    {
+        name: "Comprehensive Resume Builder",
+        description:
+            "Craft a professional resume with our intuitive, AI-powered builder",
+        image: "/resume-builder.png",
+        gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+        featured: false,
+    },
+    {
+        name: "Multi-lingual Options",
+        description:
+            "Break language barriers with seamless multi-language support",
+        image: "/multilingual.png",
+        gradient: "from-[#278E9B80] to-[#B7BDC580]",
+        featured: false,
+    },
+    {
+        name: "Manage Matches & Candidates",
+        description:
+            "Streamline your hiring process with advanced candidate tracking",
+        image: "/candidates.png",
+        gradient: "from-[#278E9B80] to-[#B7BDC580]",
+        featured: true,
+    },
+    {
+        name: "Virtual AI Assistant",
+        description:
+            "Your personal AI-powered career companion and job search ally",
+        image: "/assistant.png",
+        gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+        featured: false,
+    },
+]
 
 const Features = () => {
     return (
-        <section className="py-20 px-4">
-            <div className="max-w-[1459px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-                {/* Feature 1 - Resume Builder */}
-                <div className="bg-gradient-radial from-[#814A9E80] to-[#BAB0BB80] rounded-[45px] p-12 shadow-md">
-                    <h2 className="text-white text-3xl font-bold mb-8">
-                        Comprehensive Resume Builder
-                    </h2>
-                    <div className="rounded-[30px] overflow-hidden">
-                        <Image
-                            src="/resume-builder.png"
-                            alt="Resume Builder Interface"
-                            width={746}
-                            height={429}
-                            className="w-full h-auto"
-                        />
-                    </div>
-                </div>
-
-                {/* Feature 2 - Multi-lingual */}
-                <div className="bg-gradient-radial from-[#278E9B80] to-[#B7BDC580] rounded-[45px] p-12 shadow-md">
-                    <h2 className="text-white text-3xl font-bold mb-8">
-                        Multi-lingual Options
-                    </h2>
-                    <div className="rounded-[18px] overflow-hidden">
-                        <Image
-                            src="/multilingual.png"
-                            alt="Language Options"
-                            width={498}
-                            height={284}
-                            className="w-full h-auto"
-                        />
-                    </div>
-                </div>
-
-                {/* Feature 3 - Performance Tracking */}
-                <div className="bg-gradient-radial from-[#278E9B80] to-[#B7BDC580] rounded-[45px] p-12 shadow-md">
-                    <h2 className="text-white text-3xl font-bold mb-8">
-                        Manage matches and candidates
-                    </h2>
-                    <div className="rounded-[26px] overflow-hidden">
-                        <Image
-                            src="/candidates.png"
-                            alt="Performance Analytics"
-                            width={864}
-                            height={275}
-                            className="w-full h-auto"
-                        />
-                    </div>
-                </div>
-
-                {/* Feature 4 - Virtual Assistant */}
-                <div className="bg-gradient-radial from-[#814A9E80] to-[#BAB0BB80] rounded-[45px] p-12 shadow-md">
-                    <h2 className="text-white text-3xl font-bold mb-8">
-                        Your very own virtual assistant
-                    </h2>
-                    <div className="bg-white rounded-[27px] p-4">
-                        <div className="rounded-[20px] overflow-hidden mb-4">
-                            <Image
-                                src="/assistant.png"
-                                alt="Virtual Assistant Interface"
-                                width={750}
-                                height={181}
-                                className="w-full h-auto"
-                            />
-                        </div>
-                    </div>
-                </div>
+        <div className="py-24 px-4 bg-slate-950">
+            <div className="text-center mb-16">
+                <h2 className="text-4xl font-bold text-white mb-4">
+                    Product Features
+                </h2>
+                <p className="text-lg text-slate-400">
+                    Powerful tools designed to elevate your job search and
+                    hiring process
+                </p>
             </div>
-        </section>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                {features.map((feature) => (
+                    <Card
+                        key={feature.name}
+                        className={`relative backdrop-blur-sm border-slate-800 ${
+                            feature.featured
+                                ? "bg-slate-900/40 border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                                : "bg-slate-900/40"
+                        }`}
+                    >
+                        {feature.featured && (
+                            <div className="absolute -top-4 left-0 right-0 flex justify-center">
+                                {/* <span className="bg-[#06b6d4] text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Most Popular
+                                </span> */}
+                            </div>
+                        )}
+                        <CardHeader>
+                            <CardTitle className="text-2xl text-white flex justify-between items-center">
+                                {feature.name}
+                                <ArrowRight className="h-6 w-6 text-[#06b6d4]" />
+                            </CardTitle>
+                            <p className="text-slate-400 mt-2">
+                                {feature.description}
+                            </p>
+                        </CardHeader>
+                        <CardContent>
+                            <div
+                                className={`rounded-[30px] overflow-hidden relative bg-gradient-to-br ${feature.gradient}`}
+                            >
+                                <Image
+                                    src={feature.image}
+                                    alt={feature.name}
+                                    width={864}
+                                    height={275}
+                                    className="w-full h-auto opacity-90 hover:opacity-100 transition-opacity duration-300"
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        </div>
     )
 }
 

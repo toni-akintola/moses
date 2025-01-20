@@ -1,5 +1,5 @@
 "use client"
-import { MainNav } from "@/components/layout/banner"
+import { MainNav } from "@/components/layout/main-nav"
 import { motion } from "framer-motion"
 import { LampContainer } from "@/components/ui/lamp"
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
@@ -35,6 +35,9 @@ import { Firebase } from "@/components/icons/firebase"
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
 import Features from "@/components/landing/Features"
 import GetStarted from "@/components/landing/GetStarted"
+import Pricing from "@/components/landing/Pricing"
+import { TestimonialScroll } from "@/components/ui/testimonial-scroll"
+import { LogoCarousel } from "@/components/ui/logo-carousel"
 
 export default function Home({ home, locale }: HomeProps) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
@@ -141,7 +144,7 @@ export default function Home({ home, locale }: HomeProps) {
                     </motion.div>
                 </div>
             </LampContainer>
-            <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">
+            {/* <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">
                 <Link href={`${locale}/resume-builder`}>
                     <PinContainer
                         title={home.create}
@@ -178,13 +181,28 @@ export default function Home({ home, locale }: HomeProps) {
                         </div>
                     </PinContainer>
                 </Link>
+            </div> */}
+            <div className="p-4 flex justify-center flex-col -mt-20">
+                <LogoCarousel />
+                <StickyScroll
+                    content={[
+                        {
+                            title: "Title 1",
+                            description: "Description 1",
+                            image: "/path/to/image1.jpg",
+                        },
+                        {
+                            title: "Title 2",
+                            description: "Description 2",
+                            image: "/path/to/image2.jpg",
+                        },
+                    ]}
+                />
+                <TestimonialScroll />
+                <Features />
+                <Pricing />
+                <GetStarted />
             </div>
-
-            <div className="p-4 flex justify-center">
-                <StickyScroll content={content} />
-            </div>
-            <Features />
-            <GetStarted />
         </div>
     )
 }

@@ -9,11 +9,11 @@ export const testPayloads = {
     candidateToJobs: {
         embedding: generateTestEmbedding(),
         profileID: "test-profile-id",
-        candidate: true
+        candidate: true,
     },
     jobToCandidates: {
         embedding: generateTestEmbedding(),
         profileID: "test-profile-id",
-        jobID: "test-job-id"
-    }
-} 
+        jobID: "test-job-id",
+    },
+}

@@ -1,4 +1,4 @@
-import { MainNav } from "@/components/layout/banner"
+import { MainNav } from "@/components/layout/main-nav"
 import { useTranslations } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 

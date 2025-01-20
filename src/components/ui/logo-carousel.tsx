@@ -7,37 +7,37 @@ export const LogoCarousel = () => {
     const logos = [
         {
             name: "Google",
-            logo: "/logos/google.svg",
-            grayscale: false,
+            logo: "/logos/henryfarms.svg",
+            grayscale: true,
         },
         {
             name: "Microsoft",
-            logo: "/logos/microsoft.svg",
+            logo: "/logos/TysonFoods.svg",
             grayscale: true,
         },
         {
             name: "Amazon",
-            logo: "/logos/amazon.svg",
+            logo: "logos/Welcome.US_logo.svg",
             grayscale: true,
         },
         {
             name: "Apple",
-            logo: "/logos/apple.svg",
+            logo: "/logos/AMPI.svg",
             grayscale: true,
         },
         {
             name: "Salesforce",
-            logo: "/logos/salesforce.svg",
+            logo: "/logos/accenture (1).svg",
             grayscale: true,
         },
         {
-            name: "Netflix",
-            logo: "/logos/netflix.svg",
+            name: "Salesforce",
+            logo: "/logos/CMC.svg",
             grayscale: true,
         },
         {
-            name: "Uber",
-            logo: "/logos/uber.svg",
+            name: "Salesforce",
+            logo: "/logos/IISTL.svg",
             grayscale: true,
         },
     ]
@@ -56,7 +56,7 @@ export const LogoCarousel = () => {
                 <motion.div
                     className="flex items-center justify-center space-x-12"
                     animate={{
-                        x: [0, -1000, 0],
+                        x: [-1200, 0, 1200],
                     }}
                     transition={{
                         duration: 20,
@@ -64,7 +64,7 @@ export const LogoCarousel = () => {
                         ease: "linear",
                     }}
                 >
-                    {[...logos, ...logos].map((logo, index) => (
+                    {[...logos].map((logo, index) => (
                         <motion.div
                             key={index}
                             className="flex items-center justify-center"

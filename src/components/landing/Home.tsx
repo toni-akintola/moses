@@ -38,6 +38,7 @@ import GetStarted from "@/components/landing/GetStarted"
 import Pricing from "@/components/landing/Pricing"
 import { TestimonialScroll } from "@/components/ui/testimonial-scroll"
 import { LogoCarousel } from "@/components/ui/logo-carousel"
+import CompetitiveAnalysis from "@/components/landing/CompetitiveAnalysis"
 
 export default function Home({ home, locale }: HomeProps) {
     const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
@@ -196,10 +197,16 @@ export default function Home({ home, locale }: HomeProps) {
                             description: "Description 2",
                             image: "/path/to/image2.jpg",
                         },
+                        {
+                            title: "Title 3",
+                            description: "Description 3",
+                            image: "/path/to/image2.jpg",
+                        },
                     ]}
                 />
                 <TestimonialScroll />
                 <Features />
+                <CompetitiveAnalysis />
                 <Pricing />
                 <GetStarted />
             </div>

@@ -13,8 +13,7 @@ const pricingPlans = [
     {
         name: "Candidates",
         price: "Free",
-        description:
-            "Perfect for job seekers looking to find their next opportunity",
+        description: "For individual job seekers",
         features: [
             "AI-powered job matching",
             "Resume parsing and analysis",
@@ -22,29 +21,26 @@ const pricingPlans = [
             "Application tracking",
             "Career insights dashboard",
         ],
-    },
-    {
-        name: "Employers",
-        price: "$99",
-        period: "/month",
-        description:
-            "Ideal for small to medium businesses looking to hire top talent",
-        features: [
-            "Post unlimited job listings",
-            "AI candidate matching",
-            "Advanced search filters",
-            "Applicant tracking system",
-            "Interview scheduling",
-            "Analytics dashboard",
-        ],
         featured: true,
     },
     {
         name: "Enterprise",
-        price: "Custom",
+        price: "Free",
+
+        description: "For businesses looking to place blue collar candidates",
+        features: [
+            "Post unlimited job listings",
+            "AI candidate matching",
+            "Applicant tracking system",
+            "Interview scheduling",
+            "Analytics dashboard",
+        ],
+    },
+    {
+        name: "Employers",
+        price: "10% commission",
         description: "For large organizations with complex hiring needs",
         features: [
-            "Everything in Employers plan",
             "Custom API integration",
             "Dedicated account manager",
             "Custom workflow automation",
@@ -95,11 +91,11 @@ const Pricing = () => {
                                 <span className="text-4xl font-bold text-white">
                                     {plan.price}
                                 </span>
-                                {plan.period && (
+                                {/* {plan.period && (
                                     <span className="text-slate-400 ml-1">
                                         {plan.period}
                                     </span>
-                                )}
+                                )} */}
                             </div>
                             <ul className="space-y-3">
                                 {plan.features.map((feature) => (
@@ -121,7 +117,7 @@ const Pricing = () => {
                                         : "bg-slate-800 hover:bg-slate-700 text-white border border-slate-700"
                                 }`}
                             >
-                                {plan.name === "Enterprise"
+                                {plan.name === "Employers"
                                     ? "Contact Sales"
                                     : "Get Started"}
                             </Button>

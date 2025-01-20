@@ -3,6 +3,7 @@ import { MainNav } from "@/components/layout/main-nav"
 import { motion } from "framer-motion"
 import { LampContainer } from "@/components/ui/lamp"
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
+import { FuturisticScrollbar } from "@/components/ui/futuristic-scrollbar"
 
 import { PinContainer } from "@/components/ui/3d-pin"
 import Link from "next/link"

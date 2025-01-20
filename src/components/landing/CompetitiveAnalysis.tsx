@@ -133,7 +133,7 @@ const CompetitiveAnalysis = () => {
                         <div className="mt-6">
                             <Button
                                 variant="outline"
-                                className="w-full border-slate-700 text-slate-300 hover:bg-slate-800/50 hover:text-white"
+                                className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
                             >
                                 Visit LinkedIn
                             </Button>
@@ -171,7 +171,7 @@ const CompetitiveAnalysis = () => {
                         <div className="mt-6">
                             <Button
                                 variant="outline"
-                                className="w-full border-slate-700 text-slate-300 hover:bg-slate-800/50 hover:text-white"
+                                className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
                             >
                                 Visit Indeed
                             </Button>

@@ -48,15 +48,27 @@ export interface AdditionalInfo {
     certificates: Certificate[]
 }
 
-export type Job = {
+export interface Job {
     id: string
-    employer_id: string
+    employer_id?: string
+    jobProviders: {
+        jobProvider: string
+        url: string
+    }[]
+    url: string
+    location: string
+    salaryRange: string
     title: string
+    company: string
+    datePosted: string
+    embedding: number[]
     description: string
-    requirements: string[]
-    status: "active" | "closed" | "draft"
+    employmentType: string
+    image: string
     created_at: string
     updated_at: string
+    status: "active" | "closed" | "draft"
+    is_active: boolean
 }
 
 export interface Profile {

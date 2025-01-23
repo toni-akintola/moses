@@ -47,7 +47,7 @@ export default function Home({ home, locale }: HomeProps) {
             title: "Comprehensive Resume Builder",
             description:
                 "Craft a professional resume with our intuitive, AI-powered builder",
-            image: "/resume-builder.png",
+            image: "/screenshots/resume-builder.png",
             gradient: "from-[#814A9E80] to-[#BAB0BB80]",
             featured: false,
         },
@@ -55,7 +55,7 @@ export default function Home({ home, locale }: HomeProps) {
             title: "Multi-lingual Options",
             description:
                 "Break language barriers with seamless multi-language support",
-            image: "/multilingual.png",
+            image: "/screenshots/job-search.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
             featured: false,
         },
@@ -63,7 +63,7 @@ export default function Home({ home, locale }: HomeProps) {
             title: "Manage Matches & Candidates",
             description:
                 "Streamline your hiring process with advanced candidate tracking",
-            image: "/candidates.png",
+            image: "/screenshots/dashboard.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
             featured: true,
         },
@@ -71,7 +71,7 @@ export default function Home({ home, locale }: HomeProps) {
             title: "Virtual AI Assistant",
             description:
                 "Your personal AI-powered career companion and job search ally",
-            image: "/assistant.png",
+            image: "/screenshots/personal-assistant.png",
             gradient: "from-[#814A9E80] to-[#BAB0BB80]",
             featured: false,
         },

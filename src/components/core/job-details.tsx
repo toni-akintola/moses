@@ -72,7 +72,8 @@ export function JobDetails({ job, showApplyButton = true }: JobDetailsProps) {
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <CalendarDays className="h-4 w-4" />
                             Posted:{" "}
-                            {new Date(job.datePosted).toLocaleDateString()}
+                            {/* {new Date(job.datePosted).toLocaleDateString()} */}
+                            {job.datePosted}
                         </div>
                         <div className="flex items-center gap-2">
                             <Clock className="h-4 w-4" />

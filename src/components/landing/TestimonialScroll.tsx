@@ -24,19 +24,19 @@ export const TestimonialScroll = () => {
             rating: 5,
         },
         {
-            name: "Lilliam Post",
-            role: "Community Liaison",
-            company: "Catholic Multicultural Center",
-            quote: "I am excited [about] the pilot project. Èxodo is giving us hope in securing jobs for people in our community.",
-            image: "/headshots/lpost.png",
-            rating: 5,
-        },
-        {
             name: "Chris Grandpre",
             role: "Operating Partner",
             company: "MidOcean Partners",
             quote: "As more American youth attend four-year colleges compared to previous generations, there is an aging trade labor force in the U.S. and an increasing gap in labor supply in the trades relative to the demand.  Tools like this can help blue collar employers address this challenge.",
             image: "/headshots/cgrandpre.png",
+            rating: 5,
+        },
+        {
+            name: "Lilliam Post",
+            role: "Community Liaison",
+            company: "Catholic Multicultural Center",
+            quote: "I am excited [about] the pilot project. Èxodo is giving us hope in securing jobs for people in our community.",
+            image: "/headshots/lpost.png",
             rating: 5,
         },
     ]
@@ -55,10 +55,11 @@ export const TestimonialScroll = () => {
         <div className="bg-slate-950 py-24 px-4 w-full overflow-hidden">
             <div className="text-center mb-16">
                 <h2 className="text-4xl font-bold text-white mb-4">
-                    What Our Users Say
+                    What People Are Saying About Èxodo
                 </h2>
                 <p className="text-lg text-slate-400">
-                    Real stories from people whose careers have been transformed
+                    Whether you're an executive or a community leader, Èxodo can
+                    be your superpower.
                 </p>
             </div>
             <div className="max-w-4xl mx-auto relative group">

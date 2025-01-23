@@ -159,7 +159,10 @@ export default function Home({ home, locale }: HomeProps) {
             <div className="p-4 flex justify-center flex-col -mt-40">
                 <TypePicker
                     options={[
-                        { value: "candidate", label: "Candidates" },
+                        {
+                            value: "candidate",
+                            label: "Candidates & Enterprises",
+                        },
                         { value: "employer", label: "Employers" },
                     ]}
                     activeOption={userType}

@@ -1,98 +1,111 @@
+"use client"
+import React, { useState } from "react"
+import { motion, AnimatePresence } from "motion/react"
 import Image from "next/image"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
 
-const features = [
-    {
-        name: "Comprehensive Resume Builder",
-        description:
-            "Craft a professional resume with our intuitive, AI-powered builder",
-        image: "/resume-builder.png",
-        gradient: "from-[#814A9E80] to-[#BAB0BB80]",
-        featured: false,
-    },
-    {
-        name: "Multi-lingual Options",
-        description:
-            "Break language barriers with seamless multi-language support",
-        image: "/multilingual.png",
-        gradient: "from-[#278E9B80] to-[#B7BDC580]",
-        featured: false,
-    },
-    {
-        name: "Manage Matches & Candidates",
-        description:
-            "Streamline your hiring process with advanced candidate tracking",
-        image: "/candidates.png",
-        gradient: "from-[#278E9B80] to-[#B7BDC580]",
-        featured: true,
-    },
-    {
-        name: "Virtual AI Assistant",
-        description:
-            "Your personal AI-powered career companion and job search ally",
-        image: "/assistant.png",
-        gradient: "from-[#814A9E80] to-[#BAB0BB80]",
-        featured: false,
-    },
-]
+export const Features = ({
+    content,
+    userType = "candidate",
+}: {
+    content: {
+        title: string
+        description: string
+        image: string
+        icon?: React.ReactNode
+    }[]
+    userType?: "candidate" | "employer"
+}) => {
+    const [activeCard, setActiveCard] = useState(0)
 
-const Features = () => {
     return (
-        <div className="py-24 px-4 bg-slate-950">
+        <div className="bg-slate-950 py-24 px-4 w-full">
             <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
-                    Product Features
-                </h2>
+                <AnimatePresence mode="wait">
+                    <motion.h2
+                        key={userType}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 50 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-4xl font-bold text-white mb-4"
+                    >
+                        {userType === "candidate"
+                            ? "How We Transform Your Career Journey"
+                            : "Empowering Employers with Advanced Solutions"}
+                    </motion.h2>
+                </AnimatePresence>
                 <p className="text-lg text-slate-400">
-                    Powerful tools designed to elevate your job search and
-                    hiring process
+                    {userType === "candidate"
+                        ? "Innovative features that set us apart"
+                        : "Streamline your recruitment process"}
                 </p>
             </div>
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                {features.map((feature) => (
-                    <Card
-                        key={feature.name}
-                        className={`relative backdrop-blur-sm border-slate-800 ${
-                            feature.featured
-                                ? "bg-slate-900/40 border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-                                : "bg-slate-900/40"
-                        }`}
-                    >
-                        {feature.featured && (
-                            <div className="absolute -top-4 left-0 right-0 flex justify-center">
-                                {/* <span className="bg-[#06b6d4] text-white px-3 py-1 rounded-full text-sm font-medium">
-                                    Most Popular
-                                </span> */}
+            <div className="w-full max-w-[1920px] mx-auto flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-12 rounded-2xl bg-slate-900/40 backdrop-blur-sm p-8 lg:p-12">
+                {/* Left Side - Clickable Text Content */}
+                <div className="w-full lg:w-1/2 space-y-8 pr-4">
+                    {content.map((item, index) => (
+                        <motion.div
+                            key={item.title + index}
+                            onClick={() => setActiveCard(index)}
+                            className={`p-6 rounded-2xl transition-all duration-300 cursor-pointer group ${
+                                activeCard === index
+                                    ? "bg-slate-800/60 border border-[#06b6d4]/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                                    : "bg-transparent hover:bg-slate-800/30"
+                            }`}
+                            initial={{ opacity: 0.3 }}
+                            animate={{
+                                opacity: activeCard === index ? 1 : 0.7,
+                            }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <div className="flex items-center space-x-4 mb-4">
+                                {item.icon && (
+                                    <div className="text-[#06b6d4]">
+                                        {item.icon}
+                                    </div>
+                                )}
+                                <h3 className="text-2xl font-bold text-white">
+                                    {item.title}
+                                </h3>
                             </div>
-                        )}
-                        <CardHeader>
-                            <CardTitle className="text-2xl text-white flex justify-between items-center">
-                                {feature.name}
-                                <ArrowRight className="h-6 w-6 text-[#06b6d4]" />
-                            </CardTitle>
-                            <p className="text-slate-400 mt-2">
-                                {feature.description}
+                            <p className="text-slate-300 text-lg">
+                                {item.description}
                             </p>
-                        </CardHeader>
-                        <CardContent>
-                            <div
-                                className={`rounded-[30px] overflow-hidden relative bg-gradient-to-br ${feature.gradient}`}
-                            >
-                                <Image
-                                    src={feature.image}
-                                    alt={feature.name}
-                                    width={864}
-                                    height={275}
-                                    className="w-full h-auto opacity-90 hover:opacity-100 transition-opacity duration-300"
-                                />
+                            <div className="mt-4 flex justify-end">
+                                <ArrowRight className="h-6 w-6 text-[#06b6d4] group-hover:translate-x-2 transition-transform" />
                             </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Right Side - Dynamic Image Display */}
+                <div className="hidden lg:block w-1/2 h-[600px] relative">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeCard}
+                            className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{
+                                opacity: 1,
+                                scale: 1,
+                            }}
+                            exit={{
+                                opacity: 0,
+                                scale: 0.9,
+                            }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <Image
+                                src={content[activeCard].image}
+                                alt={content[activeCard].title}
+                                fill
+                                className="object-cover transition-all duration-500 hover:scale-105"
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </div>
         </div>
     )
 }
-
-export default Features

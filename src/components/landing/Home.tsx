@@ -2,7 +2,9 @@
 import { MainNav } from "@/components/layout/main-nav"
 import { motion } from "motion/react"
 import { LampContainer } from "@/components/ui/lamp"
-import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
+import { Features } from "@/components/landing/Features"
+import { useState } from "react"
+import { TypePicker } from "@/components/ui/type-picker"
 
 export type HomeMessage = {
     information: string
@@ -29,42 +31,84 @@ export type HomeProps = {
 }
 
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
-import Features from "@/components/landing/Features"
 import GetStarted from "@/components/landing/GetStarted"
 import Pricing from "@/components/landing/Pricing"
-import { TestimonialScroll } from "@/components/ui/testimonial-scroll"
-import { LogoCarousel } from "@/components/ui/logo-carousel"
+import { TestimonialScroll } from "@/components/landing/TestimonialScroll"
+import { LogoCarousel } from "@/components/landing/LogoCarousel"
 import CompetitiveAnalysis from "@/components/landing/CompetitiveAnalysis"
 
 export default function Home({ home, locale }: HomeProps) {
-    const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
-    const content = [
+    const [userType, setUserType] = useState<"candidate" | "employer">(
+        "candidate"
+    )
+
+    const candidateFeatures = [
         {
-            title: home.scrollOneTitle,
-            description: home.scrollOneDescription,
-            content: (
-                <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-                    {home.scrollOneCaption}
-                </div>
-            ),
+            title: "Comprehensive Resume Builder",
+            description:
+                "Craft a professional resume with our intuitive, AI-powered builder",
+            image: "/resume-builder.png",
+            gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+            featured: false,
         },
         {
-            title: home.scrollTwoTitle,
-            description: home.scrollTwoDescription,
-            content: (
-                <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-                    {home.scrollTwoCaption}
-                </div>
-            ),
+            title: "Multi-lingual Options",
+            description:
+                "Break language barriers with seamless multi-language support",
+            image: "/multilingual.png",
+            gradient: "from-[#278E9B80] to-[#B7BDC580]",
+            featured: false,
         },
         {
-            title: home.scrollThreeTitle,
-            description: home.scrollThreeDescription,
-            content: (
-                <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--violet-500),var(--cyan-500))] flex items-center justify-center text-white">
-                    {home.scrollThreeCaption}
-                </div>
-            ),
+            title: "Manage Matches & Candidates",
+            description:
+                "Streamline your hiring process with advanced candidate tracking",
+            image: "/candidates.png",
+            gradient: "from-[#278E9B80] to-[#B7BDC580]",
+            featured: true,
+        },
+        {
+            title: "Virtual AI Assistant",
+            description:
+                "Your personal AI-powered career companion and job search ally",
+            image: "/assistant.png",
+            gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+            featured: false,
+        },
+    ]
+
+    const employerFeatures = [
+        {
+            title: "Advanced Candidate Matching",
+            description:
+                "Leverage AI to find the most suitable candidates for your roles",
+            image: "/candidate-matching.png",
+            gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+            featured: false,
+        },
+        {
+            title: "Comprehensive Candidate Profiles",
+            description:
+                "Access detailed, multi-dimensional candidate insights",
+            image: "/candidate-profiles.png",
+            gradient: "from-[#278E9B80] to-[#B7BDC580]",
+            featured: false,
+        },
+        {
+            title: "Diversity & Inclusion Tools",
+            description:
+                "Enhance your hiring process with intelligent diversity screening",
+            image: "/diversity-tools.png",
+            gradient: "from-[#278E9B80] to-[#B7BDC580]",
+            featured: true,
+        },
+        {
+            title: "Recruitment Analytics",
+            description:
+                "Gain deep insights into your hiring performance and trends",
+            image: "/recruitment-analytics.png",
+            gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+            featured: false,
         },
     ]
 
@@ -76,43 +120,25 @@ export default function Home({ home, locale }: HomeProps) {
                 access={home.access}
             />
             <LampContainer className="h-full -mb-10 overflow-x-hidden">
-                <div className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-4">
-                    <motion.h1
-                        initial={{ opacity: 0.5, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{
-                            delay: 0.3,
-                            duration: 0.8,
-                            ease: "easeInOut",
-                        }}
-                        className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-7xl mt-10"
-                    >
+                <motion.div
+                    className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-4"
+                    initial={{ opacity: 0.5, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{
+                        delay: 0.3,
+                        duration: 0.8,
+                        ease: "easeInOut",
+                    }}
+                >
+                    <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-7xl mt-10">
                         {/* {home.title} */}
                         Job-matching redefined
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0.5, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{
-                            delay: 0.3,
-                            duration: 0.8,
-                            ease: "easeInOut",
-                        }}
-                        className="text-white text-lg"
-                    >
+                    </h1>
+                    <p className="text-white text-lg">
                         An AI-powered job placement solution for the vulnerable
                         and underserved.
-                    </motion.p>
-                    <motion.div
-                        initial={{ opacity: 0.5, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{
-                            delay: 0.3,
-                            duration: 0.8,
-                            ease: "easeInOut",
-                        }}
-                        className="w-3/4 md:w-2/3 text-center flex justify-between"
-                    >
+                    </p>
+                    <div className="w-3/4 md:w-2/3 text-center flex justify-between">
                         <motion.a
                             className="text-clear bg-laserBlue text-lg p-1 px-4 rounded-full"
                             href={`${locale}/core`}
@@ -126,82 +152,31 @@ export default function Home({ home, locale }: HomeProps) {
                         >
                             Learn more
                         </HoverBorderGradient>
-                        {/* <motion.button
-                            initial={{ opacity: 0.5, y: 100 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{
-                                delay: 0.3,
-                                duration: 0.8,
-                                ease: "easeInOut",
-                            }}
-                            className="text-clear text-lg p-1 px-4 rounded-full border border-laserBlue text-laserBlue"
-                        >
-                            Learn more
-                        </motion.button> */}
-                    </motion.div>
-                </div>
+                    </div>
+                </motion.div>
             </LampContainer>
-            {/* <div className="w-full flex items-center justify-center py-8 flex-col md:flex-row gap-y-20 mb-10">
-                <Link href={`${locale}/resume-builder`}>
-                    <PinContainer
-                        title={home.create}
-                        href={`${locale}/resume-builder`}
-                    >
-                        <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem] ">
-                            <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-slate-100">
-                                {home.create}
-                            </h3>
-                            <div className="text-base !m-0 !p-0 font-normal">
-                                <span className="text-slate-500 ">
-                                    {home.createSubtitle}
-                                </span>
-                            </div>
-                            <div className="flex flex-1 w-full rounded-lg mt-4 bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" />
-                        </div>
-                    </PinContainer>
-                </Link>
-                <Link href={`${locale}/moses`}>
-                    <PinContainer
-                        title={home.assistant}
-                        href={`${locale}/moses`}
-                    >
-                        <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem]">
-                            <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-slate-100">
-                                {home.assistant}
-                            </h3>
-                            <div className="text-base !m-0 !p-0 font-normal">
-                                <span className="text-slate-500 ">
-                                    {home.assistantSubtitle}
-                                </span>
-                            </div>
-                            <div className="flex flex-1 w-full rounded-lg mt-4 bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" />
-                        </div>
-                    </PinContainer>
-                </Link>
-            </div> */}
-            <div className="p-4 flex justify-center flex-col -mt-20">
-                <LogoCarousel />
-                <StickyScroll
-                    content={[
-                        {
-                            title: "Title 1",
-                            description: "Description 1",
-                            image: "/path/to/image1.jpg",
-                        },
-                        {
-                            title: "Title 2",
-                            description: "Description 2",
-                            image: "/path/to/image2.jpg",
-                        },
-                        {
-                            title: "Title 3",
-                            description: "Description 3",
-                            image: "/path/to/image2.jpg",
-                        },
+
+            <div className="p-4 flex justify-center flex-col -mt-40">
+                <TypePicker
+                    options={[
+                        { value: "candidate", label: "Candidates" },
+                        { value: "employer", label: "Employers" },
                     ]}
+                    activeOption={userType}
+                    onOptionChange={(option) =>
+                        setUserType(option as "candidate" | "employer")
+                    }
+                />
+
+                <Features
+                    content={
+                        userType === "candidate"
+                            ? candidateFeatures
+                            : employerFeatures
+                    }
+                    userType={userType}
                 />
                 <TestimonialScroll />
-                <Features />
                 <CompetitiveAnalysis />
                 <Pricing />
                 <GetStarted />

@@ -2,41 +2,41 @@
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import Image from "next/image"
-import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react"
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react"
 
 export const TestimonialScroll = () => {
     const [currentIndex, setCurrentIndex] = useState(0)
     const testimonials = [
         {
-            name: "Maria Rodriguez",
-            role: "Software Engineer",
-            company: "TechInnovate",
-            quote: "This platform completely transformed my job search. The AI-powered matching helped me find a role that perfectly aligns with my skills and career goals.",
-            image: "/testimonial-1.jpg",
+            name: "Jillian Snavley",
+            role: "Global Recruiting Sourcing Lead",
+            company: "Accenture",
+            quote: "I love how easy it is, like it’s quick and easy. Most of the technologies I’ve seen in this space are so complicated.",
+            image: "/headshots/jsnavley.png",
             rating: 5,
         },
         {
-            name: "Alex Chen",
-            role: "Product Manager",
-            company: "StartupHub",
+            name: "Richard Castellini",
+            role: "Former SVP",
+            company: "CareerBuilder",
             quote: "The resume builder is incredibly intuitive. I was able to create a professional resume in minutes, highlighting my strengths in ways I never thought possible.",
-            image: "/testimonial-2.jpg",
+            image: "/headshots/rcastellini.png",
             rating: 5,
         },
         {
-            name: "Sarah Thompson",
-            role: "HR Director",
-            company: "Global Enterprises",
-            quote: "As an employer, this platform has streamlined our hiring process. The candidate matching is precise and saves us countless hours of manual screening.",
-            image: "/testimonial-3.jpg",
+            name: "Lilliam Post",
+            role: "Community Liaison",
+            company: "Catholic Multicultural Center",
+            quote: "I am excited [about] the pilot project. Èxodo is giving us hope in securing jobs for people in our community.",
+            image: "/headshots/lpost.png",
             rating: 5,
         },
         {
-            name: "David Kim",
-            role: "Freelance Designer",
-            company: "Independent",
-            quote: "The multi-language support was a game-changer for me. I can now showcase my skills to international employers with ease.",
-            image: "/testimonial-4.jpg",
+            name: "Chris Grandpre",
+            role: "Operating Partner",
+            company: "MidOcean Partners",
+            quote: "As more American youth attend four-year colleges compared to previous generations, there is an aging trade labor force in the U.S. and an increasing gap in labor supply in the trades relative to the demand.  Tools like this can help blue collar employers address this challenge.",
+            image: "/headshots/cgrandpre.png",
             rating: 5,
         },
     ]
@@ -75,8 +75,8 @@ export const TestimonialScroll = () => {
                             <Image
                                 src={testimonials[currentIndex].image}
                                 alt={testimonials[currentIndex].name}
-                                width={100}
-                                height={100}
+                                width={500}
+                                height={500}
                                 className="rounded-full object-cover w-20 h-20"
                             />
                         </div>
@@ -87,26 +87,13 @@ export const TestimonialScroll = () => {
                                         {testimonials[currentIndex].name}
                                     </h3>
                                     <p className="text-slate-400 text-sm">
-                                        {testimonials[currentIndex].role} at{" "}
+                                        {testimonials[currentIndex].role} @{" "}
                                         {testimonials[currentIndex].company}
                                     </p>
                                 </div>
-                                <div className="flex text-[#06b6d4]">
-                                    {[
-                                        ...Array(
-                                            testimonials[currentIndex].rating
-                                        ),
-                                    ].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className="w-5 h-5 fill-current"
-                                        />
-                                    ))}
-                                </div>
                             </div>
                             <div className="relative mt-4">
-                                <Quote className="absolute -left-8 top-0 text-slate-700 w-6 h-6" />
-                                <p className="text-slate-300 italic pl-6">
+                                <p className="text-slate-300 italic text-balance">
                                     {testimonials[currentIndex].quote}
                                 </p>
                             </div>

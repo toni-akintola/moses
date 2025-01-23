@@ -6,7 +6,8 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-const Job = async ({ params }: { params: { slug: string } }) => {
+const Job = async (props: { params: Promise<{ slug: string }> }) => {
+    const params = await props.params
     const { slug: jobID } = params
     const supabase = await createClerkSupabaseClientSsr()
     const { data: jobData, error } = await supabase

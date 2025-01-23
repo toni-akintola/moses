@@ -16,12 +16,13 @@ import Link from "next/link"
 import { LastUpdated } from "@/components/ui/last-updated"
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string
-    }
+    }>
 }
 
-export default async function CandidatePage({ params }: Props) {
+export default async function CandidatePage(props: Props) {
+    const params = await props.params
     const supabase = await createClerkSupabaseClientSsr()
     const { userId } = await auth()
 

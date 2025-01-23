@@ -1,11 +1,9 @@
 "use client"
 import { MainNav } from "@/components/layout/main-nav"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { LampContainer } from "@/components/ui/lamp"
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
 
-import { PinContainer } from "@/components/ui/3d-pin"
-import Link from "next/link"
 export type HomeMessage = {
     information: string
     language: string
@@ -29,9 +27,7 @@ export type HomeProps = {
     home: HomeMessage
     locale: string
 }
-import { MongoDB } from "@/components/icons/mongo"
-import { ParallaxLogos } from "@/components/motion/ParallaxLogos"
-import { Firebase } from "@/components/icons/firebase"
+
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
 import Features from "@/components/landing/Features"
 import GetStarted from "@/components/landing/GetStarted"

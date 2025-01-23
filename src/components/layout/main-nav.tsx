@@ -4,7 +4,7 @@ import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu"
 
 import { cn } from "@/lib/utils"
 import { ChevronDownCircle, Copy, WaypointsIcon } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import {
     NavigationMenu,
     NavigationMenuContent,

@@ -11,9 +11,10 @@ import {
 } from "@/components/resume-forms/create-profile"
 import { useMessages } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
-import React from "react"
+import React, { use } from "react"
 
-const Page = ({ params }: { params: { locale: string } }) => {
+const Page = (props: { params: Promise<{ locale: string }> }) => {
+    const params = use(props.params)
     unstable_setRequestLocale(params.locale)
     const messages = useMessages()
     const resumeBuilderContent =

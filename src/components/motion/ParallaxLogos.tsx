@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, type JSX } from "react"
 import {
     motion,
     useScroll,
@@ -7,7 +7,7 @@ import {
     useMotionValue,
     useVelocity,
     useAnimationFrame,
-} from "framer-motion"
+} from "motion/react"
 import { wrap } from "@motionone/utils"
 
 interface ParallaxProps {

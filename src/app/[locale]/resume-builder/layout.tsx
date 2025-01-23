@@ -1,14 +1,16 @@
+import { use } from "react"
 import { MainNav } from "@/components/layout/main-nav"
 import { useTranslations } from "next-intl"
 import { unstable_setRequestLocale } from "next-intl/server"
 
-export default function Layout({
-    params,
-    children,
-}: {
+export default function Layout(props: {
     children: React.ReactNode
-    params: { locale: string }
+    params: Promise<{ locale: string }>
 }) {
+    const params = use(props.params)
+
+    const { children } = props
+
     unstable_setRequestLocale(params.locale)
     const t = useTranslations("home")
     return (

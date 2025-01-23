@@ -77,155 +77,50 @@ export function MainNav(props: NavProps) {
             <Logo locale={locale as string} />
             <div className="flex space-x-5 items-center">
                 <motion.a
-                    href="#"
+                    href="#product"
+                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-laserBlue font-medium"
                 >
                     Product
                 </motion.a>
                 <motion.a
-                    href="#"
+                    href="#solutions"
+                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-laserBlue font-medium"
                 >
                     Solutions
                 </motion.a>
                 <motion.a
-                    href="#"
+                    href="#resources"
+                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-laserBlue font-medium"
                 >
                     Resources
                 </motion.a>
                 <motion.a
-                    href="#"
+                    href="#pricing"
+                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-laserBlue font-medium"
                 >
                     Pricing
                 </motion.a>
                 <motion.a
-                    href="#"
+                    href="#about"
+                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-laserBlue font-medium"
                 >
                     {props.information}
                 </motion.a>
-                <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    {/* <Dialog>
-                        <DialogTrigger asChild>
-                            <Button className="bg-transparent hover:bg-transparent flex flex-row justify-center">
-                                <h2 className="text-laserBlue md:text-lg">
-                                    {props.language}
-                                </h2>
-                                <ChevronDownCircle className="text-laserBlue h-4" />
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent className="flex flex-col">
-                            <DialogHeader>
-                                <DialogTitle>Change language</DialogTitle>
-                                <DialogDescription>
-                                    Choose your language below.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <ul className="grid gap-3 p-6 grid-cols-2">
-                                <motion.a
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href="/en"
-                                    title="English"
-                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
-                                >
-                                    English
-                                </motion.a>
-                                <motion.a
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href="/es"
-                                    title="Español"
-                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
-                                >
-                                    Spanish
-                                </motion.a>
-                                <motion.a
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href="/zh-CN"
-                                    title="中国人"
-                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
-                                >
-                                    Chinese
-                                </motion.a>
-                                <motion.a
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href="/uk"
-                                    title="українська"
-                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
-                                >
-                                    Ukrainian
-                                </motion.a>
-                                <motion.a
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href="/ar-SA"
-                                    title="عربي"
-                                    className="bg-laserBlue rounded-md p-2 text-white flex items-center justify-center"
-                                >
-                                    Arabic
-                                </motion.a>
-                            </ul>
-                            <DialogFooter className="sm:justify-start">
-                                <DialogClose asChild>
-                                    <Button type="button" variant="secondary">
-                                        Close
-                                    </Button>
-                                </DialogClose>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog> */}
-                    {/* <NavigationMenu>
-                        <NavigationMenuList>
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger className="text-laserBlue font-medium bg-clear">
-                                    {props.language}
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                        <ListItem href="/en" title="English">
-                                            English
-                                        </ListItem>
-                                        <ListItem href="/es" title="Español">
-                                            Spanish
-                                        </ListItem>
-                                        <ListItem href="/zh-CN" title="中国人">
-                                            Chinese
-                                        </ListItem>
-                                        <ListItem href="/uk" title="українська">
-                                            Ukrainian
-                                        </ListItem>
-                                        <ListItem href="/ar-SA" title="عربي">
-                                            Arabic
-                                        </ListItem>
-                                    </ul>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-                        </NavigationMenuList>
-                    </NavigationMenu> */}
-                </motion.div>
             </div>
             <div className="lg:flex lg:flex-1 lg:justify-end space-x-2">
                 <motion.a
                     href={`/${locale}/core`}
-                    className="text-sm font-medium tracking-tight leading-6 text-white rounded-md py-1 px-2 md:py-2 md:px-4"
+                    className="text-sm font-medium tracking-tight leading-6 text-white rounded-md py-1 px-2 md:py-2 md:px-4 hover:bg-laserBlue/20 transition-all duration-300 ease-in-out"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
@@ -233,13 +128,14 @@ export function MainNav(props: NavProps) {
                 </motion.a>
                 <motion.a
                     href={`/${locale}/core`}
-                    className="text-sm font-medium tracking-tight leading-6 text-black bg-laserBlue rounded-full py-1 px-2 md:py-2 md:px-4"
+                    className="text-sm font-medium tracking-tight leading-6 text-black bg-laserBlue rounded-full py-1 px-2 md:py-2 md:px-4 hover:bg-laserBlue/80 transition-all duration-300 ease-in-out"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
                     Sign up for free
-                    {/* {props.access}  */}
-                    <span aria-hidden="true">&rarr;</span>
+                    <span aria-hidden="true" className="ml-1">
+                        &rarr;
+                    </span>
                 </motion.a>
             </div>
         </div>

@@ -48,24 +48,15 @@ export interface AdditionalInfo {
     certificates: Certificate[]
 }
 
-export interface Job {
+export type Job = {
     id: string
-    jobProviders: Array<{
-        jobProvider: string
-        url: string
-    }>
-    url: string
-    location: string
-    salaryRange: string
+    employer_id: string
     title: string
-    company: string
-    datePosted: string
-    embedding: number[]
     description: string
-    employmentType: string
-    image: string
-    is_active: boolean
+    requirements: string[]
+    status: "active" | "closed" | "draft"
     created_at: string
+    updated_at: string
 }
 
 export interface Profile {
@@ -80,23 +71,22 @@ export interface Profile {
     resumeSubmission?: ResumeSubmission
 }
 
-export interface Candidate {
+export type Candidate = {
     id: string
     profile_id: string
-    first_name: string
-    last_name: string
+    name: string
     email: string
-    resume_submission?: ResumeSubmission
-    embedding: number[]
+    created_at: string
+    updated_at: string
 }
 
-export interface Match {
-    id?: string
+export type Match = {
+    id: string
     profile_id: string
     job_id: string
-    employer_id: string
-    candidate_id: string
-    rating: number
+    score: number
+    created_at: string
+    updated_at: string
 }
 
 export type FormItemText = {
@@ -172,4 +162,20 @@ export interface JobEmbedding {
         employment_type: string
     }
     similarity: number
+}
+
+export type Application = {
+    id: string
+    job_id: string
+    employer_id: string
+    candidate_id: string
+    status:
+        | "pending"
+        | "reviewing"
+        | "interviewing"
+        | "offered"
+        | "accepted"
+        | "rejected"
+    created_at: string
+    updated_at: string
 }

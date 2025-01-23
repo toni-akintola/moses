@@ -67,8 +67,8 @@ const Pricing = () => {
                         key={plan.name}
                         className={`relative backdrop-blur-sm border-slate-800 ${
                             plan.featured
-                                ? "bg-slate-900/40 border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-                                : "bg-slate-900/40"
+                                ? "bg-slate-800 border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                                : "bg-slate-800/50"
                         }`}
                     >
                         {plan.featured && (

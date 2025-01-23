@@ -9,47 +9,47 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { createClerkSupabaseClientSsr } from "@/utils/supabase/server"
-import { Candidate, Match } from "../../../../types/types"
+import { Job, Application } from "../../../../../types/types"
 import { auth } from "@clerk/nextjs/server"
 import {
-    TargetIcon,
+    Briefcase,
     Users,
     TrendingUp,
-    Rocket,
+    Building2,
     Zap,
     Award,
     BarChart3,
-    Globe,
-    Briefcase,
     FileSpreadsheet,
     Filter,
     TrendingDown,
     Clock,
-    Building2,
     GraduationCap,
     LineChart,
     PieChart,
     Calendar,
+    DollarSign,
+    Target,
+    CheckCircle2,
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Progress from "@/components/ui/progress"
 
-export default async function Page() {
+export default async function EmployerDashboard() {
     const supabase = await createClerkSupabaseClientSsr()
     const { userId } = await auth()
     const profileID = userId
-    const { data: matchData, error: matchError } = await supabase
-        .from("matches")
+    const { data: jobsData } = await supabase
+        .from("jobs")
         .select("*")
-        .eq("profile_id", profileID)
-    const { data: candidateData, error } = await supabase
-        .from("candidates")
-        .select()
-        .eq("profile_id", profileID)
+        .eq("employer_id", profileID)
+    const { data: applicationsData } = await supabase
+        .from("applications")
+        .select("*")
+        .eq("employer_id", profileID)
 
-    const matches = matchData as Match[]
-    const candidates = candidateData as Candidate[]
+    const jobs = (jobsData as Job[]) || []
+    const applications = (applicationsData as Application[]) || []
 
     return (
         <ScrollArea className="h-full bg-white/95">
@@ -59,21 +59,21 @@ export default async function Page() {
                         className="text-4xl font-bold tracking-tight text-gray-900 
                         animate-fade-in-left opacity-0 animate-delay-300 animate-duration-700"
                     >
-                        Welcome Back, Innovator 🚀
+                        Welcome Back, Employer 🏢
                     </h2>
                     <div className="flex items-center space-x-4">
                         <Badge
                             variant="outline"
                             className="bg-laserBlue/10 text-laserBlue border-laserBlue/30"
                         >
-                            Pro User
+                            Enterprise
                         </Badge>
                         <Avatar className="animate-bounce-slow">
                             <AvatarImage
-                                src="/headshots/lpost.jpg"
-                                alt="User Avatar"
+                                src="/headshots/company.jpg"
+                                alt="Company Logo"
                             />
-                            <AvatarFallback>UN</AvatarFallback>
+                            <AvatarFallback>CO</AvatarFallback>
                         </Avatar>
                     </div>
                 </div>
@@ -105,18 +105,18 @@ export default async function Page() {
                             <Card className="bg-white border-gray-200 shadow-sm text-gray-900 animate-fade-in-up animate-delay-500">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium text-gray-600">
-                                        Matches
+                                        Active Jobs
                                     </CardTitle>
-                                    <TargetIcon className="text-laserBlue" />
+                                    <Briefcase className="text-laserBlue" />
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-3xl font-bold text-laserBlue">
-                                        {matches.length}
+                                        {jobs.length}
                                     </div>
                                     <div className="flex items-center space-x-2 mt-2">
                                         <TrendingUp className="text-green-600 h-4 w-4" />
                                         <p className="text-xs text-green-600">
-                                            +20.1% from last month
+                                            +15.3% from last month
                                         </p>
                                     </div>
                                 </CardContent>
@@ -125,21 +125,21 @@ export default async function Page() {
                             <Card className="bg-white border-gray-200 shadow-sm text-gray-900 animate-fade-in-up animate-delay-700">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium text-gray-600">
-                                        Candidates
+                                        Total Applications
                                     </CardTitle>
                                     <Users className="text-laserBlue" />
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-3xl font-bold text-laserBlue">
-                                        {candidates.length}
+                                        {applications.length}
                                     </div>
                                     <Progress
-                                        value={candidates.length * 5}
+                                        value={85}
                                         className="mt-2 bg-slate-200"
                                         indicatorClassName="bg-laserBlue"
                                     />
                                     <p className="text-xs text-gray-500 mt-1">
-                                        Profile Completeness
+                                        Application Quality Score
                                     </p>
                                 </CardContent>
                             </Card>
@@ -147,18 +147,18 @@ export default async function Page() {
                             <Card className="bg-white border-gray-200 shadow-sm text-gray-900 animate-fade-in-up animate-delay-900">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium text-gray-600">
-                                        Job Placements
+                                        Successful Hires
                                     </CardTitle>
-                                    <Rocket className="text-laserBlue" />
+                                    <CheckCircle2 className="text-laserBlue" />
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-3xl font-bold text-laserBlue">
-                                        0
+                                        12
                                     </div>
                                     <div className="flex items-center space-x-2 mt-2">
-                                        <Zap className="text-yellow-600 h-4 w-4" />
-                                        <p className="text-xs text-yellow-600">
-                                            Opportunities Pending
+                                        <Target className="text-green-600 h-4 w-4" />
+                                        <p className="text-xs text-green-600">
+                                            80% of quarterly goal
                                         </p>
                                     </div>
                                 </CardContent>
@@ -170,35 +170,35 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800">
                                         <BarChart3 className="mr-2 text-laserBlue" />
-                                        Performance Insights
+                                        Recruitment Metrics
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="space-y-4">
                                         <div className="flex justify-between">
                                             <span className="text-gray-700">
-                                                Candidate Engagement
+                                                Time-to-Hire
                                             </span>
                                             <span className="text-laserBlue">
-                                                72%
+                                                85%
                                             </span>
                                         </div>
                                         <Progress
-                                            value={72}
+                                            value={85}
                                             className="bg-slate-200"
                                             indicatorClassName="bg-laserBlue"
                                         />
 
                                         <div className="flex justify-between">
                                             <span className="text-gray-700">
-                                                Placement Success Rate
+                                                Offer Acceptance Rate
                                             </span>
                                             <span className="text-laserBlue">
-                                                65%
+                                                92%
                                             </span>
                                         </div>
                                         <Progress
-                                            value={65}
+                                            value={92}
                                             className="bg-slate-200"
                                             indicatorClassName="bg-laserBlue"
                                         />
@@ -210,7 +210,7 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800">
                                         <FileSpreadsheet className="mr-2 text-laserBlue" />
-                                        Candidate Pipeline
+                                        Hiring Pipeline
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
@@ -219,42 +219,42 @@ export default async function Page() {
                                             <div className="flex items-center space-x-3">
                                                 <Filter className="text-laserBlue" />
                                                 <span className="text-gray-700">
-                                                    Screening
+                                                    Application Review
                                                 </span>
                                             </div>
                                             <Badge
                                                 variant="secondary"
                                                 className="bg-blue-50 text-blue-700"
                                             >
-                                                12 Candidates
+                                                48 Pending
                                             </Badge>
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center space-x-3">
-                                                <TrendingDown className="text-laserBlue" />
+                                                <Users className="text-laserBlue" />
                                                 <span className="text-gray-700">
-                                                    Interview Stage
+                                                    Interviews Scheduled
                                                 </span>
                                             </div>
                                             <Badge
                                                 variant="outline"
                                                 className="text-yellow-700 border-yellow-300"
                                             >
-                                                5 Candidates
+                                                15 Today
                                             </Badge>
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center space-x-3">
-                                                <Award className="text-laserBlue" />
+                                                <DollarSign className="text-laserBlue" />
                                                 <span className="text-gray-700">
-                                                    Final Selection
+                                                    Offers Extended
                                                 </span>
                                             </div>
                                             <Badge
                                                 variant="outline"
                                                 className="text-green-700 border-green-300"
                                             >
-                                                3 Candidates
+                                                8 Active
                                             </Badge>
                                         </div>
                                     </div>
@@ -267,24 +267,23 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800 text-sm">
                                         <Clock className="mr-2 text-laserBlue h-4 w-4" />
-                                        Time to Placement
+                                        Recruitment Speed
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold text-laserBlue">
-                                        45 days
+                                        18 days
                                     </div>
                                     <p className="text-xs text-gray-500 mt-1">
-                                        Average time from application to
-                                        placement
+                                        Average time to fill position
                                     </p>
                                     <Progress
-                                        value={75}
+                                        value={88}
                                         className="mt-4 bg-slate-200"
                                         indicatorClassName="bg-laserBlue"
                                     />
                                     <p className="text-xs text-green-600 mt-2">
-                                        25% faster than industry average
+                                        32% faster than industry average
                                     </p>
                                 </CardContent>
                             </Card>
@@ -293,42 +292,42 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800 text-sm">
                                         <Building2 className="mr-2 text-laserBlue h-4 w-4" />
-                                        Top Industries
+                                        Department Hiring
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="space-y-3">
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-700">
-                                                Technology
+                                                Engineering
                                             </span>
                                             <Badge
                                                 variant="secondary"
                                                 className="bg-purple-50 text-purple-700"
                                             >
-                                                45%
+                                                12 Open
                                             </Badge>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-700">
-                                                Healthcare
+                                                Sales
                                             </span>
                                             <Badge
                                                 variant="secondary"
                                                 className="bg-blue-50 text-blue-700"
                                             >
-                                                30%
+                                                8 Open
                                             </Badge>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-700">
-                                                Finance
+                                                Marketing
                                             </span>
                                             <Badge
                                                 variant="secondary"
                                                 className="bg-green-50 text-green-700"
                                             >
-                                                25%
+                                                5 Open
                                             </Badge>
                                         </div>
                                     </div>
@@ -339,42 +338,42 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800 text-sm">
                                         <GraduationCap className="mr-2 text-laserBlue h-4 w-4" />
-                                        Skills in Demand
+                                        Top Required Skills
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="space-y-3">
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-700">
-                                                Machine Learning
+                                                React/Next.js
                                             </span>
                                             <Badge
                                                 variant="outline"
                                                 className="text-laserBlue border-laserBlue/30"
                                             >
-                                                High
+                                                35 Matches
                                             </Badge>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-700">
-                                                Cloud Computing
+                                                TypeScript
                                             </span>
                                             <Badge
                                                 variant="outline"
                                                 className="text-laserBlue border-laserBlue/30"
                                             >
-                                                High
+                                                28 Matches
                                             </Badge>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-700">
-                                                Data Analysis
+                                                UI/UX Design
                                             </span>
                                             <Badge
                                                 variant="outline"
                                                 className="text-laserBlue border-laserBlue/30"
                                             >
-                                                Medium
+                                                22 Matches
                                             </Badge>
                                         </div>
                                     </div>
@@ -387,7 +386,7 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800">
                                         <Calendar className="mr-2 text-laserBlue" />
-                                        Upcoming Interviews
+                                        Today&apos;s Schedule
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
@@ -396,40 +395,41 @@ export default async function Page() {
                                             <div className="flex items-center space-x-3">
                                                 <Avatar className="h-8 w-8">
                                                     <AvatarFallback>
-                                                        JD
+                                                        TS
                                                     </AvatarFallback>
                                                 </Avatar>
                                                 <div>
                                                     <p className="text-sm font-medium">
-                                                        John Doe
+                                                        Technical Screening
                                                     </p>
                                                     <p className="text-xs text-gray-500">
-                                                        Software Engineer
+                                                        Senior Frontend
+                                                        Developer
                                                     </p>
                                                 </div>
                                             </div>
                                             <Badge className="bg-laserBlue/10 text-laserBlue">
-                                                Today, 2:00 PM
+                                                2:00 PM
                                             </Badge>
                                         </div>
                                         <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                                             <div className="flex items-center space-x-3">
                                                 <Avatar className="h-8 w-8">
                                                     <AvatarFallback>
-                                                        AS
+                                                        HR
                                                     </AvatarFallback>
                                                 </Avatar>
                                                 <div>
                                                     <p className="text-sm font-medium">
-                                                        Alice Smith
+                                                        Team Interview
                                                     </p>
                                                     <p className="text-xs text-gray-500">
-                                                        Data Scientist
+                                                        Product Designer
                                                     </p>
                                                 </div>
                                             </div>
                                             <Badge className="bg-gray-100 text-gray-700">
-                                                Tomorrow, 10:00 AM
+                                                4:30 PM
                                             </Badge>
                                         </div>
                                     </div>
@@ -440,7 +440,7 @@ export default async function Page() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-gray-800">
                                         <LineChart className="mr-2 text-laserBlue" />
-                                        Recruitment Trends
+                                        Hiring Trends
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
@@ -448,10 +448,10 @@ export default async function Page() {
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <p className="text-sm font-medium">
-                                                    Application Rate
+                                                    Qualified Candidates
                                                 </p>
                                                 <p className="text-2xl font-bold text-laserBlue">
-                                                    +12.5%
+                                                    +28.5%
                                                 </p>
                                             </div>
                                             <PieChart className="text-laserBlue h-8 w-8" />
@@ -463,10 +463,10 @@ export default async function Page() {
                                         />
                                         <div className="flex justify-between text-xs text-gray-500">
                                             <span>
-                                                Previous: 125 applications
+                                                Last Month: 85 qualified
                                             </span>
                                             <span>
-                                                Current: 142 applications
+                                                This Month: 109 qualified
                                             </span>
                                         </div>
                                     </div>
@@ -481,8 +481,8 @@ export default async function Page() {
                                 Advanced Analytics
                             </h3>
                             <p className="text-gray-500">
-                                Coming soon with deeper insights and AI-powered
-                                recommendations
+                                Coming soon with AI-powered hiring insights and
+                                predictions
                             </p>
                         </div>
                     </TabsContent>
@@ -490,10 +490,11 @@ export default async function Page() {
                     <TabsContent value="reports" className="space-y-6">
                         <div className="text-gray-900 text-center py-20 bg-white border border-gray-200 rounded-lg shadow-sm">
                             <h3 className="text-2xl font-bold mb-4">
-                                Custom Reports
+                                Recruitment Reports
                             </h3>
                             <p className="text-gray-500">
-                                Generate detailed reports and analytics
+                                Generate detailed hiring and recruitment
+                                analytics
                             </p>
                             <div className="mt-6 flex justify-center space-x-4">
                                 <Badge

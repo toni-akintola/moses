@@ -171,18 +171,32 @@ export default function Home({ home, locale }: HomeProps) {
                     }
                 />
 
-                <Features
-                    content={
-                        userType === "candidate"
-                            ? candidateFeatures
-                            : employerFeatures
-                    }
-                    userType={userType}
-                />
-                <TestimonialScroll />
-                <CompetitiveAnalysis />
-                <Pricing />
-                <GetStarted />
+                <section id="product">
+                    <Features
+                        content={
+                            userType === "candidate"
+                                ? candidateFeatures
+                                : employerFeatures
+                        }
+                        userType={userType}
+                    />
+                </section>
+                <section id="solutions">
+                    <TestimonialScroll />
+                    <CompetitiveAnalysis />
+                </section>
+                <section id="resources">
+                    {/* Add any resource-related content here */}
+                    <div className="text-white text-center py-10">
+                        Resources coming soon
+                    </div>
+                </section>
+                <section id="pricing">
+                    <Pricing />
+                </section>
+                <section id="about">
+                    <GetStarted />
+                </section>
             </div>
         </div>
     )

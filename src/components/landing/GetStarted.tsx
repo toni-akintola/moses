@@ -23,7 +23,7 @@ const GetStarted = () => {
                             </Button>
                             <Button
                                 variant="outline"
-                                className="border-slate-700 text-slate-300 hover:bg-slate-800/50 hover:text-white flex items-center group"
+                                className="border-slate-700 text-slate-300 bg-slate-800/50 flex items-center group"
                             >
                                 Learn More
                                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

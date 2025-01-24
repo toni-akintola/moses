@@ -3,6 +3,7 @@ import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu"
 
 import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
+import { Menu as MenuIcon } from "lucide-react"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -54,56 +55,40 @@ ListItem.displayName = "ListItem"
 
 export function MainNav(props: NavProps) {
     const { locale } = useParams()
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+    const navLinks = [
+        { href: "#product", text: "Product" },
+        { href: "#solutions", text: "Solutions" },
+        { href: "#pricing", text: "Pricing" },
+        { href: "#testimonials", text: "Testimonials" },
+        { href: "#about", text: props.information },
+    ]
+
     return (
         <div
             className="relative flex w-full items-center justify-between z-50 px-4 py-2"
             aria-label="Global"
         >
             <Logo locale={locale as string} />
-            <div className="flex space-x-5 items-center">
-                <motion.a
-                    href="#product"
-                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    Product
-                </motion.a>
 
-                <motion.a
-                    href="#solutions"
-                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    Solutions
-                </motion.a>
-                <motion.a
-                    href="#pricing"
-                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    Pricing
-                </motion.a>
-                <motion.a
-                    href="#testimonials"
-                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    Testimonials
-                </motion.a>
-                <motion.a
-                    href="#about"
-                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    {props.information}
-                </motion.a>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-5 items-center">
+                {navLinks.map((link) => (
+                    <motion.a
+                        key={link.href}
+                        href={link.href}
+                        className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                    >
+                        {link.text}
+                    </motion.a>
+                ))}
             </div>
-            <div className="lg:flex lg:flex-1 lg:justify-end space-x-2">
+
+            {/* Desktop Auth Buttons */}
+            <div className="hidden md:flex md:flex-1 md:justify-end space-x-2">
                 <motion.a
                     href={`/${locale}/core`}
                     className="text-sm font-medium tracking-tight leading-6 text-white rounded-md py-1 px-2 md:py-2 md:px-4 hover:bg-laserBlue/20 transition-all duration-300 ease-in-out"
@@ -124,6 +109,46 @@ export function MainNav(props: NavProps) {
                     </span>
                 </motion.a>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+                className="md:hidden p-2 text-laserBlue hover:text-white"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+                <MenuIcon className="h-6 w-6" />
+            </button>
+
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+                <div className="absolute top-full left-0 right-0 bg-slate-950/95 backdrop-blur-sm border-t border-slate-800 p-4 md:hidden">
+                    <div className="flex flex-col space-y-4">
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                className="text-laserBlue font-medium hover:text-white transition-all duration-300"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                {link.text}
+                            </a>
+                        ))}
+                        <div className="flex flex-col space-y-2 pt-4 border-t border-slate-800">
+                            <a
+                                href={`/${locale}/core`}
+                                className="text-sm font-medium text-white text-center py-2 px-4 hover:bg-laserBlue/20 rounded-md transition-all duration-300"
+                            >
+                                Sign in
+                            </a>
+                            <a
+                                href={`/${locale}/core`}
+                                className="text-sm font-medium text-black bg-laserBlue text-center py-2 px-4 rounded-full hover:bg-laserBlue/80 transition-all duration-300"
+                            >
+                                Sign up for free
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

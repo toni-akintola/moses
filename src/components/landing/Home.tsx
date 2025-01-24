@@ -111,7 +111,7 @@ export default function Home({ home, locale }: HomeProps) {
                 language={home.language}
                 access={home.access}
             />
-            <LampContainer className="h-full overflow-x-hidden -mt-28 z-0">
+            <LampContainer className="h-full overflow-x-hidden z-0">
                 <motion.div
                     className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-4"
                     initial={{ opacity: 0, y: 100 }}
@@ -125,7 +125,7 @@ export default function Home({ home, locale }: HomeProps) {
                     <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-2xl font-medium tracking-tight text-white md:text-8xl">
                         Blue collar hiring redefined
                     </h1>
-                    <p className="text-white text-2xl">
+                    <p className="text-white text-lg lg:text-2xl">
                         An AI-powered job placement solution for blue collar
                         workers, tradespeople, and migrants.
                     </p>

@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react"
 const GetStarted = () => {
     return (
         <div className="bg-slate-950 py-24 px-4 w-full">
-            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12 bg-slate-900/40 backdrop-blur-sm rounded-2xl p-8 lg:p-12 border border-slate-800">
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12 bg-slate-800/40 backdrop-blur-sm rounded-2xl p-8 lg:p-12 border border-slate-800">
                 {/* Left side - Text content */}
                 <div className="w-full lg:w-1/2 space-y-8">
                     <div className="space-y-6">
@@ -32,16 +32,9 @@ const GetStarted = () => {
                     </div>
                 </div>
 
-                {/* Right side - Image */}
+                {/* Right side - Gradient Background */}
                 <div className="w-full lg:w-1/2 h-[407px] relative">
-                    <div className="bg-[#D9D9D9] rounded-[26px] overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.2)] h-full">
-                        <Image
-                            src="/dashboard-preview.png"
-                            alt="Dashboard Preview"
-                            fill
-                            className="object-cover opacity-90 hover:opacity-100 transition-opacity duration-300"
-                        />
-                    </div>
+                    <div className="bg-gradient-to-br from-slate-800 to-laserBlue   rounded-[26px] overflow-hidden h-full"></div>
                 </div>
             </div>
         </div>

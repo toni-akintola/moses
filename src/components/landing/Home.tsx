@@ -49,7 +49,6 @@ export default function Home({ home, locale }: HomeProps) {
                 "Craft a professional resume with our intuitive, AI-powered builder",
             image: "/screenshots/resume-builder.png",
             gradient: "from-[#814A9E80] to-[#BAB0BB80]",
-            featured: false,
         },
         {
             title: "Multi-lingual Options",
@@ -57,7 +56,6 @@ export default function Home({ home, locale }: HomeProps) {
                 "Break language barriers with seamless multi-language support",
             image: "/screenshots/job-search.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
-            featured: false,
         },
         {
             title: "Manage Matches & Candidates",
@@ -65,7 +63,6 @@ export default function Home({ home, locale }: HomeProps) {
                 "Streamline your hiring process with advanced candidate tracking",
             image: "/screenshots/dashboard.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
-            featured: true,
         },
         {
             title: "Virtual AI Assistant",
@@ -73,42 +70,37 @@ export default function Home({ home, locale }: HomeProps) {
                 "Your personal AI-powered career companion and job search ally",
             image: "/screenshots/personal-assistant.png",
             gradient: "from-[#814A9E80] to-[#BAB0BB80]",
-            featured: false,
         },
     ]
 
     const employerFeatures = [
         {
+            title: "Recruitment Analytics",
+            description:
+                "Gain deep insights into your hiring performance and trends",
+            image: "/screenshots/employer-dashboard.png",
+            gradient: "from-[#814A9E80] to-[#BAB0BB80]",
+        },
+        {
             title: "Advanced Candidate Matching",
             description:
                 "Leverage AI to find the most suitable candidates for your roles",
-            image: "/candidate-matching.png",
+            image: "/screenshots/matches.png",
             gradient: "from-[#814A9E80] to-[#BAB0BB80]",
-            featured: false,
         },
         {
             title: "Comprehensive Candidate Profiles",
             description:
                 "Access detailed, multi-dimensional candidate insights",
-            image: "/candidate-profiles.png",
+            image: "/screenshots/candidate-profile.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
-            featured: false,
         },
         {
             title: "Diversity & Inclusion Tools",
             description:
                 "Enhance your hiring process with intelligent diversity screening",
-            image: "/diversity-tools.png",
+            image: "/.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
-            featured: true,
-        },
-        {
-            title: "Recruitment Analytics",
-            description:
-                "Gain deep insights into your hiring performance and trends",
-            image: "/recruitment-analytics.png",
-            gradient: "from-[#814A9E80] to-[#BAB0BB80]",
-            featured: false,
         },
     ]
 
@@ -182,14 +174,11 @@ export default function Home({ home, locale }: HomeProps) {
                     />
                 </section>
                 <section id="solutions">
-                    <TestimonialScroll />
                     <CompetitiveAnalysis />
                 </section>
-                <section id="resources">
+                <section id="testimonials">
                     {/* Add any resource-related content here */}
-                    <div className="text-white text-center py-10">
-                        Resources coming soon
-                    </div>
+                    <TestimonialScroll />
                 </section>
                 <section id="pricing">
                     <Pricing />

@@ -62,49 +62,8 @@ const CompetitiveAnalysis = () => {
                 </p>
             </div>
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Our Product Card */}
-                <Card className="bg-slate-900/40 backdrop-blur-sm border border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-                    <CardHeader>
-                        <CardTitle className="text-2xl text-white flex justify-between items-center">
-                            Our Platform
-                            <span className="bg-[#06b6d4] text-white px-3 py-1 rounded-full text-sm font-medium">
-                                Recommended
-                            </span>
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="space-y-4">
-                            {competitiveFeatures.map((item) => (
-                                <li
-                                    key={item.feature}
-                                    className="flex items-center justify-between border-b border-slate-800 pb-3 last:border-b-0"
-                                >
-                                    <div>
-                                        <h4 className="text-white font-semibold">
-                                            {item.feature}
-                                        </h4>
-                                        <p className="text-slate-400 text-sm">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                    {item.ourProduct ? (
-                                        <Check className="h-6 w-6 text-[#06b6d4]" />
-                                    ) : (
-                                        <X className="h-6 w-6 text-slate-600" />
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                        <div className="mt-6">
-                            <Button className="w-full bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white">
-                                Start Hiring Now
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
-
                 {/* LinkedIn Card */}
-                <Card className="bg-slate-900/40 backdrop-blur-sm border border-slate-800">
+                <Card className="bg-slate-800/40 backdrop-blur-sm border border-slate-800">
                     <CardHeader>
                         <CardTitle className="text-2xl text-white">
                             LinkedIn
@@ -142,7 +101,7 @@ const CompetitiveAnalysis = () => {
                 </Card>
 
                 {/* Indeed Card */}
-                <Card className="bg-slate-900/40 backdrop-blur-sm border border-slate-800">
+                <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-800">
                     <CardHeader>
                         <CardTitle className="text-2xl text-white">
                             Indeed
@@ -174,6 +133,46 @@ const CompetitiveAnalysis = () => {
                                 className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
                             >
                                 Visit Indeed
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+                {/* Our Product Card */}
+                <Card className="bg-slate-800 backdrop-blur-sm border border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-white flex justify-between items-center">
+                            Our Platform
+                            <span className="bg-[#06b6d4] text-white px-3 py-1 rounded-full text-sm font-medium">
+                                Recommended
+                            </span>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="space-y-4">
+                            {competitiveFeatures.map((item) => (
+                                <li
+                                    key={item.feature}
+                                    className="flex items-center justify-between border-b border-slate-800 pb-3 last:border-b-0"
+                                >
+                                    <div>
+                                        <h4 className="text-white font-semibold">
+                                            {item.feature}
+                                        </h4>
+                                        <p className="text-slate-400 text-sm text-balance">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                    {item.ourProduct ? (
+                                        <Check className="h-6 w-6 text-[#06b6d4]" />
+                                    ) : (
+                                        <X className="h-6 w-6 text-slate-600" />
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="mt-6">
+                            <Button className="w-full bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white">
+                                Start Hiring Now
                             </Button>
                         </div>
                     </CardContent>

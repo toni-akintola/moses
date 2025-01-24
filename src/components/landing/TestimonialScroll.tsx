@@ -11,7 +11,7 @@ export const TestimonialScroll = () => {
             name: "Jillian Snavley",
             role: "Global Recruiting Sourcing Lead",
             company: "Accenture",
-            quote: "I love how easy it is, like it’s quick and easy. Most of the technologies I’ve seen in this space are so complicated.",
+            quote: "I love how easy it is, like it’s quick and easy.\nMost of the technologies I’ve seen in this space are so complicated.",
             image: "/headshots/jsnavley.png",
             rating: 5,
         },
@@ -27,7 +27,7 @@ export const TestimonialScroll = () => {
             name: "Chris Grandpre",
             role: "Operating Partner",
             company: "MidOcean Partners",
-            quote: "As more American youth attend four-year colleges compared to previous generations, there is an aging trade labor force in the U.S. and an increasing gap in labor supply in the trades relative to the demand.  Tools like this can help blue collar employers address this challenge.",
+            quote: "There is an aging trade labor force in the U.S. and an increasing gap in labor supply in the trades relative to the demand.  Tools like this can help blue collar employers address this challenge.",
             image: "/headshots/cgrandpre.png",
             rating: 5,
         },
@@ -35,7 +35,7 @@ export const TestimonialScroll = () => {
             name: "Lilliam Post",
             role: "Community Liaison",
             company: "Catholic Multicultural Center",
-            quote: "I am excited [about] the pilot project. Èxodo is giving us hope in securing jobs for people in our community.",
+            quote: "I am excited [about] the pilot project.\nÈxodo is giving us hope in securing jobs for people in our community.",
             image: "/headshots/lpost.png",
             rating: 5,
         },
@@ -66,10 +66,10 @@ export const TestimonialScroll = () => {
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentIndex}
-                        className="bg-slate-900/40 backdrop-blur-sm rounded-2xl p-8 flex items-start space-x-6 border border-slate-800 hover:border-[#06b6d4] transition-all duration-300"
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100 }}
+                        className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 flex items-start space-x-6 border border-slate-600 hover:border-[#06b6d4] transition-all duration-300"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ duration: 0.5 }}
                     >
                         <div className="flex-shrink-0">
@@ -94,7 +94,7 @@ export const TestimonialScroll = () => {
                                 </div>
                             </div>
                             <div className="relative mt-4">
-                                <p className="text-slate-300 italic text-balance">
+                                <p className="text-slate-300 italic text-balance whitespace-pre-wrap">
                                     {testimonials[currentIndex].quote}
                                 </p>
                             </div>
@@ -103,7 +103,7 @@ export const TestimonialScroll = () => {
                 </AnimatePresence>
 
                 {/* Navigation Buttons */}
-                <div className="top-1/2 -translate-y-1/2 w-full flex justify-between -left-16 -right-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-10">
+                <div className="top-1/2 -translate-y-1/2 w-full flex justify-between -left-16 -right-16 opacity-100 transition-opacity duration-300 mt-10">
                     <button
                         onClick={prevTestimonial}
                         className="bg-slate-800/50 hover:bg-slate-700/50 rounded-full p-2 backdrop-blur-sm"

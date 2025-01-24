@@ -1,9 +1,7 @@
 "use client"
-import Link from "next/link"
 import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu"
 
 import { cn } from "@/lib/utils"
-import { ChevronDownCircle, Copy, WaypointsIcon } from "lucide-react"
 import { motion } from "motion/react"
 import {
     NavigationMenu,
@@ -16,19 +14,6 @@ import {
 import React, { useState } from "react"
 import { useParams } from "next/navigation"
 import Logo from "@/components/landing/Logo"
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
 
 export type NavProps = {
     information: string
@@ -84,6 +69,7 @@ export function MainNav(props: NavProps) {
                 >
                     Product
                 </motion.a>
+
                 <motion.a
                     href="#solutions"
                     className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
@@ -93,20 +79,20 @@ export function MainNav(props: NavProps) {
                     Solutions
                 </motion.a>
                 <motion.a
-                    href="#resources"
-                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    Resources
-                </motion.a>
-                <motion.a
                     href="#pricing"
                     className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
                     Pricing
+                </motion.a>
+                <motion.a
+                    href="#testimonials"
+                    className="text-laserBlue font-medium hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    Testimonials
                 </motion.a>
                 <motion.a
                     href="#about"

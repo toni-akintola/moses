@@ -111,10 +111,10 @@ export default function Home({ home, locale }: HomeProps) {
                 language={home.language}
                 access={home.access}
             />
-            <LampContainer className="h-full -mb-10 overflow-x-hidden">
+            <LampContainer className="h-full overflow-x-hidden -mt-28 z-0">
                 <motion.div
                     className="w-3/4 md:w-2/3 text-center flex items-center flex-col space-y-4"
-                    initial={{ opacity: 0.5, y: 100 }}
+                    initial={{ opacity: 0, y: 100 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{
                         delay: 0.3,
@@ -122,15 +122,14 @@ export default function Home({ home, locale }: HomeProps) {
                         ease: "easeInOut",
                     }}
                 >
-                    <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-7xl mt-10">
-                        {/* {home.title} */}
-                        Job-matching redefined
+                    <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-2xl font-medium tracking-tight text-white md:text-8xl">
+                        Blue collar hiring redefined
                     </h1>
-                    <p className="text-white text-lg">
-                        An AI-powered job placement solution for the vulnerable
-                        and underserved.
+                    <p className="text-white text-2xl">
+                        An AI-powered job placement solution for blue collar
+                        workers, tradespeople, and migrants.
                     </p>
-                    <div className="w-3/4 md:w-2/3 text-center flex justify-between">
+                    {/* <div className="w-3/4 md:w-2/3 text-center flex justify-between">
                         <motion.a
                             className="text-clear bg-laserBlue text-lg p-1 px-4 rounded-full"
                             href={`${locale}/core`}
@@ -144,11 +143,11 @@ export default function Home({ home, locale }: HomeProps) {
                         >
                             Learn more
                         </HoverBorderGradient>
-                    </div>
+                    </div> */}
                 </motion.div>
             </LampContainer>
 
-            <div className="p-4 flex justify-center flex-col -mt-40">
+            <div className="p-4 flex justify-center flex-col -mt-72">
                 <TypePicker
                     options={[
                         {

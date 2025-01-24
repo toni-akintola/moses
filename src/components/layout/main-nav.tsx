@@ -56,7 +56,7 @@ export function MainNav(props: NavProps) {
     const { locale } = useParams()
     return (
         <div
-            className="flex w-full items-center justify-between px-4 py-2"
+            className="relative flex w-full items-center justify-between z-50 px-4 py-2"
             aria-label="Global"
         >
             <Logo locale={locale as string} />

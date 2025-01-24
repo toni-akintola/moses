@@ -80,7 +80,7 @@ export const Features = ({
                 </div>
 
                 {/* Right Side - Dynamic Image Display */}
-                <div className="hidden lg:block w-1/2 h-[600px] relative">
+                <div className="hidden lg:block relative w-1/2 h-[1000px]">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeCard}
@@ -99,8 +99,12 @@ export const Features = ({
                             <Image
                                 src={content[activeCard].image}
                                 alt={content[activeCard].title}
-                                fill
-                                className="object-cover transition-all duration-500 hover:scale-105"
+                                width={2000}
+                                height={2000}
+                                priority
+                                unoptimized
+                                className="w-full rounded-2xl transition-all duration-500 hover:scale-105 object-cover"
+                                quality={100}
                             />
                         </motion.div>
                     </AnimatePresence>

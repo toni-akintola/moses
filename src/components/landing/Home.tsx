@@ -95,13 +95,13 @@ export default function Home({ home, locale }: HomeProps) {
             image: "/screenshots/candidate-profile.png",
             gradient: "from-[#278E9B80] to-[#B7BDC580]",
         },
-        {
-            title: "Diversity & Inclusion Tools",
-            description:
-                "Enhance your hiring process with intelligent diversity screening",
-            image: "/.png",
-            gradient: "from-[#278E9B80] to-[#B7BDC580]",
-        },
+        // {
+        //     title: "Diversity & Inclusion Tools",
+        //     description:
+        //         "Enhance your hiring process with intelligent diversity screening",
+        //     image: "/.png",
+        //     gradient: "from-[#278E9B80] to-[#B7BDC580]",
+        // },
     ]
 
     return (

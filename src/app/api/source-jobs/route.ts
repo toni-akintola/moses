@@ -11,7 +11,7 @@ import { Job } from "../../../../types/types"
 
 export const dynamic = "force-dynamic"
 // Vercel Cron Job configuration
-export const maxDuration = 300
+export const maxDuration = 60
 
 export async function GET(request: Request) {
     // This is for testing the endpoint

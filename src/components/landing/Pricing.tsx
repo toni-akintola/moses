@@ -8,6 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Check } from "lucide-react"
+import Link from "next/link"
 
 const pricingPlans = [
     {
@@ -91,11 +92,6 @@ const Pricing = () => {
                                 <span className="text-4xl font-bold text-white">
                                     {plan.price}
                                 </span>
-                                {/* {plan.period && (
-                                    <span className="text-slate-400 ml-1">
-                                        {plan.period}
-                                    </span>
-                                )} */}
                             </div>
                             <ul className="space-y-3">
                                 {plan.features.map((feature) => (
@@ -110,17 +106,22 @@ const Pricing = () => {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button
-                                className={`w-full ${
-                                    plan.featured
-                                        ? "bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white"
-                                        : "bg-slate-800 hover:bg-slate-700 text-white border border-slate-700"
-                                }`}
+                            <Link
+                                className="flex w-full"
+                                href="mailto:oakintol@nd.edu"
                             >
-                                {plan.name === "Employers"
-                                    ? "Contact Sales"
-                                    : "Get Started"}
-                            </Button>
+                                <Button
+                                    className={`w-full ${
+                                        plan.featured
+                                            ? "bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white"
+                                            : "bg-slate-800 hover:bg-slate-700 text-white border border-slate-700"
+                                    }`}
+                                >
+                                    {plan.name === "Employers"
+                                        ? "Contact Sales"
+                                        : "Get Started"}
+                                </Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 ))}

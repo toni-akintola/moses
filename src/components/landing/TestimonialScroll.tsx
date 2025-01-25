@@ -16,19 +16,19 @@ export const TestimonialScroll = () => {
             rating: 5,
         },
         {
-            name: "Richard Castellini",
-            role: "Former SVP",
-            company: "CareerBuilder",
-            quote: "The resume builder is incredibly intuitive. I was able to create a professional resume in minutes, highlighting my strengths in ways I never thought possible.",
-            image: "/headshots/rcastellini.png",
-            rating: 5,
-        },
-        {
             name: "Chris Grandpre",
             role: "Operating Partner",
             company: "MidOcean Partners",
             quote: "There is an aging trade labor force in the U.S. and an increasing gap in labor supply in the trades relative to the demand.  Tools like this can help blue collar employers address this challenge.",
             image: "/headshots/cgrandpre.png",
+            rating: 5,
+        },
+        {
+            name: "Carlos Espinoza Banegas",
+            role: "Entrepreneur in Residence",
+            company: "University of Notre Dame Idea Center",
+            quote: "As someone who has worked with migrants and refugees, this product is a game changer.",
+            image: "/headshots/cbanegas.jpeg",
             rating: 5,
         },
         {
@@ -93,7 +93,7 @@ export const TestimonialScroll = () => {
                                     </p>
                                 </div>
                             </div>
-                            <div className="relative mt-4">
+                            <div className="relative">
                                 <p className="text-slate-300 italic text-balance whitespace-pre-wrap">
                                     {testimonials[currentIndex].quote}
                                 </p>

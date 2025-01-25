@@ -1,6 +1,7 @@
 import { Check, X } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const competitiveFeatures = [
     {
@@ -90,12 +91,14 @@ const CompetitiveAnalysis = () => {
                             ))}
                         </ul>
                         <div className="mt-6">
-                            <Button
-                                variant="outline"
-                                className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
-                            >
-                                Visit LinkedIn
-                            </Button>
+                            <Link href="https://www.linkedin.com/">
+                                <Button
+                                    variant="outline"
+                                    className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
+                                >
+                                    Visit LinkedIn
+                                </Button>
+                            </Link>
                         </div>
                     </CardContent>
                 </Card>
@@ -128,12 +131,14 @@ const CompetitiveAnalysis = () => {
                             ))}
                         </ul>
                         <div className="mt-6">
-                            <Button
-                                variant="outline"
-                                className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
-                            >
-                                Visit Indeed
-                            </Button>
+                            <Link href="https://www.indeed.com/">
+                                <Button
+                                    variant="outline"
+                                    className="w-full border-slate-700 text-slate-300 bg-slate-800/50"
+                                >
+                                    Visit Indeed
+                                </Button>
+                            </Link>
                         </div>
                     </CardContent>
                 </Card>
@@ -171,9 +176,11 @@ const CompetitiveAnalysis = () => {
                             ))}
                         </ul>
                         <div className="mt-6">
-                            <Button className="w-full bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white">
-                                Start Hiring Now
-                            </Button>
+                            <Link href="/sign-up">
+                                <Button className="w-full bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white">
+                                    Start Hiring Now
+                                </Button>
+                            </Link>
                         </div>
                     </CardContent>
                 </Card>

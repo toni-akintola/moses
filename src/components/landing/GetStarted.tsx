@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 const GetStarted = () => {
     return (
@@ -42,10 +43,12 @@ const GetStarted = () => {
                             transition={{ duration: 0.5, delay: 0.4 }}
                             className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-2"
                         >
-                            <Button className="w-full sm:w-auto bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white flex items-center justify-center group">
-                                Get Started
-                                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                            </Button>
+                            <Link href="/sign-up">
+                                <Button className="w-full sm:w-auto bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white flex items-center justify-center group">
+                                    Get Started
+                                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+                            </Link>
                             <Button
                                 variant="outline"
                                 className="w-full sm:w-auto border-slate-700 text-slate-300 bg-slate-800/50 flex items-center justify-center group"

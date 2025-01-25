@@ -6,37 +6,37 @@ import Image from "next/image"
 export const LogoCarousel = () => {
     const logos = [
         {
-            name: "Google",
+            name: "Henry Farms",
             logo: "/logos/henryfarms.svg",
             grayscale: true,
         },
         {
-            name: "Microsoft",
+            name: "Tyson Foods",
             logo: "/logos/TysonFoods.svg",
             grayscale: true,
         },
         {
-            name: "Amazon",
+            name: "Welcome.US",
             logo: "logos/Welcome.US_logo.svg",
             grayscale: true,
         },
         {
-            name: "Apple",
+            name: "AMPI",
             logo: "/logos/AMPI.svg",
             grayscale: true,
         },
         {
-            name: "Salesforce",
+            name: "Accenture",
             logo: "/logos/accenture (1).svg",
             grayscale: true,
         },
         {
-            name: "Salesforce",
+            name: "Catholic Multicultural Center",
             logo: "/logos/CMC.svg",
             grayscale: true,
         },
         {
-            name: "Salesforce",
+            name: "International Institute of St. Louis",
             logo: "/logos/IISTL.svg",
             grayscale: true,
         },

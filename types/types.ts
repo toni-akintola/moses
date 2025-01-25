@@ -83,22 +83,23 @@ export interface Profile {
     resumeSubmission?: ResumeSubmission
 }
 
-export type Candidate = {
+export interface Candidate {
     id: string
     profile_id: string
-    name: string
+    first_name: string
+    last_name: string
     email: string
-    created_at: string
-    updated_at: string
+    resume_submission?: ResumeSubmission
+    embedding: number[]
 }
 
-export type Match = {
+export interface Match {
     id: string
     profile_id: string
     job_id: string
-    score: number
-    created_at: string
-    updated_at: string
+    employer_id: string
+    candidate_id: string
+    rating: number
 }
 
 export type FormItemText = {

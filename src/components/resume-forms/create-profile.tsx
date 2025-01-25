@@ -46,7 +46,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom } from "jotai"
 import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import createClerkSupabaseClient from "@/utils/supabase/client"
@@ -1045,9 +1045,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                                 <SelectValue
                                                                                     placeholder={
                                                                                         s2Content
-                                                                                            .education
-                                                                                            .degree
-                                                                                            .placeholder
+                                                                                            .placeholders
+                                                                                            .none
                                                                                     }
                                                                                 />
                                                                             </SelectTrigger>
@@ -1357,12 +1356,35 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                                                                 </FormLabel>
                                                                 <FormControl>
                                                                     <Textarea
+                                                                        value={
+                                                                            field.value
+                                                                        }
+                                                                        onChange={
+                                                                            field.onChange
+                                                                        }
+                                                                        onBlur={
+                                                                            field.onBlur
+                                                                        }
+                                                                        name={
+                                                                            field.name
+                                                                        }
                                                                         placeholder={
                                                                             s3Content
                                                                                 .duties
                                                                                 .placeholder
                                                                         }
-                                                                        {...field}
+                                                                        className="min-h-[100px]"
+                                                                        onKeyDown={(
+                                                                            e
+                                                                        ) => {
+                                                                            if (
+                                                                                e.key ===
+                                                                                    "Enter" &&
+                                                                                !e.shiftKey
+                                                                            ) {
+                                                                                e.preventDefault()
+                                                                            }
+                                                                        }}
                                                                     />
                                                                 </FormControl>
                                                                 <FormDescription className="text-black">

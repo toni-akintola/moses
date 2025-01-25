@@ -12,7 +12,7 @@ import {
 import { useMessages } from "next-intl"
 import React from "react"
 
-const Page = ({ params }: { params: { locale: string } }) => {
+const Page = () => {
     const messages = useMessages()
     const resumeBuilderContent =
         messages.resumeBuilder as unknown as ResumeBuilderProps

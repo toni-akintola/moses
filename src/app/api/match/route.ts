@@ -37,36 +37,35 @@ export async function POST(request: NextRequest) {
 
         const matches = await matchToCandidates(embedding)
 
-        // Get profile owner's email
-        const profileEmail = await getProfileEmail(profileID)
+        // // Get profile owner's email
+        // const profileEmail = await getProfileEmail(profileID)
 
-        // Store matches and prepare for notifications
-        const storedMatches = await Promise.all(
-            matches.map(
-                async (match: {
-                    id: string
-                    employer?: { id: string }
-                    rating: number
-                }) => {
-                    const matchData = {
-                        profile_id: profileID,
-                        job_id: payload.jobID!,
-                        employer_id: match.employer?.id || "",
-                        candidate_id: match.id,
-                        rating: match.rating,
-                    }
-                    await storeMatch(matchData)
-                    return {
-                        ...match,
-                        profileEmail,
-                    }
-                }
-            )
-        )
+        // // Store matches and prepare for notifications
+        // const storedMatches = await Promise.all(
+        //     matches.map(
+        //         async (match: {
+        //             id: string
+        //             employer?: { id: string }
+        //             rating: number
+        //         }) => {
+        //             const matchData = {
+        //                 profile_id: profileID,
+        //                 job_id: payload.jobID!,
+        //                 employer_id: match.employer?.id || "",
+        //                 candidate_id: match.can,
+        //                 rating: match.rating,
+        //             }
+        //             await storeMatch(matchData)
+        //             return {
+        //                 ...match,
+        //                 profileEmail,
+        //             }
+        //         }
+        //     )
+        // )
 
         return NextResponse.json({
-            matches: storedMatches,
-            profileEmail,
+            matches,
         })
     } catch (error) {
         console.error("Error in match processing:", error)

@@ -30,7 +30,6 @@ export type HomeProps = {
     locale: string
 }
 
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
 import GetStarted from "@/components/landing/GetStarted"
 import Pricing from "@/components/landing/Pricing"
 import { TestimonialScroll } from "@/components/landing/TestimonialScroll"

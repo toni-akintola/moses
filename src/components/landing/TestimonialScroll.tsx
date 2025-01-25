@@ -58,8 +58,8 @@ export const TestimonialScroll = () => {
                     What People Are Saying About Èxodo
                 </h2>
                 <p className="text-lg text-slate-400">
-                    Whether you're an executive or a community leader, Èxodo can
-                    be your superpower.
+                    Whether you`&apos;`re an executive or a community leader,
+                    Èxodo can be your superpower.
                 </p>
             </div>
             <div className="max-w-4xl mx-auto relative group">

@@ -121,7 +121,7 @@ export default function Home({ home, locale }: HomeProps) {
                         ease: "easeInOut",
                     }}
                 >
-                    <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-2xl font-medium tracking-tight text-white md:text-8xl">
+                    <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-8xl">
                         Blue collar hiring redefined
                     </h1>
                     <p className="text-white text-lg lg:text-2xl">

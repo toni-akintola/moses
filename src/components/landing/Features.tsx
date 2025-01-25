@@ -19,7 +19,7 @@ export const Features = ({
     const [activeCard, setActiveCard] = useState(0)
 
     return (
-        <div className="bg-slate-950 py-24 px-4 w-full">
+        <div className="bg-slate-950 py-24 md:px-4 w-full">
             <div className="text-center mb-16">
                 <AnimatePresence mode="wait">
                     <motion.h2

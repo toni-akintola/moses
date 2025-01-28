@@ -5,6 +5,9 @@ import { LampContainer } from "@/components/ui/lamp"
 import { Features } from "@/components/landing/Features"
 import { useState } from "react"
 import { TypePicker } from "@/components/ui/type-picker"
+import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 export type HomeMessage = {
     information: string
@@ -40,6 +43,24 @@ export default function Home({ home, locale }: HomeProps) {
     const [userType, setUserType] = useState<"candidate" | "employer">(
         "candidate"
     )
+    const [email, setEmail] = useState("")
+    const [submitted, setSubmitted] = useState(false)
+
+    const handleWaitlistSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        // Add your waitlist API call here
+        console.log("Submitting email:", email)
+        const response = await fetch("/api/waitlist", {
+            method: "POST",
+            body: JSON.stringify({ email }),
+        })
+        if (response.ok) {
+            setSubmitted(true)
+            setEmail("")
+        } else {
+            console.error("Failed to add email to waitlist")
+        }
+    }
 
     const candidateFeatures = [
         {
@@ -121,32 +142,78 @@ export default function Home({ home, locale }: HomeProps) {
                         ease: "easeInOut",
                     }}
                 >
-                    <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-8xl">
-                        Blue collar hiring redefined
-                    </h1>
+                    <div className="relative">
+                        <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-8xl">
+                            Blue collar hiring redefined
+                        </h1>
+                        <motion.div
+                            className="absolute -top-4 -right-24"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20,
+                            }}
+                        >
+                            <div className="bg-gradient-to-r from-laserBlue to-slate-500 text-xs px-3 py-1 rounded-full text-white">
+                                BETA
+                            </div>
+                        </motion.div>
+                    </div>
                     <p className="text-white text-lg lg:text-2xl">
                         An AI-powered job placement solution for blue collar
                         workers, tradespeople, and migrants.
                     </p>
-                    {/* <div className="w-3/4 md:w-2/3 text-center flex justify-between">
-                        <motion.a
-                            className="text-clear bg-laserBlue text-lg p-1 px-4 rounded-full"
-                            href={`${locale}/core`}
-                        >
-                            Sign up
-                        </motion.a>
-                        <HoverBorderGradient
-                            containerClassName="rounded-full"
-                            as="button"
-                            className="text-clear text-lg p-1 px-4 rounded-full text-laserBlue"
-                        >
-                            Learn more
-                        </HoverBorderGradient>
-                    </div> */}
                 </motion.div>
             </LampContainer>
 
-            <div className="p-4 flex justify-center flex-col -mt-72">
+            {/* Waitlist Form - Moved outside LampContainer */}
+            <div className="p-4 flex justify-center -mt-64 mb-10">
+                <motion.form
+                    onSubmit={handleWaitlistSubmit}
+                    className="w-full max-w-md space-y-4"
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{
+                        delay: 0.3,
+                        duration: 0.8,
+                        ease: "easeInOut",
+                    }}
+                >
+                    {/* <div className="absolute -inset-0.5 bg-gradient-to-r from-laserBlue to-slate-500 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div> */}
+                    <Input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Join our exclusive waitlist"
+                        className="relative rounded-lg border-2 border-laserBlue bg-black/25 text-white placeholder:text-gray-300 w-full px-4 py-4 text-lg"
+                        required
+                        disabled={submitted}
+                    />
+
+                    <Button
+                        type="submit"
+                        className="relative z-60 w-full bg-gradient-to-r from-laserBlue to-slate-500 text-lg font-semibold text-white py-4 rounded-lg transition-all duration-300"
+                        disabled={submitted}
+                    >
+                        {submitted ? "Thank you! 🚀" : "Get Early Access"}
+                    </Button>
+                </motion.form>
+            </div>
+
+            {submitted && (
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-blue-400 text-sm mt-2 text-center"
+                >
+                    You're on the list! We'll notify you when we launch
+                    officially.
+                </motion.p>
+            )}
+
+            <div className="p-4 flex justify-center flex-col">
                 <TypePicker
                     options={[
                         {

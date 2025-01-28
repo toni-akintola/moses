@@ -208,8 +208,8 @@ export default function Home({ home, locale }: HomeProps) {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-blue-400 text-sm mt-2 text-center"
                 >
-                    You're on the list! We'll notify you when we launch
-                    officially.
+                    You&apos;re on the list! We&apos;ll notify you when we
+                    launch officially.
                 </motion.p>
             )}
 

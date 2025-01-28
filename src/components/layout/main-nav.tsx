@@ -89,7 +89,7 @@ export function MainNav(props: NavProps) {
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex md:flex-1 md:justify-end space-x-2">
-                <motion.a
+                {/* <motion.a
                     href={`/${locale}/core`}
                     className="text-sm font-medium tracking-tight leading-6 text-white rounded-md py-1 px-2 md:py-2 md:px-4 hover:bg-laserBlue/20 transition-all duration-300 ease-in-out"
                     whileHover={{ scale: 1.1 }}
@@ -107,7 +107,7 @@ export function MainNav(props: NavProps) {
                     <span aria-hidden="true" className="ml-1">
                         &rarr;
                     </span>
-                </motion.a>
+                </motion.a> */}
             </div>
 
             {/* Mobile Menu Button */}
@@ -132,7 +132,7 @@ export function MainNav(props: NavProps) {
                                 {link.text}
                             </a>
                         ))}
-                        <div className="flex flex-col space-y-2 pt-4 border-t border-slate-800">
+                        {/* <div className="flex flex-col space-y-2 pt-4 border-t border-slate-800">
                             <a
                                 href={`/${locale}/core`}
                                 className="text-sm font-medium text-white text-center py-2 px-4 hover:bg-laserBlue/20 rounded-md transition-all duration-300"
@@ -145,7 +145,7 @@ export function MainNav(props: NavProps) {
                             >
                                 Sign up for free
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             )}

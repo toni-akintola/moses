@@ -176,7 +176,7 @@ const CompetitiveAnalysis = () => {
                             ))}
                         </ul>
                         <div className="mt-6">
-                            <Link href="/sign-up">
+                            <Link href="#">
                                 <Button className="w-full bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white">
                                     Start Hiring Now
                                 </Button>
